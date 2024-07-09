@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blaster</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script >
+      // Auto-populate header and footer
+      $(function(){
+        $("#Header").load("https://blukat.neocities.org/header.html");
+        $("#Footer").load("https://blukat.neocities.org/footer.html");
+      });
+    </script> 
+  </head>
+
+
+  <body>
+    <div id="Header"></div>
+    
+    <div id="Body">
+    <h2>Blaster</h2>
+      <canvas id="mainCanvas" width="400" height="400" style="border:1px solid red; background-color: red;"></canvas>
+	<script src="https://blukat.neocities.org/games/blaster/canvas.js"></script>
+	<script src="https://blukat.neocities.org/games/blaster/input.js"></script>
+	<script src="https://blukat.neocities.org/games/blaster/scenes/start.js"></script>
+	<script src="https://blukat.neocities.org/games/blaster/scenes/game.js"></script>
+	<script src="https://blukat.neocities.org/games/blaster/scenes/next.js"></script>
+	<script src="https://blukat.neocities.org/games/blaster/scenes/end.js"></script>
+	<script src="https://blukat.neocities.org/games/blaster/main.js"></script>
+
+    </div>
+
+    <div id="Footer"></div>
+  </body>
+</html>
