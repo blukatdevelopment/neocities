@@ -58,10 +58,21 @@ function drawBox(x, y, width, height){
   drawLine(x+width, y, x+width, y+height);
 }
 
+function drawImage(image, x, y, width, height){
+  let context = getContext();
+  context.drawImage(image, x, y, width, height)
+}
+
 function drawText(text, x, y){
   let context = getContext()
   context.font = "30px Arial";
   context.fillText(text, x, y);
+}
+
+function loadImage(url){
+  let element = new Image();
+  element.src = url;
+  return element;
 }
 
 /*##############################################################################
@@ -155,14 +166,15 @@ main.fps = 60;
 main.startTime = Date.now();
 main.frameDuration = 1000 / main.fps
 main.lag = 0;
+console.log("Frame duration " + main.frameDuration);
 
 main.gameLoop = function(){
   requestAnimationFrame(main.gameLoop, getCanvas());
-
+  
   var current_time = Date.now();
   var elapsed = current_time - main.startTime;
   main.startTime = current_time;
-  main.lag = elapsed;
+  main.lag += elapsed;
   while(main.lag >= main.frameDuration){
     scene.update();
     main.lag -= main.frameDuration;
@@ -347,7 +359,8 @@ walker.NewWalker = function(){
     x: 100,
     y: 100,
     size: 50,
-    speed: 5
+    speed: 5,
+    image: loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/assets/fire_dress.png")
   };
   
   walker.update = function(){
@@ -374,8 +387,8 @@ walker.NewWalker = function(){
   }
   
   walker.draw = function(){
-    drawBox(walker.x, walker.y, walker.size, walker.size);
+    //drawBox(walker.x, walker.y, walker.size, walker.size);
+    drawImage(walker.image, walker.x, walker.y, walker.size, walker.size);
   }
   return walker;
 }
-
