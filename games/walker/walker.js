@@ -8,68 +8,66 @@
 /*##############################################################################
 # Canvas
 ##############################################################################*/
+var GRAPHICS = {};
 
-var _canvas;
-var _context;
-
-function initContext(){
-  _canvas = document.getElementById("mainCanvas");
-  _context = _canvas.getContext("2d");
+GRAPHICS.init = function(){
+  GRAPHICS._canvas = document.getElementById("mainCanvas");
+  GRAPHICS._context = GRAPHICS._canvas.getContext("2d");
 }
 
-function getCanvas(){
-  return _canvas;
+GRAPHICS.getCanvas = function(){
+  return GRAPHICS._canvas;
 }
 
-function getContext(){
-  return _context;
+GRAPHICS.getContext = function(){
+  return GRAPHICS._context;
 }
 
-function drawCircle(x, y, radius){
-  let context = getContext();
+GRAPHICS.drawCircle = function(x, y, radius){
+  let context = GRAPHICS.getContext();
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI);
   context.fill();
 }
 
-function drawLine(x1, y1, x2, y2){
-  let context = getContext();
+GRAPHICS.drawLine = function(x1, y1, x2, y2){
+  let context = GRAPHICS.getContext();
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
   context.stroke();
 }
 
-function clearCanvas(){
-  let context = getContext();
-  let canvas = getCanvas();
+GRAPHICS.clearCanvas = function(){
+  let context = GRAPHICS.getContext();
+  let canvas = GRAPHICS.getCanvas();
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.beginPath();
 }
 
 // XY is for top left corner.
-function drawBox(x, y, width, height){
+GRAPHICS.drawBox = function(x, y, width, height){
   // Top
-  drawLine(x, y, x+width, y);
+  GRAPHICS.drawLine(x, y, x+width, y);
   // Left
-  drawLine(x, y, x, y+height); 
+  GRAPHICS.drawLine(x, y, x, y+height); 
   // Bottom
-  drawLine(x, y+height, x+width, y+height);
+  GRAPHICS.drawLine(x, y+height, x+width, y+height);
   // Right
-  drawLine(x+width, y, x+width, y+height);
+  GRAPHICS.drawLine(x+width, y, x+width, y+height);
 }
 
-function drawImage(image, x, y, width, height){
-  let context = getContext();
+GRAPHICS.drawImage = function(image, x, y, width, height){
+  let context = GRAPHICS.getContext();
   context.drawImage(image, x, y, width, height)
 }
 
-function drawText(text, x, y){
-  let context = getContext()
+GRAPHICS.drawText = function(text, x, y){
+  let context = GRAPHICS.getContext()
   context.font = "30px Arial";
   context.fillText(text, x, y);
 }
 
-function loadImage(url){
+GRAPHICS.loadImage = function(url){
   let element = new Image();
   element.src = url;
   return element;
@@ -95,8 +93,8 @@ spriteManager.NewSpriteManager = function(sheet, width, height, columns, rows, f
   };
   
   mgr.draw = function(posX, posY){
-    var ctx = getContext();
-    var cvs = getCanvas();
+    var ctx = GRAPHICS.getContext();
+    var cvs = GRAPHICS.getCanvas();
     
     var column = parseInt(mgr.index % mgr.rows);
     var row = parseInt(mgr.index / mgr.columns);
@@ -172,7 +170,7 @@ function onMouseUp(evt){
 }
 function onMouseMove(evt)
 {
-  var rect = getCanvas().getBoundingClientRect();
+  var rect = GRAPHICS.getCanvas().getBoundingClientRect();
   _mousePos = {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top
@@ -232,7 +230,7 @@ main.frameDuration = 1000 / main.fps
 main.lag = 0;
 
 main.gameLoop = function(){
-  requestAnimationFrame(main.gameLoop, getCanvas());
+  requestAnimationFrame(main.gameLoop, GRAPHICS.getCanvas());
   
   var current_time = Date.now();
   var elapsed = current_time - main.startTime;
@@ -245,7 +243,7 @@ main.gameLoop = function(){
 }
 
 main.init = function(){
-  initContext();
+  GRAPHICS.init();
   initInput();
 }
 
@@ -329,24 +327,19 @@ var start = {};
 
 start.mouseUp = function(){}
 
-start.update = function(){
-    clearCanvas();
-    this.drawStartButton();
-}
-
 start.drawStartButton = function(){
-    drawBox(100, 100, 100, 100);
-    drawText("Start", 100, 150);
+    GRAPHICS.drawBox(100, 100, 100, 100);
+    GRAPHICS.drawText("Start", 100, 150);
     if(this.isStartButtonSelected()){
-        drawLine(0, 0, 100, 100);
-        drawLine(0, 400, 100, 200);
-        drawLine(400, 0, 200, 100);
-        drawLine(400, 400, 200, 200);
+        GRAPHICS.drawLine(0, 0, 100, 100);
+        GRAPHICS.drawLine(0, 400, 100, 200);
+        GRAPHICS.drawLine(400, 0, 200, 100);
+        GRAPHICS.drawLine(400, 400, 200, 200);
     }
 }
 
 start.update = function(){
-    clearCanvas();
+    GRAPHICS.clearCanvas();
     this.drawStartButton();
 }
 
@@ -392,7 +385,7 @@ game.setup = function(){
 }
 
 game.drawGameScreen = function(){
-  clearCanvas();
+  GRAPHICS.clearCanvas();
   if(game.walker != null){
     game.walker.draw();
   }
@@ -428,7 +421,7 @@ walker.NewWalker = function(){
     size: 50,
     speed: 5
   };
-  var spriteSheet = loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
+  var spriteSheet = GRAPHICS.loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
   wkr.spriteManager = spriteManager.NewSpriteManager(spriteSheet, 16, 32, 10, 10, 6, walker.animations);
   console.log("dasd" + wkr.spriteManager.animations);
   wkr.spriteManager.setAnimation("SOUTH_STAND");
