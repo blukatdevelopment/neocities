@@ -1,16 +1,18 @@
 /*##############################################################################
 # Main
+# Runs before all other scripts
 ##############################################################################*/
 var MAIN = {};
+// Assumes a square screen
 MAIN.SCREEN_MIN = 0;
-MAIN.SCREEN_MAX = 400;
+MAIN.SCREEN_MAX = 500;
 
 MAIN.FPS = 60;
 MAIN.START_TIME = Date.now();
 MAIN.FRAME_DURATION = 1000 / MAIN.FPS
 MAIN.LAG = 0;
 
-MAIN.GAMELoop = function(){
+MAIN.GameLoop = function(){
   requestAnimationFrame(MAIN.GAMELoop, GRAPHICS.getCanvas());
   
   var current_time = Date.now();
@@ -30,7 +32,7 @@ MAIN.init = function(){
 
 MAIN.main = function(){
   this.init();
-  this.GAMELoop();
+  this.GameLoop();
 }
 
 MAIN.main();

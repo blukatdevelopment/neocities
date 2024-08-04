@@ -3,7 +3,7 @@
 ##############################################################################*/
 var SCENE = {};
 
-// Config
+// Configured for the current project
 SCENE.SCENES = {
   START: "start",
   GAME: "GAME",
@@ -27,13 +27,6 @@ SCENE.mouseUp = function(evt){
   }
 }
 
-SCENE.mouseDown = function(evt){
-  var activeScene = this.getActiveScene();
-  if(activeScene != null){
-    activeScene.mouseDown(evt);
-  }
-}
-
 SCENE.update = function(){
   var activeScene = SCENE.getActiveScene();
   if(activeScene != null){
@@ -41,6 +34,8 @@ SCENE.update = function(){
   }
 }
 
+// Returns iScene
+// This is hardcoded for the current project
 SCENE.getActiveScene = function(){
   switch(SCENE._activeScene){
     case SCENE.SCENES.GAME:
@@ -51,6 +46,7 @@ SCENE.getActiveScene = function(){
       return null;
 }
 
+// accepts iScene
 SCENE.setActiveScene = function(scene){
   SCENE._activeScene = scene;
 }

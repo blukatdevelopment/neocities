@@ -1,6 +1,6 @@
 /*##############################################################################
 # colliders
-# Manages collection of BoxColliders with X, Y, and size
+# Manages a collection of colliders
 ##############################################################################*/
 
 var COLLISION = {};

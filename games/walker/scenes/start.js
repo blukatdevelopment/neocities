@@ -10,9 +10,9 @@ START.drawStartButton = function(){
     GRAPHICS.drawText("Start", 100, 150);
     if(this.isStartButtonSelected()){
         GRAPHICS.drawLine(0, 0, 100, 100);
-        GRAPHICS.drawLine(0, 400, 100, 200);
-        GRAPHICS.drawLine(400, 0, 200, 100);
-        GRAPHICS.drawLine(400, 400, 200, 200);
+        GRAPHICS.drawLine(0, 500, 100, 200);
+        GRAPHICS.drawLine(500, 0, 200, 100);
+        GRAPHICS.drawLine(500, 500, 200, 200);
     }
 }
 
