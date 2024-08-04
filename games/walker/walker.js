@@ -245,8 +245,8 @@ MAIN.START_TIME = Date.now();
 MAIN.FRAME_DURATION = 1000 / MAIN.FPS
 MAIN.LAG = 0;
 
-MAIN.gameLoop = function(){
-  requestAnimationFrame(MAIN.gameLoop, GRAPHICS.getCanvas());
+MAIN.GAMELoop = function(){
+  requestAnimationFrame(MAIN.GAMELoop, GRAPHICS.getCanvas());
   
   var current_time = Date.now();
   var elapsed = current_time - MAIN.START_TIME;
@@ -265,14 +265,14 @@ MAIN.init = function(){
 
 MAIN.main = function(){
   this.init();
-  this.gameLoop();
+  this.GAMELoop();
 }
 
 MAIN.main();
 
 /*##############################################################################
 #
-#                       Section: Game code
+#                       Section: GAME code
 #
 ##############################################################################*/
 
@@ -301,7 +301,7 @@ var SCENE = {};
 // Config
 SCENE.SCENES = {
   START: "start",
-  GAME: "game",
+  GAME: "GAME",
   END: "lose",
   NEXT: "next"
 };
@@ -339,9 +339,9 @@ SCENE.update = function(){
 SCENE.getActiveScene = function(){
   switch(SCENE._activeScene){
     case SCENE.SCENES.GAME:
-      return game;
+      return GAME;
     case SCENE.SCENES.START:
-      return start;
+      return START;
   }
       return null;
 }
@@ -353,11 +353,11 @@ SCENE.setActiveScene = function(scene){
 /*##############################################################################
 # Scene: Start Menu
 ##############################################################################*/
-var start = {};
+var START = {};
 
-start.mouseUp = function(){}
+START.mouseUp = function(){}
 
-start.drawStartButton = function(){
+START.drawStartButton = function(){
     GRAPHICS.drawBox(100, 100, 100, 100);
     GRAPHICS.drawText("Start", 100, 150);
     if(this.isStartButtonSelected()){
@@ -368,12 +368,12 @@ start.drawStartButton = function(){
     }
 }
 
-start.update = function(){
+START.update = function(){
     GRAPHICS.clearCanvas();
     this.drawStartButton();
 }
 
-start.isStartButtonSelected = function(){
+START.isStartButtonSelected = function(){
     var boxTopLeft = { x: 100, y: 100 };
     var boxBottomRight = { x: 200, y: 200};
     var point = INPUT.getMousePosition();
@@ -386,7 +386,7 @@ start.isStartButtonSelected = function(){
     return UTILITY.isInsideBox(boxTopLeft, boxBottomRight, point);
 }
 
-start.mouseDown = function(){
+START.mouseDown = function(){
     if(this.isStartButtonSelected()){
         SCENE.setActiveScene(SCENE.SCENES.GAME);
     }
@@ -397,66 +397,64 @@ start.mouseDown = function(){
 # Scene: Walker demo
 ##############################################################################*/
 
+var GAME = {};
+GAME.isSetup = false;
+GAME.walker = null;
+GAME.id = 0;
 
-var game = {};
-game.isSetup = false;
-game.walker = null;
-
-game.update = function(){
-  if(!game.isSetup){
-    game.setup();
+GAME.update = function(){
+  if(!GAME.isSetup){
+    GAME.setup();
   }
-  if(game.walker != null){
-    game.walker.update();
+  if(GAME.walker != null){
+    GAME.walker.update();
   }
-  this.drawGameScreen();
+  this.drawGAMEScreen();
 }
 
-game.setup = function(){
-  game.walker = walker.NewWalker();
-  game.isSetup = true;
+GAME.setup = function(){
+  GAME.walker = Actor.new();
+  GAME.isSetup = true;
 }
 
-game.drawGameScreen = function(){
+GAME.drawGAMEScreen = function(){
   GRAPHICS.clearCanvas();
-  if(game.walker != null){
-    game.walker.draw();
+  if(GAME.walker != null){
+    GAME.walker.draw();
   }
 }
 
-game.mouseDown = function(evt){}
+GAME.mouseDown = function(evt){}
 
-game.mouseUp = function(evt){}
+GAME.mouseUp = function(evt){}
 
-game.id = 0;
-
-game.getNextId = function(){
-  var next = game.id;
-  game.id += 1;
+GAME.getNextId = function(){
+  var next = GAME.id;
+  GAME.id += 1;
   return next;
 }
 
 
 /*##############################################################################
-# Walker class
+# Actor class
+# Todo: use real classes here if it makes sense
 ##############################################################################*/
-var walker = {};
+var Actor = {};
 
-walker.animations = {
+Actor.ANIMATIONS = {
   "SOUTH_STAND": [0, 7]
 };
 
-walker.NewWalker = function(){
+Actor.new = function(){
   var wkr = {
-    id: game.getNextId(),
+    id: GAME.getNextId(),
     x: 100,
     y: 100,
     size: 50,
     speed: 5
   };
   var spriteSheet = GRAPHICS.loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
-  wkr.spriteManager = SPRITES.Manager.new(spriteSheet, 16, 32, 10, 10, 6, walker.animations);
-  //console.log("dasd" + wkr.spriteManager.animations);
+  wkr.spriteManager = SPRITES.Manager.new(spriteSheet, 16, 32, 10, 10, 6, Actor.ANIMATIONS);
   wkr.spriteManager.setAnimation("SOUTH_STAND");
   wkr.update = function(){
     wkr.move();
@@ -482,8 +480,6 @@ walker.NewWalker = function(){
   }
   
   wkr.draw = function(){
-    //drawBox(walker.x, walker.y, walker.size, walker.size);
-    //drawImage(image, walker.x, walker.y, walker.size, walker.size);
     wkr.spriteManager.draw(wkr.x, wkr.y);
   }
   return wkr;
