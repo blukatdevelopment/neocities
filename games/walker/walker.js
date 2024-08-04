@@ -76,10 +76,11 @@ GRAPHICS.loadImage = function(url){
 /*##############################################################################
 # Sprites
 ##############################################################################*/
-var spriteManager = {};
+var SPRITES = {};
+SPRITES.Manager = {};
 
-
-spriteManager.NewSpriteManager = function(sheet, width, height, columns, rows, frameRate, animations){
+// TODO: use real classes if that makes sense
+SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, animations){
   var mgr = {
     sheet: sheet,
     width: width,
@@ -178,10 +179,10 @@ INPUT.key = function(which){
 }
 
 INPUT.onMouseDown = function(evt){
-  scene.mouseDown(evt);
+  SCENE.mouseDown(evt);
 }
 INPUT.onMouseUp = function(evt){
-  scene.mouseUp(evt);
+  SCENE.mouseUp(evt);
 }
 INPUT.onMouseMove = function(evt)
 {
@@ -220,12 +221,12 @@ INPUT.initInput = function(){
 /*##############################################################################
 # Util
 ##############################################################################*/
-
-function randRange(min, max){
+var UTILITY = {}
+UTILITY.randRange = function(min, max){
   return Math.random() * (max - min) + min;
 }
 
-function isInsideBox(topLeft, bottomRight, point){
+UTILITY.isInsideBox = function(topLeft, bottomRight, point){
   var inX = point.x < bottomRight.x && point.x > topLeft.x;
   var inY = point.y < bottomRight.y && point.y > topLeft.y;
   return inX && inY;  
@@ -235,39 +236,39 @@ function isInsideBox(topLeft, bottomRight, point){
 /*##############################################################################
 # Main
 ##############################################################################*/
-var main = {};
-main.SCREEN_MIN = 0;
-main.SCREEN_MAX = 400;
+var MAIN = {};
+MAIN.SCREEN_MIN = 0;
+MAIN.SCREEN_MAX = 400;
 
-main.fps = 60;
-main.startTime = Date.now();
-main.frameDuration = 1000 / main.fps
-main.lag = 0;
+MAIN.FPS = 60;
+MAIN.START_TIME = Date.now();
+MAIN.FRAME_DURATION = 1000 / MAIN.FPS
+MAIN.LAG = 0;
 
-main.gameLoop = function(){
-  requestAnimationFrame(main.gameLoop, GRAPHICS.getCanvas());
+MAIN.gameLoop = function(){
+  requestAnimationFrame(MAIN.gameLoop, GRAPHICS.getCanvas());
   
   var current_time = Date.now();
-  var elapsed = current_time - main.startTime;
-  main.startTime = current_time;
-  main.lag += elapsed;
-  while(main.lag >= main.frameDuration){
-    scene.update();
-    main.lag -= main.frameDuration;
+  var elapsed = current_time - MAIN.START_TIME;
+  MAIN.START_TIME = current_time;
+  MAIN.LAG += elapsed;
+  while(MAIN.LAG >= MAIN.FRAME_DURATION){
+    SCENE.update();
+    MAIN.LAG -= MAIN.FRAME_DURATION;
   }
 }
 
-main.init = function(){
+MAIN.init = function(){
   GRAPHICS.init();
   INPUT.initInput();
 }
 
-main.main = function(){
+MAIN.main = function(){
   this.init();
   this.gameLoop();
 }
 
-main.main();
+MAIN.main();
 
 /*##############################################################################
 #
@@ -277,12 +278,17 @@ main.main();
 
 /*##############################################################################
 # SFX
+# TODO: Add an init which loads all sounds at startup
 ##############################################################################*/
-const SFX_PEW = "https://github.com/blukatdevelopment/neocities/raw/main/assets/pew.mp3",
-SFX_IMPACT = "https://github.com/blukatdevelopment/neocities/raw/main/assets/impact.mp3",
-SFX_EXPLOSION = "https://github.com/blukatdevelopment/neocities/raw/main/assets/explosion.mp3";
+var SOUND = {}
 
-function playSound(file){
+SOUND.EFFECTS = {
+  PEW: "https://github.com/blukatdevelopment/neocities/raw/main/assets/pew.mp3",
+  IMPACT: "https://github.com/blukatdevelopment/neocities/raw/main/assets/impact.mp3",
+  EXPLOSION: "https://github.com/blukatdevelopment/neocities/raw/main/assets/explosion.mp3"
+};
+
+SOUND.playSound = function(file){
   var audio = new Audio(file);
   audio.play();
 }
@@ -290,49 +296,58 @@ function playSound(file){
 /*##############################################################################
 # Scene management
 ##############################################################################*/
-var scene = {};
-scene.START_SCENE = "start",
-scene.GAME_SCENE = "game",
-scene.END_SCENE = "lose",
-scene.NEXT_SCENE = "next";
-scene.activeScene = scene.START_SCENE;
+var SCENE = {};
 
-scene.mouseDown = function(evt){
-  var scene = this.getActiveScene();
-  if(scene != null){
-    scene.mouseDown(evt);
+// Config
+SCENE.SCENES = {
+  START: "start",
+  GAME: "game",
+  END: "lose",
+  NEXT: "next"
+};
+
+SCENE._activeScene = SCENE.SCENES.START;
+
+SCENE.mouseDown = function(evt){
+  var activeScene = this.getActiveScene();
+  if(activeScene != null){
+    activeScene.mouseDown(evt);
   }
 }
 
-scene.mouseUp = function(evt){
-  var scene = this.getActiveScene();
-  if(scene != null){
-    scene.mouseUp(evt);
+SCENE.mouseUp = function(evt){
+  var activeScene = this.getActiveScene();
+  if(activeScene != null){
+    activeScene.mouseUp(evt);
   }
 }
 
-scene.mouseDown = function(evt){
-  var scene = this.getActiveScene();
-  if(scene != null){
-    scene.mouseDown(evt);
+SCENE.mouseDown = function(evt){
+  var activeScene = this.getActiveScene();
+  if(activeScene != null){
+    activeScene.mouseDown(evt);
   }
 }
 
-scene.update = function(){
-  var scene = this.getActiveScene();
-  if(scene != null){
-    scene.update();
+SCENE.update = function(){
+  var activeScene = SCENE.getActiveScene();
+  if(activeScene != null){
+    activeScene.update();
   }
 }
 
-scene.getActiveScene = function(){
-  switch(this.activeScene){
-    case this.GAME_SCENE:
+SCENE.getActiveScene = function(){
+  switch(SCENE._activeScene){
+    case SCENE.SCENES.GAME:
       return game;
-    case this.START_SCENE:
+    case SCENE.SCENES.START:
       return start;
   }
       return null;
+}
+
+SCENE.setActiveScene = function(scene){
+  SCENE._activeScene = scene;
 }
 
 /*##############################################################################
@@ -368,12 +383,12 @@ start.isStartButtonSelected = function(){
     if(typeof point === "undefined"){
         return false;
     }
-    return isInsideBox(boxTopLeft, boxBottomRight, point);
+    return UTILITY.isInsideBox(boxTopLeft, boxBottomRight, point);
 }
 
 start.mouseDown = function(){
     if(this.isStartButtonSelected()){
-        scene.activeScene = scene.GAME_SCENE;
+        SCENE.setActiveScene(SCENE.SCENES.GAME);
     }
 }
 
@@ -440,7 +455,7 @@ walker.NewWalker = function(){
     speed: 5
   };
   var spriteSheet = GRAPHICS.loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
-  wkr.spriteManager = spriteManager.NewSpriteManager(spriteSheet, 16, 32, 10, 10, 6, walker.animations);
+  wkr.spriteManager = SPRITES.Manager.new(spriteSheet, 16, 32, 10, 10, 6, walker.animations);
   //console.log("dasd" + wkr.spriteManager.animations);
   wkr.spriteManager.setAnimation("SOUTH_STAND");
   wkr.update = function(){
@@ -480,8 +495,10 @@ walker.NewWalker = function(){
 # Manages collection of BoxColliders with X, Y, and size
 ##############################################################################*/
 
-var collision = {};
+var COLLISION = {};
 
-collision.NewBoxCollider = function(){
+// TODO: use real classes if that makes sense
+COLLISION.BoxCollider = {};
+COLLISION.BoxCollider.new = function(){
   
 }
