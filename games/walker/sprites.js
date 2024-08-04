@@ -15,8 +15,11 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
     index: 1,
     frameRate: frameRate,
     animations: animations,
-    animation: null
+    animation: null,
+    lastUpdate: Date.now(),
+    frameLag: 0
   };
+  mgr.frameDuration = 1000 / mgr.frameRate;
   
   mgr.draw = function(posX, posY){
     var ctx = GRAPHICS.getContext();
@@ -39,13 +42,22 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
       mgr.width, // size drawing to canvas
       mgr.height // size drawing to canvas
       );
-    mgr.step();
+    var currentTime = Date.now();
+    var elapsed = currentTime - mgr.lastUpdate;
+    mgr.lastUpdate = currentTime;
+    mgr.frameLag += elapsed;
+    while(mgr.frameLag >= mgr.frameDuration){
+      //console.log("Frame lag:" + mgr.frameLag);
+      mgr.step();
+      mgr.frameLag -= mgr.frameDuration;
+    }
     return;
   }
   
   mgr.setAnimation = function(key){
     if(mgr.animations && mgr.animations[key]){
       mgr.animation = mgr.animations[key];
+      mgr.lastUpdate = Date.now();
     }
     else{
       console.log("Could not find animation: " + key);

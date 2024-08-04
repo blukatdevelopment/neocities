@@ -17,7 +17,7 @@ Actor.new = function(){
     speed: 5
   };
   var spriteSheet = GRAPHICS.loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
-  wkr.spriteManager = SPRITES.Manager.new(spriteSheet, 16, 32, 10, 10, 6, Actor.ANIMATIONS);
+  wkr.spriteManager = SPRITES.Manager.new(spriteSheet, 16, 32, 10, 10, 12, Actor.ANIMATIONS);
   wkr.spriteManager.setAnimation("SOUTH_STAND");
   wkr.update = function(){
     wkr.move();
