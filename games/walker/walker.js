@@ -140,66 +140,81 @@ spriteManager.NewSpriteManager = function(sheet, width, height, columns, rows, f
 /*##############################################################################
 # Input
 ##############################################################################*/
-var _mousePos;
-function getMousePosition(){
-  return _mousePos;
-}
+var INPUT = {};
+INPUT._mousePos = null;
 
-var K_W = 87,
-K_A = 65,
-K_S = 83,
-K_D = 68,
-K_SPACE = 32;
-var KEYS_USED = [K_W, K_A, K_S, K_D, K_SPACE];
-var input = {
-  keys: {}
+
+// Define all possible keys
+INPUT.KEYS = {
+  K_W: 87,
+  K_A: 65,
+  K_S: 83,
+  K_D: 68,
+  K_SPACE: 32
 };
 
-function key(which){
-  if(!(which in input.keys)){
-    return false;
-  }
-  return input.keys[which];
+// Configure which keys will be used
+var KEYS_USED = [
+  INPUT.KEYS.K_W, 
+  INPUT.KEYS.K_A, 
+  INPUT.KEYS.K_S, 
+  INPUT.KEYS.K_D, 
+  INPUT.KEYS.K_SPACE
+];
+
+// Key state
+INPUT.activeKeys = {};
+
+
+INPUT.getMousePosition = function(){
+  return INPUT._mousePos;
 }
 
-function onMouseDown(evt){
+INPUT.key = function(which){
+  if(!(which in INPUT.activeKeys)){
+    return false;
+  }
+  return INPUT.activeKeys[which];
+}
+
+INPUT.onMouseDown = function(evt){
   scene.mouseDown(evt);
 }
-function onMouseUp(evt){
+INPUT.onMouseUp = function(evt){
   scene.mouseUp(evt);
 }
-function onMouseMove(evt)
+INPUT.onMouseMove = function(evt)
 {
   var rect = GRAPHICS.getCanvas().getBoundingClientRect();
-  _mousePos = {
+  INPUT._mousePos = {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top
   };
 }
-function onMouseOut(evt){}
-function onKeyDown(evt){
-  if(evt.which in input.keys){
-    input.keys[evt.which] = true;
+INPUT.onMouseOut = function(evt){}
+INPUT.onKeyDown = function(evt){
+  if(evt.which in INPUT.activeKeys){
+    INPUT.activeKeys[evt.which] = true;
   }
 }
-function onKeyUp(evt){
-  if(evt.which in input.keys){
-    input.keys[evt.which] = false;
+INPUT.onKeyUp = function(evt){
+  if(evt.which in INPUT.activeKeys){
+    INPUT.activeKeys[evt.which] = false;
   }
 }
 
-function initInput(){
+INPUT.initInput = function(){
   for(let i in KEYS_USED){
     let key = KEYS_USED[i];
-    input.keys[key] = false;
+    INPUT.activeKeys[key] = false;
   }
-  var canvas = document.getElementById("mainCanvas");
-  canvas.addEventListener("mousedown", onMouseDown);
-  canvas.addEventListener("mouseup", onMouseUp);
-  canvas.addEventListener("mousemove", onMouseMove);
-  canvas.addEventListener("mouseout", onMouseOut);
-  window.addEventListener('keydown', this.onKeyDown, false);
-  window.addEventListener('keyup', this.onKeyUp, false);
+  var canvas = GRAPHICS.getCanvas();
+  canvas.addEventListener("mousedown", INPUT.onMouseDown);
+  canvas.addEventListener("mouseup", INPUT.onMouseUp);
+  canvas.addEventListener("mousemove", INPUT.onMouseMove);
+  canvas.addEventListener("mouseout", INPUT.onMouseOut);
+  window.addEventListener('keydown', INPUT.onKeyDown, false);
+  window.addEventListener('keyup', INPUT.onKeyUp, false);
 }
 
 /*##############################################################################
@@ -244,7 +259,7 @@ main.gameLoop = function(){
 
 main.init = function(){
   GRAPHICS.init();
-  initInput();
+  INPUT.initInput();
 }
 
 main.main = function(){
@@ -346,7 +361,10 @@ start.update = function(){
 start.isStartButtonSelected = function(){
     var boxTopLeft = { x: 100, y: 100 };
     var boxBottomRight = { x: 200, y: 200};
-    var point = getMousePosition();
+    var point = INPUT.getMousePosition();
+    if(!point){
+      return false;
+    }
     if(typeof point === "undefined"){
         return false;
     }
@@ -423,7 +441,7 @@ walker.NewWalker = function(){
   };
   var spriteSheet = GRAPHICS.loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
   wkr.spriteManager = spriteManager.NewSpriteManager(spriteSheet, 16, 32, 10, 10, 6, walker.animations);
-  console.log("dasd" + wkr.spriteManager.animations);
+  //console.log("dasd" + wkr.spriteManager.animations);
   wkr.spriteManager.setAnimation("SOUTH_STAND");
   wkr.update = function(){
     wkr.move();
@@ -432,16 +450,16 @@ walker.NewWalker = function(){
   wkr.move = function(){
     var x_movement = 0;
     var y_movement = 0;
-    if(key(K_W)){
+    if(INPUT.key(INPUT.KEYS.K_W)){
       y_movement -= wkr.speed;
     }
-    if(key(K_S)){
+    if(INPUT.key(INPUT.KEYS.K_S)){
       y_movement += wkr.speed;
     }
-    if(key(K_A)){
+    if(INPUT.key(INPUT.KEYS.K_A)){
       x_movement -= wkr.speed;
     }
-    if(key(K_D)){
+    if(INPUT.key(INPUT.KEYS.K_D)){
       x_movement += wkr.speed;
     }
     wkr.x += x_movement;
