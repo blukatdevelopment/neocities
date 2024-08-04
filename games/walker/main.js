@@ -13,7 +13,7 @@ MAIN.FRAME_DURATION = 1000 / MAIN.FPS
 MAIN.LAG = 0;
 
 MAIN.GameLoop = function(){
-  requestAnimationFrame(MAIN.GAMELoop, GRAPHICS.getCanvas());
+  requestAnimationFrame(MAIN.GameLoop, GRAPHICS.getCanvas());
   
   var current_time = Date.now();
   var elapsed = current_time - MAIN.START_TIME;
