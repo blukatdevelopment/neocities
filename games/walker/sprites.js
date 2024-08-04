@@ -2,10 +2,9 @@
 # Sprites
 ##############################################################################*/
 var SPRITES = {};
-SPRITES.Manager = {};
 
-// TODO: use real classes if that makes sense
-SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, animations){
+SPRITES.Manager = {};
+SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, animations, handler){
   var mgr = {
     sheet: sheet,
     width: width,
@@ -16,8 +15,12 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
     frameRate: frameRate,
     animations: animations,
     animation: null,
+    animationName: null,
     lastUpdate: Date.now(),
-    frameLag: 0
+    frameLag: 0,
+    events: [],
+    state: {},
+    eventHandler: handler
   };
   mgr.frameDuration = 1000 / mgr.frameRate;
   
@@ -51,17 +54,26 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
       mgr.step();
       mgr.frameLag -= mgr.frameDuration;
     }
+    if(mgr.eventHandler){
+      mgr.eventHandler(mgr.events, mgr.state, mgr);
+      mgr.events = [];
+    }
     return;
   }
   
   mgr.setAnimation = function(key){
     if(mgr.animations && mgr.animations[key]){
       mgr.animation = mgr.animations[key];
+      mgr.animationName = key;
       mgr.lastUpdate = Date.now();
     }
     else{
       console.log("Could not find animation: " + key);
     }
+  }
+
+  mgr.activeAnimation = function(){
+    return mgr.animationName;
   }
   
   mgr.step = function(){
@@ -71,6 +83,11 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
         mgr.index = mgr.animation[0];
       }
     }
+  }
+
+  // Event should be a string
+  mgr.event = function(event){
+    mgr.events.push(event);
   }
   return mgr;
 }
