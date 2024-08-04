@@ -76,6 +76,70 @@ function loadImage(url){
 }
 
 /*##############################################################################
+# Sprites
+##############################################################################*/
+var spriteManager = {};
+
+
+spriteManager.NewSpriteManager = function(sheet, width, height, columns, rows, frameRate, animations){
+  var mgr = {
+    sheet: sheet,
+    width: width,
+    height: height,
+    columns: columns,
+    rows: rows,
+    index: 1,
+    frameRate: frameRate,
+    animations: animations,
+    animation: null
+  };
+  
+  mgr.draw = function(posX, posY){
+    var ctx = getContext();
+    var cvs = getCanvas();
+    
+    var column = parseInt(mgr.index % mgr.rows);
+    var row = parseInt(mgr.index / mgr.columns);
+    //console.log("column "+ column + " row " + row);
+    var offX = column * mgr.width;
+    var offY = row * mgr.height;
+    //console.log("offX: " + offX + " offY" + offY);
+    ctx.drawImage(
+      sheet, // Image
+      offX, // X offset into image
+      offY, // Y offset into image
+      mgr.width, // sprite width
+      mgr.height, // sprite height
+      posX, // X offset drawing to canvas
+      posY, // Y offset drawing to canvas
+      mgr.width, // size drawing to canvas
+      mgr.height // size drawing to canvas
+      );
+    mgr.step();
+    return;
+  }
+  
+  mgr.setAnimation = function(key){
+    if(mgr.animations && mgr.animations[key]){
+      mgr.animation = mgr.animations[key];
+    }
+    else{
+      console.log("Could not find animation: " + key);
+    }
+  }
+  
+  mgr.step = function(){
+    if(mgr.animation){
+      mgr.index++;
+      if(mgr.index > mgr.animation[1]){
+        mgr.index = mgr.animation[0];
+      }
+    }
+  }
+  return mgr;
+}
+
+/*##############################################################################
 # Input
 ##############################################################################*/
 var _mousePos;
@@ -166,7 +230,6 @@ main.fps = 60;
 main.startTime = Date.now();
 main.frameDuration = 1000 / main.fps
 main.lag = 0;
-console.log("Frame duration " + main.frameDuration);
 
 main.gameLoop = function(){
   requestAnimationFrame(main.gameLoop, getCanvas());
@@ -353,42 +416,61 @@ game.getNextId = function(){
 ##############################################################################*/
 var walker = {};
 
+walker.animations = {
+  "SOUTH_STAND": [0, 7]
+};
+
 walker.NewWalker = function(){
-  var walker = {
+  var wkr = {
     id: game.getNextId(),
     x: 100,
     y: 100,
     size: 50,
-    speed: 5,
-    image: loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/assets/fire_dress.png")
+    speed: 5
   };
-  
-  walker.update = function(){
-    walker.move();
+  var spriteSheet = loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
+  wkr.spriteManager = spriteManager.NewSpriteManager(spriteSheet, 16, 32, 10, 10, 6, walker.animations);
+  console.log("dasd" + wkr.spriteManager.animations);
+  wkr.spriteManager.setAnimation("SOUTH_STAND");
+  wkr.update = function(){
+    wkr.move();
   }
   
-  walker.move = function(){
+  wkr.move = function(){
     var x_movement = 0;
     var y_movement = 0;
     if(key(K_W)){
-      y_movement -= walker.speed;
+      y_movement -= wkr.speed;
     }
     if(key(K_S)){
-      y_movement += walker.speed;
+      y_movement += wkr.speed;
     }
     if(key(K_A)){
-      x_movement -= walker.speed;
+      x_movement -= wkr.speed;
     }
     if(key(K_D)){
-      x_movement += walker.speed;
+      x_movement += wkr.speed;
     }
-    walker.x += x_movement;
-    walker.y += y_movement;
+    wkr.x += x_movement;
+    wkr.y += y_movement;
   }
   
-  walker.draw = function(){
+  wkr.draw = function(){
     //drawBox(walker.x, walker.y, walker.size, walker.size);
-    drawImage(walker.image, walker.x, walker.y, walker.size, walker.size);
+    //drawImage(image, walker.x, walker.y, walker.size, walker.size);
+    wkr.spriteManager.draw(wkr.x, wkr.y);
   }
-  return walker;
+  return wkr;
+}
+
+
+/*##############################################################################
+# colliders
+# Manages collection of BoxColliders with X, Y, and size
+##############################################################################*/
+
+var collision = {};
+
+collision.NewBoxCollider = function(){
+  
 }
