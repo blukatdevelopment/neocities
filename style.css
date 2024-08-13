@@ -34,3 +34,28 @@ body {
   flex-direction: column;
   align-items: left; 
 }
+
+.collapsible {
+  background-color: #660909;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 650px;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 24px;
+}
+
+.active, .collapsible:hover {
+  background-color: red;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  background-color: #e3d5b6;
+  overflow: hidden;
+  width: 650px;
+  background-color: #f1f1f1;
+}

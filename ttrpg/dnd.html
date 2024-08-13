@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Edition</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script >
+      // Auto-populate header and footer
+      $(function(){
+        $("#Header").load("https://blukat.neocities.org/header.html");
+        $("#Footer").load("https://blukat.neocities.org/footer.html");
+        
+        // Provides collapsisible functionality
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+        console.log(coll);
+        for (i = 0; i < coll.length; i++) {
+          console.log(coll[i]);
+          coll[i].addEventListener("click", function() {
+            console.log("Click");
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+              content.style.display = "none";
+            } else {
+              content.style.display = "block";
+            }
+          });
+        }
+      });
+    </script>
+  </head>
+
+
+  <body>
+    <div id="Header"></div>
+    <h2>Unchained Worlds: Fantasy</h2>
+    <div id="Body", style="display: flex; flex-flow: column;">
+      <button type="button" class="collapsible">Core Rules</button>
+      <div class="content">
+        <h3>Keeper and Player</h3>
+        <p>The keeper controls the world and runs all non-player characters(NPCs). Each player controls one player character(PC) called a delver which is part of a party of delvers. The keeper retains the right to modify, add, remove, or ignore any rule in this document.</p>
+        <h3>Checks</h3>
+        <p>A <strong>check</strong> sonsists of rolling a D20 to meet or beat a target number and accomplish a task. If a check is <strong>opposed</strong>, the opposer rolls a D20 as well and the highest wins. A <strong>save</strong> is just a check made to prevent something from happening, such as being grappled.</p>
+        <h3>Luck Dice</h3>
+        <p>Every player gets 3 luck dice per session. They do not stack. A player may expend one or more luck dice to use them. A luck die can be added or subtracted from any other die roll. If the keeper rolls on a loot table, for instance, luck dice can be added to shift the result.  </p>
+        <h3>Hearts</h3>
+        <p>A delver loses hearts as they take damage, and they must make a death save if an attack leaves them below 1 heart. A delver's class decides their maximum hearts.</p>
+        <h3>Death Save</h3>
+        <p>Roll a D6. If you get a 6 or higher, you defy death.</p>
+        <h3>Inventory</h3>
+        <p>Use plausibility to determine what you can carry.</p>
+        <h3>Skills</h3>
+        <p>A skill is a domain of practical or theoretical knowledge. If you have proficiency in a skill, you gain a +D6 bonus to checks using it. If you have expertise in the skill, that bonus becomes a +2d6. Skills are flexible. While a skill in swords might help you attack with them, it might also help you in smithing them.</p>
+      </div>
+
+      <button type="button" class="collapsible">Combat</button>
+      <div class="content">
+        <h3>Initiative</h3>
+        <p>If it's obvious that one side goes first, they do. Otherwise, each side of the conflict rolls a D6 and the highest goes first. When it's the party's turn, each delver can take their turn. Order can be shifted by player preference, but defaults to going around the table in a clock-wise manner.</p>
+        <h3>Attacks</h3>
+        <p>To make an attack, roll a D20 against the target, adding any relevant skill bonus. The target rolls a D20 to resist your attack. If you beat the target's roll, you deal damage. If you fail an attack and the target can counter-attack(ie you are sword-fighting or dueling with bows), they hit you and deal damage. On a tie, both sides hit(if possible). </p>
+        <h3>Multi-attacks</h3>
+        <p>To make a multi-attack, make a normal attack and roll an extra D20 for the second attack. Roll all bonuses once and apply to both attacks. These are both opposed by your target, who can only counter-attack if both your attacks fail.</p>
+        <h3>Damage</h3>
+        <p>Most damage comes in multiples of D6. Unarmed attacks deal 2 damage. Some magic weapons may give a flat bonus, such as a +1 sword.</p>
+        <h3>Armor</h3>
+        <p>Armor reduces incoming damage by the <strong>armor value(AV)</strong> of the piece of armor. The <strong>durability value(DV)</strong> is the total number of hits a piece of armor can take before it breaks.</p>
+      </div>
+      
+      <button type="button" class="collapsible">Progression</button>
+      <div class="content">
+        <h3>XP</h3>
+        <p>Experience Points(XP) are a measure of progression. When earned, they are divided equally among all members of the party. There are a few ways to gain XP:
+          <br>- 1XP per heart of vanquished enemies
+          <br>- 1XP per coin earned(10 talons = 1 coin)
+          <br>- 100XP per completed quest</p>
+        <h3>Progression</h3>
+        <p>Adventurers begin at level 1 and may choose from one of the classes on this page. They only start with abilities and items mentioned in the class description.
+          <br>- Level 1: 0XP
+          <br>- Level 2: 100XP
+          <br>- Level 3: 200XP</p>
+      </div>
+      <h2>Classes</h2>
+      <button type="button" class="collapsible">Rogue</button>
+      <div class="content">
+        <h2>Level 1</h2>
+        <h3>Hearts</h3>
+        <p>You start with 12 hearts.</p>
+        <h3>Skills</h3>
+        <p><br>- Acrobatics: Jump, climb, balance, swing, carthweel.
+            <br>- Deception: lie, omit, embellish, downplay.
+            <br>- Perception: hear, see, taste, smell, feel.
+            <br>- Stealth: avoid detection.
+            <br>- Daggers
+            <br>- Bows</p>
+        <h3>Starting Gear</h3>
+          <p>- Common clothes
+          <br>- Backpack
+          <br>- 2 Daggers
+          <br>- Bow
+          <br>- 20 Arrows
+          <br>- 50ft Rope
+          <br>- Bag of ballbearings
+          <br>- a purse containing 5 crowns</p>
+        <h3>Grit</h3>
+        <p>You have 3 grit, which recovers on a rest. You gain +2 grit at levels 2(5 grit) and 3(7 grit). You may spend grit on the following:
+          <br>- Dodge: Subtract D6 from incoming damage that could feasibly be dodged.
+          <br>- Sprint: Double your movement without using an action.
+          <br>- Focus: Add an extra D6 bonus to a roll already using a skill.
+          <br>- Hide: Attempt to hide without using an action.</p>
+        <h2>Level 2</h2>
+        <h3>Hearts</h3>
+        <p>You now have 14 hearts.</p>
+        <h3></h3>
+        <p>Choose a specialty. If you chose daggers or bows, your D6 skill bonus for that type of weapon becomes a 2d6 bonus.
+          <br>- Daggers: When dual wielding, you may multi-attack(2). A dagger attack deals extra D6 damage against a surprised target.
+          <br>- Bows: You may use 1 grit to multi-attack(2) with a bow.
+          <br>- Bard Magic: you choose one spell from the mage spell list, which you may cast by consuming 1 grit. Casting requires you to perform music with an instrument. You may change the spell once each rest.</p>
+        <h2>Level 3</h2>
+        <h3>Hearts</h3>
+        <p>You now have 16 hearts.</p>
+        <h3>Skill</h3>
+        <p>Gain one of the following skills:
+          <br>- Sleight of hand: Steal, pick pockets, juggle, pick locks.
+          <br>- Insight: detect social disposition, emotions, context.
+          <br>- Swords
+          <br>- Magic: cast spells, read scrolls, etc.</p>
+        <h3>Expertise</h3>
+        <p>Choose one non-weapon skill that grants a D6 bonus. It now grants a 2d6 bonus.</p>
+      </div>
+      <button type="button" class="collapsible">Warrior</button>
+      <div class="content">
+        <h2>Level 1</h2>
+        <h3>Hearts</h3>
+        <p>You start with d6+15 hearts.</p>
+        <h3>Skills</h3>
+        <p><br>- Athletics: Climb, swim, carry, drag, throw, etc.
+          <br>- Intimidation: Inspire fear, respect, or terror.
+          <br>- Weapons: If you can kill with it, your skill applies.</p>
+        <h3>Starting Gear</h3>
+        <p><br>- Common Clothes
+              <br>- Leather Armor
+              <br>- Backpack
+              <br>- 5 torches
+              <br>- a purse containing 5 crowns
+              Choose one of the following options:
+              <br>- A melee weapon that deals 3d6 damage
+              <br>- Sword and Shield 
+              <br>- One melee weapon that deals 2d6, a bow, and 20 arrows</p>
+        <h3>Grit</h3>
+        <p>You have 3 grit, which recovers on a rest. You gain +2 grit at levels 2(5 grit) and 3(7 grit). You may spend grit on the following:
+          <br>- Ferocious strike: Your next attack has advantage and deals max damage on a hit.
+          <br>- Double Strike: Your next attack is a multi-attack(2).
+          <br>- Second Wind(2 grit): Heal D6 hearts. 
+          <br>- Sentry: Use your action and end your turn. Make up to three attacks at creatures that enter range before your next turn.</p>
+        <h2>Level 2</h2>
+        <h3>Hearts</h3>
+        <p>Your hearts increase by D6.</p>
+        <h3>Specialty</h3>
+        <p>Choose one specialty:
+          <br>- Swords: Skill bonus for swords is now 2d6. You may dual-wield swords to make multi-attacks(2).
+          <br>- Bows: Skill bonus for bows is now 2d6. You may multi-attack(2) with bows if you do not move that turn.
+          <br>- Pugilist: Skill bonus for unarmed attacks is now 2d6. May dual wield fists to make multi-attack(2).
+          <br>- Armorer: Worn armor(not shields) grants an extra +1 armor value and +5 durability value.
+          <br>- Tunnel Fighter: You may attack creatures within 10ft normally even without sight. 
+          <br>- Crossbows: You may reload crossbows as part of firing them. Skill bonus for crossbows is now 2d6.</p>
+        <h2>Level 3</h2>
+        <h3>Hearts</h3>
+        <p>Your hearts increase by D6.</p>
+        <h3>Advanced Technique</h3>
+        <p>Choose one of the following advanced techniques:</p>
+        <h4>Oath</h4>
+        <p>You swear an oath, and so long as you keep the oath, you may smite. To smite when you hit a target with a melee weapon, you spend 2 grit. A smite deals 2d6 extra damage, or 4d6 against a demon, devil, undead, fae, or a humanoid imbued with any form of evil magic. Oaths include:
+          <br>- Vengeance: I will punish all evil I encounter.
+          <br>- Protection: I will defend the powerless without exception.
+          <br>- Redemption: When able, I will offer wicked creatures a chance to redeem themself.
+          <br>- Law: I will enforce the law of the land around me.
+          <br>- Truth: I will neither lie, nor deceive, nor willingly allow others to do so.</p>
+        <h4>Blood Magic</h4>
+        <p>Every rest, you may choose a spell from the mage spell list, spell book, or spell scroll. You may then trace the spell onto your sword with a piece of bone. Every time you slay a creature with your sword, it is charged and may cast its spell once. Charges do not stack and are lost on a rest.</p>
+        <h4>Commander</h4>
+        <p>You may use 1 grit to issue a command to all friendly creatures that can hear you and grant a benefit to them this turn.
+          <br>- Retreat: Double movement when retreating.
+          <br>- Charge!: Advantage on attack rolls.
+          <br>- Fire: Max damage on ranged attacks.
+          <br>- Hold the line: +2 Armor Value.</p>
+      </div>
+      <button type="button" class="collapsible">Mage</button>
+      <div class="content">
+        <h2>Level 1</h2>
+        <h3>Hearts</h3>
+        <p>You start with 11 hearts.</p>
+        <h3>Skills</h3>
+        <p>- Magic: cast spells, read scrolls, etc.
+            <br>- Investigation: research, search, analyze, etc.
+            <br>- Lore: recall history, legends, monster facts.
+            <br>- Persuasion: convince using honest means.</p>
+        <h3>Starting Gear</h3>
+        <p>- Robes
+          <br>- Spellbook
+          <br>- Backpack
+          <br>- Book of lore
+          <br>- Wand
+          <br>- A dagger or staff(D6 damage)
+          <br>- a purse containing 5 crowns</p>
+        <h3>Grimoire Magic</h3>
+        <p>You learn 3 random spells from the mage spell list and add them to your spellbook. Each night, you may meditate to charge your spellbook. You may then cast each spell in the book once. Casting requires both hands, and acannot be performed while wearing physical armor.</p>
+        <h2>Level 2</h2>
+        <h3>Hearts</h3>
+        <p>You now have 12 hearts</p>
+        <h3>Wand Magic</h3>
+        <p>You learn the remaining mage spell list, adding them to your spellbook. At night when charging your spellbook, you may also charge one dedicated wand. You may use your wand 3 times, casting one spell of your choice from your spellbook each time.</p>
+        <h2>Level 3</h2>
+        <h3>Hearts</h3>
+        <p>You now have 13 hearts</p>
+        <h3>Signature Spell</h3>
+        <p>You may wait to select a signature spell later. Take one spell in your spellbook and work with the keeper to improve it. It is now your signature spell, `<your name>'s <spell>`. Copying it to a new spellbook or scroll removes it from yours.</p>
+        <h3>Continued Research</h3>
+        <p>You may now copy spells from books and scrolls using 20 coins worth of ink to do so. This destroys scrolls.</p>
+        <h2>Mage Spell List</h2>
+        <h3>1. Light</h3>
+        <p>Touch an item, which emits 30ft of light for the next hour. May instead make an unarmed attack which blinds the target for an hour on a hit.</p>
+        <h3>2. Magic Missile</h3>
+        <p>Fire 3 spectral darts that always hit and deal 2 damage each.</p>
+        <h3>3. Find Familiar</h3>
+        <p>A spirit takes the form of varmint(has 1 heart, can deal 1 damage) and follows your orders. Within 120ft, you may telepathically access its senses, ignoring your own. Each mage has only one familiar.</p>
+        <h3>4. Firebolt</h3>
+        <p>Make a ranged spell attack(2d6 damage). 2/3 chance the spell is not consumed by casting. (Roll a D6 and get 3 or higher)</p>
+        <h3>5. Invisibility</h3>
+        <p>Touch a creature, turning them invisible for one hour. Ends early if creature attacks or casts a spell.</p>
+        <h3>6. Minor Illusion</h3>
+        <p>Create an illusion which fits in a 5ft cube and lasts one hour. May not move, produce light, or produce sound.</p>
+      </div>
+      <button type="button" class="collapsible">Cleric</button>
+      <div class="content">
+        <h2>Level 1</h2>
+        <h3>Hearts</h3>
+        <p>You start with 12 hearts.</p>
+        <h3>Skills</h3>
+        <p>- Magic: casting spells, reading runes, etc.
+          <br>- Insight: vibe check, notice emotions, pick up context clues.
+          <br>- Medicine: create mmedicine, diagnose injury, apply first aid.</p>
+        <h3>Starting Gear</h3>
+        <p>- Robes
+          <br>- Backpack
+          <br>- Spellbook
+          <br>- Book of lore
+          <br>- Wand
+          <br>- A dagger or staff(D6 damage)
+          <br>- a purse containing 5 crowns</p>
+        <h3>Lay on Hands</h3>
+        <p>You have a pool of 10 healing points to draw from. You may touch a creature to heal 1 or more hearts, consuming as many healing points. If a creature has died in the last hour, you may expend 1 healing to repeat their death save. Healing points restore on a rest.</p>
+        <h3>Bless</h3>
+        <p>You use your action to bless a creature. For the next minute, they add a blessing die (D6) to all their D20 rolls. You may bless one creature at a time. Blessings restore after each rest. You get two blessings per level.</p>
+        <h2>Level 2</h2>
+        <h3>Hearts</h3>
+        <p>You now have 14 hearts</p>
+        <h3>Specialty</h3>
+        <p>You may choose one specialty as a cleric.</p>
+        <h4>Exorcist</h4>
+        <p>You may use one blessing to turn a container of water holy. Holy Water deals 3d6 damage when splashed on a demon, devil, undead, fae, or humanoid imbued with any form of evil magic. Holy water also lifts curses.</p>
+        <h4>Healer</h4>
+        <p>You may use a blessing to heal a creature 2d6 by touch, or D6 within 60ft.</p>
+        <h4>Holy Weapon</h4>
+        <p>You may use a blessing to conjure a flying sword. The sword's attacks have a +2d6 bonus and deal 2d6 damage. The sword lasts one minute, and shares your turn.</p>
+        <h2>Level 3</h2>
+        <h3>Hearts</h3>
+        <p>You now have 16 hearts</p>
+        <h3>Divine spellcasting</h3>
+        <p>You may use one blessing to cast any of the following spells
+
+          <br>- Aid: Heal creeature D6. May heal above max hearts. Must touch.
+          <br>- Dispel magic: End one spell or magic effect. Target may resist with contested magic check.
+          <br>- Inflict wounds: Touch a target, which must save to halve 4d6 damage.
+          <br>- Locate Creature: For one hour, you know the general direction of a creature. May be one specific creature, or a type of creature.
+          <br>- Truth: A creature saves against this spell, or it must answer questions honestly for one hour. If it saves, it is immune from recasts for 24 hours.
+          <br>- Guiding Bolt: Make a ranged attack that deals 3d6 damage. On a hit, target is marked and attacks against it have advantage. Mark ends at start of your next turn.</p>
+      </div>
+      <button type="button" class="collapsible">Namer</button>
+      <div class="content">
+        <h2>Level 1</h2>
+        <h3>Hearts</h3>
+        <p>You start with 12 hearts.</p>
+        <h3>Skills</h3>
+        <p>- Magic: casting spells, reading runes, etc.
+          <br>- Insight: detect social disposition, emotions, context.
+          <br>- Perception: hear, see, taste, smell, feel.</p>
+        <h3>Starting Gear</h3>
+        <p>- Common clothes
+          <br>- Backpack
+          <br>- Dagger
+          <br>- Book of Lore
+          <br>- Lamp
+          <br>- 2 flasks of oil
+          <br>- Tinderbox
+          <br>- a purse containing 5 crowns</p>
+        <h3>Naming Magic</h3>
+        <p>You have 7 soul points which recover on a rest. You gain 3 more at levels 2 and 3. You know 3 random true names, and gain 2 more with each level. You may use soul points to craft and cast spells using names. How to do so:
+            <br>1. Select one or more names (eg "fire")
+            <br>2. Describe a spell using the names(eg "I create a flame that casts 30ft of light for 8 hours")
+            <br>3. Keeper provides a cost. (eg "5 soul points")
+            <br>4. Negotiate to finalize. Costs may vary. (eg "What about 1 hour?", "1 point", "Deal")
+            <br>5. Cast the spell</p>
+        <h2>Level 2</h2>
+        <h3>Hearts</h3>
+        <p>You now have 14 hearts</p>
+        <h3>Blood Magic</h3>
+        <p>You may sacrifice 1 heart to regain D6 soul points. After using blood magic, you may not heal until you finish a rest.</p>
+        <h2>Level 3</h2>
+        <h3>Hearts</h3>
+        <p>You now have 16 hearts</p>
+        <h3>Signature Spell</h3>
+        <p>You may record one spell with a cost given by the keeper. This spell is written as a mage spell onto a scroll or spell book. This spell has a fixed soul point cost determined by the keeper, and may require material components for mages to cast.</p>
+        <h2>List of True Names</h2>
+        <p>This uses a D66 table. For that, roll 2d6. The first D6 is the tens place and the second is the ones place.
+          <br>11. Spirit
+          <br>12. Fire
+          <br>13. Water
+          <br>14. Air
+          <br>15. Earth
+          <br>16. Word
+          <br>21. Create
+          <br>22. Transmute
+          <br>23. Shape
+          <br>24. Remove
+          <br>25. Project
+          <br>26. Curse
+          <br>31. Taste
+          <br>32. Touch
+          <br>33. Smell
+          <br>34. Sight
+          <br>35. Sound
+          <br>36. Thought
+          <br>41. Cold
+          <br>42. Gravity
+          <br>43. Lightning
+          <br>44. Thunder
+          <br>45. Light
+          <br>46. Shadow
+          <br>51. Wand
+          <br>52. Cup
+          <br>53. Sword
+          <br>54. Coin
+          <br>55. Arrow
+          <br>56. Rope
+          <br>61. Grow
+          <br>62. Shrink
+          <br>63. Bind
+          <br>64. Release
+          <br>65. Locate
+          <br>66. Conceal</p>
+      </div>
+      <h2>Gear</h2>
+      <button type="button" class="collapsible">Currency</button>
+      <div class="content">
+        <h3>Talon(T)</h3>
+        <p>A literal talon retrieved from a monster. Valued as commodity for talchemical properties. Used in rural communities.</p>
+        <h3>Crown(C)</h3>
+        <p>Gold coins minted by a long gone empire with a crown on each coin. Used by the empire.</p>
+        <h3>Bar(B)</h3>
+        <p>Gold bars weighing one ounce. Used for larger transactions.</p>
+      </div>
+      <button type="button" class="collapsible">Weapons</button>
+      <div class="content">
+        <p>DMG = damage<br>
+           Crossbows require an action to reload.</p>
+        <h3>Ammo</h3>
+        <p>- 20 arrows 1C
+          <br>- 20 Bolts 1C</p>
+        <h3>2DMG</h3>
+        <p>- Rock (Free of cost)
+          <br>- Sling 1T
+          <br>- Boomerang 1C
+          <br>- Blowdart 10C</p>
+        <h3>D6DMG</h3>
+        <p>- Club 1T
+          <br>- Dart 5T
+          <br>- Javelin 5T
+          <br>- Whip 2C
+          <br>- Hammer 2C
+          <br>- Knife/Dagger 2C
+          <br>- Hand Crossbow 75C</p>
+        <h3>2d6DMG</h3>
+        <p>- Spear 1C
+          <br>- Handaxe 5C
+          <br>- Sword 10C
+          <br>- Mace 10C
+          <br>- Halberd 20C
+          <br>- Shortbow 25C</p>
+        <h3>3d6DMG</h3>
+        <p>- Greatclub 2T
+          <br>- Warhammer 15C
+          <br>- Crossbow 25C
+          <br>- Greataxe 30C
+          <br>- Greatsword 50C
+          <br>- Longbow 50C</p>
+        <h3>4d6DMG</h3>
+        <p>- Heavy Crossbow 50C</p>
+      </div>
+      <button type="button" class="collapsible">Armor</button>
+      <div class="content">
+        <p>AV = armor value = flat damage reduction <br>
+            DV = durability value = number of hits armor can take before breaking</p>
+        <h3>Clothes(0AV)</h3>
+        <p>- Common Clothes 5T
+          <br>- Robes 1C
+          <br>- Fine Clothes 5C
+          <br>- Costume Clothes 5C</p>
+        <h3>Light(1AV)</h3>
+        <p>- Leather 10C 5DV
+          <br>- Studded Leather 45C 10AV</p>
+        <h3>Medium(2AV)</h3>
+        <p>- Shield 10C 10DV
+          <br>- Hide 10C 5DV
+          <br>- Chain 50C 10DV
+          <br>- Breastplate 400C 20DV</p>
+        <h3>Heavy(4AV)</h3>
+        <p>- Half Plate 750C 10DV
+            <br>- Full Plate 1500C 50DV</p>
+      </div>
+      <button type="button" class="collapsible">Light Sources</button>
+      <div class="content">
+        <h3>Light Sources</h3>
+        <p>- Candle 5ft radius, lasts 1 hour, 10/talon
+          <br>- Torch 30ft radius, lasts 1 hour, 10/talon
+          <br>- Oil Flask costs 5 talons
+          <br>- Lamp, 15ft radius, lasts 6 hours, costs 5 talons
+          <br>- Hooded Lantern, 30ft radius, lasts 6 hours, costs 5 crowns
+          <br>- Bullsyeye Lantern, 60ft cone, lasts 6 hours, costs 10 crowns</p>
+      </div>
+      <button type="button" class="collapsible">Miscellaneous</button>
+      <div class="content">
+        <h3>10 Per Talon</h3>
+        <p>- Flask
+          <br>- Soap
+          <br>- Incense</p>
+        <h3>2 Per Talon</h3>
+        <p>- Piton
+          <br>- 10ft Pole
+          <br>- Pouch
+          <br>- Fresh Ration
+          <br>- Whistle
+          <br>- Quill Pen</p>
+        <h3>1 Talon</h3>
+        <p>- 10ft Ladder
+          <br>- Parchment
+          <br>- Iron Spike</p>
+        <h3>2 Talons</h3>
+        <p>- Waterskins
+          <br>- Paper Sheet
+          <br>- Mess Kit
+          <br>- Brazier</p>
+        <h3>5 Talons</h3>
+        <p>- Basket
+          <br>- Bucket
+          <br>- Blanket
+          <br>- Sealing Wax
+          <br>- Iron Ration
+          <br>- Tinderbox</p>
+        <h3>1 Crown</h3>
+        <p>- Bag of Ballbearings
+          <br>- Bell
+          <br>- Block and Tackle
+          <br>- 50ft Rope
+          <br>- Scroll case
+          <br>- Vial
+          <br>- Fishing Kit</p>
+        <h3>2 Crowns</h3>
+        <p>- Backpack
+          <br> Barrel
+          <br> Glass Bottle
+          <br> Grappling Hook
+          <br> Crowbar
+          <br> Manacles
+          <br> Pickaxe
+          <br> Iron Pot
+          <br> 4-Person Tent
+          <br> Shovel</p>
+        <h3>5 Crowns</h3>
+        <p>- Portable Ram
+          <br>- Chest
+          <br>- 10ft Chain
+          <br>- Steel Mirror
+          <br>- Ink Bottle
+          <br>- Perfume vial
+          <br>- Hunting Trap
+          <br>- Scale
+          <br>- Herbalism Kit
+          <br>- Healer's Kit (10 charges, D6 Hearts)</p>
+        <h3>10 Crowns</h3>
+        <p>- Lock
+          <br>- Wand
+          <br>- Forgery Kit
+          <br>- Lockpick
+          </p>
+        <h3>20 Crowns</h3>
+        <p>- Book
+          <br>- Hourglass
+          <br>- Climber's Kit
+          <br>- Disguise Kit
+          </p>
+        <h3>50 Crowns</h3>
+        <p>- Healing Potion(3d6 hearts)
+          <br>- Spellbook
+          <br>- Poisoner's kit</p>
+        <h3>100 Crowns</h3>
+        <p>- Magnifying Glass
+          <br>- Spy Glass
+          <br>- Poison (10 charges, +2d6DMG, lasts 1 minute on weapon)</p>
+      </div>
+    </div>
+
+    <div id="Footer"></div>
+  </body>
+</html>
