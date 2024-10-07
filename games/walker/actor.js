@@ -9,10 +9,10 @@ Actor.ANIMATIONS = {
   SOUTH_STAND: [1, 1],
   EAST_STAND: [2, 2],
   WEST_STAND: [3, 3],
-  NORTH_MOVE: [10, 16],
-  EAST_MOVE: [17, 23],
-  SOUTH_MOVE: [24, 30],
-  WEST_MOVE: [31, 37]
+  NORTH_MOVE: [4, 5],
+  SOUTH_MOVE: [6, 7],
+  EAST_MOVE: [8, 9],
+  WEST_MOVE: [10, 11]
 };
 
 Actor.EVENTS = {
@@ -111,7 +111,7 @@ Actor.new = function(){
     size: 50,
     speed: 5
   };
-  var spriteSheet = GRAPHICS.loadImage("https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
+  var spriteSheet = GRAPHICS.loadImage("file:///home/blukat/localdev/neocities/games/walker/player.png");//"https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
   wkr.spriteManager = SPRITES.Manager.new(
     spriteSheet, // sheet
     16, // width
