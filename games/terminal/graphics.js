@@ -16,6 +16,11 @@ GRAPHICS.getContext = function(){
   return GRAPHICS._context;
 }
 
+GRAPHICS.setFillStyle = function(style){
+  let context = GRAPHICS.getContext();
+  context.fillStyle = style;
+}
+
 GRAPHICS.drawCircle = function(x, y, radius){
   let context = GRAPHICS.getContext();
   context.beginPath();
@@ -49,14 +54,22 @@ GRAPHICS.drawBox = function(x, y, width, height){
   GRAPHICS.drawLine(x+width, y, x+width, y+height);
 }
 
+GRAPHICS.fillBox = function(x, y, width, height){
+  let context = GRAPHICS.getContext();
+  context.fillRect(x, y, x+width, y+height);
+}
+
 GRAPHICS.drawImage = function(image, x, y, width, height){
   let context = GRAPHICS.getContext();
   context.drawImage(image, x, y, width, height)
 }
 
-GRAPHICS.drawText = function(text, x, y){
+GRAPHICS.drawText = function(text, size, x, y){
+  if(size == null){
+    size = 30;
+  }
   let context = GRAPHICS.getContext()
-  context.font = "30px Arial";
+  context.font = ""+ size +"px Arial";
   context.fillText(text, x, y);
 }
 

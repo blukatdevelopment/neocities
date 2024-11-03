@@ -22,6 +22,7 @@ MAIN.GameLoop = function(){
   while(MAIN.LAG >= MAIN.FRAME_DURATION){
     SCENE.update();
     MAIN.LAG -= MAIN.FRAME_DURATION;
+    INPUT.clearEvents();
   }
 }
 
@@ -34,5 +35,11 @@ MAIN.main = function(){
   this.init();
   this.GameLoop();
 }
+
+window.addEventListener('keydown', function(e) {
+  if(e.keyCode == 32 && e.target == document.body) {
+    e.preventDefault();
+  }
+});
 
 MAIN.main();
