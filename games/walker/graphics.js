@@ -10,6 +10,7 @@ GRAPHICS.init = function(){
   GRAPHICS._canvas.width = MAIN.CANVAS_MAX;
   GRAPHICS._canvas.height = MAIN.CANVAS_MAX;
   GRAPHICS._scale = MAIN.CANVAS_MAX / MAIN.VIEWPORT_MAX;
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 // Scales from viewport to screen
@@ -50,6 +51,7 @@ GRAPHICS.clearCanvas = function(){
   let canvas = GRAPHICS.getCanvas();
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.beginPath();
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 // XY is for top left corner.

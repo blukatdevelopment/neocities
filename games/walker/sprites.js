@@ -33,7 +33,14 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
     //console.log("column "+ column + " row " + row);
     var offX = column * mgr.width;
     var offY = row * mgr.height;
+
+    // Allow for a 1 pixel border between cells
+      offX += column;
+      offY += row;
+
     //console.log("offX: " + offX + " offY" + offY);
+    //console.log("x: " + offX + ", y: " + offY + ", column: " + column + ", row: " + row);
+    console.log("Width: " + mgr.width + " height" + mgr.height);
     GRAPHICS.drawImageToImage(
       sheet, // Image
       offX, // X offset into image
@@ -42,8 +49,8 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
       mgr.height, // sprite height
       posX, // X offset drawing to canvas
       posY, // Y offset drawing to canvas
-      mgr.width, // size drawing to canvas
-      mgr.height // size drawing to canvas
+      mgr.width * 2, // size drawing to canvas
+      mgr.height * 2 // size drawing to canvas
       );
     var currentTime = Date.now();
     var elapsed = currentTime - mgr.lastUpdate;
