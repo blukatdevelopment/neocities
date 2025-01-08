@@ -109,7 +109,7 @@ Actor.new = function(){
     x: 100,
     y: 100,
     size: 50,
-    speed: 5
+    speed: 2.5
   };
   var spriteSheet = GRAPHICS.loadImage("file:///home/blukat/localdev/neocities/games/walker/player.png");//"https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
   wkr.spriteManager = SPRITES.Manager.new(

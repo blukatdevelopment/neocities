@@ -22,8 +22,8 @@ START.update = function(){
 }
 
 START.isStartButtonSelected = function(){
-    var boxTopLeft = { x: 100, y: 100 };
-    var boxBottomRight = { x: 200, y: 200};
+    var boxTopLeft = { x: GRAPHICS.scale(100), y: GRAPHICS.scale(100) };
+    var boxBottomRight = { x: GRAPHICS.scale(200), y: GRAPHICS.scale(200)};
     var point = INPUT.getMousePosition();
     if(!point){
       return false;

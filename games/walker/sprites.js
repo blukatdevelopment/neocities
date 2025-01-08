@@ -34,7 +34,7 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
     var offX = column * mgr.width;
     var offY = row * mgr.height;
     //console.log("offX: " + offX + " offY" + offY);
-    ctx.drawImage(
+    GRAPHICS.drawImageToImage(
       sheet, // Image
       offX, // X offset into image
       offY, // Y offset into image
