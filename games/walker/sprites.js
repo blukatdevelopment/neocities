@@ -40,7 +40,7 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
 
     //console.log("offX: " + offX + " offY" + offY);
     //console.log("x: " + offX + ", y: " + offY + ", column: " + column + ", row: " + row);
-    console.log("Width: " + mgr.width + " height" + mgr.height);
+    //console.log("Width: " + mgr.width + " height" + mgr.height);
     GRAPHICS.drawImageToImage(
       sheet, // Image
       offX, // X offset into image
@@ -70,9 +70,13 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
   
   mgr.setAnimation = function(key){
     if(mgr.animations && mgr.animations[key]){
-      mgr.animation = mgr.animations[key];
-      mgr.animationName = key;
-      mgr.lastUpdate = Date.now();
+      if(mgr.animation != mgr.animations[key]){
+        mgr.animation = mgr.animations[key];
+        mgr.animationName = key;
+        mgr.lastUpdate = Date.now();
+        mgr.index = mgr.animation[0];
+        console.log("Set animation to " + key);
+      }
     }
     else{
       console.log("Could not find animation: " + key);

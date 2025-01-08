@@ -96,10 +96,10 @@ Actor.EVENT_HANDLER = function(events, state, manager){
         break;
       }
     }
-    if(currentAnimation){
-      //console.log("Setting current animation to" + currentAnimation);
-      manager.setAnimation(currentAnimation);
-    }
+  }
+  if(currentAnimation){
+    //console.log("Setting current animation to" + currentAnimation);
+    manager.setAnimation(currentAnimation);
   }
 };
 
