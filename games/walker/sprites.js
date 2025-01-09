@@ -38,9 +38,6 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
       offX += column;
       offY += row;
 
-    //console.log("offX: " + offX + " offY" + offY);
-    //console.log("x: " + offX + ", y: " + offY + ", column: " + column + ", row: " + row);
-    //console.log("Width: " + mgr.width + " height" + mgr.height);
     GRAPHICS.drawImageToImage(
       sheet, // Image
       offX, // X offset into image
@@ -75,7 +72,7 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
         mgr.animationName = key;
         mgr.lastUpdate = Date.now();
         mgr.index = mgr.animation[0];
-        console.log("Set animation to " + key);
+        //console.log("Set animation to " + key);
       }
     }
     else{

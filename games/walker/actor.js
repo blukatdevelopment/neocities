@@ -1,6 +1,5 @@
 /*##############################################################################
 # Actor class
-# Todo: use real classes here if it makes sense
 ##############################################################################*/
 var Actor = {};
 
@@ -28,6 +27,11 @@ Actor.NORTH = 0;
 Actor.SOUTH = 1;
 Actor.EAST = 2;
 Actor.WEST = 3;
+
+Actor.AGENT = {};
+Actor.AGENT.PLAYER_ONE = "Player One";
+Actor.AGENT.ENEMY = "Enemy";
+
 
 Actor.EVENT_HANDLER = function(events, state, manager){
   // init
@@ -98,12 +102,11 @@ Actor.EVENT_HANDLER = function(events, state, manager){
     }
   }
   if(currentAnimation){
-    //console.log("Setting current animation to" + currentAnimation);
     manager.setAnimation(currentAnimation);
   }
 };
 
-Actor.new = function(){
+Actor.new = function(agent_constructor){
   var wkr = {
     id: GAME.getNextId(),
     x: 100,
@@ -111,6 +114,7 @@ Actor.new = function(){
     size: 50,
     speed: 2.5
   };
+  wkr.agent = agent_constructor(wkr);
   var spriteSheet = GRAPHICS.loadImage("file:///home/blukat/localdev/neocities/games/walker/player.png");//"https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
   wkr.spriteManager = SPRITES.Manager.new(
     spriteSheet, // sheet
@@ -127,40 +131,10 @@ Actor.new = function(){
   }
   
   wkr.move = function(){
-    var x_movement = 0;
-    var y_movement = 0;
-    if(INPUT.key(INPUT.KEYS.K_W)){
-      y_movement -= wkr.speed;
+    if(wkr.agent){
+      wkr.agent.move();  
     }
-    if(INPUT.key(INPUT.KEYS.K_S)){
-      y_movement += wkr.speed;
-    }
-    if(INPUT.key(INPUT.KEYS.K_A)){
-      x_movement -= wkr.speed;
-    }
-    if(INPUT.key(INPUT.KEYS.K_D)){
-      x_movement += wkr.speed;
-    }
-    wkr.x += x_movement;
-    wkr.y += y_movement;
-    if(x_movement == 0 && y_movement == 0){
-      wkr.spriteManager.event(Actor.EVENTS.STOP);
-    }
-    else{
-      wkr.spriteManager.event(Actor.EVENTS.MOVE);
-    }
-    if(x_movement > 0){
-      wkr.spriteManager.event(Actor.EVENTS.FACE_EAST);
-    }
-    else if(x_movement < 0){
-      wkr.spriteManager.event(Actor.EVENTS.FACE_WEST);
-    }
-    if(y_movement > 0){
-      wkr.spriteManager.event(Actor.EVENTS.FACE_SOUTH);
-    }
-    else if(y_movement < 0){
-      wkr.spriteManager.event(Actor.EVENTS.FACE_NORTH);
-    }
+    
   }
   
   wkr.draw = function(){

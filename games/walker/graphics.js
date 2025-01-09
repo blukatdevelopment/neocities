@@ -27,14 +27,16 @@ GRAPHICS.getContext = function(){
 }
 
 GRAPHICS.drawCircle = function(x, y, radius){
+  GRAPHICS._context.imageSmoothingEnabled = false;
   let context = GRAPHICS.getContext();
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI);
   context.fill();
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 GRAPHICS.drawLine = function(x1, y1, x2, y2){
-
+  GRAPHICS._context.imageSmoothingEnabled = false;
   x1 = GRAPHICS.scale(x1);
   y1 = GRAPHICS.scale(y1);
   x2 = GRAPHICS.scale(x2);
@@ -44,9 +46,11 @@ GRAPHICS.drawLine = function(x1, y1, x2, y2){
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
   context.stroke();
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 GRAPHICS.clearCanvas = function(){
+  GRAPHICS._context.imageSmoothingEnabled = false;
   let context = GRAPHICS.getContext();
   let canvas = GRAPHICS.getCanvas();
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -56,6 +60,7 @@ GRAPHICS.clearCanvas = function(){
 
 // XY is for top left corner.
 GRAPHICS.drawBox = function(x, y, width, height){
+  GRAPHICS._context.imageSmoothingEnabled = false;
   // Top
   GRAPHICS.drawLine(x, y, x+width, y);
   // Left
@@ -64,9 +69,11 @@ GRAPHICS.drawBox = function(x, y, width, height){
   GRAPHICS.drawLine(x, y+height, x+width, y+height);
   // Right
   GRAPHICS.drawLine(x+width, y, x+width, y+height);
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 GRAPHICS.drawImageToImage = function(image, x1, y1, width1, height1, x2, y2, width2, height2){
+  GRAPHICS._context.imageSmoothingEnabled = false;
   x2 = GRAPHICS.scale(x2);
   y2 = GRAPHICS.scale(y2);
   width2 = GRAPHICS.scale(width2);
@@ -74,19 +81,23 @@ GRAPHICS.drawImageToImage = function(image, x1, y1, width1, height1, x2, y2, wid
   
   let context = GRAPHICS.getContext();
   context.drawImage(image, x1, y1, width1, height1, x2, y2, width2, height2);
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 GRAPHICS.drawImage = function(image, x, y, width, height){
+  GRAPHICS._context.imageSmoothingEnabled = false;
   x = GRAPHICS.scale(x);
   y = GRAPHICS.scale(y);
   width = GRAPHICS.scale(width);
   height = GRAPHICS.scale(height);
 
   let context = GRAPHICS.getContext();
-  context.drawImage(image, x, y, width, height)
+  context.drawImage(image, x, y, width, height);
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 GRAPHICS.drawText = function(text, x, y){
+  GRAPHICS._context.imageSmoothingEnabled = false;
   x = GRAPHICS.scale(x);
   y = GRAPHICS.scale(y);
   let textSize = GRAPHICS.scale(30);
@@ -94,6 +105,7 @@ GRAPHICS.drawText = function(text, x, y){
   let context = GRAPHICS.getContext()
   context.font = "" + textSize + "px Arial";
   context.fillText(text, x, y);
+  GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
 GRAPHICS.loadImage = function(url){
