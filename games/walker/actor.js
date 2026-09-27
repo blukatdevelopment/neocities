@@ -115,7 +115,7 @@ Actor.new = function(agent_constructor){
     speed: 2.5
   };
   wkr.agent = agent_constructor(wkr);
-  var spriteSheet = GRAPHICS.loadImage("file:///home/blukat/localdev/neocities/games/walker/player.png");//"https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/player.png");
+  var spriteSheet = GRAPHICS.loadImage("player.png");
   wkr.spriteManager = SPRITES.Manager.new(
     spriteSheet, // sheet
     16, // width

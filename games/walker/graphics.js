@@ -4,6 +4,7 @@
 var GRAPHICS = {};
 
 GRAPHICS.init = function(){
+  GRAPHICS._devmode = true;
   GRAPHICS._canvas = document.getElementById("mainCanvas");
   GRAPHICS._canvas.setAttribute('crossOrigin', '');
   GRAPHICS._context = GRAPHICS._canvas.getContext("2d");
@@ -11,6 +12,7 @@ GRAPHICS.init = function(){
   GRAPHICS._canvas.height = MAIN.CANVAS_MAX;
   GRAPHICS._scale = MAIN.CANVAS_MAX / MAIN.VIEWPORT_MAX;
   GRAPHICS._context.imageSmoothingEnabled = false;
+  GRAPHICS.baseUrl = GRAPHICS._devmode ? "file:///home/blukat/localdev/neocities/games/walker/" : "https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/";
 }
 
 // Scales from viewport to screen
@@ -108,9 +110,9 @@ GRAPHICS.drawText = function(text, x, y){
   GRAPHICS._context.imageSmoothingEnabled = false;
 }
 
-GRAPHICS.loadImage = function(url){
+GRAPHICS.loadImage = function(fileName){
   let element = new Image();
-  element.src = url;
+  element.src = GRAPHICS.baseUrl + fileName;
   return element;
 }
 
