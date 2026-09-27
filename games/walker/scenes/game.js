@@ -6,6 +6,7 @@ var GAME = {};
 GAME.isSetup = false;
 GAME.walker = null;
 GAME.enemies = [];
+GAME.scenery = [];
 GAME.id = 0;
 
 GAME.update = function(){
