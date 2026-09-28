@@ -110,7 +110,7 @@ GRAPHICS.drawText = function(text, x, y){
 
 GRAPHICS.loadImage = function(fileName){
   let element = new Image();
-  element.src = SETTINGS._assetsUrl + fileName;
+  element.src = SETTINGS.assetsUrl + fileName;
   return element;
 }
 

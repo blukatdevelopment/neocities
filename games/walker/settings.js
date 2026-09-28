@@ -3,12 +3,12 @@
 ##############################################################################*/
 var SETTINGS = {};
 
-SETTINGS._logLevel = 2;
-SETTINGS._devMode = true;
-SETTINGS._devUrl = "file:///home/blukat/localdev/neocities/games/walker/";
-SETTINGS._prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/";
-SETTINGS._assetsDirectory = "assets/";
-SETTINGS._defaultImageExtension = ".png";
+SETTINGS.logLevel = 2;
+SETTINGS.devMode = true;
+SETTINGS.devUrl = "file:///home/blukat/localdev/neocities/games/walker/";
+SETTINGS.prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/";
+SETTINGS.assetsDirectory = "assets/";
+SETTINGS.defaultImageExtension = ".png";
 
 // Actor config
 SETTINGS.actorList = [
@@ -29,7 +29,7 @@ SETTINGS.animations = {};
 SETTINGS.loadActorSheets = function(actorName){
 	SETTINGS.sheets.actors[actorName] = {};
 	for(let animation of SETTINGS.actorAnimationsList){
-		let fileName = SETTINGS._assetsUrl + actorName + "/" + animation + SETTINGS._defaultImageExtension;
+		let fileName = SETTINGS._assetsUrl + actorName + "/" + animation + SETTINGS.defaultImageExtension;
 		GRAPHICS.addImageAsync(fileName, SETTINGS.sheets.actors[actorName], animation);
 	}
 }
@@ -40,8 +40,8 @@ SETTINGS.sheets.actors = {};
 
 // Init
 SETTINGS.init = function(){
-	SETTINGS._baseUrl = SETTINGS._devMode ? SETTINGS._devUrl : SETTINGS.prodUrl;
-	SETTINGS._assetsUrl = SETTINGS._baseUrl + SETTINGS._assetsDirectory;
+	SETTINGS.baseUrl = SETTINGS.devMode ? SETTINGS.devUrl : SETTINGS.prodUrl;
+	SETTINGS.assetsUrl = SETTINGS.baseUrl + SETTINGS.assetsDirectory;
 
 	// Init actor animation constants
 	for(let animation of SETTINGS.actorAnimationsList){
