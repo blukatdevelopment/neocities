@@ -10,6 +10,17 @@ SETTINGS.prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocitie
 SETTINGS.assetsDirectory = "assets/";
 SETTINGS.defaultImageExtension = ".png";
 
+SETTINGS.fps = 60;
+SETTINGS.frameDuration = 1000 / SETTINGS.fps;
+
+
+// Graphics
+SETTINGS.viewportMin = 0;
+SETTINGS.viewportMin = 400;
+SETTINGS.canvasMin = 0;
+SETTINGS.canvasMax = 800;
+
+
 // Actor config
 SETTINGS.actorList = [
 	"wrath"

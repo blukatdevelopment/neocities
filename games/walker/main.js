@@ -14,9 +14,7 @@ MAIN.CANVAS_MIN = 0;
 MAIN.CANVAS_MAX = 800;
 
 
-MAIN.FPS = 60;
 MAIN.START_TIME = Date.now();
-MAIN.FRAME_DURATION = 1000 / MAIN.FPS
 MAIN.LAG = 0;
 
 MAIN.GameLoop = function(){
@@ -26,9 +24,9 @@ MAIN.GameLoop = function(){
   var elapsed = current_time - MAIN.START_TIME;
   MAIN.START_TIME = current_time;
   MAIN.LAG += elapsed;
-  while(MAIN.LAG >= MAIN.FRAME_DURATION){
+  while(MAIN.LAG >= SETTINGS.frameDuration){
     SCENE.update();
-    MAIN.LAG -= MAIN.FRAME_DURATION;
+    MAIN.LAG -= SETTINGS.frameDuration;
   }
 }
 
