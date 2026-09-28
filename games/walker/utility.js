@@ -11,3 +11,20 @@ UTILITY.isInsideBox = function(topLeft, bottomRight, point){
   var inY = point.y < bottomRight.y && point.y > topLeft.y;
   return inX && inY;  
 }
+
+
+// Output wrapper
+UTILITY.log = function(sender, message, context){
+	if(SETTINGS._logLevel == 0){
+		// Log level 0, do nothing
+		return;
+	}
+	else if(SETTINGS._logLevel == 1){
+		// Level 1: basic info
+		console.log(`${sender}, ${message}`);
+	}
+	else{
+		// Level 2+: include context
+		console.log(`${sender}, ${message}, ${context}`);
+	}
+}
