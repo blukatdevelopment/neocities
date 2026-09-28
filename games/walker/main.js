@@ -33,6 +33,7 @@ MAIN.GameLoop = function(){
 }
 
 MAIN.init = function(){
+  SETTINGS.init();
   GRAPHICS.init();
   INPUT.initInput();
 }

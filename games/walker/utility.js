@@ -25,6 +25,7 @@ UTILITY.log = function(sender, message, context){
 	}
 	else{
 		// Level 2+: include context
-		console.log(`${sender}, ${message}, ${context}`);
+		let contextString = JSON.stringify(context);
+		console.log(`${sender}, ${message}, ${contextString}`);
 	}
 }

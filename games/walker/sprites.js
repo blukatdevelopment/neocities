@@ -3,6 +3,11 @@
 ##############################################################################*/
 var SPRITES = {};
 
+SPRITES.drawFromSheet = function(index, sheet, width, height, columns){
+// Assuming a horizontal strip spritesheet, grabs the cell
+
+}
+
 SPRITES.Manager = {};
 SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, animations, handler){
   var mgr = {

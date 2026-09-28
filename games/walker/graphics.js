@@ -114,3 +114,29 @@ GRAPHICS.loadImage = function(fileName){
   return element;
 }
 
+// Applies async validation before actually adding to object
+GRAPHICS.addImageAsync = function(fileName, object, key){
+  GRAPHICS.isValidImage(fileName)
+  .then(isValid => {
+    if (isValid) {
+      UTILITY.log("GRAPHICS", "Image URL valid. Loading.", { name: fileName });
+      const img = new Image();
+      img.src = src;
+      object[key] = img;
+    }
+    else {
+      UTILITY.log("GRAPHICS", "Image URL invalid.", { name: fileName });
+    }
+  });
+}
+
+GRAPHICS.isValidImage = function(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+
+    img.src = src;
+  });
+}
