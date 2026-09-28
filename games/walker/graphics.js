@@ -7,9 +7,9 @@ GRAPHICS.init = function(){
   GRAPHICS._canvas = document.getElementById("mainCanvas");
   GRAPHICS._canvas.setAttribute('crossOrigin', '');
   GRAPHICS._context = GRAPHICS._canvas.getContext("2d");
-  GRAPHICS._canvas.width = MAIN.CANVAS_MAX;
-  GRAPHICS._canvas.height = MAIN.CANVAS_MAX;
-  GRAPHICS._scale = MAIN.CANVAS_MAX / MAIN.VIEWPORT_MAX;
+  GRAPHICS._canvas.width = SETTINGS.canvasMax;
+  GRAPHICS._canvas.height = SETTINGS.canvasMax;
+  GRAPHICS._scale = SETTINGS.canvasMax / SETTINGS.viewportMax;
   GRAPHICS._context.imageSmoothingEnabled = false;
 }
 

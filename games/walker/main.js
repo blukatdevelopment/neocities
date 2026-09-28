@@ -1,18 +1,8 @@
 /*##############################################################################
 # Main
-# Runs before all other scripts
+# Runs before all other scripts, runs main game loop
 ##############################################################################*/
 var MAIN = {};
-
-// GRAPHICS
-// Resolution of the viewport
-MAIN.VIEWPORT_MIN = 0;
-MAIN.VIEWPORT_MAX = 400;
-
-// Scaled of the canvas the viewport is drawn to
-MAIN.CANVAS_MIN = 0;
-MAIN.CANVAS_MAX = 800;
-
 
 MAIN.START_TIME = Date.now();
 MAIN.LAG = 0;

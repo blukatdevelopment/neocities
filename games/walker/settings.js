@@ -16,7 +16,7 @@ SETTINGS.frameDuration = 1000 / SETTINGS.fps;
 
 // Graphics
 SETTINGS.viewportMin = 0;
-SETTINGS.viewportMin = 400;
+SETTINGS.viewportMax = 400;
 SETTINGS.canvasMin = 0;
 SETTINGS.canvasMax = 800;
 
