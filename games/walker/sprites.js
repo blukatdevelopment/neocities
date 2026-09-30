@@ -8,6 +8,11 @@ SPRITES.drawFromSheet = function(index, sheet, width, height, columns){
 
 }
 
+SPRITES.Animator = {};
+SPRITES.Animator.new = function(){
+  let 
+}
+
 SPRITES.Manager = {};
 SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, animations, handler){
   var mgr = {

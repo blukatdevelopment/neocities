@@ -3,7 +3,7 @@
 ##############################################################################*/
 var SETTINGS = {};
 
-SETTINGS.logLevel = 2;
+SETTINGS.logLevel = 0;
 SETTINGS.devMode = true;
 SETTINGS.devUrl = "file:///home/blukat/localdev/neocities/games/walker/";
 SETTINGS.prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/";

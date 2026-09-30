@@ -33,6 +33,87 @@ Actor.AGENT.PLAYER_ONE = "Player One";
 Actor.AGENT.ENEMY = "Enemy";
 
 
+
+Actor.ActorAnimationStateMachine = {};
+Actor.ActorAnimationStateMachine.new = function(actor){
+  // Determines which animation is active based on the actor
+
+};
+
+// Updated version
+Actor.EVENT_HANDLER2 = function(events, state, manager){
+  // init
+  if(state?.initialized == null){
+    state.initialized = true;
+    state.direction = Actor.NORTH;
+    state.moving = false;
+  }
+
+  // Update state with events
+  while(events.length > 0){
+    var event = events.shift();
+    //console.log("EVENT: " + event);
+    switch(event){
+      case Actor.EVENTS.MOVE:
+        state.moving = true;
+      break;
+      case Actor.EVENTS.STOP:
+        state.moving = false;
+      break;
+      case Actor.EVENTS.FACE_NORTH:
+        state.direction = Actor.NORTH;
+      break;
+      case Actor.EVENTS.FACE_EAST:
+        state.direction = Actor.EAST;
+      break;
+      case Actor.EVENTS.FACE_SOUTH:
+        state.direction = Actor.SOUTH;
+      break;
+      case Actor.EVENTS.FACE_WEST:
+        state.direction = Actor.WEST;
+      break;
+    }
+
+    // Calculate event for state
+    var currentAnimation = null;
+    if(state.moving){
+      switch(state.direction){
+        case Actor.NORTH:
+          currentAnimation = "NORTH_MOVE";
+        break;
+        case Actor.SOUTH:
+          currentAnimation = "SOUTH_MOVE";
+        break;
+        case Actor.EAST:
+          currentAnimation = "EAST_MOVE";
+        break;
+        case Actor.WEST:
+          currentAnimation = "WEST_MOVE";
+        break;
+      }
+    }
+    else{
+      switch(state.direction){
+        case Actor.NORTH:
+          currentAnimation = "NORTH_STAND";
+        break;
+        case Actor.SOUTH:
+          currentAnimation = "SOUTH_STAND";
+        break;
+        case Actor.EAST:
+          currentAnimation = "EAST_STAND";
+        break;
+        case Actor.WEST:
+          currentAnimation = "WEST_STAND";
+        break;
+      }
+    }
+  }
+  if(currentAnimation){
+    manager.setAnimation(currentAnimation);
+  }
+};
+
 Actor.EVENT_HANDLER = function(events, state, manager){
   // init
   if(state?.initialized == null){
