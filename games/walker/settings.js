@@ -8,11 +8,16 @@ SETTINGS.devMode = true;
 SETTINGS.devUrl = "file:///home/blukat/localdev/neocities/games/walker/";
 SETTINGS.prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/";
 SETTINGS.assetsDirectory = "assets/";
-SETTINGS.defaultImageExtension = ".png";
 
 SETTINGS.fps = 60;
 SETTINGS.frameDuration = 1000 / SETTINGS.fps;
 
+
+DIRECTIONS = {};
+DIRECTIONS.up = 0;
+DIRECTIONS.down = 0;
+DIRECTIONS.left = 0;
+DIRECTIONS.right = 0;
 
 // Graphics
 SETTINGS.viewportMin = 0;
@@ -20,11 +25,6 @@ SETTINGS.viewportMax = 400;
 SETTINGS.canvasMin = 0;
 SETTINGS.canvasMax = 800;
 
-
-// Actor config
-SETTINGS.actorList = [
-	"wrath"
-];
 
 // Animation config
 SETTINGS.actorAnimationsList = [
@@ -36,14 +36,21 @@ SETTINGS.actorAnimationsList = [
 ];
 SETTINGS.animations = {};
 
-
-SETTINGS.loadActorSheets = function(actorName){
-	SETTINGS.sheets.actors[actorName] = {};
-	for(let animation of SETTINGS.actorAnimationsList){
-		let fileName = SETTINGS._assetsUrl + actorName + "/" + animation + SETTINGS.defaultImageExtension;
-		GRAPHICS.addImageAsync(fileName, SETTINGS.sheets.actors[actorName], animation);
-	}
-}
+SETTINGS.actorList = [];
+SETTINGS.actorList.push({
+	name: "Wrath",
+	sheet: "wrath_sprites.png",
+	animations: [
+		[ SETTINGS.actorAnimationsList.idleUp, 0, 0],
+		[ SETTINGS.actorAnimationsList.idleDown, 1, 1],
+		[ SETTINGS.actorAnimationsList.idleRight, 2, 2],
+		[ SETTINGS.actorAnimationsList.idleLeft, 3, 3],
+		[ SETTINGS.actorAnimationsList.walkUp, 4, 5],
+		[ SETTINGS.actorAnimationsList.walkDown, 6, 7],
+		[ SETTINGS.actorAnimationsList.walkRight, 8, 9],
+		[ SETTINGS.actorAnimationsList.walkLeft, 10, 11]
+	]
+});
 
 // Sprite config
 SETTINGS.sheets = {};
@@ -54,13 +61,8 @@ SETTINGS.init = function(){
 	SETTINGS.baseUrl = SETTINGS.devMode ? SETTINGS.devUrl : SETTINGS.prodUrl;
 	SETTINGS.assetsUrl = SETTINGS.baseUrl + SETTINGS.assetsDirectory;
 
-	// Init actor animation constants
-	for(let animation of SETTINGS.actorAnimationsList){
-		SETTINGS.animations[animation] = animation;
-	}
-
 	for(let actor of SETTINGS.actorList){
-		SETTINGS.loadActorSheets(actor);
+		SPRITES.loadActorSprites(actor);
 	}
 }
 

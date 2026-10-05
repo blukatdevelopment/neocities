@@ -2,15 +2,54 @@
 # Sprites
 ##############################################################################*/
 var SPRITES = {};
+SPRITES.animations = {};
+SPRITES.sheets = {};
+
+// Record to hold sheet info
+SPRITES.SpriteSheet = {};
+SPRITES.SpriteSheet.new = function(name, src, element, defaultCell, cellCount){
+  var ss = {
+    name: name,
+    src: src,
+    element: element,
+    defaultCell: defaultCell,
+    cellCount: cellCount
+  };
+  return ss;
+};
+
+SPRITES.Animation = {};
+SPRITES.Animation.new = function(name, sheet, startIndex, endIndex){
+  var anim = {
+    name: name,
+    sheet: sheet,
+    startIndex: startIndex,
+    endIndex: endIndex
+  };
+  return anim;
+};
+
+
+SPRITES.loadActorSprites = function(config){
+  UTILITY.log("SPRITES", "Loading Actor Config", config);
+  GRAPHICS.addImageAsync(config.sheet, SPRITES.sheets, config.name);
+  SPRITES.animations[config.name] = {};
+  for(let i in config.animations){
+    let animConfig = config.animations[i];
+    let anim = SPRITES.Animation.new(animConfig[0], animConfig[1], animConfig[2]);
+    SPRITES.animations[config.name][animConfig[0]] = anim;
+  }
+};
 
 SPRITES.drawFromSheet = function(index, sheet, width, height, columns){
 // Assuming a horizontal strip spritesheet, grabs the cell
 
 }
 
+// Plays an animation from start to end
 SPRITES.Animator = {};
 SPRITES.Animator.new = function(){
-  let 
+
 }
 
 SPRITES.Manager = {};
