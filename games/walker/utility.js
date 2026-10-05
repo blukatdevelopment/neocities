@@ -29,3 +29,8 @@ UTILITY.log = function(sender, message, context){
 		console.log(`${sender}, ${message}, ${contextString}`);
 	}
 }
+
+// Returns the number of frames that have passed since the last scene update cycle
+UTILITY.framesAdvanced = function(){
+	return MAIN.FRAMES_TO_ADVANCE;
+}

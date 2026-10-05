@@ -8,6 +8,7 @@ SETTINGS.devMode = true;
 SETTINGS.devUrl = "file:///home/blukat/localdev/neocities/games/walker/";
 SETTINGS.prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/";
 SETTINGS.assetsDirectory = "assets/";
+SETTINGS.defaultPlayerActor = "wrath";
 
 SETTINGS.fps = 60;
 SETTINGS.frameDuration = 1000 / SETTINGS.fps;
@@ -27,6 +28,8 @@ SETTINGS.canvasMax = 800;
 
 
 // Animation config
+SETTINGS.animationFrameRate = 12;
+SETTINGS.animationFrameDuration = 1000 / SETTINGS.animationFrameRate;
 SETTINGS.actorAnimationsList = [
 	"idleUp", "idleDown", "idleLeft", "idleRight",
 	"walkUp", "walkDown", "walkLeft", "walkRight",
@@ -36,10 +39,14 @@ SETTINGS.actorAnimationsList = [
 ];
 SETTINGS.animations = {};
 
+
 SETTINGS.actorList = [];
 SETTINGS.actorList.push({
-	name: "Wrath",
+	name: "wrath",
 	sheet: "wrath_sprites.png",
+	resolutionX: 32,
+	resolutionY: 32,
+	cells: 12,
 	animations: [
 		[ SETTINGS.actorAnimationsList.idleUp, 0, 0],
 		[ SETTINGS.actorAnimationsList.idleDown, 1, 1],

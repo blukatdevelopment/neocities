@@ -7,13 +7,14 @@ SPRITES.sheets = {};
 
 // Record to hold sheet info
 SPRITES.SpriteSheet = {};
-SPRITES.SpriteSheet.new = function(name, src, element, defaultCell, cellCount){
+SPRITES.SpriteSheet.new = function(name, src, element, cells, resolutionX, resolutionY){
   var ss = {
     name: name,
     src: src,
     element: element,
-    defaultCell: defaultCell,
-    cellCount: cellCount
+    cellCount: cells,
+    cellResolutionX: resolutionX,
+    cellResolutionY: resolutionY
   };
   return ss;
 };
@@ -32,7 +33,9 @@ SPRITES.Animation.new = function(name, sheet, startIndex, endIndex){
 
 SPRITES.loadActorSprites = function(config){
   UTILITY.log("SPRITES", "Loading Actor Config", config);
-  GRAPHICS.addImageAsync(config.sheet, SPRITES.sheets, config.name);
+  let sheet = SPRITES.SpriteSheet.new(config.name, config.sheet, config.cells, config.resolutionX, config.resolutionY);
+  GRAPHICS.addImageAsync(config.sheet, sheet, "element");
+  SPRITES.sheets[config.name] = sheet;
   SPRITES.animations[config.name] = {};
   for(let i in config.animations){
     let animConfig = config.animations[i];
@@ -46,11 +49,6 @@ SPRITES.drawFromSheet = function(index, sheet, width, height, columns){
 
 }
 
-// Plays an animation from start to end
-SPRITES.Animator = {};
-SPRITES.Animator.new = function(){
-
-}
 
 SPRITES.Manager = {};
 SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, animations, handler){
@@ -148,3 +146,7 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
   }
   return mgr;
 }
+
+SPRITES.drawSprite = function(){
+  console.log("TODO: Draw a sprite");
+};
