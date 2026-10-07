@@ -44,11 +44,60 @@ SPRITES.loadActorSprites = function(config){
   }
 };
 
-SPRITES.drawFromSheet = function(index, sheet, width, height, columns){
-// Assuming a horizontal strip spritesheet, grabs the cell
+SPRITES.renderSprite = function(posX, posY, index, sheet){
 
+  // Assumes one horizontal strip of cells
+  let offX = index * sheet.cellResolutionX;
+  let offY = 0;
+
+  // Assumes 1 pixel border between cells
+  offX += index;
+
+  GRAPHICS.drawImageToImage(
+      sheet.element, // Image
+      offX, // X offset into image
+      offY, // Y offset into image
+      sheet.cellResolutionX, // sprite width
+      sheet.cellResolutionY, // sprite height
+      posX, // X offset drawing to canvas
+      posY, // Y offset drawing to canvas
+      sheet.cellResolutionX * SETTINGS.drawScale, // size drawing to canvas
+      sheet.cellResolutionY * SETTINGS.drawScale // size drawing to canvas
+   );
+};
+
+// Increments over the animation's cells using the animation clock
+SPRITES.Animator = {};
+SPRITES.Animator.new = function(){
+  let anr = {
+    animation: null,
+    index: 0,
+  };
+  anr.setAnimation = function(animation){
+    anr.animation = animation;
+  };
+  anr.activeAnimation = function(){
+    if(anr.animation){
+      return anr.animation.name;
+    }
+    return null;
+  };
+  anr.update = function(posX, posY){
+    for(let i = 0; i < UTILITY.framesAdvanced; i++){
+      anr.step();
+    }
+    SPRITES.renderSprite(posX, posY, anr.index, anr.animation.sheet);
+  }
+  anr.step = function(){
+    if(anr.animation){
+      anr.index++;
+      if(anr.index > anr.animation.endIndex){
+        mgr.index = mgr.animation.startIndex;
+      }
+    }
+  };
+  return anr;
 }
-
 
 SPRITES.Manager = {};
 SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, animations, handler){
@@ -146,7 +195,3 @@ SPRITES.Manager.new = function(sheet, width, height, columns, rows, frameRate, a
   }
   return mgr;
 }
-
-SPRITES.drawSprite = function(){
-  console.log("TODO: Draw a sprite");
-};

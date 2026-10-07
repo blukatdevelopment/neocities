@@ -9,7 +9,7 @@ UTILITY.randRange = function(min, max){
 UTILITY.isInsideBox = function(topLeft, bottomRight, point){
   var inX = point.x < bottomRight.x && point.x > topLeft.x;
   var inY = point.y < bottomRight.y && point.y > topLeft.y;
-  return inX && inY;  
+  return inX && inY;
 }
 
 

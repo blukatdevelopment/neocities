@@ -33,85 +33,89 @@ Actor.AGENT.PLAYER_ONE = "Player One";
 Actor.AGENT.ENEMY = "Enemy";
 
 
-
-Actor.ActorAnimationStateMachine = {};
-Actor.ActorAnimationStateMachine.new = function(actor){
-  // Determines which animation is active based on the actor
-
-};
-
-// Updated version
-Actor.EVENT_HANDLER2 = function(events, state, manager){
-  // init
-  if(state?.initialized == null){
-    state.initialized = true;
-    state.direction = Actor.NORTH;
-    state.moving = false;
-  }
-
-  // Update state with events
-  while(events.length > 0){
-    var event = events.shift();
-    //console.log("EVENT: " + event);
-    switch(event){
-      case Actor.EVENTS.MOVE:
-        state.moving = true;
-      break;
-      case Actor.EVENTS.STOP:
-        state.moving = false;
-      break;
-      case Actor.EVENTS.FACE_NORTH:
-        state.direction = Actor.NORTH;
-      break;
-      case Actor.EVENTS.FACE_EAST:
-        state.direction = Actor.EAST;
-      break;
-      case Actor.EVENTS.FACE_SOUTH:
-        state.direction = Actor.SOUTH;
-      break;
-      case Actor.EVENTS.FACE_WEST:
-        state.direction = Actor.WEST;
-      break;
+Actor.AnimationStateMachine = function(animations, animator){
+  let asm = {
+    currentAnimation: null,
+    animations: animations,
+    animator: animator,
+    state: {
+      direction: DIRECTIONS.north,
+      moving: false
     }
+  };
 
-    // Calculate event for state
-    var currentAnimation = null;
-    if(state.moving){
-      switch(state.direction){
-        case Actor.NORTH:
-          currentAnimation = "NORTH_MOVE";
+  asm.updateState = function(events){
+    while(events.length > 0){
+      let event = events.shift();
+      switch(event){
+        case Actor.EVENTS.MOVE:
+          asm.state.moving = true;
         break;
-        case Actor.SOUTH:
-          currentAnimation = "SOUTH_MOVE";
+        case Actor.EVENTS.STOP:
+          asm.state.moving = false;
         break;
-        case Actor.EAST:
-          currentAnimation = "EAST_MOVE";
+        case Actor.EVENTS.FACE_NORTH:
+          asm.state.direction = DIRECTIONS.north;
         break;
-        case Actor.WEST:
-          currentAnimation = "WEST_MOVE";
+        case Actor.EVENTS.FACE_EAST:
+          asm.state.direction = DIRECTIONS.east;
         break;
+        case Actor.EVENTS.FACE_SOUTH:
+          asm.state.direction = DIRECTIONS.south;
+        break;
+        case Actor.EVENTS.FACE_WEST:
+          asm.state.direction = DIRECTIONS.west;
+        break;
+      }
+    }
+  };
+
+  asm.getNextAnimationName = function(){
+    let nextAnimation = null;
+    if(asm.state.moving){
+      switch(asm.state.direction){
+        case DIRECTIONS.north:
+          nextAnimation = ACTOR_ANIMATIONS.walkUp;
+          break;
+        case DIRECTIONS.south:
+          nextAnimation = ACTOR_ANIMATIONS.walkDown;
+          break;
+        case DIRECTIONS.east:
+          nextAnimation = ACTOR_ANIMATIONS.walkRight;
+          break;
+        case DIRECTIONS.west:
+          nextAnimation = ACTOR_ANIMATIONS.walkLeft;
+          break;
       }
     }
     else{
-      switch(state.direction){
-        case Actor.NORTH:
-          currentAnimation = "NORTH_STAND";
-        break;
-        case Actor.SOUTH:
-          currentAnimation = "SOUTH_STAND";
-        break;
-        case Actor.EAST:
-          currentAnimation = "EAST_STAND";
-        break;
-        case Actor.WEST:
-          currentAnimation = "WEST_STAND";
-        break;
+      switch(asm.state.direction){
+        case DIRECTIONS.north:
+          nextAnimation = ACTOR_ANIMATIONS.idleUp;
+          break;
+        case DIRECTIONS.south:
+          nextAnimation = ACTOR_ANIMATIONS.idleDown;
+          break;
+        case DIRECTIONS.east:
+          nextAnimation = ACTOR_ANIMATIONS.idleRight;
+          break;
+        case DIRECTIONS.west:
+          nextAnimation = ACTOR_ANIMATIONS.idleLeft;
+          break;
       }
     }
-  }
-  if(currentAnimation){
-    manager.setAnimation(currentAnimation);
-  }
+    return nextAnimation;
+  };
+
+  asm.update = function(events){
+    asm.updateState(events);
+    let nextAnimation = asm.getNextAnimationName();
+    if(nextAnimation && asm.animations[nextAnimation]){
+      asm.animator.setAnimation(asm.animations[nextAnimation]);
+    }
+  };
+
+  return asm;
 };
 
 Actor.EVENT_HANDLER = function(events, state, manager){
