@@ -2,102 +2,51 @@
 # Agents
 # Code that determines actor behavior
 ##############################################################################*/
-var Agents = {};
+var AGENT = {};
 
-Agents.PLAYER_ONE = function(actor){
+AGENT.PLAYER_ONE = {};
+AGENT.PLAYER_ONE.new = function(actor){
 	var pone = {
 		actor: actor
 	};
 
-	pone.move = function (){
+	pone.update = function (){
 		let atr = pone.actor;
+		let aId = atr.entityId;
+		let speed = pone.actor.speed;
 		let x_movement = 0;
 	    let y_movement = 0;
-	    if(INPUT.key(INPUT.KEYS.K_W)){
-	      y_movement -= atr.speed;
-	    }
-	    if(INPUT.key(INPUT.KEYS.K_S)){
-	      y_movement += atr.speed;
-	    }
-	    if(INPUT.key(INPUT.KEYS.K_A)){
-	      x_movement -= atr.speed;
-	    }
-	    if(INPUT.key(INPUT.KEYS.K_D)){
-	      x_movement += atr.speed;
-	    }
-	    atr.x += x_movement;
-	    atr.y += y_movement;
-	    if(x_movement == 0 && y_movement == 0){
-	      atr.spriteManager.event(Actor.EVENTS.STOP);
+	    // Key inputs weighted by speed
+	    let k_w = INPUT.key(INPUT.KEYS.K_W) ? speed : 0;
+	    let k_s = INPUT.key(INPUT.KEYS.K_S) ? speed : 0;
+	    let k_a = INPUT.key(INPUT.KEYS.K_A) ? speed : 0;
+	    let k_d = INPUT.key(INPUT.KEYS.K_D) ? speed : 0;
+
+	    // Net inputs
+	    let x = k_d - k_a;
+	    let z = k_w - k_s; // Invert
+
+	    if(x == 0 && z == 0){
+	    	if(atr.moving){
+	    		atr.moving = false;	
+	    	}
+	    	
 	    }
 	    else{
-	      atr.spriteManager.event(Actor.EVENTS.MOVE);
+	    	UTILITY.addActorEvent(aId, EVENTS.move);
+	    	if(x < 0){
+	    		atr.move(DIRECTIONS.west);
+	    	}
+	    	else if(x > 0){
+	    		atr.move(DIRECTIONS.east);
+	    	}
+	    	if(z < 0){
+	    		atr.move(DIRECTIONS.south);
+	    	}
+	    	else if(z > 0){
+	    		atr.move(DIRECTIONS.north);
+	    	}
 	    }
-	    if(x_movement > 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_EAST);
-	    }
-	    else if(x_movement < 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_WEST);
-	    }
-	    if(y_movement > 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_SOUTH);
-	    }
-	    else if(y_movement < 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_NORTH);
-	    }
-
 	};
 	return pone;
-}
-
-Agents.ENEMY = function(actor){
-	var enemy = {
-		actor: actor
-	};
-
-	enemy.move = function (){
-		let atr = enemy.actor;
-		
-		let x_movement = 0;
-	    let y_movement = 0;
-	    if(GAME.walker){
-	    	let wkr = GAME.walker;
-	    	if(atr.x < wkr.x){
-	    		x_movement = 1;
-	    	}
-	    	else if(atr.x > wkr.x){
-	    		x_movement = -1;
-	    	}
-	    	if(atr.y < wkr.y){
-	    		y_movement = 1;
-	    	}
-	    	else if(atr.y > wkr.y){
-	    		y_movement = -1;
-	    	}
-	    }
-
-	    if(x_movement == 0 && y_movement == 0){
-	      atr.spriteManager.event(Actor.EVENTS.STOP);
-	    }
-	    else{
-	      atr.spriteManager.event(Actor.EVENTS.MOVE);
-	    }
-	    if(x_movement > 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_EAST);
-	    }
-	    else if(x_movement < 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_WEST);
-	    }
-	    if(y_movement > 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_SOUTH);
-	    }
-	    else if(y_movement < 0){
-	      atr.spriteManager.event(Actor.EVENTS.FACE_NORTH);
-	    }
-
-
-	    atr.x += atr.speed * 0.5 * x_movement;
-	    atr.y += atr.speed * 0.5 * y_movement;
-	};
-	return enemy;
 }

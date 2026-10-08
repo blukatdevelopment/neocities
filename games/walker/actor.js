@@ -1,79 +1,115 @@
 /*##############################################################################
 # Actor class
 ##############################################################################*/
+var ACTORFACTORY = {};
+
+ACTORFACTORY.playerOne = function(){
+  let config = UTILITY.getActorConfig("wrath");
+  let pone = ACTOR.new();
+  let anm = SPRITES.Animator.new();
+  anm.animation = SPRITES.animations[config.name][ACTOR_ANIMATIONS.idleLeft]
+  let asm = ACTOR.AnimationStateMachine.new(name, SPRITES.animations[config.name], anm);
+  asm.linkToActor(pone);
+  pone.stateMachine = asm;
+  let agent = AGENT.PLAYER_ONE.new(pone);
+  pone.agent = agent;
+  pone.animator = anm;
+  return pone;
+};
+
+ACTORFACTORY.npc = function(){
+  // TODO
+};
+
+var ACTOR = {};
+ACTOR.new = function(){
+  let atr = {
+    entityId: UTILITY.getNextEntityId(),
+    stateMachine: null,
+    position: VECTOR3.new(0, 0, 0),
+    prevPosition: VECTOR3.new(0, 0, 0),
+    direction: DIRECTIONS.east,
+    prevDirection: DIRECTIONS.east,
+    moving: false,
+    prevMoving: false,
+    size: 32,
+    speed: 2.5
+  };
+  atr.update = function(){
+    atr.stateMachine.update();
+    atr.agent.update();
+
+  };
+  atr.teleport = function(destination){
+    atr.position = destination;
+    atr.prevPosition = destination;
+  };
+  atr.move = function(direction){
+    atr.moving = true;
+    switch(direction){
+      case DIRECTIONS.north:
+        atr.position.z -= atr.speed;
+        atr.direction = direction;
+      break;
+      case DIRECTIONS.south:
+        atr.position.z += atr.speed;
+        atr.direction = direction;
+      break;
+      case DIRECTIONS.east:
+        atr.position.x += atr.speed;
+        atr.direction = direction;
+      break;
+      case DIRECTIONS.west:
+        atr.position.x -= atr.speed;
+        atr.direction = direction;
+      break;
+      case DIRECTIONS.up:
+        atr.position.y += atr.speed;
+        atr.direction = direction;
+      break;
+      case DIRECTIONS.down:
+        atr.position.y -= atr.speed;
+        atr.direction = direction;
+      break;
+    }
+  };
+  atr.draw = function(){
+    let events = UTILITY.getEventsByEntity(atr.entityId);
+    atr.animator.update(atr.position.x, atr.position.z);
+  };
+  atr.toString = function(){
+    let str = "[";
+    str += "ID: " + atr.entityId;
+    str += ", pos: " + atr.position.toString();
+    str += "]";
+    return str;
+  }
+  return atr;
+}
+
+
 var Actor = {};
 
-Actor.ANIMATIONS = {
-  NORTH_STAND: [0, 0],
-  SOUTH_STAND: [1, 1],
-  EAST_STAND: [2, 2],
-  WEST_STAND: [3, 3],
-  NORTH_MOVE: [4, 5],
-  SOUTH_MOVE: [6, 7],
-  EAST_MOVE: [8, 9],
-  WEST_MOVE: [10, 11]
-};
-
-Actor.EVENTS = {
-  FACE_NORTH: "FACE_NORTH",
-  FACE_EAST: "FACE_EAST",
-  FACE_SOUTH: "FACE_SOUTH",
-  FACE_WEST: "FACE_WEST",
-  MOVE: "MOVE",
-  STOP: "STOP"
-};
-
-Actor.NORTH = 0;
-Actor.SOUTH = 1;
-Actor.EAST = 2;
-Actor.WEST = 3;
-
-Actor.AGENT = {};
-Actor.AGENT.PLAYER_ONE = "Player One";
-Actor.AGENT.ENEMY = "Enemy";
-
-
-Actor.AnimationStateMachine = function(animations, animator){
+ACTOR.AnimationStateMachine = {};
+ACTOR.AnimationStateMachine.new = function(name, animations, animator){
   let asm = {
+    entityId: -1,
+    name: name,
     currentAnimation: null,
     animations: animations,
     animator: animator,
-    state: {
-      direction: DIRECTIONS.north,
-      moving: false
-    }
+    moving: false,
+    direction: DIRECTIONS.north
   };
 
-  asm.updateState = function(events){
-    while(events.length > 0){
-      let event = events.shift();
-      switch(event){
-        case Actor.EVENTS.MOVE:
-          asm.state.moving = true;
-        break;
-        case Actor.EVENTS.STOP:
-          asm.state.moving = false;
-        break;
-        case Actor.EVENTS.FACE_NORTH:
-          asm.state.direction = DIRECTIONS.north;
-        break;
-        case Actor.EVENTS.FACE_EAST:
-          asm.state.direction = DIRECTIONS.east;
-        break;
-        case Actor.EVENTS.FACE_SOUTH:
-          asm.state.direction = DIRECTIONS.south;
-        break;
-        case Actor.EVENTS.FACE_WEST:
-          asm.state.direction = DIRECTIONS.west;
-        break;
-      }
-    }
+  asm.linkToActor = function(actor){
+    asm.actor = actor;
   };
 
   asm.getNextAnimationName = function(){
     let nextAnimation = null;
-    if(asm.state.moving){
-      switch(asm.state.direction){
+    if(asm.actor.moving){
+      switch(asm.actor.direction){
         case DIRECTIONS.north:
           nextAnimation = ACTOR_ANIMATIONS.walkUp;
           break;
@@ -89,7 +125,7 @@ Actor.AnimationStateMachine = function(animations, animator){
       }
     }
     else{
-      switch(asm.state.direction){
+      switch(asm.actor.direction){
         case DIRECTIONS.north:
           nextAnimation = ACTOR_ANIMATIONS.idleUp;
           break;
@@ -107,123 +143,19 @@ Actor.AnimationStateMachine = function(animations, animator){
     return nextAnimation;
   };
 
-  asm.update = function(events){
-    asm.updateState(events);
+  asm.update = function(){
     let nextAnimation = asm.getNextAnimationName();
     if(nextAnimation && asm.animations[nextAnimation]){
       asm.animator.setAnimation(asm.animations[nextAnimation]);
+    }
+    else{
+      let obj = {
+        nextAnimation: nextAnimation,
+        ref: asm.animations[nextAnimation]
+      };
+      UTILITY.log("ACTOR" + "nextanimation invalid" + JSON.stringify(obj));
     }
   };
 
   return asm;
 };
-
-Actor.EVENT_HANDLER = function(events, state, manager){
-  // init
-  if(state?.initialized == null){
-    state.initialized = true;
-    state.direction = Actor.NORTH;
-    state.moving = false;
-  }
-
-  // Update state with events
-  while(events.length > 0){
-    var event = events.shift();
-    //console.log("EVENT: " + event);
-    switch(event){
-      case Actor.EVENTS.MOVE:
-        state.moving = true;
-      break;
-      case Actor.EVENTS.STOP:
-        state.moving = false;
-      break;
-      case Actor.EVENTS.FACE_NORTH:
-        state.direction = Actor.NORTH;
-      break;
-      case Actor.EVENTS.FACE_EAST:
-        state.direction = Actor.EAST;
-      break;
-      case Actor.EVENTS.FACE_SOUTH:
-        state.direction = Actor.SOUTH;
-      break;
-      case Actor.EVENTS.FACE_WEST:
-        state.direction = Actor.WEST;
-      break;
-    }
-
-    // Calculate event for state
-    var currentAnimation = null;
-    if(state.moving){
-      switch(state.direction){
-        case Actor.NORTH:
-          currentAnimation = "NORTH_MOVE";
-        break;
-        case Actor.SOUTH:
-          currentAnimation = "SOUTH_MOVE";
-        break;
-        case Actor.EAST:
-          currentAnimation = "EAST_MOVE";
-        break;
-        case Actor.WEST:
-          currentAnimation = "WEST_MOVE";
-        break;
-      }
-    }
-    else{
-      switch(state.direction){
-        case Actor.NORTH:
-          currentAnimation = "NORTH_STAND";
-        break;
-        case Actor.SOUTH:
-          currentAnimation = "SOUTH_STAND";
-        break;
-        case Actor.EAST:
-          currentAnimation = "EAST_STAND";
-        break;
-        case Actor.WEST:
-          currentAnimation = "WEST_STAND";
-        break;
-      }
-    }
-  }
-  if(currentAnimation){
-    manager.setAnimation(currentAnimation);
-  }
-};
-
-Actor.new = function(agent_constructor){
-  var wkr = {
-    id: GAME.getNextId(),
-    x: 100,
-    y: 100,
-    size: 50,
-    speed: 2.5
-  };
-  wkr.agent = agent_constructor(wkr);
-  var spriteSheet = GRAPHICS.loadImage("player.png");
-  wkr.spriteManager = SPRITES.Manager.new(
-    spriteSheet, // sheet
-    16, // width
-    32, // height
-    10, // columns
-    10, // rows
-    12, // frameRate
-    Actor.ANIMATIONS, // animations
-    Actor.EVENT_HANDLER // animation event handler
-  );
-  wkr.update = function(){
-    wkr.move();
-  }
-  
-  wkr.move = function(){
-    if(wkr.agent){
-      wkr.agent.move();  
-    }
-    
-  }
-  
-  wkr.draw = function(){
-    wkr.spriteManager.draw(wkr.x, wkr.y);
-  }
-  return wkr;
-}

@@ -3,6 +3,8 @@
 ##############################################################################*/
 var START = {};
 
+START.setup = false;
+
 START.mouseUp = function(){}
 
 START.drawStartButton = function(){
@@ -17,6 +19,9 @@ START.drawStartButton = function(){
 }
 
 START.update = function(){
+    if(START.setup == false){
+        START.setup = true;
+    }
     GRAPHICS.clearCanvas();
     this.drawStartButton();
 }

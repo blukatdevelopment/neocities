@@ -25,11 +25,8 @@ GAME.update = function(){
 }
 
 GAME.setup = function(){
-  GAME.walker = Actor.new(Agents.PLAYER_ONE);
-  for(let i = 0; i<1; i++){
-    let enemy = Actor.new(Agents.ENEMY);
-    GAME.enemies.push(enemy);
-  }
+  GAME.walker = ACTORFACTORY.playerOne();
+  GAME.walker.teleport(VECTOR3.new(100, 0, 100));
   GAME.isSetup = true;
 }
 

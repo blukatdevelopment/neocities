@@ -78,7 +78,7 @@ GRAPHICS.drawImageToImage = function(image, x1, y1, width1, height1, x2, y2, wid
   y2 = GRAPHICS.scale(y2);
   width2 = GRAPHICS.scale(width2);
   height2 = GRAPHICS.scale(height2);
-  
+
   let context = GRAPHICS.getContext();
   context.drawImage(image, x1, y1, width1, height1, x2, y2, width2, height2);
   GRAPHICS._context.imageSmoothingEnabled = false;
@@ -110,6 +110,9 @@ GRAPHICS.drawText = function(text, x, y){
 
 GRAPHICS.loadImage = function(fileName){
   let element = new Image();
+  element.addEventListener('error', function handleError() {
+    UTILITY.log("GRAPHICS", "Invalid URL", {url: element.src});
+  });
   element.src = SETTINGS.assetsUrl + fileName;
   return element;
 }
@@ -121,7 +124,7 @@ GRAPHICS.addImageAsync = function(fileName, object, key){
     if (isValid) {
       UTILITY.log("GRAPHICS", "Image URL valid. Loading.", { name: fileName });
       const img = new Image();
-      img.src = src;
+      img.src = fileName;
       object[key] = img;
     }
     else {

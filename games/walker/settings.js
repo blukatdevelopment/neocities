@@ -10,12 +10,13 @@ SETTINGS.prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocitie
 SETTINGS.assetsDirectory = "assets/";
 SETTINGS.defaultPlayerActor = "wrath";
 
-SETTINGS.fps = 60;
+SETTINGS.fps = 30;
 SETTINGS.frameDuration = 1000 / SETTINGS.fps;
 
 
 // Assumes A 2.5 dimensional world
 DIRECTIONS = {};
+DIRECTIONS.none = -1;
 DIRECTIONS.north = 0;
 DIRECTIONS.south = 1;
 DIRECTIONS.west = 2;
@@ -29,23 +30,31 @@ SETTINGS.viewportMax = 400;
 // The viewport is upscaled to the screen resolution
 SETTINGS.canvasMin = 0;
 SETTINGS.canvasMax = 800;
-SETTINGS.drawScale = SETTINGS.canvasMax / SETTINGS.viewPortMax;
 
+// Entity Factory
+let ENTITY_FACTORY = {};
+
+
+// Event config
+let EVENT_TYPES = {};
+EVENT_TYPES.actor = "actor";
+let EVENTS = {}; // Add global events here
 
 // Animation config
-SETTINGS.animationFrameRate = 12;
+SETTINGS.animationFrameRate = 6;
 SETTINGS.animationFrameDuration = 1000 / SETTINGS.animationFrameRate;
-SETTINGS.actorAnimationsList = [
-	"idleUp", "idleDown", "idleLeft", "idleRight",
-	"walkUp", "walkDown", "walkLeft", "walkRight",
-	"attackUp", "attackDown", "attackLeft", "attackRight",
-	"jumpUp", "jumpDown", "jumpLeft", "jumpRight",
-	"death", "deathIdle"
-];
 
 SETTINGS.animations = {};
 
 let ACTOR_ANIMATIONS = {};
+ACTOR_ANIMATIONS.idleUp = "idleUp";
+ACTOR_ANIMATIONS.idleDown = "idleDown";
+ACTOR_ANIMATIONS.idleLeft = "idleLeft";
+ACTOR_ANIMATIONS.idleRight = "idleRight";
+ACTOR_ANIMATIONS.walkUp = "walkUp";
+ACTOR_ANIMATIONS.walkDown = "walkDown";
+ACTOR_ANIMATIONS.walkLeft = "walkLeft";
+ACTOR_ANIMATIONS.walkRight = "walkRight";
 
 SETTINGS.actorList = [];
 SETTINGS.actorList.push({
@@ -75,10 +84,6 @@ SETTINGS.init = function(){
 	SETTINGS.baseUrl = SETTINGS.devMode ? SETTINGS.devUrl : SETTINGS.prodUrl;
 	SETTINGS.assetsUrl = SETTINGS.baseUrl + SETTINGS.assetsDirectory;
 
-	for(let i in SETTINGS.actorAnimationsList){
-		let animation = SETTINGS.actorAnimationsList;
-		ACTOR_ANIMATIONS[animation] = animation;
-	}
 	for(let actor of SETTINGS.actorList){
 		SPRITES.loadActorSprites(actor);
 	}
