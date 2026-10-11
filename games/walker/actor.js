@@ -15,6 +15,10 @@ ACTORFACTORY.playerOne = function(){
   pone.agent = agent;
   pone.animator = anm;
   pone.lockCamera = true;
+
+  pone.setCollider(PHYSICS.BoxCollider.new());
+  pone.getCollider().rect.position = VECTOR3.new(0, 8);
+  pone.getCollider().rect.size = VECTOR2.new(16, 16);
   return pone;
 };
 

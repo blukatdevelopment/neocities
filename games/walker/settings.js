@@ -96,7 +96,7 @@ SETTINGS.staticSheetList.push({
 	resolutionY: 16,
 	cells: 16,
 	sprites: [
-		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
+		"One", "Two", "Three", "Four",
 		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
 		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
 		"Placeholder", "Placeholder", "Placeholder", "Placeholder"

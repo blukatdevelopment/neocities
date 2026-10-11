@@ -141,9 +141,10 @@ PHYSICS.BoxCollider = {};
 PHYSICS.BoxCollider.new = function(){
     let bc = {
         entity: null,
+        rigid: true,
+        // rect is relative to parent entity
         rect: SHAPES.RECT.new(VECTOR2.new(0, 0), VECTOR2.new(0, 0))
     };
-
     return bc;
 };
 
@@ -153,7 +154,7 @@ PHYSICS.Controller.new = function(){
         colliders: []
     };
     ctl.registerCollider = function(collider){
-
+        ctl.colliders.push(collider);
     };
     return ctl;
 };

@@ -97,7 +97,8 @@ SPRITES.SpriteRenderer = {};
 SPRITES.SpriteRenderer.new = function(sprite, position){
   let sr = {
     sprite: sprite,
-    position: VECTOR3.new(0, 0, 0)
+    position: VECTOR3.new(0, 0, 0),
+    parent: null // inherent position from an object
   };
   if(position){
     sr.position = position;
@@ -106,7 +107,19 @@ SPRITES.SpriteRenderer.new = function(sprite, position){
     sr.draw();
   };
   sr.draw = function(){
-    SPRITES.renderSprite(sr.position.x, sr.position.z, sr.sprite.index, sr.sprite.sheet);
+    let pos = sr.position;
+    if(sr.parent){
+      pos = sr.parent.getPosition();
+    }
+    SPRITES.renderSprite(pos.x, pos.z, sr.sprite.index, sr.sprite.sheet);
+  };
+  sr.toString = function(){
+    let ret = "Renderer[";
+    ret += "sprite: " + sr.sprite.name;
+    ret += ", position: " + sr.position.toString();
+    ret += ", parent: " + parent;
+    ret += "]";
+    return ret;
   };
   return sr;
 };
