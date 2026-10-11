@@ -148,7 +148,7 @@ PHYSICS.BoxCollider.new = function(){
 PHYSICS.Controller = {};
 PHYSICS.Controller.new = function(){
     let ctl = {
-        colliders: [];
+        colliders: []
     };
     ctl.registerCollider = function(collider){
 
