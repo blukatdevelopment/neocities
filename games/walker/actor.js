@@ -14,6 +14,7 @@ ACTORFACTORY.playerOne = function(){
   let agent = AGENT.PLAYER_ONE.new(pone);
   pone.agent = agent;
   pone.animator = anm;
+  pone.lockCamera = true;
   return pone;
 };
 
@@ -33,12 +34,15 @@ ACTOR.new = function(){
     moving: false,
     prevMoving: false,
     size: 32,
-    speed: 2.5
+    speed: 5,
+    lockCamera: false
   };
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
-
+    if(atr.lockCamera && GRAPHICS.getDisplayMode() == DISPLAY_MODES.camera){
+      GRAPHICS.centerCamera(VECTOR2.new(atr.position.x, atr.position.z));
+    }
   };
   atr.teleport = function(destination){
     atr.position = destination;
@@ -74,7 +78,6 @@ ACTOR.new = function(){
     }
   };
   atr.draw = function(){
-    let events = UTILITY.getEventsByEntity(atr.entityId);
     atr.animator.update(atr.position.x, atr.position.z);
   };
   atr.toString = function(){

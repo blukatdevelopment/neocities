@@ -29,7 +29,11 @@ SETTINGS.viewportMin = 0;
 SETTINGS.viewportMax = 400;
 // The viewport is upscaled to the screen resolution
 SETTINGS.canvasMin = 0;
-SETTINGS.canvasMax = 800;
+SETTINGS.canvasMax = 700;
+
+let DISPLAY_MODES = {};
+DISPLAY_MODES.static = "static";
+DISPLAY_MODES.camera = "camera";
 
 // Entity Factory
 let ENTITY_FACTORY = {};
@@ -41,7 +45,7 @@ EVENT_TYPES.actor = "actor";
 let EVENTS = {}; // Add global events here
 
 // Animation config
-SETTINGS.animationFrameRate = 6;
+SETTINGS.animationFrameRate = 12;
 SETTINGS.animationFrameDuration = 1000 / SETTINGS.animationFrameRate;
 
 SETTINGS.animations = {};
@@ -75,6 +79,16 @@ SETTINGS.actorList.push({
 	]
 });
 
+SETTINGS.staticSheetList = [];
+SETTINGS.staticSheetList.push({
+	name: "village",
+	sheet: "village.png",
+	resolutionX: 1024,
+	resolutionY: 1024,
+	cells: 1,
+	sprites: ["village"]
+});
+
 // Sprite config
 SETTINGS.sheets = {};
 SETTINGS.sheets.actors = {};
@@ -86,6 +100,9 @@ SETTINGS.init = function(){
 
 	for(let actor of SETTINGS.actorList){
 		SPRITES.loadActorSprites(actor);
+	}
+	for(let sheet of SETTINGS.staticSheetList){
+		SPRITES.loadStaticSprites(sheet);
 	}
 }
 

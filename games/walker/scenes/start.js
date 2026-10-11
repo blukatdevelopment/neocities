@@ -20,6 +20,7 @@ START.drawStartButton = function(){
 
 START.update = function(){
     if(START.setup == false){
+        GRAPHICS.setDisplayMode(DISPLAY_MODES.static);
         START.setup = true;
     }
     GRAPHICS.clearCanvas();

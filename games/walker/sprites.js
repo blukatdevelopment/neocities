@@ -2,6 +2,7 @@
 # Sprites
 ##############################################################################*/
 var SPRITES = {};
+SPRITES.static = {};
 SPRITES.animations = {};
 SPRITES.sheets = {};
 
@@ -19,6 +20,18 @@ SPRITES.SpriteSheet.new = function(name, src, element, cells, resolutionX, resol
   return ss;
 };
 
+// A single cell to be rendered by a SpriteRenderer
+SPRITES.Sprite = {};
+SPRITES.Sprite.new = function(name, sheet, index){
+  let st = {
+    name: name,
+    sheet: sheet,
+    index: index
+  };
+  return st;
+};
+
+// A range of cells to be played in an Animator
 SPRITES.Animation = {};
 SPRITES.Animation.new = function(name, sheet, startIndex, endIndex){
   var anim = {
@@ -30,10 +43,20 @@ SPRITES.Animation.new = function(name, sheet, startIndex, endIndex){
   return anim;
 };
 
+SPRITES.loadStaticSprites = function(config){
+  UTILITY.log("SPRITES", "Loading static sprite config", config);
+  let element = GRAPHICS.loadImage(config.sheet);
+  let sheet = SPRITES.SpriteSheet.new(config.name, config.sheet, element, config.cells, config.resolutionX, config.resolutionY);
+  SPRITES.static[config.name] = {};
+  for(let i in config.sprites){
+    let sprite = SPRITES.Sprite.new(config.sprites[i], sheet, i);
+    SPRITES.static[config.name][sprite.name] = sprite;
+  }
+};
 
 SPRITES.loadActorSprites = function(config){
   UTILITY.log("SPRITES", "Loading Actor Config", config);
-  let element = GRAPHICS.loadImage(config.sheet);;
+  let element = GRAPHICS.loadImage(config.sheet);
   let sheet = SPRITES.SpriteSheet.new(config.name, config.sheet, element, config.cells, config.resolutionX, config.resolutionY);
   SPRITES.sheets[config.name] = sheet;
   SPRITES.animations[config.name] = {};
@@ -49,6 +72,13 @@ SPRITES.renderSprite = function(posX, posY, index, sheet){
   let offX = index * sheet.cellResolutionX;
   let offY = 0;
 
+  // Make relative to camera
+  if(GRAPHICS.getDisplayMode() == DISPLAY_MODES.camera){
+    let relative = GRAPHICS.relativeToCamera(VECTOR2.new(posX, posY));
+    posX = relative.x;
+    posY = relative.y;
+  }
+
   GRAPHICS.drawImageToImage(
       sheet.element, // Image
       offX, // X offset into image
@@ -60,6 +90,25 @@ SPRITES.renderSprite = function(posX, posY, index, sheet){
       sheet.cellResolutionX, 
       sheet.cellResolutionY 
    );
+};
+
+// Renders a single sprite with no animations
+SPRITES.SpriteRenderer = {};
+SPRITES.SpriteRenderer.new = function(sprite, position){
+  let sr = {
+    sprite: sprite,
+    position: VECTOR3.new(0, 0, 0)
+  };
+  if(position){
+    sr.position = position;
+  }
+  sr.update = function(){
+    sr.draw();
+  };
+  sr.draw = function(){
+    SPRITES.renderSprite(sr.position.x, sr.position.z, sr.sprite.index, sr.sprite.sheet);
+  };
+  return sr;
 };
 
 // Increments over the animation's cells using the animation clock
@@ -105,4 +154,4 @@ SPRITES.Animator.new = function(){
     }
   };
   return anr;
-}
+};

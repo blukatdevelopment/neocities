@@ -11,20 +11,60 @@ GRAPHICS.init = function(){
   GRAPHICS._canvas.height = SETTINGS.canvasMax;
   GRAPHICS._scale = SETTINGS.canvasMax / SETTINGS.viewportMax;
   GRAPHICS._context.imageSmoothingEnabled = false;
+  GRAPHICS._camera = GRAPHICS.Camera.new(VECTOR2.new(0,0), VECTOR2.new(400,400));
+  GRAPHICS.setDisplayMode(DISPLAY_MODES.static);
 }
+
+// Basic rectangular camera that can be panned
+GRAPHICS.Camera = {};
+GRAPHICS.Camera.new = function(position, size){
+  let cam = {
+    rect: SHAPES.RECT.new(position, size)
+  };
+  return cam;
+};
+
+
+GRAPHICS.getDisplayMode = function(){
+  return GRAPHICS._displayMode;
+};
+
+GRAPHICS.setDisplayMode = function(mode){
+  UTILITY.log("GRAPHICS", "Setting display mode", {mode: mode});
+  GRAPHICS._displayMode = mode;
+};
+
+// Returns global camera instance
+GRAPHICS.getCamera = function(){
+  return GRAPHICS._camera;
+};
+
+// Vector2
+GRAPHICS.centerCamera = function(point){
+  let size = GRAPHICS._camera.rect.size;
+  let centered = VECTOR2.new(point.x - (size.x/2), point.y - (size.y/2));
+  GRAPHICS._camera.rect.position = centered;
+};
+
+// Returns position relative to camera VECTOR2
+GRAPHICS.relativeToCamera = function(point){
+  //console.log("From " + point.toString() + " to " + GRAPHICS._camera.rect.position.toString());
+  let pos = GRAPHICS._camera.rect.position;
+  return VECTOR2.new(point.x - pos.x, point.y - pos.y);
+};
 
 // Scales from viewport to screen
 GRAPHICS.scale = function(viewport_units){
   return viewport_units * GRAPHICS._scale;
-}
+};
 
 GRAPHICS.getCanvas = function(){
   return GRAPHICS._canvas;
-}
+};
 
 GRAPHICS.getContext = function(){
   return GRAPHICS._context;
-}
+};
 
 GRAPHICS.drawCircle = function(x, y, radius){
   GRAPHICS._context.imageSmoothingEnabled = false;
@@ -33,7 +73,7 @@ GRAPHICS.drawCircle = function(x, y, radius){
   context.arc(x, y, radius, 0, 2 * Math.PI);
   context.fill();
   GRAPHICS._context.imageSmoothingEnabled = false;
-}
+};
 
 GRAPHICS.drawLine = function(x1, y1, x2, y2){
   GRAPHICS._context.imageSmoothingEnabled = false;
@@ -47,7 +87,7 @@ GRAPHICS.drawLine = function(x1, y1, x2, y2){
   context.lineTo(x2, y2);
   context.stroke();
   GRAPHICS._context.imageSmoothingEnabled = false;
-}
+};
 
 GRAPHICS.clearCanvas = function(){
   GRAPHICS._context.imageSmoothingEnabled = false;
@@ -56,7 +96,7 @@ GRAPHICS.clearCanvas = function(){
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.beginPath();
   GRAPHICS._context.imageSmoothingEnabled = false;
-}
+};
 
 // XY is for top left corner.
 GRAPHICS.drawBox = function(x, y, width, height){
@@ -70,7 +110,7 @@ GRAPHICS.drawBox = function(x, y, width, height){
   // Right
   GRAPHICS.drawLine(x+width, y, x+width, y+height);
   GRAPHICS._context.imageSmoothingEnabled = false;
-}
+};
 
 GRAPHICS.drawImageToImage = function(image, x1, y1, width1, height1, x2, y2, width2, height2){
   GRAPHICS._context.imageSmoothingEnabled = false;
@@ -82,7 +122,7 @@ GRAPHICS.drawImageToImage = function(image, x1, y1, width1, height1, x2, y2, wid
   let context = GRAPHICS.getContext();
   context.drawImage(image, x1, y1, width1, height1, x2, y2, width2, height2);
   GRAPHICS._context.imageSmoothingEnabled = false;
-}
+};
 
 GRAPHICS.drawImage = function(image, x, y, width, height){
   GRAPHICS._context.imageSmoothingEnabled = false;
@@ -94,7 +134,7 @@ GRAPHICS.drawImage = function(image, x, y, width, height){
   let context = GRAPHICS.getContext();
   context.drawImage(image, x, y, width, height);
   GRAPHICS._context.imageSmoothingEnabled = false;
-}
+};
 
 GRAPHICS.drawText = function(text, x, y){
   GRAPHICS._context.imageSmoothingEnabled = false;
@@ -106,7 +146,7 @@ GRAPHICS.drawText = function(text, x, y){
   context.font = "" + textSize + "px Arial";
   context.fillText(text, x, y);
   GRAPHICS._context.imageSmoothingEnabled = false;
-}
+};
 
 GRAPHICS.loadImage = function(fileName){
   let element = new Image();
@@ -115,7 +155,7 @@ GRAPHICS.loadImage = function(fileName){
   });
   element.src = SETTINGS.assetsUrl + fileName;
   return element;
-}
+};
 
 // Applies async validation before actually adding to object
 GRAPHICS.addImageAsync = function(fileName, object, key){
@@ -131,7 +171,7 @@ GRAPHICS.addImageAsync = function(fileName, object, key){
       UTILITY.log("GRAPHICS", "Image URL invalid.", { name: fileName });
     }
   });
-}
+};
 
 GRAPHICS.isValidImage = function(src) {
   return new Promise((resolve) => {
@@ -142,4 +182,4 @@ GRAPHICS.isValidImage = function(src) {
 
     img.src = src;
   });
-}
+};

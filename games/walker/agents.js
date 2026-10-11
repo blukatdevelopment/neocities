@@ -30,10 +30,8 @@ AGENT.PLAYER_ONE.new = function(actor){
 	    	if(atr.moving){
 	    		atr.moving = false;	
 	    	}
-	    	
 	    }
 	    else{
-	    	UTILITY.addActorEvent(aId, EVENTS.move);
 	    	if(x < 0){
 	    		atr.move(DIRECTIONS.west);
 	    	}
