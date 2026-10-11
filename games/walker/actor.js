@@ -1,5 +1,5 @@
 /*##############################################################################
-# Actor class
+# Actor-related classes
 ##############################################################################*/
 var ACTORFACTORY = {};
 
@@ -22,21 +22,19 @@ ACTORFACTORY.npc = function(){
   // TODO
 };
 
+// implements iEntity, inherits base entity
 var ACTOR = {};
 ACTOR.new = function(){
-  let atr = {
-    entityId: UTILITY.getNextEntityId(),
-    stateMachine: null,
-    position: VECTOR3.new(0, 0, 0),
-    prevPosition: VECTOR3.new(0, 0, 0),
-    direction: DIRECTIONS.east,
-    prevDirection: DIRECTIONS.east,
-    moving: false,
-    prevMoving: false,
-    size: 32,
-    speed: 5,
-    lockCamera: false
-  };
+  let atr = ENTITY.baseEntity.new();
+  atr.stateMachine = null;
+  atr.prevPosition = VECTOR3.new(0, 0, 0);
+  atr.direction = DIRECTIONS.east;
+  atr.prevDirection = DIRECTIONS.east;
+  atr.moving = false;
+  atr.prevMoving = false;
+  atr.size = 32;
+  atr.speed = 5;
+  atr.lockCamera = false;
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();

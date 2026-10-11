@@ -140,8 +140,10 @@ let PHYSICS = {};
 PHYSICS.BoxCollider = {};
 PHYSICS.BoxCollider.new = function(){
     let bc = {
-        entity: null
+        entity: null,
+        rect: SHAPES.RECT.new(VECTOR2.new(0, 0), VECTOR2.new(0, 0))
     };
+
     return bc;
 };
 

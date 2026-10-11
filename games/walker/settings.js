@@ -89,6 +89,20 @@ SETTINGS.staticSheetList.push({
 	sprites: ["village"]
 });
 
+SETTINGS.staticSheetList.push({
+	name: "items",
+	sheet: "items.png",
+	resolutionX: 16,
+	resolutionY: 16,
+	cells: 16,
+	sprites: [
+		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
+		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
+		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
+		"Placeholder", "Placeholder", "Placeholder", "Placeholder"
+	]
+});
+
 // Sprite config
 SETTINGS.sheets = {};
 SETTINGS.sheets.actors = {};
