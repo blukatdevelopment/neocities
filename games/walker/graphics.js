@@ -136,16 +136,23 @@ GRAPHICS.drawImage = function(image, x, y, width, height){
   GRAPHICS._context.imageSmoothingEnabled = false;
 };
 
+// Draw text at static point
 GRAPHICS.drawText = function(text, x, y){
   GRAPHICS._context.imageSmoothingEnabled = false;
+  let textSize = GRAPHICS.scale(10);
   x = GRAPHICS.scale(x);
   y = GRAPHICS.scale(y);
-  let textSize = GRAPHICS.scale(30);
-
   let context = GRAPHICS.getContext()
   context.font = "" + textSize + "px Arial";
   context.fillText(text, x, y);
   GRAPHICS._context.imageSmoothingEnabled = false;
+};
+
+// Draw text relative to viewport
+GRAPHICS.drawTextRelative = function(text, x, y){
+  GRAPHICS._context.imageSmoothingEnabled = false;
+  let relative = GRAPHICS.relativeToCamera(VECTOR2.new(x, y));
+  GRAPHICS.drawText(text, relative.x, relative.y);
 };
 
 GRAPHICS.loadImage = function(fileName){

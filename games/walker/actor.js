@@ -17,8 +17,8 @@ ACTORFACTORY.playerOne = function(){
   pone.lockCamera = true;
 
   pone.setCollider(PHYSICS.BoxCollider.new());
-  pone.getCollider().rect.position = VECTOR3.new(0, 8);
-  pone.getCollider().rect.size = VECTOR2.new(16, 16);
+  pone.getCollider().rect.position = VECTOR3.new(16, 16);
+  pone.getCollider().rect.size = VECTOR2.new(32, 32);
   return pone;
 };
 
@@ -52,32 +52,39 @@ ACTOR.new = function(){
   };
   atr.move = function(direction){
     atr.moving = true;
+    let dest = VECTOR3.new(atr.position.x, atr.position.y, atr.position.z);
     switch(direction){
       case DIRECTIONS.north:
-        atr.position.z -= atr.speed;
+        dest.z -= atr.speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.south:
-        atr.position.z += atr.speed;
+        dest.z += atr.speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.east:
-        atr.position.x += atr.speed;
+        dest.x += atr.speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.west:
-        atr.position.x -= atr.speed;
+        dest.x -= atr.speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.up:
-        atr.position.y += atr.speed;
+        dest.y += atr.speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.down:
-        atr.position.y -= atr.speed;
+        dest.y -= atr.speed;
         atr.direction = direction;
       break;
     }
+    let dest2D = VECTOR2.new(dest.x, dest.z);
+    let collision = atr.collider.moveAndCollideShort(dest2D);
+    if(collision){
+      return;
+    }
+    atr.position = dest;
   };
   atr.draw = function(){
     atr.animator.update(atr.position.x, atr.position.z);

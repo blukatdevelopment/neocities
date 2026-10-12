@@ -8,6 +8,7 @@ GAME.walker = null;
 GAME.entities = [];
 GAME.scenery = [];
 GAME.physics = false;
+GAME.debugText = "";
 
 GAME.setup = function(){
   GAME.physics = PHYSICS.Controller.new();
@@ -21,9 +22,10 @@ GAME.setup = function(){
   GAME.scenery.push(background);
   
   // Add in some random pieces of scenery
-  for(let i = 0; i<10; i++){
+  for(let i = 0; i < 10; i++){
     let sc = ENTITYFACTORY.Scenery(SPRITES.static.items.One);
-    sc.setPosition(VECTOR3.new(UTILITY.randRange(16, 1008), 0, UTILITY.randRange(16, 1008)));
+    //sc.setPosition(VECTOR3.new(UTILITY.randRange(16, 1008), 0, UTILITY.randRange(16, 1008)));
+    sc.setPosition(VECTOR3.new(32*i, 0, 32*i));
     GAME.addEntity(sc);
   }
 
@@ -38,8 +40,9 @@ GAME.update = function(){
   for(let e in GAME.entities){
     let entity = GAME.entities[e];
     entity.update();
+    entity.label = entity.collider.absoluteRect().toString();
   }
-
+  GAME.debugMessage(GAME.walker.collider.absoluteRect().toString());
   this.drawGAMEScreen();
 }
 
@@ -52,13 +55,19 @@ GAME.drawGAMEScreen = function(){
     let entity = GAME.entities[e];
     entity.draw();
   }
+
+  GRAPHICS.drawText(GAME.debugText, 10, 10);
 }
 
 GAME.addEntity = function(entity){
   GAME.entities.push(entity);
-  GAME.physics.registerCollider(entity.getCollider);
+  GAME.physics.registerCollider(entity.getCollider());
 }
 
 GAME.mouseDown = function(evt){}
 
 GAME.mouseUp = function(evt){}
+
+GAME.debugMessage = function(message){
+  GAME.debugText = message;
+};

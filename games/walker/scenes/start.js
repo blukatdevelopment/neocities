@@ -45,3 +45,7 @@ START.mouseDown = function(){
         SCENE.setActiveScene(SCENE.SCENES.GAME);
     }
 }
+
+START.debugMessage = function(message){
+
+};

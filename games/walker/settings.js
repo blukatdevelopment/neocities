@@ -30,6 +30,7 @@ SETTINGS.viewportMax = 400;
 // The viewport is upscaled to the screen resolution
 SETTINGS.canvasMin = 0;
 SETTINGS.canvasMax = 700;
+SETTINGS.drawScale = SETTINGS.canvasMax / SETTINGS.viewportMax;
 
 let DISPLAY_MODES = {};
 DISPLAY_MODES.static = "static";

@@ -8,3 +8,6 @@ Handler for mouse down events
 
 ## void mouseUp(Vector2 evt)
 Hanndler for mouse up events
+
+## void debugMessage(string message)
+Display debug info on the screen

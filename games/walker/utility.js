@@ -18,6 +18,12 @@ VECTOR2.new = function(x, y){
         x: x,
         y: y
     };
+    v2.distance = function(point){
+        var a = v2.x - point.x;
+        var b = v2.y - point.y;
+
+        return Math.sqrt( a*a + b*b );
+    }
     v2.toString = function(){
         return "{" + v2.x + ", " + v2.y + "}";
     };
@@ -49,7 +55,6 @@ SHAPES.RECT.new = function(position, size){
             rect.position.y + rect.size.y/2
         );
     };
-    // Bottom Right corner
     rect.extents = function(){
         return VECTOR2.new(
             rect.position.x+rect.size.x,
@@ -61,6 +66,12 @@ SHAPES.RECT.new = function(position, size){
             rect.position.x+rect.size.x,
             rect.position.y
         );
+    };
+    rect.topLeft = function(){
+        return rect.position;
+    };
+    rect.bottomRight = function(){
+        return rect.extents;
     };
     rect.bottomLeft = function(){
         return VECTOR2.new(
@@ -93,11 +104,23 @@ SHAPES.RECT.new = function(position, size){
         }
         return false;
     };
+    rect.toString = function(){
+        let ret = "Rect[";
+        ret += rect.position.toString();
+        ret += ", " + rect.size.toString();
+        ret += "]";
+        return ret;
+    };
 
     return rect;
 };
 
-// Output wrapper
+// Print to screen for active scene when possible.
+UTILITY.debugMessage = function(message){
+    SCENE.debugMessage(message);
+};
+
+// Console output wrapper
 UTILITY.log = function(sender, message, context){
 	if(SETTINGS._logLevel == 0){
 		// Log level 0, do nothing
@@ -135,15 +158,69 @@ UTILITY.getActorConfig = function(name){
 }
 
 // Physics
-
 let PHYSICS = {};
+
+
+PHYSICS.Collision = {};
+PHYSICS.Collision.new = function(first, second){
+    let col = {
+        first: first, // Collider initiating collision
+        second: second // Collider
+    };
+    return col;
+};
+
 PHYSICS.BoxCollider = {};
 PHYSICS.BoxCollider.new = function(){
     let bc = {
-        entity: null,
+        parent: null,
         rigid: true,
         // rect is relative to parent entity
-        rect: SHAPES.RECT.new(VECTOR2.new(0, 0), VECTOR2.new(0, 0))
+        rect: SHAPES.RECT.new(VECTOR2.new(0, 0), VECTOR2.new(0, 0)),
+        controller: null
+    };
+    // Account for parent position
+    bc.absoluteRect = function(){
+        let pos = bc.rect.position;
+        if(bc.parent){
+            let ppos = bc.parent.getPosition();
+            pos = VECTOR2.new(ppos.x+pos.x, ppos.z+pos.y);
+        }
+        let size = bc.rect.size;
+        let rect = SHAPES.RECT.new(pos, size);
+        return rect;
+    };
+    bc.contains = function(point){
+        let rect = bc.absoluteRect();
+        return rect.contains(point);
+    };
+    bc.overlaps = function(otherCollider){
+        let rect = bc.absoluteRect();
+        return otherCollider.contains(rect.topLeft()) || otherCollider.contains(rect.topRight()) || otherCollider.contains(rect.bottomLeft()) || otherCollider.contains(rect.bottomRight());
+    };
+    // Makes one check, assuming distance is less than scale
+    bc.moveAndCollideShort = function(destination){
+        if(bc.controller && bc.parent){
+            let currentPosition = bc.rect.position;
+            bc.rect.position = destination;
+            let excludeList = [];
+            excludeList.push(bc.parent.getEntityId());
+            let ret = bc.controller.checkForCollision(excludeList, bc);
+            bc.rect.position = currentPosition;
+            return ret;
+        }
+        else{
+            UTILITY.log("BoxCollider.moveAndCollide()", "BoxCollider not assigned to physics controller.", { controller: bc.controller == null, parent: bc.parent == null});
+        }
+    };
+    bc.toString = function(){
+        let parent = "null";
+        if(bc.parent){
+            parent = bc.parent.getName();
+        }
+        let ret = "BoxCollider[Parent: " + parent;
+        ret += ", " + bc.absoluteRect().toString() + "]";
+        return ret;
     };
     return bc;
 };
@@ -155,6 +232,20 @@ PHYSICS.Controller.new = function(){
     };
     ctl.registerCollider = function(collider){
         ctl.colliders.push(collider);
+        collider.controller = ctl;
+    };
+    ctl.checkForCollision = function(excludeList, collider){
+        //console.log("Exclude list" + JSON.stringify(excludeList));
+        for(let cl of ctl.colliders){
+            if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
+                //console.log("Check for collision" + collider.toString());
+                if(collider.overlaps(cl)){
+                    return PHYSICS.Collision.new(collider, cl);
+                }
+                //console.log("No collision: " + collider.toString() + ", " + cl.toString());
+            }
+        }
+        return null;
     };
     return ctl;
 };

@@ -9,7 +9,8 @@ ENTITYFACTORY.Scenery = function(_sprite){
     sc.renderer = SPRITES.SpriteRenderer.new(_sprite);
     sc.renderer.parent = sc;
     sc.setCollider(PHYSICS.BoxCollider.new());
-    sc.getCollider().rect.size = VECTOR2.new(16, 16);
+    sc.collider.rect.position = VECTOR2.new(8, 8);
+    sc.collider.rect.size = VECTOR2.new(16, 16);
     return sc;
 };
 
@@ -24,7 +25,8 @@ ENTITY.baseEntity.new = function(){
         entityId: UTILITY.getNextEntityId(),
         position: VECTOR3.new(0, 0, 0),
         collider: PHYSICS.BoxCollider.new(),
-        renderer: null
+        renderer: null,
+        label: ""
     };
     be.collider.entity = be;
     be.getName = function(){ return be.name; };
@@ -36,6 +38,9 @@ ENTITY.baseEntity.new = function(){
         if(be.renderer){
             be.renderer.draw();
         }
+        if(be.label != ""){
+            GRAPHICS.drawTextRelative(be.label, be.position.x, be.position.z);
+        }
     };
     be.getPosition = function(){ return be.position; };
     be.setPosition = function(newPosition){
@@ -44,7 +49,7 @@ ENTITY.baseEntity.new = function(){
     be.getCollider = function(){ return be.collider; };
     be.setCollider = function(newCollider){
         be.collider = newCollider;
-        be.collider.entity = be;
+        be.collider.parent = be;
     };
     be.toString = function(){
         let ret = "[";

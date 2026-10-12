@@ -18,21 +18,21 @@ SCENE.mouseDown = function(evt){
   if(activeScene != null){
     activeScene.mouseDown(evt);
   }
-}
+};
 
 SCENE.mouseUp = function(evt){
   var activeScene = this.getActiveScene();
   if(activeScene != null){
     activeScene.mouseUp(evt);
   }
-}
+};
 
 SCENE.update = function(){
   var activeScene = SCENE.getActiveScene();
   if(activeScene != null){
     activeScene.update();
   }
-}
+};
 
 // Returns iScene
 // This is hardcoded for the current project
@@ -44,9 +44,13 @@ SCENE.getActiveScene = function(){
       return START;
   }
       return null;
-}
+};
 
 // accepts iScene
 SCENE.setActiveScene = function(scene){
   SCENE._activeScene = scene;
-}
+};
+
+SCENE.debugMessage = function(message){
+  SCENE._activeScene.debugMessage(message);
+};
