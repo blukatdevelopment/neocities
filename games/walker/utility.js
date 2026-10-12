@@ -167,6 +167,13 @@ PHYSICS.Collision.new = function(first, second){
         first: first, // Collider initiating collision
         second: second // Collider
     };
+    col.toString = function(){
+        let ret = "Collision[";
+        ret += col.first.toString();
+        ret += ", " + col.second.toString();
+        ret += "]";
+        return ret;
+    };
     return col;
 };
 
@@ -204,23 +211,23 @@ PHYSICS.BoxCollider.new = function(){
         let bl = otherRect.contains(rect.bottomLeft());
         let br = otherRect.contains(rect.bottomRight());
         let cr = otherRect.contains(rect.center());
-        if(tl || tr || bl || br || cr){
-            console.log("Collision!");
-        }
-        return tl || tr || bl || br || cr;
-        //return otherCollider.contains(rect.topLeft()) || otherCollider.contains(rect.topRight()) || otherCollider.contains(rect.bottomLeft()) || otherCollider.contains(rect.bottomRight());
+        return tl || tr || bl || br || cr;       
     };
     // Makes one check, assuming distance is less than scale
+    // Destination is VECTOR3
     bc.moveAndCollideShort = function(destination){
         if(bc.controller && bc.parent){
-            let rect = bc.absoluteRect();
-            let currentPosition = rect.position;
-            rect.position = destination;
+            let previous = bc.parent.getPosition();
+            bc.parent.setPosition(VECTOR3.new(destination.x, previous.y, destination.y));
             let excludeList = [];
             excludeList.push(bc.parent.getEntityId());
             let ret = bc.controller.checkForCollision(excludeList, bc);
-            rect.position = currentPosition;
-            return ret;
+            if(ret){
+                //revert upon collision
+                bc.parent.setPosition(previous);
+                return ret;
+            }
+            return null;
         }
         else{
             UTILITY.log("BoxCollider.moveAndCollide()", "BoxCollider not assigned to physics controller.", { controller: bc.controller == null, parent: bc.parent == null});
@@ -251,10 +258,14 @@ PHYSICS.Controller.new = function(){
         for(let cl of ctl.colliders){
             if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
                 if(collider.overlaps(cl)){
-                    console.log("Collision!");
-                    return PHYSICS.Collision.new(collider, cl);
+                    let col = PHYSICS.Collision.new(collider, cl);
+                    console.log(col.toString());
+                    return col;
                 }
             }
+            if(cl.parent.getName() == "item9"){
+                console.log("No collision: " + collider.toString() + ", " + cl.toString());
+            }            
         }
         return null;
     };

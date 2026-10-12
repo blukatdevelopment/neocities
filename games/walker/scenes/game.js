@@ -24,6 +24,7 @@ GAME.setup = function(){
   // Add in some random pieces of scenery
   for(let i = 0; i < 10; i++){
     let sc = ENTITYFACTORY.Scenery(SPRITES.static.items.One);
+    sc.name += "" + i;
     //sc.setPosition(VECTOR3.new(UTILITY.randRange(16, 1008), 0, UTILITY.randRange(16, 1008)));
     sc.setPosition(VECTOR3.new(32*i, 0, 32*i));
     GAME.addEntity(sc);
@@ -40,10 +41,10 @@ GAME.update = function(){
   for(let e in GAME.entities){
     let entity = GAME.entities[e];
     entity.update();
-    entity.label = entity.collider.absoluteRect().toString();
+    //entity.label = entity.getName() + entity.collider.absoluteRect().toString();
   }
-  GAME.debugMessage(GAME.walker.collider.absoluteRect().toString());
-  GAME.debugMessage(GAME.walker.label);
+  //GAME.debugMessage(GAME.walker.collider.absoluteRect().toString());
+  //GAME.debugMessage(GAME.walker.label);
   this.drawGAMEScreen();
 }
 

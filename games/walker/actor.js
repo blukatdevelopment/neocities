@@ -17,7 +17,7 @@ ACTORFACTORY.playerOne = function(){
   pone.lockCamera = true;
 
   pone.setCollider(PHYSICS.BoxCollider.new());
-  pone.getCollider().rect.position = VECTOR3.new(16, 16);
+  pone.getCollider().rect.position = VECTOR3.new(0, 0);
   pone.getCollider().rect.size = VECTOR2.new(32, 32);
   pone.name = "player";
   return pone;
@@ -84,7 +84,7 @@ ACTOR.new = function(){
     if(atr.collider.moveAndCollideShort(dest2D)){
       return;
     }
-    atr.position = dest;
+    //atr.position = dest;
   };
   atr.draw = function(){
     atr.animator.update(atr.position.x, atr.position.z);
