@@ -11,6 +11,7 @@ ENTITYFACTORY.Scenery = function(_sprite){
     sc.setCollider(PHYSICS.BoxCollider.new());
     sc.collider.rect.position = VECTOR2.new(8, 8);
     sc.collider.rect.size = VECTOR2.new(16, 16);
+    sc.name = "item";
     return sc;
 };
 

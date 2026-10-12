@@ -19,6 +19,7 @@ ACTORFACTORY.playerOne = function(){
   pone.setCollider(PHYSICS.BoxCollider.new());
   pone.getCollider().rect.position = VECTOR3.new(16, 16);
   pone.getCollider().rect.size = VECTOR2.new(32, 32);
+  pone.name = "player";
   return pone;
 };
 
@@ -80,14 +81,16 @@ ACTOR.new = function(){
       break;
     }
     let dest2D = VECTOR2.new(dest.x, dest.z);
-    let collision = atr.collider.moveAndCollideShort(dest2D);
-    if(collision){
+    if(atr.collider.moveAndCollideShort(dest2D)){
       return;
     }
     atr.position = dest;
   };
   atr.draw = function(){
     atr.animator.update(atr.position.x, atr.position.z);
+    if(atr.label != ""){
+      GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.z);
+    }
   };
   atr.toString = function(){
     let str = "[";

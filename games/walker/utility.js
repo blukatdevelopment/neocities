@@ -71,7 +71,7 @@ SHAPES.RECT.new = function(position, size){
         return rect.position;
     };
     rect.bottomRight = function(){
-        return rect.extents;
+        return rect.extents();
     };
     rect.bottomLeft = function(){
         return VECTOR2.new(
@@ -81,16 +81,16 @@ SHAPES.RECT.new = function(position, size){
     };
     rect.contains = function(point){
         let pos = rect.position;
-        let ext = rect.extents;
+        let ext = rect.extents();
         if(point.x >= pos.x && point.x <= ext.x){
-            if(point.y >= pos.y && point.y <= ext.y){
+            if(point.y >= pos.y  && point.y <= ext.y){
                 return true;
             }
         }
         return false;
     };
     rect.overlaps = function(otherRect){
-        if(rect.contains(otherRect.position)){
+        if(rect.contains(otherRect.position())){
             return true; 
         }
         if(rect.contains(otherRect.extents())){
@@ -170,6 +170,7 @@ PHYSICS.Collision.new = function(first, second){
     return col;
 };
 
+// Assuming only box colliders will exist.
 PHYSICS.BoxCollider = {};
 PHYSICS.BoxCollider.new = function(){
     let bc = {
@@ -194,19 +195,31 @@ PHYSICS.BoxCollider.new = function(){
         let rect = bc.absoluteRect();
         return rect.contains(point);
     };
+    // Assumes another box collider
     bc.overlaps = function(otherCollider){
         let rect = bc.absoluteRect();
-        return otherCollider.contains(rect.topLeft()) || otherCollider.contains(rect.topRight()) || otherCollider.contains(rect.bottomLeft()) || otherCollider.contains(rect.bottomRight());
+        let otherRect = otherCollider.absoluteRect();
+        let tl = otherRect.contains(rect.topLeft());
+        let tr = otherRect.contains(rect.topRight());
+        let bl = otherRect.contains(rect.bottomLeft());
+        let br = otherRect.contains(rect.bottomRight());
+        let cr = otherRect.contains(rect.center());
+        if(tl || tr || bl || br || cr){
+            console.log("Collision!");
+        }
+        return tl || tr || bl || br || cr;
+        //return otherCollider.contains(rect.topLeft()) || otherCollider.contains(rect.topRight()) || otherCollider.contains(rect.bottomLeft()) || otherCollider.contains(rect.bottomRight());
     };
     // Makes one check, assuming distance is less than scale
     bc.moveAndCollideShort = function(destination){
         if(bc.controller && bc.parent){
-            let currentPosition = bc.rect.position;
-            bc.rect.position = destination;
+            let rect = bc.absoluteRect();
+            let currentPosition = rect.position;
+            rect.position = destination;
             let excludeList = [];
             excludeList.push(bc.parent.getEntityId());
             let ret = bc.controller.checkForCollision(excludeList, bc);
-            bc.rect.position = currentPosition;
+            rect.position = currentPosition;
             return ret;
         }
         else{
@@ -235,14 +248,12 @@ PHYSICS.Controller.new = function(){
         collider.controller = ctl;
     };
     ctl.checkForCollision = function(excludeList, collider){
-        //console.log("Exclude list" + JSON.stringify(excludeList));
         for(let cl of ctl.colliders){
             if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
-                //console.log("Check for collision" + collider.toString());
                 if(collider.overlaps(cl)){
+                    console.log("Collision!");
                     return PHYSICS.Collision.new(collider, cl);
                 }
-                //console.log("No collision: " + collider.toString() + ", " + cl.toString());
             }
         }
         return null;

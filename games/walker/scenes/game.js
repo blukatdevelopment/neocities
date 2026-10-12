@@ -14,7 +14,7 @@ GAME.setup = function(){
   GAME.physics = PHYSICS.Controller.new();
 
   GAME.walker = ACTORFACTORY.playerOne();
-  GAME.walker.teleport(VECTOR3.new(100, 0, 100));
+  GAME.walker.teleport(VECTOR3.new(100, 0, 300));
   GAME.addEntity(GAME.walker);
 
   // Add in background
@@ -43,6 +43,7 @@ GAME.update = function(){
     entity.label = entity.collider.absoluteRect().toString();
   }
   GAME.debugMessage(GAME.walker.collider.absoluteRect().toString());
+  GAME.debugMessage(GAME.walker.label);
   this.drawGAMEScreen();
 }
 
