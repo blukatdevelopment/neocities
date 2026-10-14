@@ -45,6 +45,11 @@ AGENT.PLAYER_ONE.new = function(actor){
 	    		atr.move(DIRECTIONS.north);
 	    	}
 	    }
+
+	    if(INPUT.key(INPUT.KEYS.K_SPACE)){
+	    	// Interact/attack logic here
+	    	console.log("Spacebar pressed!");
+	    }
 	};
 	return pone;
 }

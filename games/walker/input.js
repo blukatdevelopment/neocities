@@ -31,40 +31,50 @@ INPUT.activeKeys = {};
 
 INPUT.getMousePosition = function(){
   return INPUT._mousePos;
-}
+};
 
 INPUT.key = function(which){
   if(!(which in INPUT.activeKeys)){
     return false;
   }
   return INPUT.activeKeys[which];
-}
+};
 
 INPUT.onMouseDown = function(evt){
   SCENE.mouseDown(evt);
-}
+};
+
 INPUT.onMouseUp = function(evt){
   SCENE.mouseUp(evt);
-}
-INPUT.onMouseMove = function(evt)
-{
+};
+
+INPUT.onMouseMove = function(evt){
   var rect = GRAPHICS.getCanvas().getBoundingClientRect();
   INPUT._mousePos = {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top
   };
-}
-INPUT.onMouseOut = function(evt){}
+};
+
+INPUT.onMouseOut = function(evt){};
+
 INPUT.onKeyDown = function(evt){
   if(evt.which in INPUT.activeKeys){
     INPUT.activeKeys[evt.which] = true;
   }
-}
+};
+
 INPUT.onKeyUp = function(evt){
   if(evt.which in INPUT.activeKeys){
     INPUT.activeKeys[evt.which] = false;
   }
-}
+};
+
+INPUT.cancelSpacebarScroll = function(evt){
+  if(evt.keyCode == INPUT.KEYS.K_SPACE && evt.target == document.body) {
+    evt.preventDefault();
+  }
+};
 
 INPUT.initInput = function(){
   for(let i in KEYS_USED){
@@ -78,4 +88,5 @@ INPUT.initInput = function(){
   canvas.addEventListener("mouseout", INPUT.onMouseOut);
   window.addEventListener('keydown', INPUT.onKeyDown, false);
   window.addEventListener('keyup', INPUT.onKeyUp, false);
+  window.addEventListener('keydown', INPUT.cancelSpacebarScroll, false);
 }
