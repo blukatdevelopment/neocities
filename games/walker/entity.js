@@ -64,7 +64,11 @@ ENTITY.baseEntity.new = function(){
         ret += ", pos: " + be.position.toString();
         return ret;
     };
+    be.centeredPosition = function(){
+        return be.collider.absoluteRect().center();
+    };
     be.onCollide = function(collision){};
+    be.onInteract = function(interaction){};
 
     return be;
 };
@@ -76,12 +80,17 @@ ENTITY.Scenery.new = function(){
     return sc;
 };
 
+// An item intended to be picked up by the player
 ENTITY.PickUp = {};
 ENTITY.PickUp.new = function(){
     let pue = ENTITY.baseEntity.new();
     pue.setCollider(PHYSICS.BoxCollider.new());
     pue.collider.rigid = false;
     pue.onCollide = function(collision){
+        //SCENE.destroyEntity(pue);
+    };
+    pue.onInteract = function(interaction){
+        console.log("I was interacted with!");
         SCENE.destroyEntity(pue);
     };
     return pue;

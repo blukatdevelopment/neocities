@@ -84,7 +84,6 @@ ACTOR.new = function(){
     if(atr.collider.moveAndCollideShort(dest2D)){
       return;
     }
-    //atr.position = dest;
   };
   atr.draw = function(){
     atr.animator.update(atr.position.x, atr.position.z);
@@ -92,7 +91,18 @@ ACTOR.new = function(){
       GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.z);
     }
   };
+  atr.interact = function(){
+    let dir = VECTOR2.vectorFromDirection(atr.direction);
+    let pos = atr.centeredPosition();
+    let pointer = VECTOR2.new(dir.x * atr.size, dir.y * atr.size);
+    pointer = VECTOR2.new(pointer.x + pos.x, pointer.y + pos.y);
+    let colliders = atr.collider.controller.getCollidersByPoint([atr.getEntityId()], pointer);
+    for(let cl of colliders){
+      cl.parent.onInteract({});
+    }
+  };
   atr.onCollide = function(collision){};
+  atr.onInteract = function(interaction){};
   atr.toString = function(){
     let str = "[";
     str += "ID: " + atr.entityId;

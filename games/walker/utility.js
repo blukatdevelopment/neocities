@@ -29,6 +29,34 @@ VECTOR2.new = function(x, y){
     };
     return v2;
 };
+VECTOR2.vectorFromDirection = function(direction){
+    switch(direction){
+        case DIRECTIONS.none:
+            return VECTOR2.new(0, 0);
+        break;
+        case DIRECTIONS.north:
+            return VECTOR2.north();
+        break;
+        case DIRECTIONS.south:
+            return VECTOR2.south();
+        break;
+        case DIRECTIONS.east:
+            return VECTOR2.east();
+        break;
+        case DIRECTIONS.west:
+            return VECTOR2.west();
+        break;
+    }
+};
+VECTOR2.north = function(){ return VECTOR2.new(0, 1); };
+VECTOR2.south = function(){ return VECTOR2.new(0, -1); };
+VECTOR2.east = function(){ return VECTOR2.new(1, 0); };
+VECTOR2.west = function(){ return VECTOR2.new(-1, 0); };
+VECTOR2.northWest = function(){ return VECTOR2.new(-1, 1); };
+VECTOR2.northEast = function(){ return VECTOR2.new(1, 1); };
+VECTOR2.southWest = function(){ return VECTOR2.new(-1, -1); };
+VECTOR2.southEast = function(){ return VECTOR2.new(1, -1); };
+
 var VECTOR3 = {};
 VECTOR3.new = function(x, y, z){
     let v3 = {
@@ -41,6 +69,14 @@ VECTOR3.new = function(x, y, z){
     };
     return v3;
 };
+VECTOR3.north = function(){ return VECTOR3.new(0, 0, 1); };
+VECTOR3.south = function(){ return VECTOR3.new(0, 0, -1); };
+VECTOR3.east = function(){ return VECTOR3.new(1, 0, 0); };
+VECTOR3.west = function(){ return VECTOR3.new(-1, 0, 0); };
+VECTOR3.northWest = function(){ return VECTOR3.new(-1, 0, 1); };
+VECTOR3.northEast = function(){ return VECTOR3.new(1, 0, 1); };
+VECTOR3.southWest = function(){ return VECTOR3.new(-1, 0, -1); };
+VECTOR3.southEast = function(){ return VECTOR3.new(1, 0, -1); };
 
 var SHAPES = {};
 SHAPES.RECT = {};
@@ -209,6 +245,7 @@ PHYSICS.BoxCollider.new = function(){
         let rect = SHAPES.RECT.new(pos, size);
         return rect;
     };
+    // Vector2
     bc.contains = function(point){
         let rect = bc.absoluteRect();
         return rect.contains(point);
@@ -287,6 +324,20 @@ PHYSICS.Controller.new = function(){
             }         
         }
         return null;
+    };
+    ctl.getCollidersByPoint = function(excludeList, point){
+        let cols = [];
+        for(let cl of ctl.colliders){
+            if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
+                if(cl.contains(point)){
+                    cols.push(cl);
+                }
+                else {
+                    let rect = cl.absoluteRect();
+                }
+            }
+        }
+        return cols;
     };
     return ctl;
 };
