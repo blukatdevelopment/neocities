@@ -90,7 +90,6 @@ ENTITY.PickUp.new = function(){
         //SCENE.destroyEntity(pue);
     };
     pue.onInteract = function(interaction){
-        console.log("I was interacted with!");
         SCENE.destroyEntity(pue);
     };
     return pue;

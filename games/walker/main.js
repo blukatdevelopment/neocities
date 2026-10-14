@@ -22,6 +22,7 @@ MAIN.GameLoop = function(){
   while(MAIN.LAG >= SETTINGS.frameDuration){
 
     SCENE.update();
+    INPUT.clearPresses();
     MAIN.LAG -= SETTINGS.frameDuration;
     
     // Handle FPS timer for animations

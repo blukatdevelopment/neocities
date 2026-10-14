@@ -25,8 +25,14 @@ var KEYS_USED = [
   INPUT.KEYS.K_SPACE
 ];
 
+// Configure keys to check for presses
+var KEY_PRESSES_USED = [
+  INPUT.KEYS.K_SPACE
+];
+
 // Key state
 INPUT.activeKeys = {};
+INPUT.activeKeyPresses = {};
 
 
 INPUT.getMousePosition = function(){
@@ -38,6 +44,13 @@ INPUT.key = function(which){
     return false;
   }
   return INPUT.activeKeys[which];
+};
+
+INPUT.keyPress = function(which){
+  if(!(which in INPUT.activeKeyPresses)){
+    return false;
+  }
+  return INPUT.activeKeyPresses[which];
 };
 
 INPUT.onMouseDown = function(evt){
@@ -60,13 +73,23 @@ INPUT.onMouseOut = function(evt){};
 
 INPUT.onKeyDown = function(evt){
   if(evt.which in INPUT.activeKeys){
+    let previousDown = INPUT.activeKeys[evt.which];
     INPUT.activeKeys[evt.which] = true;
+    if(evt.which in INPUT.activeKeyPresses){
+      INPUT.activeKeyPresses[evt.which] = false;
+      if(!previousDown){
+        INPUT.activeKeyPresses[evt.which] = true;
+      }
+    }
   }
 };
 
 INPUT.onKeyUp = function(evt){
   if(evt.which in INPUT.activeKeys){
     INPUT.activeKeys[evt.which] = false;
+  }
+  if(evt.which in INPUT.activeKeyPresses){
+    INPUT.activeKeyPresses[evt.which] = false;
   }
 };
 
@@ -76,10 +99,22 @@ INPUT.cancelSpacebarScroll = function(evt){
   }
 };
 
+// Only allow presses to appear for a single frame
+INPUT.clearPresses = function(){
+    for(let i in KEY_PRESSES_USED){
+      let key = KEY_PRESSES_USED[i];
+      INPUT.activeKeyPresses[key] = false;
+    }
+};
+
 INPUT.initInput = function(){
   for(let i in KEYS_USED){
     let key = KEYS_USED[i];
     INPUT.activeKeys[key] = false;
+  }
+  for(let i in KEY_PRESSES_USED){
+    let key = KEY_PRESSES_USED[i];
+    INPUT.activeKeyPresses[key] = false;
   }
   var canvas = GRAPHICS.getCanvas();
   canvas.addEventListener("mousedown", INPUT.onMouseDown);

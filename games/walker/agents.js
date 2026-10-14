@@ -7,8 +7,13 @@ var AGENT = {};
 AGENT.PLAYER_ONE = {};
 AGENT.PLAYER_ONE.new = function(actor){
 	var pone = {
-		actor: actor
+		actor: actor,
+		keyPresses: {}
 	};
+	for(let i in KEY_PRESSES_USED){
+    	let key = KEY_PRESSES_USED[i];
+    	pone.keyPresses[key] = false;
+  	}
 
 	pone.update = function (){
 		let atr = pone.actor;
@@ -46,9 +51,8 @@ AGENT.PLAYER_ONE.new = function(actor){
 	    	}
 	    }
 
-	    if(INPUT.key(INPUT.KEYS.K_SPACE)){
-	    	// Interact/attack logic here
-	    	atr.interact();
+	    if(INPUT.keyPress(INPUT.KEYS.K_SPACE)){
+    		atr.interact();	    	
 	    }
 	};
 	return pone;
