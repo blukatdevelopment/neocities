@@ -5,18 +5,23 @@
 let ENTITYFACTORY = {};
 // Static object with collision box
 ENTITYFACTORY.Scenery = function(_sprite){
-    let sc = ENTITY.baseEntity.new();
-    sc.renderer = SPRITES.SpriteRenderer.new(_sprite);
-    sc.renderer.parent = sc;
-    sc.setCollider(PHYSICS.BoxCollider.new());
-    sc.collider.rect.position = VECTOR2.new(0, 0);
-    sc.collider.rect.size = VECTOR2.new(16, 16);
-    sc.name = "item";
+    let sc = ENTITY.Scenery.new();
+    sc.renderer.setSprite(_sprite);
+    sc.collider.resize(VECTOR2.new(16, 16));
+    sc.name = "scenery" + sc.getEntityId();
     return sc;
 };
 
-let ENTITY = {};
+// Is picked up by actors
+ENTITYFACTORY.Pickup = function(_sprite){
+    let pu = ENTITY.PickUp.new();
+    pu.renderer.setSprite(_sprite);
+    pu.collider.rect.size = VECTOR2.new(16, 16);
+    pu.name = "Pickup" + pu.getEntityId();
+    return pu;
+};
 
+let ENTITY = {};
 
 // Implements iEntity
 ENTITY.baseEntity = {};
@@ -26,10 +31,11 @@ ENTITY.baseEntity.new = function(){
         entityId: UTILITY.getNextEntityId(),
         position: VECTOR3.new(0, 0, 0),
         collider: PHYSICS.BoxCollider.new(),
-        renderer: null,
+        renderer: SPRITES.SpriteRenderer.new(),
         label: ""
     };
-    be.collider.entity = be;
+    be.renderer.parent = be;
+    be.collider.parent = be;
     be.getName = function(){ return be.name; };
     be.getEntityId = function(){
         return be.entityId;
@@ -57,7 +63,26 @@ ENTITY.baseEntity.new = function(){
         ret += be.name + " ID: " + be.entityId;
         ret += ", pos: " + be.position.toString();
         return ret;
-    }
+    };
+    be.onCollide = function(collision){};
 
     return be;
+};
+
+ENTITY.Scenery = {};
+ENTITY.Scenery.new = function(){
+    let sc = ENTITY.baseEntity.new();
+    sc.collider.rigid = true;
+    return sc;
+};
+
+ENTITY.PickUp = {};
+ENTITY.PickUp.new = function(){
+    let pue = ENTITY.baseEntity.new();
+    pue.setCollider(PHYSICS.BoxCollider.new());
+    pue.collider.rigid = false;
+    pue.onCollide = function(collision){
+        SCENE.destroyEntity(pue);
+    };
+    return pue;
 };

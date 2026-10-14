@@ -24,15 +24,20 @@ GAME.setup = function(){
   // Add in some random pieces of scenery
   for(let i = 0; i < 1; i++){
     let sc = ENTITYFACTORY.Scenery(SPRITES.static.items.One);
-    sc.name += "" + i;
     //sc.setPosition(VECTOR3.new(UTILITY.randRange(16, 1008), 0, UTILITY.randRange(16, 1008)));
     sc.setPosition(VECTOR3.new(32*i, 0, 32*i));
     GAME.addEntity(sc);
   }
 
+  for(let i = 0; i < 10; i++){
+    let pu = ENTITYFACTORY.Pickup(SPRITES.static.items.Two);
+    pu.setPosition(VECTOR3.new(i * 32, 0, 100));
+    GAME.addEntity(pu);
+  }
+
   GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
   GAME.isSetup = true;
-}
+};
 
 GAME.update = function(){
   if(!GAME.isSetup){
@@ -40,13 +45,15 @@ GAME.update = function(){
   }
   for(let e in GAME.entities){
     let entity = GAME.entities[e];
-    entity.update();
+    if(entity){
+      entity.update();
+    }
     //entity.label = entity.getName() + entity.collider.absoluteRect().toString();
   }
   //GAME.debugMessage(GAME.walker.collider.absoluteRect().toString());
   //GAME.debugMessage(GAME.walker.label);
   this.drawGAMEScreen();
-}
+};
 
 GAME.drawGAMEScreen = function(){
   GRAPHICS.clearCanvas();
@@ -59,17 +66,26 @@ GAME.drawGAMEScreen = function(){
   }
 
   GRAPHICS.drawText(GAME.debugText, 10, 10);
-}
+};
 
 GAME.addEntity = function(entity){
   GAME.entities.push(entity);
   GAME.physics.registerCollider(entity.getCollider());
-}
+};
 
-GAME.mouseDown = function(evt){}
+GAME.removeEntity = function(entity){
+  GAME.entities = GAME.entities.filter((ent) => ent !== entity);
+  GAME.physics.unregisterCollider(entity.getCollider());
+};
 
-GAME.mouseUp = function(evt){}
+GAME.mouseDown = function(evt){};
+
+GAME.mouseUp = function(evt){};
 
 GAME.debugMessage = function(message){
   GAME.debugText = message;
+};
+
+GAME.destroyEntity = function(entity){
+  GAME.removeEntity(entity);
 };

@@ -92,6 +92,7 @@ ACTOR.new = function(){
       GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.z);
     }
   };
+  atr.onCollide = function(collision){};
   atr.toString = function(){
     let str = "[";
     str += "ID: " + atr.entityId;

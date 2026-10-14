@@ -113,6 +113,9 @@ SPRITES.SpriteRenderer.new = function(sprite, position){
     }
     SPRITES.renderSprite(pos.x, pos.z, sr.sprite.index, sr.sprite.sheet);
   };
+  sr.setSprite = function(newSprite){
+    sr.sprite = newSprite;
+  };
   sr.toString = function(){
     let ret = "Renderer[";
     ret += "sprite: " + sr.sprite.name;

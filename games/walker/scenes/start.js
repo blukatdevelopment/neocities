@@ -49,3 +49,5 @@ START.mouseDown = function(){
 START.debugMessage = function(message){
 
 };
+
+START.destroyEntity = function(entity){};

@@ -35,7 +35,7 @@ SCENE.update = function(){
 };
 
 // Returns iScene
-// This is hardcoded for the current project
+// TODO: make scenes configurable
 SCENE.getActiveScene = function(){
   switch(SCENE._activeScene){
     case SCENE.SCENES.GAME:
@@ -52,5 +52,11 @@ SCENE.setActiveScene = function(scene){
 };
 
 SCENE.debugMessage = function(message){
-  SCENE._activeScene.debugMessage(message);
+  var activeScene = SCENE.getActiveScene();
+  activeScene.debugMessage(message);
+};
+
+SCENE.destroyEntity = function(entity){
+  var activeScene = SCENE.getActiveScene();
+  activeScene.destroyEntity(entity);
 };

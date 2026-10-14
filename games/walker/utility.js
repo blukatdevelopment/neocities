@@ -4,13 +4,13 @@
 var UTILITY = {}
 UTILITY.randRange = function(min, max){
   return Math.random() * (max - min) + min;
-}
+};
 
 UTILITY.isInsideBox = function(topLeft, bottomRight, point){
   var inX = point.x < bottomRight.x && point.x > topLeft.x;
   var inY = point.y < bottomRight.y && point.y > topLeft.y;
   return inX && inY;
-}
+};
 
 var VECTOR2 = {};
 VECTOR2.new = function(x, y){
@@ -94,11 +94,9 @@ SHAPES.RECT.new = function(position, size){
         let br = rect.bottomRight();
         if(point.x >= tl.x && point.x <= br.x){
             if(point.y >= tl.y  && point.y <= br.y){
-                console.log(point.toString() + " within [" + tl.toString() + ", " + br.toString() + "]?: true");
                 return true;
             }
         }
-        console.log(point.toString() + " within [" + tl.toString() + ", " + br.toString() + "]?: false");
         return false;
     };
     rect.overlaps = function(otherRect){
@@ -231,8 +229,16 @@ PHYSICS.BoxCollider.new = function(){
             excludeList.push(bc.parent.getEntityId());
             let ret = bc.controller.checkForCollision(excludeList, bc);
             if(ret){
-                //revert upon collision
-                bc.parent.setPosition(previous);
+                if(ret.second.rigid){
+                    //revert upon collision with rigid collider
+                    bc.parent.setPosition(previous);
+                    
+                }
+                // Emit collision events
+                bc.parent.onCollide(ret);
+                if(ret.second && ret.second.parent){
+                    ret.second.parent.onCollide(ret);
+                }
                 return ret;
             }
             return null;
@@ -240,6 +246,9 @@ PHYSICS.BoxCollider.new = function(){
         else{
             UTILITY.log("BoxCollider.moveAndCollide()", "BoxCollider not assigned to physics controller.", { controller: bc.controller == null, parent: bc.parent == null});
         }
+    };
+    bc.resize = function(updatedSize){
+        bc.rect.size = updatedSize;
     };
     bc.toString = function(){
         let parent = "null";
@@ -261,6 +270,9 @@ PHYSICS.Controller.new = function(){
     ctl.registerCollider = function(collider){
         ctl.colliders.push(collider);
         collider.controller = ctl;
+    };
+    ctl.unregisterCollider = function(collider){
+        ctl.colliders = ctl.colliders.filter((cl) => cl !== collider);
     };
     ctl.checkForCollision = function(excludeList, collider){
         for(let cl of ctl.colliders){
