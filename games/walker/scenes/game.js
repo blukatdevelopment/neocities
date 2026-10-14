@@ -77,7 +77,16 @@ GAME.removeEntity = function(entity){
   GAME.physics.unregisterCollider(entity.getCollider());
 };
 
-GAME.mouseDown = function(evt){};
+GAME.mouseDown = function(evt){
+  let point = INPUT.getMousePosition();
+  
+  // Convert to viewport coords
+  point.x = GRAPHICS.downScale(point.x);
+  point.y = GRAPHICS.downScale(point.y);
+  // Convert to point in world space
+  point = GRAPHICS.getWorldPoint(point);
+  GAME.walker.interactAtPoint(point);
+};
 
 GAME.mouseUp = function(evt){};
 

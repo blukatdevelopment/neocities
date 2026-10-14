@@ -100,6 +100,16 @@ ACTOR.new = function(){
       cl.parent.onInteract({});
     }
   };
+  atr.interactAtPoint = function(point){
+    let halfSize = atr.size/2;
+    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(halfSize, halfSize));
+    rect.recenter(point);
+
+    let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
+    for(let cl of colliders){
+      cl.parent.onInteract({});
+    }
+  };
   atr.onCollide = function(collision){};
   atr.onInteract = function(interaction){};
   atr.toString = function(){

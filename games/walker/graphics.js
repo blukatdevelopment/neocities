@@ -53,9 +53,20 @@ GRAPHICS.relativeToCamera = function(point){
   return VECTOR2.new(point.x - pos.x, point.y - pos.y);
 };
 
-// Scales from viewport to screen
+// Scales up from viewport to screen
 GRAPHICS.scale = function(viewport_units){
   return viewport_units * GRAPHICS._scale;
+};
+
+// Scales down from screen down to viewport
+GRAPHICS.downScale = function(pixels){
+  return pixels / GRAPHICS._scale;
+};
+
+// Converts from point relative to viewport to point in absolute space
+GRAPHICS.getWorldPoint = function(viewPortPoint){
+  let pos = GRAPHICS._camera.rect.position;
+  return pos.add(viewPortPoint);
 };
 
 GRAPHICS.getCanvas = function(){
@@ -163,6 +174,8 @@ GRAPHICS.loadImage = function(fileName){
   element.src = SETTINGS.assetsUrl + fileName;
   return element;
 };
+
+
 
 // Applies async validation before actually adding to object
 GRAPHICS.addImageAsync = function(fileName, object, key){

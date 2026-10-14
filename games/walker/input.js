@@ -36,7 +36,10 @@ INPUT.activeKeyPresses = {};
 
 
 INPUT.getMousePosition = function(){
-  return INPUT._mousePos;
+  if(INPUT._mousePos){
+    return VECTOR2.new(INPUT._mousePos.x, INPUT._mousePos.y);  
+  }
+  return null;
 };
 
 INPUT.key = function(which){
@@ -63,10 +66,7 @@ INPUT.onMouseUp = function(evt){
 
 INPUT.onMouseMove = function(evt){
   var rect = GRAPHICS.getCanvas().getBoundingClientRect();
-  INPUT._mousePos = {
-    x: evt.clientX - rect.left,
-    y: evt.clientY - rect.top
-  };
+  INPUT._mousePos = VECTOR2.new(evt.clientX - rect.left, evt.clientY - rect.top);
 };
 
 INPUT.onMouseOut = function(evt){};
