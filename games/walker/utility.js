@@ -60,7 +60,7 @@ SHAPES.RECT.new = function(position, size){
             rect.position.x+rect.size.x,
             rect.position.y+rect.size.y
         );
-    }
+    };
     rect.topRight = function(){
         return VECTOR2.new(
             rect.position.x+rect.size.x,
@@ -79,28 +79,41 @@ SHAPES.RECT.new = function(position, size){
             rect.position.y+rect.size.y
         );
     };
+    // Returns polygonal points
+    rect.getPoints = function(){
+        let points = [
+            rect.topLeft(),
+            rect.topRight(),
+            rect.bottomLeft(),
+            rect.bottomRight()
+        ];
+        return points;
+    };
     rect.contains = function(point){
-        let pos = rect.position;
-        let ext = rect.extents();
-        if(point.x >= pos.x && point.x <= ext.x){
-            if(point.y >= pos.y  && point.y <= ext.y){
+        let tl = rect.topLeft();
+        let br = rect.bottomRight();
+        if(point.x >= tl.x && point.x <= br.x){
+            if(point.y >= tl.y  && point.y <= br.y){
+                console.log(point.toString() + " within [" + tl.toString() + ", " + br.toString() + "]?: true");
                 return true;
             }
         }
+        console.log(point.toString() + " within [" + tl.toString() + ", " + br.toString() + "]?: false");
         return false;
     };
     rect.overlaps = function(otherRect){
-        if(rect.contains(otherRect.position())){
-            return true; 
+        let largest = rect;
+        let smallest = otherRect;
+        if(otherRect.size.x * otherRect.size.y > rect.size.x * rect.size.y){
+            largest = otherRect;
+            smallest = rect;
         }
-        if(rect.contains(otherRect.extents())){
-            return true;
-        }
-        if(rect.contains(otherRect.topRight())){
-            return true;
-        }
-        if(rect.contains(otherRect.bottomLeft())){
-            return true;
+
+        let points = smallest.getPoints();
+        for(let point of points){
+            if(largest.contains(point)){                
+                return true;
+            }
         }
         return false;
     };
@@ -206,12 +219,7 @@ PHYSICS.BoxCollider.new = function(){
     bc.overlaps = function(otherCollider){
         let rect = bc.absoluteRect();
         let otherRect = otherCollider.absoluteRect();
-        let tl = otherRect.contains(rect.topLeft());
-        let tr = otherRect.contains(rect.topRight());
-        let bl = otherRect.contains(rect.bottomLeft());
-        let br = otherRect.contains(rect.bottomRight());
-        let cr = otherRect.contains(rect.center());
-        return tl || tr || bl || br || cr;       
+        return otherRect.overlaps(rect);    
     };
     // Makes one check, assuming distance is less than scale
     // Destination is VECTOR3
@@ -257,15 +265,14 @@ PHYSICS.Controller.new = function(){
     ctl.checkForCollision = function(excludeList, collider){
         for(let cl of ctl.colliders){
             if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
+                if(cl.parent.getEntityId() == 1){
+                    let str = cl.toString() + ", " + collider.toString() + ", " + collider.overlaps(cl);
+                };
                 if(collider.overlaps(cl)){
                     let col = PHYSICS.Collision.new(collider, cl);
-                    console.log(col.toString());
                     return col;
                 }
-            }
-            if(cl.parent.getName() == "item9"){
-                console.log("No collision: " + collider.toString() + ", " + cl.toString());
-            }            
+            }         
         }
         return null;
     };

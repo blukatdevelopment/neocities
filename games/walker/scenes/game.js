@@ -22,7 +22,7 @@ GAME.setup = function(){
   GAME.scenery.push(background);
   
   // Add in some random pieces of scenery
-  for(let i = 0; i < 10; i++){
+  for(let i = 0; i < 1; i++){
     let sc = ENTITYFACTORY.Scenery(SPRITES.static.items.One);
     sc.name += "" + i;
     //sc.setPosition(VECTOR3.new(UTILITY.randRange(16, 1008), 0, UTILITY.randRange(16, 1008)));
