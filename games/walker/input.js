@@ -89,4 +89,4 @@ INPUT.initInput = function(){
   window.addEventListener('keydown', INPUT.onKeyDown, false);
   window.addEventListener('keyup', INPUT.onKeyUp, false);
   window.addEventListener('keydown', INPUT.cancelSpacebarScroll, false);
-}
+};

@@ -14,24 +14,23 @@ GAME.setup = function(){
   GAME.physics = PHYSICS.Controller.new();
 
   GAME.walker = ACTORFACTORY.playerOne();
-  GAME.walker.teleport(VECTOR3.new(100, 0, 300));
+  GAME.walker.teleport(VECTOR2.new(100, 300));
   GAME.addEntity(GAME.walker);
 
   // Add in background
-  let background = SPRITES.SpriteRenderer.new(SPRITES.static.village.village, VECTOR3.new(0,0,0));
+  let background = SPRITES.SpriteRenderer.new(SPRITES.static.village.village, VECTOR2.new(0,0));
   GAME.scenery.push(background);
   
   // Add in some random pieces of scenery
   for(let i = 0; i < 1; i++){
     let sc = ENTITYFACTORY.Scenery(SPRITES.static.items.One);
-    //sc.setPosition(VECTOR3.new(UTILITY.randRange(16, 1008), 0, UTILITY.randRange(16, 1008)));
-    sc.setPosition(VECTOR3.new(32*i, 0, 32*i));
+    sc.setPosition(VECTOR2.new(32*i, 32*i));
     GAME.addEntity(sc);
   }
 
   for(let i = 0; i < 10; i++){
     let pu = ENTITYFACTORY.Pickup(SPRITES.static.items.Two);
-    pu.setPosition(VECTOR3.new(i * 32, 0, 100));
+    pu.setPosition(VECTOR2.new(i * 32, 100));
     GAME.addEntity(pu);
   }
 

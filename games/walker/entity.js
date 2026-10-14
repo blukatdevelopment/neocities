@@ -29,7 +29,7 @@ ENTITY.baseEntity.new = function(){
     let be = {
         name: "",
         entityId: UTILITY.getNextEntityId(),
-        position: VECTOR3.new(0, 0, 0),
+        position: VECTOR2.new(0, 0),
         collider: PHYSICS.BoxCollider.new(),
         renderer: SPRITES.SpriteRenderer.new(),
         label: ""
@@ -46,7 +46,7 @@ ENTITY.baseEntity.new = function(){
             be.renderer.draw();
         }
         if(be.label != ""){
-            GRAPHICS.drawTextRelative(be.label, be.position.x, be.position.z);
+            GRAPHICS.drawTextRelative(be.label, be.position.x, be.position.y);
         }
     };
     be.getPosition = function(){ return be.position; };

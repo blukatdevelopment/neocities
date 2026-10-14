@@ -57,27 +57,6 @@ VECTOR2.northEast = function(){ return VECTOR2.new(1, 1); };
 VECTOR2.southWest = function(){ return VECTOR2.new(-1, -1); };
 VECTOR2.southEast = function(){ return VECTOR2.new(1, -1); };
 
-var VECTOR3 = {};
-VECTOR3.new = function(x, y, z){
-    let v3 = {
-        x: x,
-        y: y,
-        z: z
-    };
-    v3.toString = function(){
-        return "{" + v3.x + ", " + v3.y + ", " + v3.z + "}";
-    };
-    return v3;
-};
-VECTOR3.north = function(){ return VECTOR3.new(0, 0, 1); };
-VECTOR3.south = function(){ return VECTOR3.new(0, 0, -1); };
-VECTOR3.east = function(){ return VECTOR3.new(1, 0, 0); };
-VECTOR3.west = function(){ return VECTOR3.new(-1, 0, 0); };
-VECTOR3.northWest = function(){ return VECTOR3.new(-1, 0, 1); };
-VECTOR3.northEast = function(){ return VECTOR3.new(1, 0, 1); };
-VECTOR3.southWest = function(){ return VECTOR3.new(-1, 0, -1); };
-VECTOR3.southEast = function(){ return VECTOR3.new(1, 0, -1); };
-
 var SHAPES = {};
 SHAPES.RECT = {};
 SHAPES.RECT.new = function(position, size){
@@ -239,7 +218,7 @@ PHYSICS.BoxCollider.new = function(){
         let pos = bc.rect.position;
         if(bc.parent){
             let ppos = bc.parent.getPosition();
-            pos = VECTOR2.new(ppos.x+pos.x, ppos.z+pos.y);
+            pos = VECTOR2.new(ppos.x+pos.x, ppos.y+pos.y);
         }
         let size = bc.rect.size;
         let rect = SHAPES.RECT.new(pos, size);
@@ -257,11 +236,10 @@ PHYSICS.BoxCollider.new = function(){
         return otherRect.overlaps(rect);    
     };
     // Makes one check, assuming distance is less than scale
-    // Destination is VECTOR3
     bc.moveAndCollideShort = function(destination){
         if(bc.controller && bc.parent){
             let previous = bc.parent.getPosition();
-            bc.parent.setPosition(VECTOR3.new(destination.x, previous.y, destination.y));
+            bc.parent.setPosition(VECTOR2.new(destination.x, destination.y));
             let excludeList = [];
             excludeList.push(bc.parent.getEntityId());
             let ret = bc.controller.checkForCollision(excludeList, bc);

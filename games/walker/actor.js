@@ -17,7 +17,7 @@ ACTORFACTORY.playerOne = function(){
   pone.lockCamera = true;
 
   pone.setCollider(PHYSICS.BoxCollider.new());
-  pone.getCollider().rect.position = VECTOR3.new(0, 0);
+  pone.getCollider().rect.position = VECTOR2.new(0, 0);
   pone.getCollider().rect.size = VECTOR2.new(32, 32);
   pone.name = "player";
   return pone;
@@ -32,7 +32,7 @@ var ACTOR = {};
 ACTOR.new = function(){
   let atr = ENTITY.baseEntity.new();
   atr.stateMachine = null;
-  atr.prevPosition = VECTOR3.new(0, 0, 0);
+  atr.prevPosition = VECTOR2.new(0, 0);
   atr.direction = DIRECTIONS.east;
   atr.prevDirection = DIRECTIONS.east;
   atr.moving = false;
@@ -44,7 +44,7 @@ ACTOR.new = function(){
     atr.stateMachine.update();
     atr.agent.update();
     if(atr.lockCamera && GRAPHICS.getDisplayMode() == DISPLAY_MODES.camera){
-      GRAPHICS.centerCamera(VECTOR2.new(atr.position.x, atr.position.z));
+      GRAPHICS.centerCamera(VECTOR2.new(atr.position.x, atr.position.y));
     }
   };
   atr.teleport = function(destination){
@@ -53,14 +53,14 @@ ACTOR.new = function(){
   };
   atr.move = function(direction){
     atr.moving = true;
-    let dest = VECTOR3.new(atr.position.x, atr.position.y, atr.position.z);
+    let dest = VECTOR2.new(atr.position.x, atr.position.y);
     switch(direction){
       case DIRECTIONS.north:
-        dest.z -= atr.speed;
+        dest.y -= atr.speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.south:
-        dest.z += atr.speed;
+        dest.y += atr.speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.east:
@@ -71,24 +71,16 @@ ACTOR.new = function(){
         dest.x -= atr.speed;
         atr.direction = direction;
       break;
-      case DIRECTIONS.up:
-        dest.y += atr.speed;
-        atr.direction = direction;
-      break;
-      case DIRECTIONS.down:
-        dest.y -= atr.speed;
-        atr.direction = direction;
-      break;
     }
-    let dest2D = VECTOR2.new(dest.x, dest.z);
+    let dest2D = VECTOR2.new(dest.x, dest.y);
     if(atr.collider.moveAndCollideShort(dest2D)){
       return;
     }
   };
   atr.draw = function(){
-    atr.animator.update(atr.position.x, atr.position.z);
+    atr.animator.update(atr.position.x, atr.position.y);
     if(atr.label != ""){
-      GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.z);
+      GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.y);
     }
   };
   atr.interact = function(){

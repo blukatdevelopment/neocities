@@ -97,7 +97,7 @@ SPRITES.SpriteRenderer = {};
 SPRITES.SpriteRenderer.new = function(sprite, position){
   let sr = {
     sprite: sprite,
-    position: VECTOR3.new(0, 0, 0),
+    position: VECTOR2.new(0, 0),
     parent: null // inherent position from an object
   };
   if(position){
@@ -111,7 +111,7 @@ SPRITES.SpriteRenderer.new = function(sprite, position){
     if(sr.parent){
       pos = sr.parent.getPosition();
     }
-    SPRITES.renderSprite(pos.x, pos.z, sr.sprite.index, sr.sprite.sheet);
+    SPRITES.renderSprite(pos.x, pos.y, sr.sprite.index, sr.sprite.sheet);
   };
   sr.setSprite = function(newSprite){
     sr.sprite = newSprite;
