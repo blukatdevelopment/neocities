@@ -24,6 +24,12 @@ VECTOR2.new = function(x, y){
 
         return Math.sqrt( a*a + b*b );
     }
+    v2.add = function(otherVector){
+        return VECTOR2.new(v2.x + otherVector.x, v2.y + otherVector.y);
+    };
+    v2.multiply = function(otherVector){
+        return VECTOR2.new(v2.x * otherVector.x, v2.y * otherVector.y);
+    }
     v2.toString = function(){
         return "{" + v2.x + ", " + v2.y + "}";
     };
@@ -129,6 +135,10 @@ SHAPES.RECT.new = function(position, size){
             }
         }
         return false;
+    };
+    rect.recenter = function(point){
+        let halfSize = VECTOR2.new(rect.size.x/2, rect.size.y/2);
+        rect.position = VECTOR2.new(point.x-halfSize.x, point.y-halfSize.y);
     };
     rect.toString = function(){
         let ret = "Rect[";
@@ -310,8 +320,17 @@ PHYSICS.Controller.new = function(){
                 if(cl.contains(point)){
                     cols.push(cl);
                 }
-                else {
-                    let rect = cl.absoluteRect();
+            }
+        }
+        return cols;
+    };
+    ctl.rectHitScan = function(excludeList, rect){
+        let cols = [];
+        for(let cl of ctl.colliders){
+            if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
+                let otherRect = cl.absoluteRect();
+                if(otherRect.overlaps(rect)){
+                    cols.push(cl);
                 }
             }
         }

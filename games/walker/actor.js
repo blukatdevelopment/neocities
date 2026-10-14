@@ -85,10 +85,17 @@ ACTOR.new = function(){
   };
   atr.interact = function(){
     let dir = VECTOR2.vectorFromDirection(atr.direction);
+    let halfSize = atr.size/2;
+    let speed = VECTOR2.new(halfSize, halfSize); // Should be just out of the hitbox
+    dir = dir.multiply(speed);
+
     let pos = atr.centeredPosition();
-    let pointer = VECTOR2.new(dir.x * atr.size, dir.y * atr.size);
-    pointer = VECTOR2.new(pointer.x + pos.x, pointer.y + pos.y);
-    let colliders = atr.collider.controller.getCollidersByPoint([atr.getEntityId()], pointer);
+    let dest = pos.add(dir);
+
+    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(halfSize, halfSize));
+    rect.recenter(dest);
+
+    let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
     for(let cl of colliders){
       cl.parent.onInteract({});
     }
