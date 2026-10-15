@@ -67,13 +67,17 @@ SPRITES.loadActorSprites = function(config){
   }
 };
 
-SPRITES.renderSprite = function(posX, posY, index, sheet){
+SPRITES.renderSprite = function(posX, posY, index, sheet, forceDisplayMode){
   // Assumes one horizontal strip of cells
   let offX = index * sheet.cellResolutionX;
   let offY = 0;
+  let displayMode = GRAPHICS.getDisplayMode();
+  if(forceDisplayMode){
+    displayMode = forceDisplayMode;
+  }
 
   // Make relative to camera
-  if(GRAPHICS.getDisplayMode() == DISPLAY_MODES.camera){
+  if( displayMode == DISPLAY_MODES.camera){
     let relative = GRAPHICS.relativeToCamera(VECTOR2.new(posX, posY));
     posX = relative.x;
     posY = relative.y;

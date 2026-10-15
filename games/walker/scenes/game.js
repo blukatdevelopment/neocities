@@ -49,8 +49,6 @@ GAME.update = function(){
     }
     //entity.label = entity.getName() + entity.collider.absoluteRect().toString();
   }
-  //GAME.debugMessage(GAME.walker.collider.absoluteRect().toString());
-  //GAME.debugMessage(GAME.walker.label);
   this.drawGAMEScreen();
 };
 
@@ -65,6 +63,24 @@ GAME.drawGAMEScreen = function(){
   }
 
   GRAPHICS.drawText(GAME.debugText, 10, 10);
+  GAME.updateCursor();
+  SCENE.drawCursor();
+};
+
+GAME.updateCursor = function(){
+  if(GAME.cursorInRange()){
+    SCENE.updateCursor(SPRITES.static.cursors.roundBlack);
+  }
+  else{
+    SCENE.updateCursor(SPRITES.static.cursors.roundRed);
+  }
+};
+
+GAME.cursorInRange = function(){
+  let pos = GRAPHICS.getWorldCursor();
+  let walkerPos = GAME.walker.centeredPosition();
+  let distance = pos.distance(walkerPos);
+  return distance < SETTINGS.interactionRange;
 };
 
 GAME.addEntity = function(entity){
@@ -85,7 +101,10 @@ GAME.mouseDown = function(evt){
   point.y = GRAPHICS.downScale(point.y);
   // Convert to point in world space
   point = GRAPHICS.getWorldPoint(point);
-  GAME.walker.interactAtPoint(point);
+  if(GAME.cursorInRange()){
+    GAME.walker.interactAtPoint(point);
+  }
+  SCENE.updateCursor(SPRITES.static.cursors.roundGreen);
 };
 
 GAME.mouseUp = function(evt){};

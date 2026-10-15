@@ -25,6 +25,7 @@ START.update = function(){
     }
     GRAPHICS.clearCanvas();
     this.drawStartButton();
+    SCENE.drawCursor();
 }
 
 START.isStartButtonSelected = function(){

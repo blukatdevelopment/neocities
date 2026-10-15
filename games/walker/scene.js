@@ -12,6 +12,7 @@ SCENE.SCENES = {
 };
 
 SCENE._activeScene = SCENE.SCENES.START;
+SCENE._cursorSprite = null;
 
 SCENE.mouseDown = function(evt){
   var activeScene = this.getActiveScene();
@@ -29,9 +30,7 @@ SCENE.mouseUp = function(evt){
 
 SCENE.update = function(){
   var activeScene = SCENE.getActiveScene();
-  if(activeScene != null){
-    activeScene.update();
-  }
+  activeScene.update();
 };
 
 // Returns iScene
@@ -59,4 +58,21 @@ SCENE.debugMessage = function(message){
 SCENE.destroyEntity = function(entity){
   var activeScene = SCENE.getActiveScene();
   activeScene.destroyEntity(entity);
+};
+
+SCENE.drawCursor = function(){
+  let pos = GRAPHICS.getWorldCursor();
+
+  if(pos && SCENE._cursorSprite){
+    let sprite = SCENE._cursorSprite;
+    SPRITES.renderSprite(pos.x, pos.y, sprite.index, sprite.sheet);
+  }
+};
+
+SCENE.updateCursor = function(sprite){
+  SCENE._cursorSprite = sprite;
+};
+
+SCENE.init = function(){
+  SCENE.updateCursor(SPRITES.static.cursors.roundBlack);
 };

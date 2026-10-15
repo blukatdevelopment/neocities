@@ -13,6 +13,7 @@ SETTINGS.defaultPlayerActor = "wrath";
 SETTINGS.fps = 30;
 SETTINGS.frameDuration = 1000 / SETTINGS.fps;
 
+SETTINGS.interactionRange = 100;
 
 // Assumes A 2.5 dimensional world
 DIRECTIONS = {};
@@ -101,6 +102,18 @@ SETTINGS.staticSheetList.push({
 		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
 		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
 		"Placeholder", "Placeholder", "Placeholder", "Placeholder"
+	]
+});
+
+SETTINGS.staticSheetList.push({
+	name: "cursors",
+	sheet: "cursors.png",
+	resolutionX: 8,
+	resolutionY: 8,
+	cells: 6,
+	sprites: [
+		"roundBlack", "roundRed", "roundGreen",
+		"arrowBlack", "arrowRed", "arrowGreen"
 	]
 });
 

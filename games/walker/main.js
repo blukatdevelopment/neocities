@@ -41,6 +41,7 @@ MAIN.init = function(){
   SETTINGS.init();
   GRAPHICS.init();
   INPUT.initInput();
+  SCENE.init();
 }
 
 MAIN.main = function(){

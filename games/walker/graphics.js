@@ -63,6 +63,17 @@ GRAPHICS.downScale = function(pixels){
   return pixels / GRAPHICS._scale;
 };
 
+// returns point in worldspace where mouse is pointing
+GRAPHICS.getWorldCursor = function(){
+  let pos = INPUT.getMousePosition();
+  if(pos){
+    pos.x = GRAPHICS.downScale(pos.x);
+    pos.y = GRAPHICS.downScale(pos.y);
+    pos = GRAPHICS.getWorldPoint(pos);
+  }
+  return pos;
+};
+
 // Converts from point relative to viewport to point in absolute space
 GRAPHICS.getWorldPoint = function(viewPortPoint){
   let pos = GRAPHICS._camera.rect.position;
