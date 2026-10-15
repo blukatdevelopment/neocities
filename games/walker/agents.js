@@ -51,7 +51,7 @@ AGENT.PLAYER_ONE.new = function(actor){
 	    	}
 	    }
 
-	    if(INPUT.keyPress(INPUT.KEYS.K_SPACE)){
+	    if(INPUT.keyPress(INPUT.KEYS.K_E)){
     		atr.interact();	    	
 	    }
 	};

@@ -6,6 +6,9 @@
 var INPUT = {};
 INPUT._mousePos = null;
 
+INPUT.LEFT_CLICK = 0;
+INPUT.MIDDLE_CLICK = 1;
+INPUT.RIGHT_CLICK = 2;
 
 // Define all possible keys
 INPUT.KEYS = {
@@ -13,6 +16,7 @@ INPUT.KEYS = {
   K_A: 65,
   K_S: 83,
   K_D: 68,
+  K_E: 69,
   K_SPACE: 32
 };
 
@@ -21,13 +25,15 @@ var KEYS_USED = [
   INPUT.KEYS.K_W, 
   INPUT.KEYS.K_A, 
   INPUT.KEYS.K_S, 
-  INPUT.KEYS.K_D, 
+  INPUT.KEYS.K_D,
+  INPUT.KEYS.K_E,
   INPUT.KEYS.K_SPACE
 ];
 
 // Configure keys to check for presses
 var KEY_PRESSES_USED = [
-  INPUT.KEYS.K_SPACE
+  INPUT.KEYS.K_SPACE,
+  INPUT.KEYS.K_E
 ];
 
 // Key state

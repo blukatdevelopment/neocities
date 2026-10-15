@@ -95,14 +95,15 @@ GAME.removeEntity = function(entity){
 
 GAME.mouseDown = function(evt){
   let point = INPUT.getMousePosition();
-  
-  // Convert to viewport coords
-  point.x = GRAPHICS.downScale(point.x);
-  point.y = GRAPHICS.downScale(point.y);
-  // Convert to point in world space
-  point = GRAPHICS.getWorldPoint(point);
-  if(GAME.cursorInRange()){
-    GAME.walker.interactAtPoint(point);
+  if(evt.button == INPUT.RIGHT_CLICK){
+    // Convert to viewport coords
+    point.x = GRAPHICS.downScale(point.x);
+    point.y = GRAPHICS.downScale(point.y);
+    // Convert to point in world space
+    point = GRAPHICS.getWorldPoint(point);
+    if(GAME.cursorInRange()){
+      GAME.walker.interactAtPoint(point);
+    }
   }
   SCENE.updateCursor(SPRITES.static.cursors.roundGreen);
 };
