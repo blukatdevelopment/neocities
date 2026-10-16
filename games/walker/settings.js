@@ -84,8 +84,8 @@ SETTINGS.actorList.push({
 		[ ACTOR_ANIMATIONS.walkLeft, 10, 11],
 		[ ACTOR_ANIMATIONS.meleeUp, 12, 14],
 		[ ACTOR_ANIMATIONS.meleeDown, 15, 17],
-		[ ACTOR_ANIMATIONS.meleeRight, 18, 19],
-		[ ACTOR_ANIMATIONS.meleeLeft, 20, 22]
+		[ ACTOR_ANIMATIONS.meleeRight, 18, 20],
+		[ ACTOR_ANIMATIONS.meleeLeft, 21, 23]
 	]
 });
 
