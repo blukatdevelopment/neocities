@@ -344,6 +344,5 @@ UTILITY.delayExecute = function(frames, funct){
         frames: frames,
         onExecute: funct
     };
-    console.log("Frames at queuing: " + execution.frames);
     MAIN.DELAYED_EXECUTIONS.push(execution);
 };

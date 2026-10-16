@@ -137,6 +137,7 @@ SPRITES.Animator.new = function(){
   let anr = {
     animation: null,
     index: 0,
+    nextAnimation: null
   };
   anr.setAnimation = function(animation){
     if(anr.animation.name != animation.name){
@@ -144,6 +145,11 @@ SPRITES.Animator.new = function(){
       anr.index = animation.startIndex;
     }
     
+  };
+  // Plays first animation, loops next
+  anr.playAnimationOnce = function(animation, nextAnimation){
+    anr.nextAnimation = nextAnimation;
+    anr.setAnimation(animation);
   };
   anr.activeAnimation = function(){
     if(anr.animation){
@@ -166,7 +172,15 @@ SPRITES.Animator.new = function(){
     if(anr.animation){
       anr.index++;
       if(anr.index > anr.animation.endIndex){
-        anr.index = anr.animation.startIndex;
+        if(anr.nextAnimation){
+          // Switch to next animation if one's configured
+          anr.setAnimation(anr.nextAnimation);
+          anr.nextAnimation = null;
+        }
+        else{
+          // Loop current animation
+          anr.index = anr.animation.startIndex;
+        }
       }
     }
     else{

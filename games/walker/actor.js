@@ -47,6 +47,7 @@ ACTOR.new = function(){
   atr.lockCamera = false;
   atr.attacks = [];
   atr.activeAttack = null;
+  atr.cooldown = true;
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
@@ -59,6 +60,10 @@ ACTOR.new = function(){
     atr.prevPosition = destination;
   };
   atr.move = function(direction){
+    // No moving while attacking
+    if(!atr.cooldown){
+      return;
+    }
     atr.moving = true;
     let dest = VECTOR2.new(atr.position.x, atr.position.y);
     switch(direction){
@@ -91,9 +96,29 @@ ACTOR.new = function(){
     }
   };
   atr.attack = function(){
+    if(!atr.cooldown){
+      return;
+    }
+    let atk = atr.activeAttack;
     
-    let execution = () => {console.log("Executing Delayed attack from " + atr.name + "!")};
-    UTILITY.delayExecute(12, execution);
+
+    // Execute immediately
+    atr.cooldown = false;
+    atr.stateMachine.startAttack(atk);
+
+    // Execute attack hitscans at specific timing.
+    UTILITY.delayExecute(atk.frames, () => {
+      atr.attackHitscan(atk);
+    });
+    
+    // Execute at end of attack
+    UTILITY.delayExecute(atk.frames, () => {
+      atr.cooldown = true;
+    });
+    
+  };
+  atr.attackHitscan = function(atk){
+    console.log("Hitscan");
   };
   atr.interact = function(){
     let dir = VECTOR2.vectorFromDirection(atr.direction);
@@ -146,7 +171,8 @@ ACTOR.AnimationStateMachine.new = function(name, animations, animator){
     animations: animations,
     animator: animator,
     moving: false,
-    direction: DIRECTIONS.north
+    direction: DIRECTIONS.north,
+    attack: null
   };
 
   asm.linkToActor = function(actor){
@@ -155,7 +181,24 @@ ACTOR.AnimationStateMachine.new = function(name, animations, animator){
 
   asm.getNextAnimationName = function(){
     let nextAnimation = null;
-    if(asm.actor.moving){
+    if(asm.attack){
+      let atk = asm.attack;
+      switch(asm.actor.direction){
+        case DIRECTIONS.north:
+          nextAnimation = atk.upAnimation;
+          break;
+        case DIRECTIONS.south:
+          nextAnimation = atk.downAnimation;
+          break;
+        case DIRECTIONS.east:
+          nextAnimation = atk.rightAnimation;
+          break;
+        case DIRECTIONS.west:
+          nextAnimation = atk.leftAnimation;
+          break;
+      }
+    }
+    else if(asm.actor.moving){
       switch(asm.actor.direction){
         case DIRECTIONS.north:
           nextAnimation = ACTOR_ANIMATIONS.walkUp;
@@ -204,6 +247,10 @@ ACTOR.AnimationStateMachine.new = function(name, animations, animator){
     }
   };
 
+  asm.startAttack = function(attack, frames){
+    asm.attack = attack;
+    UTILITY.delayExecute(attack.frames, () => { asm.attack = null; });
+  };
   return asm;
 };
 
