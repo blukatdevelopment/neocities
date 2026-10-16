@@ -19,9 +19,10 @@ ACTORFACTORY.playerOne = function(){
   pone.setCollider(PHYSICS.BoxCollider.new());
   pone.getCollider().rect.position = VECTOR2.new(0, 0);
   pone.getCollider().rect.size = VECTOR2.new(32, 32);
-  pone.name = "player";
+  pone.name = "Wrath";
 
   pone.attacks.push(ACTOR.AttackFactory.UNARMED());
+  pone.activeAttack = pone.attacks[0];
 
   return pone;
 };
@@ -45,6 +46,7 @@ ACTOR.new = function(){
   atr.speed = 5;
   atr.lockCamera = false;
   atr.attacks = [];
+  atr.activeAttack = null;
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
@@ -89,7 +91,9 @@ ACTOR.new = function(){
     }
   };
   atr.attack = function(){
-    console.log("Attack!");
+    
+    let execution = () => {console.log("Executing Delayed attack from " + atr.name + "!")};
+    UTILITY.delayExecute(12, execution);
   };
   atr.interact = function(){
     let dir = VECTOR2.vectorFromDirection(atr.direction);

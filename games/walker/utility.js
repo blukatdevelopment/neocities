@@ -342,7 +342,8 @@ PHYSICS.Controller.new = function(){
 UTILITY.delayExecute = function(frames, funct){
     let execution = {
         frames: frames,
-        execute: funct
+        onExecute: funct
     };
-    return execute;
+    console.log("Frames at queuing: " + execution.frames);
+    MAIN.DELAYED_EXECUTIONS.push(execution);
 };

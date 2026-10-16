@@ -53,13 +53,13 @@ MAIN.main = function(){
 }
 
 MAIN.updateDelayedExecutions = function(){
-  for(let execution in MAIN.DELAYED_EXECUTIONS){
+  for(let execution of MAIN.DELAYED_EXECUTIONS){
     execution.frames -= 1;
     if(execution.frames < 1){
-      execution.execute();
+      execution.onExecute();
     }
   }
-  MAIN.DELAYED_EXECUTIONS = MAIN.DELAYED_EXECUTIONS.filter((ex) => ex > 0);
+  MAIN.DELAYED_EXECUTIONS = MAIN.DELAYED_EXECUTIONS.filter((ex) => ex.frames > 0);  
 };
 
 document.addEventListener('DOMContentLoaded', function() {
