@@ -16,6 +16,7 @@ AGENT.PLAYER_ONE.new = function(actor){
   	}
 
 	pone.update = function (){
+		// TODO: move code currently in GAME.mouseDown here to break tight coupling
 		let atr = pone.actor;
 		let aId = atr.entityId;
 		let speed = pone.actor.speed;
@@ -50,7 +51,9 @@ AGENT.PLAYER_ONE.new = function(actor){
 	    		atr.move(DIRECTIONS.north);
 	    	}
 	    }
-
+	    if(INPUT.keyPress(INPUT.KEYS.K_SPACE)){
+    		atr.attack();	    	
+	    }
 	    if(INPUT.keyPress(INPUT.KEYS.K_E)){
     		atr.interact();	    	
 	    }

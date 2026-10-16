@@ -31,35 +31,7 @@ ACTORFACTORY.npc = function(){
 };
 
 
-// Set up info for attacks
-ACTOR.Attack = {};
-ACTOR.Attack.new = function(){
-  let atk = {
-    upAnimation: null,
-    downAnimation: null,
-    leftAnimation: null,
-    rightAnimation: null,
-    damage: null,
-    frames: null,
-    damageFrames: []
-  };
-  return atk;
-};
-ACTOR.AttackPresets = {};
-ACTOR.AttackFactory.UNARMED = function(){
-  let atk = ACTOR.Attack.new();
-  atk.upAnimation = ACTOR_ANIMATIONS.meleeUp;
-  atk.downAnimation = ACTOR_ANIMATIONS.meleeDown;
-  atk.rightAnimation = ACTOR_ANIMATIONS.meleeRight;
-  atk.leftAnimation = ACTOR_ANIMATIONS.meleeLeft;
-  atk.damage = 1;
-  atk.frames = 3;
-  atk.damageFrames = [1];
-  return atk;
-};
-
-
-// implements iEntity, inherits base entity
+// inherits base entity
 var ACTOR = {};
 ACTOR.new = function(){
   let atr = ENTITY.baseEntity.new();
@@ -115,6 +87,9 @@ ACTOR.new = function(){
     if(atr.label != ""){
       GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.y);
     }
+  };
+  atr.attack = function(){
+    console.log("Attack!");
   };
   atr.interact = function(){
     let dir = VECTOR2.vectorFromDirection(atr.direction);
@@ -226,4 +201,31 @@ ACTOR.AnimationStateMachine.new = function(name, animations, animator){
   };
 
   return asm;
+};
+
+// Set up info for attacks
+ACTOR.Attack = {};
+ACTOR.Attack.new = function(){
+  let atk = {
+    upAnimation: null,
+    downAnimation: null,
+    leftAnimation: null,
+    rightAnimation: null,
+    damage: null,
+    frames: null,
+    damageFrames: []
+  };
+  return atk;
+};
+ACTOR.AttackFactory = {};
+ACTOR.AttackFactory.UNARMED = function(){
+  let atk = ACTOR.Attack.new();
+  atk.upAnimation = ACTOR_ANIMATIONS.meleeUp;
+  atk.downAnimation = ACTOR_ANIMATIONS.meleeDown;
+  atk.rightAnimation = ACTOR_ANIMATIONS.meleeRight;
+  atk.leftAnimation = ACTOR_ANIMATIONS.meleeLeft;
+  atk.damage = 1;
+  atk.frames = 3;
+  atk.damageFrames = [1];
+  return atk;
 };

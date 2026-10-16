@@ -94,7 +94,13 @@ GAME.removeEntity = function(entity){
 };
 
 GAME.mouseDown = function(evt){
+  // TODO: move mouse input handling to AGENT.PLAYER_ONE
   let point = INPUT.getMousePosition();
+  if(evt.button == INPUT.LEFT_CLICK){
+    if(GAME.cursorInRange()){
+      GAME.walker.attack();
+    }
+  }
   if(evt.button == INPUT.RIGHT_CLICK){
     // Convert to viewport coords
     point.x = GRAPHICS.downScale(point.x);
