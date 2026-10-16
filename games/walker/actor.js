@@ -24,6 +24,8 @@ ACTORFACTORY.playerOne = function(){
   pone.attacks.push(ACTOR.AttackFactory.UNARMED());
   pone.activeAttack = pone.attacks[0];
 
+  pone.stats = ACTOR.StatsController.new(100, 100);
+
   return pone;
 };
 
@@ -48,6 +50,7 @@ ACTOR.new = function(){
   atr.attacks = [];
   atr.activeAttack = null;
   atr.cooldown = true;
+  atr.stats = null;
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
@@ -118,7 +121,22 @@ ACTOR.new = function(){
     
   };
   atr.attackHitscan = function(atk){
-    console.log("Hitscan");
+    let dir = VECTOR2.vectorFromDirection(atr.direction);
+    let halfSize = atr.size/2;
+    let speed = VECTOR2.new(halfSize, halfSize); // Should be just out of the hitbox
+    dir = dir.multiply(speed);
+
+    let pos = atr.centeredPosition();
+    let dest = pos.add(dir);
+
+    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(halfSize, halfSize));
+    rect.recenter(dest);
+
+    let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
+    let attackData = ACTOR.AttackData.new(atk.damage, atr);
+    for(let cl of colliders){
+      cl.parent.onAttacked(attackData);
+    }
   };
   atr.interact = function(){
     let dir = VECTOR2.vectorFromDirection(atr.direction);
@@ -268,6 +286,17 @@ ACTOR.Attack.new = function(){
   };
   return atk;
 };
+
+// Record to pass to entity.onAttacked()
+ACTOR.AttackData = {};
+ACTOR.AttackData.new = function(damage, sender){
+  let ad = {
+    damage: damage,
+    sender: sender
+  };
+  return ad;
+};
+
 ACTOR.AttackFactory = {};
 ACTOR.AttackFactory.UNARMED = function(){
   let atk = ACTOR.Attack.new();
@@ -279,4 +308,39 @@ ACTOR.AttackFactory.UNARMED = function(){
   atk.frames = 3;
   atk.damageFrames = [1];
   return atk;
+};
+
+
+ACTOR.StatsController = {};
+ACTOR.StatsController.new = function(maxHealth, maxEnergy){
+  let stc = {
+    health: ACTOR.Stat.new(STATS.health, maxHealth),
+    energy: ACTOR.Stat.new(STATS.energy, maxEnergy)
+  };
+  stc.fullRestore = function(){
+    stc.health.reset();
+    stc.energy.reset();
+  };
+  return stc;
+};
+
+ACTOR.Stat = {};
+ACTOR.Stat.new = function(name, max){
+  let st = {
+    name: name,
+    value: max,
+    max: max,
+    min: 0
+  };
+  st.reset = function(){
+    st.value = st.max;
+  };
+  st.clear = function(){
+    st.value = st.min;
+  };
+  st.change = function(delta){
+    st.value += delta;
+    st.value = UTILITY.clamp(st.value);
+  };
+  return st;
 };

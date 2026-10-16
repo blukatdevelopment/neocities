@@ -15,6 +15,12 @@ SETTINGS.frameDuration = 1000 / SETTINGS.fps;
 
 SETTINGS.interactionRange = 100;
 
+// Stats
+STATS = {};
+STATS.health = "health";
+STATS.energy = "energy";
+
+
 // Assumes A 2.5 dimensional world
 DIRECTIONS = {};
 DIRECTIONS.none = -1;

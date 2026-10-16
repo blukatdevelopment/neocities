@@ -69,6 +69,7 @@ ENTITY.baseEntity.new = function(){
     };
     be.onCollide = function(collision){};
     be.onInteract = function(interaction){};
+    be.onAttacked = function(attackData){};
 
     return be;
 };
@@ -90,6 +91,9 @@ ENTITY.PickUp.new = function(){
         //SCENE.destroyEntity(pue);
     };
     pue.onInteract = function(interaction){
+        SCENE.destroyEntity(pue);
+    };
+    pue.onAttacked = function(attack){
         SCENE.destroyEntity(pue);
     };
     return pue;

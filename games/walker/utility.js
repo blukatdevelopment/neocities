@@ -12,6 +12,16 @@ UTILITY.isInsideBox = function(topLeft, bottomRight, point){
   return inX && inY;
 };
 
+UTILITY.clamp = function(value, min, max){
+    if(value < min){
+        return min;
+    }
+    if(value > max){
+        return max;
+    }
+    return value;
+}
+
 var VECTOR2 = {};
 VECTOR2.new = function(x, y){
     let v2 = {
