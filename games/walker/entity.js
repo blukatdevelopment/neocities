@@ -70,6 +70,7 @@ ENTITY.baseEntity.new = function(){
     be.onCollide = function(collision){};
     be.onInteract = function(interaction){};
     be.onAttacked = function(attackData){};
+    be.die = function(){};
 
     return be;
 };

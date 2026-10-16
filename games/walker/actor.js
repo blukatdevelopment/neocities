@@ -133,7 +133,7 @@ ACTOR.new = function(){
     rect.recenter(dest);
 
     let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
-    let attackData = ACTOR.AttackData.new(atk.damage, atr);
+    let attackData = ACTOR.AttackData.new(atr.direction, atk.damage, atr, { knockback: 1 });
     for(let cl of colliders){
       cl.parent.onAttacked(attackData);
     }
@@ -166,6 +166,14 @@ ACTOR.new = function(){
     }
   };
   atr.onCollide = function(collision){};
+  atr.onAttacked = function(attackData){
+    if(atr.stats){
+      atr.stats.health.change(attackData.damage);
+      if(atr.stats.health < 1){
+        atr.die();
+      }
+    }
+  };
   atr.onInteract = function(interaction){};
   atr.toString = function(){
     let str = "[";
@@ -288,12 +296,19 @@ ACTOR.Attack.new = function(){
 };
 
 // Record to pass to entity.onAttacked()
+// Valid options: knockback
 ACTOR.AttackData = {};
-ACTOR.AttackData.new = function(damage, sender){
+ACTOR.AttackData.new = function(direction, damage, sender, options){
   let ad = {
+    direction: direction,
     damage: damage,
-    sender: sender
+    sender: sender,
+    knockback: 0,    
   };
+  if(options.knockback){
+    ad.knockback = options.knockback;
+  }
+
   return ad;
 };
 
