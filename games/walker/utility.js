@@ -338,3 +338,11 @@ PHYSICS.Controller.new = function(){
     };
     return ctl;
 };
+
+UTILITY.delayExecute = function(frames, funct){
+    let execution = {
+        frames: frames,
+        execute: funct
+    };
+    return execute;
+};

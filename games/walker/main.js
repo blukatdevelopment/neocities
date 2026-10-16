@@ -1,5 +1,6 @@
 /*##############################################################################
 # Main
+# One script to rule them all.
 # God object/singleton. Runs before all other scripts, runs main game loop
 ##############################################################################*/
 var MAIN = {};
@@ -11,6 +12,7 @@ MAIN.ANIM_LAG = 0;
 MAIN.FRAMES_TO_ADVANCE = 0;
 MAIN.nextEntityId = 0;
 MAIN.DISPLAY_MODE = 0;
+MAIN.DELAYED_EXECUTIONS = [];
 
 MAIN.GameLoop = function(){
   requestAnimationFrame(MAIN.GameLoop, GRAPHICS.getCanvas());
@@ -33,6 +35,7 @@ MAIN.GameLoop = function(){
     MAIN.FRAMES_TO_ADVANCE = Math.trunc(MAIN.ANIM_LAG / SETTINGS.animationFrameDuration);
     if(MAIN.FRAMES_TO_ADVANCE >= 1){
       MAIN.ANIM_LAG = 0;
+      MAIN.updateDelayedExecutions();
     }
   }
 }
@@ -49,6 +52,15 @@ MAIN.main = function(){
   this.GameLoop();
 }
 
+MAIN.updateDelayedExecutions = function(){
+  for(let execution in MAIN.DELAYED_EXECUTIONS){
+    execution.frames -= 1;
+    if(execution.frames < 1){
+      execution.execute();
+    }
+  }
+  MAIN.DELAYED_EXECUTIONS = MAIN.DELAYED_EXECUTIONS.filter((ex) => ex > 0);
+};
 
 document.addEventListener('DOMContentLoaded', function() {
   MAIN.main();

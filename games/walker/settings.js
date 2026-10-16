@@ -61,10 +61,10 @@ ACTOR_ANIMATIONS.walkUp = "walkUp";
 ACTOR_ANIMATIONS.walkDown = "walkDown";
 ACTOR_ANIMATIONS.walkLeft = "walkLeft";
 ACTOR_ANIMATIONS.walkRight = "walkRight";
-ACTOR_ANIMATIONS.attackUp = "attackUp";
-ACTOR_ANIMATIONS.attackDown = "attackDown";
-ACTOR_ANIMATIONS.attackRight = "attackRight";
-ACTOR_ANIMATIONS.attackLeft = "attackLeft";
+ACTOR_ANIMATIONS.meleeUp = "meleeUp";
+ACTOR_ANIMATIONS.meleeDown = "meleeDown";
+ACTOR_ANIMATIONS.meleeRight = "meleeRight";
+ACTOR_ANIMATIONS.meleeLeft = "meleeLeft";
 
 SETTINGS.actorList = [];
 SETTINGS.actorList.push({
@@ -82,10 +82,10 @@ SETTINGS.actorList.push({
 		[ ACTOR_ANIMATIONS.walkDown, 6, 7],
 		[ ACTOR_ANIMATIONS.walkRight, 8, 9],
 		[ ACTOR_ANIMATIONS.walkLeft, 10, 11],
-		[ ACTOR_ANIMATIONS.attackUp, 12, 14],
-		[ ACTOR_ANIMATIONS.attackDown, 15, 17],
-		[ ACTOR_ANIMATIONS.attackRight, 18, 19],
-		[ ACTOR_ANIMATIONS.attackLeft, 20, 22]
+		[ ACTOR_ANIMATIONS.meleeUp, 12, 14],
+		[ ACTOR_ANIMATIONS.meleeDown, 15, 17],
+		[ ACTOR_ANIMATIONS.meleeRight, 18, 19],
+		[ ACTOR_ANIMATIONS.meleeLeft, 20, 22]
 	]
 });
 

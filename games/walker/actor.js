@@ -20,12 +20,44 @@ ACTORFACTORY.playerOne = function(){
   pone.getCollider().rect.position = VECTOR2.new(0, 0);
   pone.getCollider().rect.size = VECTOR2.new(32, 32);
   pone.name = "player";
+
+  pone.attacks.push(ACTOR.AttackFactory.UNARMED());
+
   return pone;
 };
 
 ACTORFACTORY.npc = function(){
   // TODO
 };
+
+
+// Set up info for attacks
+ACTOR.Attack = {};
+ACTOR.Attack.new = function(){
+  let atk = {
+    upAnimation: null,
+    downAnimation: null,
+    leftAnimation: null,
+    rightAnimation: null,
+    damage: null,
+    frames: null,
+    damageFrames: []
+  };
+  return atk;
+};
+ACTOR.AttackPresets = {};
+ACTOR.AttackFactory.UNARMED = function(){
+  let atk = ACTOR.Attack.new();
+  atk.upAnimation = ACTOR_ANIMATIONS.meleeUp;
+  atk.downAnimation = ACTOR_ANIMATIONS.meleeDown;
+  atk.rightAnimation = ACTOR_ANIMATIONS.meleeRight;
+  atk.leftAnimation = ACTOR_ANIMATIONS.meleeLeft;
+  atk.damage = 1;
+  atk.frames = 3;
+  atk.damageFrames = [1];
+  return atk;
+};
+
 
 // implements iEntity, inherits base entity
 var ACTOR = {};
@@ -40,6 +72,7 @@ ACTOR.new = function(){
   atr.size = 32;
   atr.speed = 5;
   atr.lockCamera = false;
+  atr.attacks = [];
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
