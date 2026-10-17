@@ -3,7 +3,7 @@
 ##############################################################################*/
 var UTILITY = {}
 UTILITY.randRange = function(min, max){
-  return Math.random() * (max - min) + min;
+  return Math.round(Math.random() * (max - min) + min);
 };
 
 UTILITY.isInsideBox = function(topLeft, bottomRight, point){

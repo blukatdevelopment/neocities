@@ -41,6 +41,7 @@ ACTORFACTORY.simpleEnemy = function(){
   se.agent = agent;
   se.animator = anm;
   se.lockCamera = false;
+  se.speed = 2.5;
 
   se.setCollider(PHYSICS.BoxCollider.new());
   se.getCollider().rect.position = VECTOR2.new(13, 0);
@@ -187,7 +188,6 @@ ACTOR.new = function(){
     if(atr.stats){
       let prevHealth = atr.stats.health.value;
       atr.stats.health.change(attackData.damage);
-      console.log(atr.name + " attacked for " + attackData.damage +", going from " + prevHealth + " to " + atr.stats.health.value);
       if(atr.stats.health.value < 1){
         atr.die();
       }
