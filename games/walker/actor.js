@@ -151,15 +151,8 @@ ACTOR.new = function(){
     
   };
   atr.attackHitscan = function(atk){
-    let dir = VECTOR2.vectorFromDirection(atr.direction);
-    let halfSize = atr.size/2;
-    let speed = VECTOR2.new(halfSize, halfSize); // Should be just out of the hitbox
-    dir = dir.multiply(speed);
-
-    let pos = atr.centeredPosition();
-    let dest = pos.add(dir);
-
-    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(halfSize, halfSize));
+    let dest = atr.centeredPosition().move(atr.direction, atr.size);
+    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(atr.size, atr.size));
     rect.recenter(dest);
 
     let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
@@ -169,15 +162,8 @@ ACTOR.new = function(){
     }
   };
   atr.interact = function(){
-    let dir = VECTOR2.vectorFromDirection(atr.direction);
-    let halfSize = atr.size/2;
-    let speed = VECTOR2.new(halfSize, halfSize); // Should be just out of the hitbox
-    dir = dir.multiply(speed);
-
-    let pos = atr.centeredPosition();
-    let dest = pos.add(dir);
-
-    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(halfSize, halfSize));
+    let dest = atr.centeredPosition().move(atr.direction, atr.size);
+    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(atr.size, atr.size));
     rect.recenter(dest);
 
     let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
