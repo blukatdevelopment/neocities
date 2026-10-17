@@ -131,9 +131,18 @@ ACTOR.new = function(){
     atr.stateMachine.startAttack(atk);
 
     // Execute attack hitscans at specific timing.
-    UTILITY.delayExecute(atk.frames, () => {
-      atr.attackHitscan(atk);
-    });
+    for(let damageFrame of atk.damageFrames){
+      if(damageFrame == 0){
+        // Deal damage now
+        atr.attackHitscan(atk);
+      }
+      else{
+        // Deal damage later
+        UTILITY.delayExecute(damageFrame, () => {
+          atr.attackHitscan(atk);
+        });
+      }
+    }
     
     // Execute at end of attack
     UTILITY.delayExecute(atk.frames, () => {

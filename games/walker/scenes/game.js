@@ -34,9 +34,9 @@ GAME.setup = function(){
     GAME.addEntity(pu);
   }
 
-  for(let i = 0; i< 1; i++){
+  for(let i = 0; i< 10; i++){
     let se = ACTORFACTORY.simpleEnemy();
-    se.setPosition(VECTOR2.new(i * 32, 400));
+    se.setPosition(VECTOR2.new(i * 100, 400));
     GAME.addEntity(se);
   }
 
