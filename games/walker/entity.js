@@ -23,7 +23,6 @@ ENTITYFACTORY.Pickup = function(_sprite){
 
 let ENTITY = {};
 
-// Implements iEntity
 ENTITY.baseEntity = {};
 ENTITY.baseEntity.new = function(){
     let be = {
@@ -73,7 +72,7 @@ ENTITY.baseEntity.new = function(){
     be.onKnockback = function(direction, magnitude){
         if(be.collider){
             let dest = be.position.move(direction, magnitude);
-            be.collider.moveAndCollideShort(dest);
+            be.collider.moveAndCollideShort(dest, true);
         }
     };
     be.die = function(){

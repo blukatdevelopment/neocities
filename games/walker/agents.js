@@ -77,7 +77,6 @@ AGENT.SIMPLE_ENEMY.new = function(actor){
 			se.nextDirectionChange = Date.now() + (1000 * UTILITY.randRange(1, 5));
 		}
 		if(se.direction != DIRECTIONS.none){
-			console.log("Moving in direction " + se.direction);
 			se.actor.move(se.direction);
 		}
 	};

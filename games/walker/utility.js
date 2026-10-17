@@ -274,13 +274,16 @@ PHYSICS.BoxCollider.new = function(){
         return otherRect.overlaps(rect);    
     };
     // Makes one check, assuming distance is less than scale
-    bc.moveAndCollideShort = function(destination){
+    bc.moveAndCollideShort = function(destination, suppressCollisionEvents){
         if(bc.controller && bc.parent){
             let previous = bc.parent.getPosition();
             bc.parent.setPosition(VECTOR2.new(destination.x, destination.y));
             let excludeList = [];
             excludeList.push(bc.parent.getEntityId());
             let ret = bc.controller.checkForCollision(excludeList, bc);
+            if(suppressCollisionEvents){
+                return ret;
+            }
             if(ret){
                 if(ret.second.rigid){
                     //revert upon collision with rigid collider

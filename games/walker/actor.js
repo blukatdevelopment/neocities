@@ -41,7 +41,7 @@ ACTORFACTORY.simpleEnemy = function(){
   se.agent = agent;
   se.animator = anm;
   se.lockCamera = false;
-  se.speed = 2.5;
+  se.speed = 1.5;
 
   se.setCollider(PHYSICS.BoxCollider.new());
   se.getCollider().rect.position = VECTOR2.new(13, 0);
@@ -51,6 +51,20 @@ ACTORFACTORY.simpleEnemy = function(){
 
   se.attacks.push(ACTOR.AttackFactory.UNARMED());
   se.activeAttack = se.attacks[0];
+
+  // Deal damage and knock target away
+  se.onCollide = function(collision){
+    let target = collision.second.parent == se ? collision.first.parent : collision.second.parent;
+    if(target == se){
+      return;
+    }
+    let pos = se.centeredPosition();
+    let targetPos = target.centeredPosition();
+    let dir = pos.x < targetPos.x ? DIRECTIONS.east : DIRECTIONS.west;
+    let attackData = ACTOR.AttackData.new(dir, -se.activeAttack.damage, se, { knockback: 10 });
+    target.onAttacked(attackData);
+    
+  };
 
   se.stats = ACTOR.StatsController.new(3, 3);
   return se;
@@ -186,12 +200,21 @@ ACTOR.new = function(){
   atr.onCollide = function(collision){};
   atr.onAttacked = function(attackData){
     if(atr.stats){
+      if(atr.stats.damageCooldown == null || atr.stats.damageCooldown < Date.now()){
+        atr.stats.damageCooldown = Date.now() + SETTINGS.damageCooldown;
+      }
+      else{
+        //console.log("Ignoring attack until cooldown finishes");
+        return;
+      }
       let prevHealth = atr.stats.health.value;
       atr.stats.health.change(attackData.damage);
+      //console.log(atr.name + " attacked for " + attackData.damage + " and now has " + atr.stats.health.value + " health.");
       if(atr.stats.health.value < 1){
         atr.die();
       }
       if(attackData.knockback > 0){
+        //console.log("Being knocked back in direction" + attackData.direction);
         atr.onKnockback(attackData.direction, attackData.knockback);
       }
     }
@@ -367,7 +390,8 @@ ACTOR.Stat.new = function(name, max){
     name: name,
     value: max,
     max: max,
-    min: 0
+    min: 0,
+    damageCooldown: null
   };
   st.reset = function(){
     st.value = st.max;
