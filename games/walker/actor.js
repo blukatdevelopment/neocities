@@ -29,8 +29,30 @@ ACTORFACTORY.playerOne = function(){
   return pone;
 };
 
-ACTORFACTORY.npc = function(){
-  // TODO
+ACTORFACTORY.simpleEnemy = function(){
+  let config = UTILITY.getActorConfig("wrath");
+  let se = ACTOR.new();
+  let anm = SPRITES.Animator.new();
+  anm.animation = SPRITES.animations[config.name][ACTOR_ANIMATIONS.idleLeft]
+  let asm = ACTOR.AnimationStateMachine.new(name, SPRITES.animations[config.name], anm);
+  asm.linkToActor(se);
+  se.stateMachine = asm;
+  let agent = AGENT.SIMPLE_ENEMY.new(se);
+  se.agent = agent;
+  se.animator = anm;
+  se.lockCamera = false;
+
+  se.setCollider(PHYSICS.BoxCollider.new());
+  se.getCollider().rect.position = VECTOR2.new(0, 0);
+  se.getCollider().rect.size = VECTOR2.new(32, 32);
+  se.name = "Enemy";
+  se.label = se.name;
+
+  se.attacks.push(ACTOR.AttackFactory.UNARMED());
+  se.activeAttack = se.attacks[0];
+
+  se.stats = ACTOR.StatsController.new(3, 3);
+  return se;
 };
 
 
@@ -87,15 +109,14 @@ ACTOR.new = function(){
         atr.direction = direction;
       break;
     }
-    let dest2D = VECTOR2.new(dest.x, dest.y);
-    if(atr.collider.moveAndCollideShort(dest2D)){
+    if(atr.collider.moveAndCollideShort(dest)){
       return;
     }
   };
   atr.draw = function(){
     atr.animator.update(atr.position.x, atr.position.y);
     if(atr.label != ""){
-      GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.y);
+      GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.y + atr.size + SETTINGS.defaultFontSize);
     }
   };
   atr.attack = function(){
@@ -133,7 +154,7 @@ ACTOR.new = function(){
     rect.recenter(dest);
 
     let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
-    let attackData = ACTOR.AttackData.new(atr.direction, atk.damage, atr, { knockback: 1 });
+    let attackData = ACTOR.AttackData.new(atr.direction, -atk.damage, atr, { knockback: 10 });
     for(let cl of colliders){
       cl.parent.onAttacked(attackData);
     }
@@ -168,9 +189,14 @@ ACTOR.new = function(){
   atr.onCollide = function(collision){};
   atr.onAttacked = function(attackData){
     if(atr.stats){
+      let prevHealth = atr.stats.health.value;
       atr.stats.health.change(attackData.damage);
-      if(atr.stats.health < 1){
+      console.log(atr.name + " attacked for " + attackData.damage +", going from " + prevHealth + " to " + atr.stats.health.value);
+      if(atr.stats.health.value < 1){
         atr.die();
+      }
+      if(attackData.knockback > 0){
+        atr.onKnockback(attackData.direction, attackData.knockback);
       }
     }
   };

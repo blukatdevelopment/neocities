@@ -34,6 +34,12 @@ GAME.setup = function(){
     GAME.addEntity(pu);
   }
 
+  for(let i = 0; i< 1; i++){
+    let se = ACTORFACTORY.simpleEnemy();
+    se.setPosition(VECTOR2.new(i * 32, 400));
+    GAME.addEntity(se);
+  }
+
   GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
   GAME.isSetup = true;
 };
@@ -121,5 +127,9 @@ GAME.debugMessage = function(message){
 };
 
 GAME.destroyEntity = function(entity){
-  GAME.removeEntity(entity);
+  if(entity == GAME.walker){
+    console.log("Game over!");
+  }
+  // Removes entity after update loop completes.
+  UTILITY.delayExecute(0, () => { GAME.removeEntity(entity); });
 };

@@ -43,6 +43,24 @@ VECTOR2.new = function(x, y){
     v2.toString = function(){
         return "{" + v2.x + ", " + v2.y + "}";
     };
+    v2.move = function(direction, magnitude){
+        let ret = VECTOR2.new(v2.x, v2.y);
+        switch(direction){
+          case DIRECTIONS.north:
+            ret.y -= magnitude;
+          break;
+          case DIRECTIONS.south:
+            ret.y += magnitude;
+          break;
+          case DIRECTIONS.east:
+            ret.x += magnitude;
+          break;
+          case DIRECTIONS.west:
+            ret.x -= magnitude;
+          break;
+        }
+        return ret;
+    };
     return v2;
 };
 VECTOR2.vectorFromDirection = function(direction){

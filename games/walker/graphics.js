@@ -161,7 +161,7 @@ GRAPHICS.drawImage = function(image, x, y, width, height){
 // Draw text at static point
 GRAPHICS.drawText = function(text, x, y){
   GRAPHICS._context.imageSmoothingEnabled = false;
-  let textSize = GRAPHICS.scale(10);
+  let textSize = GRAPHICS.scale(SETTINGS.defaultFontSize);
   x = GRAPHICS.scale(x);
   y = GRAPHICS.scale(y);
   let context = GRAPHICS.getContext()

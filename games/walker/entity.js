@@ -70,7 +70,15 @@ ENTITY.baseEntity.new = function(){
     be.onCollide = function(collision){};
     be.onInteract = function(interaction){};
     be.onAttacked = function(attackData){};
-    be.die = function(){};
+    be.onKnockback = function(direction, magnitude){
+        if(be.collider){
+            let dest = be.position.move(direction, magnitude);
+            be.collider.moveAndCollideShort(dest);
+        }
+    };
+    be.die = function(){
+        SCENE.destroyEntity(be);
+    };
 
     return be;
 };

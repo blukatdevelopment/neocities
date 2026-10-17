@@ -59,4 +59,13 @@ AGENT.PLAYER_ONE.new = function(actor){
 	    }
 	};
 	return pone;
-}
+};
+
+AGENT.SIMPLE_ENEMY = {};
+AGENT.SIMPLE_ENEMY.new = function(actor){
+	let se = {};
+	se.update = function(){
+
+	};
+	return se;
+};

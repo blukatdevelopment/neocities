@@ -15,6 +15,8 @@ SETTINGS.frameDuration = 1000 / SETTINGS.fps;
 
 SETTINGS.interactionRange = 100;
 
+SETTINGS.defaultFontSize = 10;
+
 // Stats
 STATS = {};
 STATS.health = "health";
