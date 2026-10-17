@@ -122,6 +122,7 @@ GRAPHICS.clearCanvas = function(){
 
 // XY is for top left corner.
 GRAPHICS.drawBox = function(x, y, width, height){
+
   GRAPHICS._context.imageSmoothingEnabled = false;
   // Top
   GRAPHICS.drawLine(x, y, x+width, y);
@@ -136,10 +137,8 @@ GRAPHICS.drawBox = function(x, y, width, height){
 
 GRAPHICS.drawImageToImage = function(image, x1, y1, width1, height1, x2, y2, width2, height2){
   GRAPHICS._context.imageSmoothingEnabled = false;
-  x2 = GRAPHICS.scale(x2);
-  y2 = GRAPHICS.scale(y2);
-  width2 = GRAPHICS.scale(width2);
-  height2 = GRAPHICS.scale(height2);
+  x2 = x2;
+  y2 = y2;
 
   let context = GRAPHICS.getContext();
   context.drawImage(image, x1, y1, width1, height1, x2, y2, width2, height2);

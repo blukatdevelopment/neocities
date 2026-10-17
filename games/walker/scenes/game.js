@@ -9,6 +9,7 @@ GAME.entities = [];
 GAME.scenery = [];
 GAME.physics = false;
 GAME.debugText = "";
+GAME.hotbar = null;
 
 GAME.setup = function(){
   GAME.physics = PHYSICS.Controller.new();
@@ -41,6 +42,7 @@ GAME.setup = function(){
   }
 
   GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
+  GAME.hotbar = UI.COMPONENTS.Hotbar.new();
   GAME.isSetup = true;
 };
 
@@ -55,6 +57,7 @@ GAME.update = function(){
     }
     //entity.label = entity.getName() + entity.collider.absoluteRect().toString();
   }
+  GAME.hotbar.update();
   this.drawGAMEScreen();
 };
 
@@ -69,6 +72,7 @@ GAME.drawGAMEScreen = function(){
   }
 
   GRAPHICS.drawText(GAME.debugText, 10, 10);
+  GAME.hotbar.draw();
   GAME.updateCursor();
   SCENE.drawCursor();
 };

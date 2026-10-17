@@ -28,6 +28,9 @@ SPRITES.Sprite.new = function(name, sheet, index){
     sheet: sheet,
     index: index
   };
+  st.toString = function(){
+    return "Sprite[" + st.name + ", sheet:" + st.sheet.name + ", index:" + st.index + "]";
+  };
   return st;
 };
 
@@ -82,6 +85,27 @@ SPRITES.renderSprite = function(posX, posY, index, sheet, forceDisplayMode){
     posX = relative.x;
     posY = relative.y;
   }
+  posX = GRAPHICS.scale(posX);
+  posY = GRAPHICS.scale(posY);
+  GRAPHICS.drawImageToImage(
+      sheet.element, // Image
+      offX, // X offset into image
+      offY, // Y offset into image
+      sheet.cellResolutionX, // sprite width
+      sheet.cellResolutionY, // sprite height
+      posX, // X offset drawing to canvas
+      posY, // Y offset drawing to canvas
+      GRAPHICS.scale(sheet.cellResolutionX), 
+      GRAPHICS.scale(sheet.cellResolutionY) 
+   );
+};
+
+// Draws a sprite directly onto the screen without scaling
+// or relative positioning
+SPRITES.staticRenderSprite = function(posX, posY, index, sheet){
+  // Assumes one horizontal strip of cells
+  let offX = index * sheet.cellResolutionX;
+  let offY = 0;
 
   GRAPHICS.drawImageToImage(
       sheet.element, // Image

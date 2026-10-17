@@ -5,6 +5,7 @@
 ##############################################################################*/
 var INPUT = {};
 INPUT._mousePos = null;
+INPUT._mouseWheelInput = 0;
 
 INPUT.LEFT_CLICK = 0;
 INPUT.MIDDLE_CLICK = 1;
@@ -12,6 +13,15 @@ INPUT.RIGHT_CLICK = 2;
 
 // Define all possible keys
 INPUT.KEYS = {
+  K_1: 49,
+  K_2: 50,
+  K_3: 51,
+  K_4: 52,
+  K_5: 53,
+  K_6: 54,
+  K_7: 55,
+  K_8: 56,
+  K_9: 57,
   K_W: 87,
   K_A: 65,
   K_S: 83,
@@ -20,20 +30,39 @@ INPUT.KEYS = {
   K_SPACE: 32
 };
 
-// Configure which keys will be used
+// Configure which keys will be used for ondown
 var KEYS_USED = [
   INPUT.KEYS.K_W, 
-  INPUT.KEYS.K_A, 
-  INPUT.KEYS.K_S, 
+  INPUT.KEYS.K_A,
+  INPUT.KEYS.K_S,
   INPUT.KEYS.K_D,
   INPUT.KEYS.K_E,
-  INPUT.KEYS.K_SPACE
+  INPUT.KEYS.K_SPACE,
+  INPUT.KEYS.K_E,
+  INPUT.KEYS.K_1,
+  INPUT.KEYS.K_2,
+  INPUT.KEYS.K_3,
+  INPUT.KEYS.K_4,
+  INPUT.KEYS.K_5,
+  INPUT.KEYS.K_6,
+  INPUT.KEYS.K_7,
+  INPUT.KEYS.K_8,
+  INPUT.KEYS.K_9
 ];
 
 // Configure keys to check for presses
 var KEY_PRESSES_USED = [
   INPUT.KEYS.K_SPACE,
-  INPUT.KEYS.K_E
+  INPUT.KEYS.K_E,
+  INPUT.KEYS.K_1,
+  INPUT.KEYS.K_2,
+  INPUT.KEYS.K_3,
+  INPUT.KEYS.K_4,
+  INPUT.KEYS.K_5,
+  INPUT.KEYS.K_6,
+  INPUT.KEYS.K_7,
+  INPUT.KEYS.K_8,
+  INPUT.KEYS.K_9
 ];
 
 // Key state
@@ -105,12 +134,24 @@ INPUT.cancelSpacebarScroll = function(evt){
   }
 };
 
+INPUT.handleMouseWheel = function(evt){
+  event.preventDefault();
+  if(event.deltaY != 0){
+    INPUT._mouseWheelInput = event.deltaY;
+  }
+};
+
 // Only allow presses to appear for a single frame
 INPUT.clearPresses = function(){
     for(let i in KEY_PRESSES_USED){
       let key = KEY_PRESSES_USED[i];
       INPUT.activeKeyPresses[key] = false;
     }
+    INPUT._mouseWheelInput = 0;
+};
+
+INPUT.getMouseWheel = function(){
+  return INPUT._mouseWheelInput;
 };
 
 INPUT.initInput = function(){
@@ -130,4 +171,5 @@ INPUT.initInput = function(){
   window.addEventListener('keydown', INPUT.onKeyDown, false);
   window.addEventListener('keyup', INPUT.onKeyUp, false);
   window.addEventListener('keydown', INPUT.cancelSpacebarScroll, false);
+  window.addEventListener("wheel", INPUT.handleMouseWheel, { passive:false });
 };

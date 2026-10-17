@@ -132,6 +132,14 @@ SETTINGS.staticSheetList.push({
 		"arrowBlack", "arrowRed", "arrowGreen"
 	]
 });
+SETTINGS.staticSheetList.push({
+	name: "hotbar",
+	sheet: "hotbar.png",
+	resolutionX: 154,
+	resolutionY: 18,
+	cells: 1,
+	sprites: ["hotbar"]
+});
 
 // Sprite config
 SETTINGS.sheets = {};
