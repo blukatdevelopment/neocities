@@ -17,8 +17,8 @@ ACTORFACTORY.playerOne = function(){
   pone.lockCamera = true;
 
   pone.setCollider(PHYSICS.BoxCollider.new());
-  pone.getCollider().rect.position = VECTOR2.new(0, 0);
-  pone.getCollider().rect.size = VECTOR2.new(32, 32);
+  pone.getCollider().rect.position = VECTOR2.new(13, 0);
+  pone.getCollider().rect.size = VECTOR2.new(11, 32);
   pone.name = "Wrath";
 
   pone.attacks.push(ACTOR.AttackFactory.UNARMED());
@@ -43,8 +43,8 @@ ACTORFACTORY.simpleEnemy = function(){
   se.lockCamera = false;
 
   se.setCollider(PHYSICS.BoxCollider.new());
-  se.getCollider().rect.position = VECTOR2.new(0, 0);
-  se.getCollider().rect.size = VECTOR2.new(32, 32);
+  se.getCollider().rect.position = VECTOR2.new(13, 0);
+  se.getCollider().rect.size = VECTOR2.new(11, 32);
   se.name = "Enemy";
   se.label = se.name;
 
@@ -151,6 +151,7 @@ ACTOR.new = function(){
     
   };
   atr.attackHitscan = function(atk){
+
     let dest = atr.centeredPosition().move(atr.direction, atr.size);
     let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(atr.size, atr.size));
     rect.recenter(dest);
