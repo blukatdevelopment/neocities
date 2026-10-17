@@ -103,7 +103,7 @@ ENTITY.PickUp.new = function(){
         SCENE.destroyEntity(pue);
     };
     pue.onAttacked = function(attack){
-        SCENE.destroyEntity(pue);
+        //SCENE.destroyEntity(pue);
     };
     return pue;
 };
