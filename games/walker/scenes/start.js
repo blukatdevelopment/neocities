@@ -52,3 +52,5 @@ START.debugMessage = function(message){
 };
 
 START.destroyEntity = function(entity){};
+
+START.setGameState = function(gameState){};

@@ -27,7 +27,8 @@ INPUT.KEYS = {
   K_S: 83,
   K_D: 68,
   K_E: 69,
-  K_SPACE: 32
+  K_SPACE: 32,
+  K_TAB: 9
 };
 
 // Configure which keys will be used for ondown
@@ -47,7 +48,8 @@ var KEYS_USED = [
   INPUT.KEYS.K_6,
   INPUT.KEYS.K_7,
   INPUT.KEYS.K_8,
-  INPUT.KEYS.K_9
+  INPUT.KEYS.K_9,
+  INPUT.KEYS.K_TAB,
 ];
 
 // Configure keys to check for presses
@@ -62,7 +64,8 @@ var KEY_PRESSES_USED = [
   INPUT.KEYS.K_6,
   INPUT.KEYS.K_7,
   INPUT.KEYS.K_8,
-  INPUT.KEYS.K_9
+  INPUT.KEYS.K_9,
+  INPUT.KEYS.K_TAB
 ];
 
 // Key state
@@ -107,6 +110,12 @@ INPUT.onMouseMove = function(evt){
 INPUT.onMouseOut = function(evt){};
 
 INPUT.onKeyDown = function(evt){
+  // Suppress Tab Key
+  if(evt.which == 9){
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+
   if(evt.which in INPUT.activeKeys){
     let previousDown = INPUT.activeKeys[evt.which];
     INPUT.activeKeys[evt.which] = true;

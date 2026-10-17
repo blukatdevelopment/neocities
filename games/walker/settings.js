@@ -22,6 +22,12 @@ STATS = {};
 STATS.health = "health";
 STATS.energy = "energy";
 
+// States that effect rendering.
+let GAMESTATES = {};
+GAMESTATES.play = "play";
+GAMESTATES.inventory = "inventory";
+GAMESTATES.dialogue = "dialogue";
+GAMESTATES.pause = "pause";
 
 // Assumes A 2.5 dimensional world
 DIRECTIONS = {};
@@ -139,6 +145,15 @@ SETTINGS.staticSheetList.push({
 	resolutionY: 18,
 	cells: 1,
 	sprites: ["hotbar"]
+});
+
+SETTINGS.staticSheetList.push({
+	name: "inventory",
+	sheet: "inventory.png",
+	resolutionX: 154,
+	resolutionY: 52,
+	cells: 1,
+	sprites: ["inventory"]
 });
 
 // Sprite config

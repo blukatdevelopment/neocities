@@ -76,3 +76,8 @@ SCENE.updateCursor = function(sprite){
 SCENE.init = function(){
   SCENE.updateCursor(SPRITES.static.cursors.roundBlack);
 };
+
+SCENE.setGameState = function(gameState){
+  var activeScene = SCENE.getActiveScene();
+  activeScene.setGameState(gameState);
+};

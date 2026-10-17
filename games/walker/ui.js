@@ -98,3 +98,68 @@ UI.COMPONENTS.Hotbar.new = function(){
 	return hb;
 };
 
+UI.COMPONENTS.Inventory = {};
+UI.COMPONENTS.Inventory.new = function(){
+	let rect = SHAPES.RECT.new(VECTOR2.new(123, 328), VECTOR2.new(154, 54));
+	let sprite = SPRITES.static.inventory.inventory;	
+	let inv = UI.COMPONENTS.BaseComponent.new(rect, sprite);
+	inv.activeSlot = 0;
+	inv.slotCount = 9;
+	inv.active = false;
+	inv.update = function(){
+		if(INPUT.keyPress(INPUT.KEYS.K_TAB)){
+			inv.toggleActive();
+		}
+	};
+	inv.draw = function(){
+		if(inv.active){
+			let pos = inv.rect.position;
+			SPRITES.renderSprite(pos.x, pos.y, inv.sprite.index, inv.sprite.sheet, DISPLAY_MODES.static);
+			let hoveredSlot = inv.getHoveredSlot();
+			console.log("hoveredSlot " + hoveredSlot);
+			if(hoveredSlot > -1){
+				let rect = inv.getSlotRect(hoveredSlot);
+				GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
+			}
+		}
+	};
+	// Returns the rect for one inventory slot
+	inv.getSlotRect = function(index){
+		let oneIndexed = index+1;
+		let row = Math.floor(index/9); // 9 slots per row
+		let rowIndex = index % 9;
+		let slotSize = 16;
+		let offsetX = (rowIndex * slotSize) + rowIndex + 1;
+		let offsetY = 1 + (row * (slotSize + 1));
+		let x = inv.rect.position.x;
+		let y = inv.rect.position.y;
+		return SHAPES.RECT.new(VECTOR2.new(x+offsetX, y+offsetY), VECTOR2.new(slotSize, slotSize));
+	};
+	inv.getHoveredSlot = function(){
+		let mousePos = INPUT.getMousePosition();
+		// Convert canvas pixels to viewport pixels.
+		mousePos.x = GRAPHICS.downScale(mousePos.x);
+		mousePos.y = GRAPHICS.downScale(mousePos.y);
+
+		let ret = -1;
+		for(let i = 0; i < 27; i++){
+			let rect = inv.getSlotRect(i);
+			if(rect.contains(mousePos)){
+				return i;
+			}
+		}
+		return ret;
+	};
+	inv.toggleActive = function(){
+		if(inv.active){
+			SCENE.setGameState(GAMESTATES.play);
+			inv.active = false;
+		}
+		else{
+			SCENE.setGameState(GAMESTATES.inventory);
+			inv.active = true;
+		}
+	};
+
+	return inv;
+};

@@ -10,6 +10,8 @@ GAME.scenery = [];
 GAME.physics = false;
 GAME.debugText = "";
 GAME.hotbar = null;
+GAME.inventory = null;
+GAME.gameState = GAMESTATES.play;
 
 GAME.setup = function(){
   GAME.physics = PHYSICS.Controller.new();
@@ -43,6 +45,7 @@ GAME.setup = function(){
 
   GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
   GAME.hotbar = UI.COMPONENTS.Hotbar.new();
+  GAME.inventory = UI.COMPONENTS.Inventory.new();
   GAME.isSetup = true;
 };
 
@@ -50,15 +53,33 @@ GAME.update = function(){
   if(!GAME.isSetup){
     GAME.setup();
   }
+
+  if(GAME.gameState === GAMESTATES.play){
+    GAME.updateWorld();
+  }
+  else if(GAME.gameState === GAMESTATES.inventory){
+    GAME.updateInventory();
+  }
+  else if(GAME.gameState === GAMESTATES.pause){
+    // TODO: pause menu
+  }
+};
+
+GAME.updateWorld = function(){
   for(let e in GAME.entities){
     let entity = GAME.entities[e];
     if(entity){
       entity.update();
     }
-    //entity.label = entity.getName() + entity.collider.absoluteRect().toString();
   }
   GAME.hotbar.update();
-  this.drawGAMEScreen();
+  GAME.inventory.update();
+  GAME.drawGAMEScreen();
+};
+
+GAME.updateInventory = function(){
+  GAME.inventory.update();
+  GAME.drawGAMEScreen();
 };
 
 GAME.drawGAMEScreen = function(){
@@ -73,6 +94,7 @@ GAME.drawGAMEScreen = function(){
 
   GRAPHICS.drawText(GAME.debugText, 10, 10);
   GAME.hotbar.draw();
+  GAME.inventory.draw();
   GAME.updateCursor();
   SCENE.drawCursor();
 };
@@ -104,7 +126,6 @@ GAME.removeEntity = function(entity){
 };
 
 GAME.mouseDown = function(evt){
-  // TODO: move mouse input handling to AGENT.PLAYER_ONE
   let point = INPUT.getMousePosition();
   if(evt.button == INPUT.LEFT_CLICK){
     if(GAME.cursorInRange()){
@@ -136,4 +157,8 @@ GAME.destroyEntity = function(entity){
   }
   // Removes entity after update loop completes.
   UTILITY.delayExecute(0, () => { GAME.removeEntity(entity); });
+};
+
+GAME.setGameState = function(gameState){
+  GAME.gameState = gameState;
 };
