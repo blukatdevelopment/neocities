@@ -5,8 +5,6 @@ var START = {};
 
 START.setup = false;
 
-START.mouseUp = function(){}
-
 START.drawStartButton = function(){
     GRAPHICS.drawBox(100, 100, 100, 100);
     GRAPHICS.drawText("Start", 100, 150);
@@ -26,6 +24,9 @@ START.update = function(){
     GRAPHICS.clearCanvas();
     this.drawStartButton();
     SCENE.drawCursor();
+    if(INPUT.mouseClick(INPUT.LEFT_CLICK) && this.isStartButtonSelected()){
+        SCENE.setActiveScene(SCENE.SCENES.GAME);
+    }
 }
 
 START.isStartButtonSelected = function(){
@@ -41,12 +42,6 @@ START.isStartButtonSelected = function(){
     return UTILITY.isInsideBox(boxTopLeft, boxBottomRight, point);
 }
 
-START.mouseDown = function(){
-    if(this.isStartButtonSelected()){
-        SCENE.setActiveScene(SCENE.SCENES.GAME);
-    }
-}
-
 START.debugMessage = function(message){
 
 };
@@ -54,3 +49,4 @@ START.debugMessage = function(message){
 START.destroyEntity = function(entity){};
 
 START.setGameState = function(gameState){};
+START.getGameState = function(){ return null; };

@@ -9,9 +9,8 @@ GAME.entities = [];
 GAME.scenery = [];
 GAME.physics = false;
 GAME.debugText = "";
-GAME.hotbar = null;
-GAME.inventory = null;
 GAME.gameState = GAMESTATES.play;
+GAME.ui = null;
 
 GAME.setup = function(){
   GAME.physics = PHYSICS.Controller.new();
@@ -44,8 +43,7 @@ GAME.setup = function(){
   }
 
   GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
-  GAME.hotbar = UI.COMPONENTS.Hotbar.new();
-  GAME.inventory = UI.COMPONENTS.Inventory.new();
+  GAME.ui = UI.COMPONENTS.ComponentManager.new();
   GAME.isSetup = true;
 };
 
@@ -57,12 +55,9 @@ GAME.update = function(){
   if(GAME.gameState === GAMESTATES.play){
     GAME.updateWorld();
   }
-  else if(GAME.gameState === GAMESTATES.inventory){
-    GAME.updateInventory();
-  }
-  else if(GAME.gameState === GAMESTATES.pause){
-    // TODO: pause menu
-  }
+  GAME.ui.update();
+  GAME.drawGAMEScreen();
+  
 };
 
 GAME.updateWorld = function(){
@@ -72,9 +67,6 @@ GAME.updateWorld = function(){
       entity.update();
     }
   }
-  GAME.hotbar.update();
-  GAME.inventory.update();
-  GAME.drawGAMEScreen();
 };
 
 GAME.updateInventory = function(){
@@ -93,8 +85,7 @@ GAME.drawGAMEScreen = function(){
   }
 
   GRAPHICS.drawText(GAME.debugText, 10, 10);
-  GAME.hotbar.draw();
-  GAME.inventory.draw();
+  GAME.ui.draw();
   GAME.updateCursor();
   SCENE.drawCursor();
 };
@@ -125,26 +116,6 @@ GAME.removeEntity = function(entity){
   GAME.physics.unregisterCollider(entity.getCollider());
 };
 
-GAME.mouseDown = function(evt){
-  let point = INPUT.getMousePosition();
-  if(evt.button == INPUT.LEFT_CLICK){
-    if(GAME.cursorInRange()){
-      GAME.walker.attack();
-    }
-  }
-  if(evt.button == INPUT.RIGHT_CLICK){
-    // Convert to viewport coords
-    point.x = GRAPHICS.downScale(point.x);
-    point.y = GRAPHICS.downScale(point.y);
-    // Convert to point in world space
-    point = GRAPHICS.getWorldPoint(point);
-    if(GAME.cursorInRange()){
-      GAME.walker.interactAtPoint(point);
-    }
-  }
-  SCENE.updateCursor(SPRITES.static.cursors.roundGreen);
-};
-
 GAME.mouseUp = function(evt){};
 
 GAME.debugMessage = function(message){
@@ -162,3 +133,7 @@ GAME.destroyEntity = function(entity){
 GAME.setGameState = function(gameState){
   GAME.gameState = gameState;
 };
+
+GAME.getGameState = function(){
+  return GAME.gameState;
+}

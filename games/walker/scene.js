@@ -14,20 +14,6 @@ SCENE.SCENES = {
 SCENE._activeScene = SCENE.SCENES.START;
 SCENE._cursorSprite = null;
 
-SCENE.mouseDown = function(evt){
-  var activeScene = this.getActiveScene();
-  if(activeScene != null){
-    activeScene.mouseDown(evt);
-  }
-};
-
-SCENE.mouseUp = function(evt){
-  var activeScene = this.getActiveScene();
-  if(activeScene != null){
-    activeScene.mouseUp(evt);
-  }
-};
-
 SCENE.update = function(){
   var activeScene = SCENE.getActiveScene();
   activeScene.update();
@@ -80,4 +66,9 @@ SCENE.init = function(){
 SCENE.setGameState = function(gameState){
   var activeScene = SCENE.getActiveScene();
   activeScene.setGameState(gameState);
+};
+
+SCENE.getGameState = function(){
+  var activeScene = SCENE.getActiveScene();
+  return activeScene.getGameState();
 };

@@ -6,6 +6,8 @@
 var INPUT = {};
 INPUT._mousePos = null;
 INPUT._mouseWheelInput = 0;
+INPUT._mouseClick = [false, false, false];
+INPUT._mouseDown = [false, false, false];
 
 INPUT.LEFT_CLICK = 0;
 INPUT.MIDDLE_CLICK = 1;
@@ -80,6 +82,12 @@ INPUT.getMousePosition = function(){
   return null;
 };
 
+INPUT.mouseClick = function(mouseButton){
+  if(mouseButton > -1 && mouseButton < 3){
+    return INPUT._mouseClick[mouseButton];
+  }
+}
+
 INPUT.key = function(which){
   if(!(which in INPUT.activeKeys)){
     return false;
@@ -95,11 +103,21 @@ INPUT.keyPress = function(which){
 };
 
 INPUT.onMouseDown = function(evt){
-  SCENE.mouseDown(evt);
+  let which = evt.button;
+  if(which > -1 && which < 3){
+    let previousDown = INPUT._mouseDown[which];
+    INPUT._mouseDown[which] = true;
+    if(!previousDown){
+      INPUT._mouseClick[which] = true;
+    }
+  }
 };
 
 INPUT.onMouseUp = function(evt){
-  SCENE.mouseUp(evt);
+  let which = evt.button;
+  if(which > -1 && which < 3){
+    INPUT._mouseDown[which] = false;
+  }
 };
 
 INPUT.onMouseMove = function(evt){
@@ -157,6 +175,9 @@ INPUT.clearPresses = function(){
       INPUT.activeKeyPresses[key] = false;
     }
     INPUT._mouseWheelInput = 0;
+    INPUT._mouseClick[0] = false;
+    INPUT._mouseClick[1] = false;
+    INPUT._mouseClick[2] = false;
 };
 
 INPUT.getMouseWheel = function(){

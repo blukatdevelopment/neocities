@@ -193,6 +193,9 @@ SPRITES.Animator.new = function(){
     }
   }
   anr.step = function(){
+    if(SCENE.getGameState() && SCENE.getGameState() !== GAMESTATES.play){
+      return;
+    }
     if(anr.animation){
       anr.index++;
       if(anr.index > anr.animation.endIndex){

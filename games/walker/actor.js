@@ -220,6 +220,12 @@ ACTOR.new = function(){
     }
   };
   atr.onInteract = function(interaction){};
+  atr.cursorInRange = function(){
+    let pos = GRAPHICS.getWorldCursor();
+    let actorPos = atr.centeredPosition();
+    let distance = pos.distance(actorPos);
+    return distance < SETTINGS.interactionRange;
+  };
   atr.toString = function(){
     let str = "[";
     str += "ID: " + atr.entityId;
