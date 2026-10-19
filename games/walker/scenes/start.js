@@ -23,7 +23,6 @@ START.update = function(){
     }
     GRAPHICS.clearCanvas();
     this.drawStartButton();
-    SCENE.drawCursor();
     if(INPUT.mouseClick(INPUT.LEFT_CLICK) && this.isStartButtonSelected()){
         SCENE.setActiveScene(SCENE.SCENES.GAME);
     }

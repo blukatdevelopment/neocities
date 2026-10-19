@@ -4,35 +4,42 @@
 var SCENE = {};
 
 // Configured for the current project
-SCENE.SCENES = {
-  START: "start",
-  GAME: "GAME",
-  END: "lose",
-  NEXT: "next"
-};
+SCENE.SCENES = {};
+SCENE.SCENES.START = "start";
+SCENE.SCENES.GAME = "game";
+SCENE.SCENES.WORLDMAP = "worldmap";
 
-SCENE._activeScene = SCENE.SCENES.START;
+SCENE.DEFAULT_SCENE = SCENE.SCENES.START;
+
+SCENE._activeScene = SCENE.DEFAULT_SCENE;
 SCENE._cursorSprite = null;
 
 SCENE.update = function(){
   var activeScene = SCENE.getActiveScene();
-  activeScene.update();
+  if(activeScene){
+    activeScene.update();
+    SCENE.drawCursor();  
+  }
 };
 
 // Returns iScene
 // TODO: make scenes configurable
 SCENE.getActiveScene = function(){
+  console.log("Active scene: " + SCENE._activeScene);
   switch(SCENE._activeScene){
     case SCENE.SCENES.GAME:
       return GAME;
     case SCENE.SCENES.START:
       return START;
+    case SCENE.SCENES.WORLDMAP:
+      return WORLDMAP;
   }
       return null;
 };
 
 // accepts iScene
 SCENE.setActiveScene = function(scene){
+  UTILITY.log("SCENE.setActiveScene", "Setting scene " + scene, {});
   SCENE._activeScene = scene;
 };
 

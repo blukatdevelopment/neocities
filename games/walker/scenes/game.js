@@ -88,7 +88,6 @@ GAME.drawGAMEScreen = function(){
   GRAPHICS.drawText(GAME.debugText, 10, 10);
   GAME.ui.draw();
   GAME.updateCursor();
-  SCENE.drawCursor();
 };
 
 GAME.updateCursor = function(){

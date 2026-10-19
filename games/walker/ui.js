@@ -342,3 +342,24 @@ UI.COMPONENTS.Inventory.new = function(manager){
 
 	return inv;
 };
+
+UI.COMPONENTS.Map = {};
+UI.COMPONENTS.Map.new = function(grid){
+	let map = {
+		grid: grid,
+		cellSize: 10
+	};
+	map.rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(400, 400));
+	map.draw = function(){
+		let cellSize = GRAPHICS.scale(map.cellSize);
+		for(let i = 0; i < map.grid.terrainMap.length; i++){
+			let terrain = map.grid.terrainMap[i];
+			let color = WORLD.TerrainData[terrain].color;
+			let coords = map.grid.indexToCoords(i);
+			let x = coords.x * cellSize;
+			let y = coords.y * cellSize;
+			GRAPHICS.fillBox(x, y, cellSize, cellSize, color);
+		}
+	}
+	return map;
+};

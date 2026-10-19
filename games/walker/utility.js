@@ -2,6 +2,29 @@
 # Util
 ##############################################################################*/
 var UTILITY = {}
+
+UTILITY.StopWatch = {};
+UTILITY.StopWatch.new = function(){
+    let sw = {
+        startTime: null,
+        endTime: null,
+        secondsElapsed: null
+    };
+    sw.start = function(){
+        sw.startTime = Date.now();
+    };
+    sw.stop = function(){
+        sw.endTime = Date.now();
+        sw.secondsElapsed = (sw.endTime - sw.startTime)/1000;
+        return sw.secondsElapsed;
+    };
+    return sw;
+};
+
+
+UTILITY.distanceInt = function(a, b){
+
+};
 UTILITY.randRange = function(min, max){
   return Math.round(Math.random() * (max - min) + min);
 };
@@ -27,6 +50,9 @@ VECTOR2.new = function(x, y){
     let v2 = {
         x: x,
         y: y
+    };
+    v2.equals = function(other){
+        return v2.x == other.x && v2.y == other.y;
     };
     v2.distance = function(point){
         var a = v2.x - point.x;

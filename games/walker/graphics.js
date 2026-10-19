@@ -135,6 +135,18 @@ GRAPHICS.drawBox = function(x, y, width, height){
   GRAPHICS._context.imageSmoothingEnabled = false;
 };
 
+// XY is for the top left corner.
+GRAPHICS.fillBox = function(x, y, width, height, color){
+  let ctx = GRAPHICS._context;
+  ctx.imageSmoothingEnabled = false;
+  if(color){
+    ctx.fillStyle = color;
+  }
+  ctx.fillRect(x, y, width, height);
+  ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = SETTINGS.defaultColor;
+};
+
 GRAPHICS.drawImageToImage = function(image, x1, y1, width1, height1, x2, y2, width2, height2){
   GRAPHICS._context.imageSmoothingEnabled = false;
   x2 = x2;

@@ -16,6 +16,7 @@ SETTINGS.frameDuration = 1000 / SETTINGS.fps;
 SETTINGS.interactionRange = 100;
 SETTINGS.damageCooldown = 500; // Time between hits registering
 SETTINGS.defaultFontSize = 10;
+SETTINGS.defaultColor = "black";
 
 // Stats
 STATS = {};
