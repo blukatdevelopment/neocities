@@ -40,16 +40,15 @@ ITEMS.Item.new = function(){
         }
     };
     item.stack = function(quantity){
-        let stackSpace = item.stackSpace;
-        if(quantity <= stackSpace){
-            item.quantity += quantity;
+        item.quantity += quantity;
+        let overflow = item.quantity - item.stackSize;
+        if(overflow > 0){
+            item.quantity = item.stackSize;
+        }
+        if(overflow < 0){
             return 0;
         }
-        else{
-            let overflow = stackSpace - quantity;
-            item.quantity = item.stackSize;
-            return overflow;
-        }
+        return overflow;
     };
     item.clone = function(){
         let clone = ITEMS.Item.new();
@@ -84,7 +83,7 @@ ITEMS.getConfig = function(){
             name: ITEMS.Names.YellowBlob,
             description: "Just a Yellow blob!",
             sprite: SPRITES.static.items.Two,
-            stackSize: 16
+            stackSize: 8
         },
     ];
 };
@@ -135,29 +134,29 @@ ITEMS.Inventory.new = function(size){
         }
     };
     // Returns overflow quantity
-    inv.pickUp = function(item){
+    inv.pickUp = function(_item){
+        let item = _item.clone();
         if(item.stackSize > 0){
             item.quantity = inv.stackItem(item);
         }
         if(item.quantity > 0){
             let slot = inv.findEmptySlot();
             if(slot > -1){
-                inv.slots[slot] = item;
+                inv.slots[slot] = item.clone();
                 return 0;
             }
         }
         return item.quantity;
     };
     // Returns quantity overflow after adding item stacks to existing stacks
-    inv.stackItem = function(item){
+    inv.stackItem = function(_item){
+        let item = _item.clone();
         let stackingSlot = inv.findStackingSlot(item);
-        while(stackingSlot > 0 && item.quantity > 0){
-            item.quantity = inv.slots[stackingslot].stack(item.quantity);
+        while(stackingSlot > -1 && item.quantity > 0){
+            item.quantity = inv.slots[stackingSlot].stack(item.quantity);
             stackingSlot = inv.findStackingSlot(item);
         }
-        if(item.quantity > 0){
-            let
-        }
+        return item.quantity;
     };
     inv.findStackingSlot = function(item){
         for(let i = 0; i< inv.slots.length; i++){

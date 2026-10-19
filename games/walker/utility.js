@@ -93,10 +93,10 @@ VECTOR2.southEast = function(){ return VECTOR2.new(1, -1); };
 
 UTILITY.Interaction = {};
 UTILITY.Interaction.new = function(initiator){
-    let int = {
+    let interaction = {
         initiator: initiator
     };
-    return int;
+    return interaction;
 };
 
 var SHAPES = {};

@@ -44,6 +44,7 @@ GAME.setup = function(){
 
   GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
   GAME.ui = UI.COMPONENTS.ComponentManager.new();
+  GAME.ui.linkInventories(GAME.walker);
   GAME.isSetup = true;
 };
 

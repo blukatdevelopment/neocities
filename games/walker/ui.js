@@ -20,7 +20,11 @@ UI.COMPONENTS.ComponentManager.new = function(){
 	cm.draw = function(){
 		cm.hotbar.draw();
 		cm.inventory.draw();
-	}
+	};
+	cm.linkInventories = function(actor){
+		cm.hotbar.linkedInv = actor.hotbar;
+		cm.inventory.linkedInv = actor.inventory;
+	};
 	return cm;
 };
 
@@ -48,6 +52,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 	hb.manager = manager;
 	hb.activeSlot = 0;
 	hb.slotCount = 9;
+	hb.linkedInv = null;
 	hb.update = function(){
 		// Using the number keys to select a slot
 		if(INPUT.keyPress(INPUT.KEYS.K_1)){
@@ -89,6 +94,12 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 	hb.draw = function(){
 		let pos = hb.rect.position;
 		SPRITES.renderSprite(pos.x, pos.y, hb.sprite.index, hb.sprite.sheet, DISPLAY_MODES.static);		
+		if(hb.linkedInv){
+			for(let i = 0; i < hb.linkedInv.size; i++){
+				hb.drawSlot(i);
+			}
+		}
+
 		let rect = null;
 		if(SCENE.getGameState() === GAMESTATES.play){
 			// Highlight active slot
@@ -102,6 +113,18 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 				rect = hb.getSlotRect(hoveredSlot);
 				GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
 			}
+		}
+	};
+	hb.drawSlot = function(slot){
+		let item = hb.linkedInv.getItem(slot);
+		if(item){
+			let rect = hb.getSlotRect(slot);
+			SPRITES.renderSprite(rect.position.x, rect.position.y, item.sprite.index, item.sprite.sheet, DISPLAY_MODES.static);
+			let quant = item.quantity;
+			let xOff = 1;
+			let yOff = 15;
+			let label = item.quantity + "/" + item.stackSize;
+			GRAPHICS.drawText(label, rect.position.x+xOff, rect.position.y+yOff, 10);
 		}
 	};
 	// Returns the rect for one inventory slot
@@ -151,7 +174,7 @@ UI.COMPONENTS.Inventory.new = function(manager){
 	let rect = SHAPES.RECT.new(VECTOR2.new(123, 328), VECTOR2.new(154, 54));
 	let sprite = SPRITES.static.inventory.inventory;	
 	let inv = UI.COMPONENTS.BaseComponent.new(rect, sprite);
-	inv.linkedInv = false;
+	inv.linkedInv = null;
 	inv.manager = manager;
 	inv.activeSlot = 0;
 	inv.slotCount = 9;

@@ -17,7 +17,7 @@ ENTITYFACTORY.Pickup = function(itemName, quantity, durability){
     let item = ITEMS.create(itemName, quantity, durability);
     if(item){
         let pu = ENTITY.PickUp.new(item);
-        return pu;    
+        return pu;
     }
     UTILITY.log("ENTITYFACTORY.Pickup", "Could not create pickup", { name: itemName, quantity: quantity, durability: durability });
 };
@@ -108,7 +108,9 @@ ENTITY.PickUp.new = function(item){
     pue.onCollide = function(collision){};
     pue.onInteract = function(interaction){
         if(interaction.initiator){
+            let prevQuant = pue.item.quantity;
             pue.item.quantity = interaction.initiator.pickUp(pue.item);
+            console.log("Item went from " + prevQuant  + " to " + pue.item.quantity);
             if(pue.item.quantity == 0){
                 SCENE.destroyEntity(pue);
             }

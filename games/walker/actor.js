@@ -196,7 +196,7 @@ ACTOR.new = function(){
 
     let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
     for(let cl of colliders){
-      cl.parent.onInteract({});
+      cl.parent.onInteract(UTILITY.Interaction.new(atr));
     }
   };
   atr.onCollide = function(collision){};
@@ -228,7 +228,8 @@ ACTOR.new = function(){
     let distance = pos.distance(actorPos);
     return distance < SETTINGS.interactionRange;
   };
-  atr.pickUp = function(item){
+  atr.pickUp = function(_item){
+    let item = _item.clone();
     item.quantity = atr.hotbar.pickUp(item);
     if(item.quantity > 0){
       item.quantity = atr.inventory.pickUp(item);
