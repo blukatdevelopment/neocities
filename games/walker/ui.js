@@ -13,13 +13,77 @@ UI.COMPONENTS.ComponentManager.new = function(){
 	let cm = {};
 	cm.hotbar = UI.COMPONENTS.Hotbar.new(cm);
 	cm.inventory = UI.COMPONENTS.Inventory.new(cm);
+	cm.dragged = null;
+
 	cm.update = function(){
 		cm.hotbar.update();
 		cm.inventory.update();
+		if(SCENE.getGameState() !== GAMESTATES.inventory){
+			return;
+		}
+		if(INPUT.mouseClick(INPUT.LEFT_CLICK)){
+			let draggedComponent = cm.getDraggedComponent();
+			if(draggedComponent){
+				cm.dragged = {
+					component: draggedComponent,
+					slot: draggedComponent.getHoveredSlot()
+				};
+			}
+		}
+		if(INPUT.fullClick()){
+			// Deposit dropped item if possible
+			let destComponent = cm.getHoveredComponent();
+			if(destComponent){
+				let destSlot = destComponent.getHoveredSlot();
+				let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
+				let displacedItem = destComponent.getItem(destSlot);
+				
+				// Swap contents of slots
+				destComponent.setItem(destSlot, draggedItem);
+				cm.dragged.component.setItem(cm.dragged.slot, displacedItem);
+			}
+			// Stop dragging
+			cm.dragged = null;
+		}
 	};
 	cm.draw = function(){
 		cm.hotbar.draw();
 		cm.inventory.draw();
+		if(cm.dragged == null){
+			return;
+		}
+
+		let slot = cm.dragged.slot;
+		let item = cm.dragged.component.linkedInv.getItem(slot);
+
+		if(item == null){
+			return;
+		}
+		let pos = INPUT.getDownScaledMousePosition();
+		let size = VECTOR2.new(item.sprite.sheet.cellResolutionX, item.sprite.sheet.cellResolutionY);
+		//pos.x += size.x/2;
+		//pos.y += size.y/2;
+		SPRITES.renderSprite(pos.x, pos.y, item.sprite.index, item.sprite.sheet, DISPLAY_MODES.static);
+	};
+	// Component who's item is being clicked and dragged
+	cm.getDraggedComponent = function(){
+		if(cm.hotbar.getHoveredSlot() != -1 && cm.hotbar.getItem(cm.hotbar.getHoveredSlot()) != null){
+			return cm.hotbar;
+		}
+		if(cm.inventory.getHoveredSlot() != -1 && cm.inventory.getItem(cm.inventory.getHoveredSlot()) != null){
+			return cm.inventory;
+		}
+		return null;
+	};
+	// Component whose slot is hovered over
+	cm.getHoveredComponent = function(){
+		if(cm.hotbar.getHoveredSlot() != -1){
+			return cm.hotbar;
+		}
+		if(cm.inventory.getHoveredSlot() != -1){
+			return cm.inventory;
+		}
+		return null;
 	};
 	cm.linkInventories = function(actor){
 		cm.hotbar.linkedInv = actor.hotbar;
@@ -49,6 +113,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 	let rect = SHAPES.RECT.new(VECTOR2.new(123, 382), VECTOR2.new(154, 18));
 	let sprite = SPRITES.static.hotbar.hotbar;	
 	let hb = UI.COMPONENTS.BaseComponent.new(rect, sprite);
+	hb.name = "Hotbar";
 	hb.manager = manager;
 	hb.activeSlot = 0;
 	hb.slotCount = 9;
@@ -93,7 +158,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 	};
 	hb.draw = function(){
 		let pos = hb.rect.position;
-		SPRITES.renderSprite(pos.x, pos.y, hb.sprite.index, hb.sprite.sheet, DISPLAY_MODES.static);		
+		SPRITES.renderSprite(pos.x, pos.y, hb.sprite.index, hb.sprite.sheet, DISPLAY_MODES.static);
 		if(hb.linkedInv){
 			for(let i = 0; i < hb.linkedInv.size; i++){
 				hb.drawSlot(i);
@@ -116,6 +181,9 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 		}
 	};
 	hb.drawSlot = function(slot){
+		if(hb.manager.dragged && hb.manager.dragged.component == hb && hb.manager.dragged.slot == slot){
+			return;
+		}
 		let item = hb.linkedInv.getItem(slot);
 		if(item){
 			let rect = hb.getSlotRect(slot);
@@ -136,6 +204,17 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 		let y = hb.rect.position.y;
 		return SHAPES.RECT.new(VECTOR2.new(x+offsetX, y+offsetY), VECTOR2.new(slotSize, slotSize));
 	};
+	hb.getItem = function(slot){
+		if(hb.linkedInv == null){
+			return null;
+		}
+		return hb.linkedInv.getItem(slot);
+	};
+	hb.setItem = function(slot, item){
+		if(hb.linkedInv){
+			hb.linkedInv.setItem(slot, item);
+		}
+	};
 	hb.nextSlot = function(){
 		hb.activeSlot += 1;
 		if(hb.activeSlot >= hb.slotCount){
@@ -152,10 +231,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 		hb.activeSlot = index;
 	};
 	hb.getHoveredSlot = function(){
-		let mousePos = INPUT.getMousePosition();
-		// Convert canvas pixels to viewport pixels.
-		mousePos.x = GRAPHICS.downScale(mousePos.x);
-		mousePos.y = GRAPHICS.downScale(mousePos.y);
+		let mousePos = INPUT.getDownScaledMousePosition();
 
 		let ret = -1;
 		for(let i = 0; i < 9; i++){
@@ -174,6 +250,7 @@ UI.COMPONENTS.Inventory.new = function(manager){
 	let rect = SHAPES.RECT.new(VECTOR2.new(123, 328), VECTOR2.new(154, 54));
 	let sprite = SPRITES.static.inventory.inventory;	
 	let inv = UI.COMPONENTS.BaseComponent.new(rect, sprite);
+	inv.name = "Inventory";
 	inv.linkedInv = null;
 	inv.manager = manager;
 	inv.activeSlot = 0;
@@ -185,16 +262,38 @@ UI.COMPONENTS.Inventory.new = function(manager){
 		}
 	};
 	inv.draw = function(){
-		if(inv.active){
-			let pos = inv.rect.position;
-			SPRITES.renderSprite(pos.x, pos.y, inv.sprite.index, inv.sprite.sheet, DISPLAY_MODES.static);
-			let hoveredSlot = inv.getHoveredSlot();
-			if(hoveredSlot > -1){
-				let rect = inv.getSlotRect(hoveredSlot);
-				GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
+		if(!inv.active){
+			return;
+		}
+		let pos = inv.rect.position;
+		SPRITES.renderSprite(pos.x, pos.y, inv.sprite.index, inv.sprite.sheet, DISPLAY_MODES.static);
+		if(inv.linkedInv){
+			for(let i = 0; i < inv.linkedInv.size; i++){
+				inv.drawSlot(i);
 			}
 		}
+
+		let hoveredSlot = inv.getHoveredSlot();
+		if(hoveredSlot > -1){
+			let rect = inv.getSlotRect(hoveredSlot);
+			GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
+		}
 	};
+	inv.drawSlot = function(slot){
+        if(inv.manager.dragged && inv.manager.dragged.component == inv && inv.manager.dragged.slot == slot){
+            return;
+        }
+        let item = inv.linkedInv.getItem(slot);
+        if(item){
+            let rect = inv.getSlotRect(slot);
+            SPRITES.renderSprite(rect.position.x, rect.position.y, item.sprite.index, item.sprite.sheet, DISPLAY_MODES.static);
+            let quant = item.quantity;
+            let xOff = 1;
+            let yOff = 15;
+            let label = item.quantity + "/" + item.stackSize;
+            GRAPHICS.drawText(label, rect.position.x+xOff, rect.position.y+yOff, 10);
+        }
+    };
 	// Returns the rect for one inventory slot
 	inv.getSlotRect = function(index){
 		let oneIndexed = index+1;
@@ -207,11 +306,19 @@ UI.COMPONENTS.Inventory.new = function(manager){
 		let y = inv.rect.position.y;
 		return SHAPES.RECT.new(VECTOR2.new(x+offsetX, y+offsetY), VECTOR2.new(slotSize, slotSize));
 	};
+	inv.getItem = function(slot){
+		if(inv.linkedInv == null){
+			return null;
+		}
+		return inv.linkedInv.getItem(slot);
+	};
+	inv.setItem = function(slot, item){
+		if(inv.linkedInv){
+			inv.linkedInv.setItem(slot, item);
+		}
+	};
 	inv.getHoveredSlot = function(){
-		let mousePos = INPUT.getMousePosition();
-		// Convert canvas pixels to viewport pixels.
-		mousePos.x = GRAPHICS.downScale(mousePos.x);
-		mousePos.y = GRAPHICS.downScale(mousePos.y);
+		let mousePos = INPUT.getDownScaledMousePosition();
 
 		let ret = -1;
 		for(let i = 0; i < 27; i++){
