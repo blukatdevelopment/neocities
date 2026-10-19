@@ -8,10 +8,12 @@ INPUT._mousePos = null;
 INPUT._mouseWheelInput = 0;
 INPUT._mouseClick = [false, false, false];
 INPUT._mouseDown = [false, false, false];
+INPUT._fullClick = false;
 
 INPUT.LEFT_CLICK = 0;
 INPUT.MIDDLE_CLICK = 1;
 INPUT.RIGHT_CLICK = 2;
+
 
 // Define all possible keys
 INPUT.KEYS = {
@@ -82,11 +84,27 @@ INPUT.getMousePosition = function(){
   return null;
 };
 
+INPUT.getDownScaledMousePosition = function(){
+  if(INPUT._mousePos){
+    return VECTOR2.new(GRAPHICS.downScale(INPUT._mousePos.x), GRAPHICS.downScale(INPUT._mousePos.y));
+  }
+  return null;
+};
+
+
 INPUT.mouseClick = function(mouseButton){
   if(mouseButton > -1 && mouseButton < 3){
     return INPUT._mouseClick[mouseButton];
   }
-}
+};
+
+INPUT.isMouseDragging = function(){
+  return INPUT._mouseDown[0] && !INPUT._mouseClick[0];
+};
+
+INPUT.fullClick = function(){
+  return INPUT._fullClick;
+};
 
 INPUT.key = function(which){
   if(!(which in INPUT.activeKeys)){
@@ -100,6 +118,12 @@ INPUT.keyPress = function(which){
     return false;
   }
   return INPUT.activeKeyPresses[which];
+};
+
+// Triggers when you left click and then release
+// Differentiates between click and drag
+INPUT.onMouseFullClick = function(evt){
+  INPUT._fullClick = true;
 };
 
 INPUT.onMouseDown = function(evt){
@@ -178,6 +202,7 @@ INPUT.clearPresses = function(){
     INPUT._mouseClick[0] = false;
     INPUT._mouseClick[1] = false;
     INPUT._mouseClick[2] = false;
+    INPUT._fullClick = false;
 };
 
 INPUT.getMouseWheel = function(){
@@ -194,6 +219,7 @@ INPUT.initInput = function(){
     INPUT.activeKeyPresses[key] = false;
   }
   var canvas = GRAPHICS.getCanvas();
+  canvas.addEventListener("click", INPUT.onMouseFullClick);
   canvas.addEventListener("mousedown", INPUT.onMouseDown);
   canvas.addEventListener("mouseup", INPUT.onMouseUp);
   canvas.addEventListener("mousemove", INPUT.onMouseMove);
