@@ -88,6 +88,8 @@ ACTOR.new = function(){
   atr.activeAttack = null;
   atr.cooldown = true;
   atr.stats = null;
+  atr.hotbar = ITEMS.Inventory.new(9);
+  atr.inventory = ITEMS.Inventory.new(27);
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
@@ -184,7 +186,7 @@ ACTOR.new = function(){
 
     let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
     for(let cl of colliders){
-      cl.parent.onInteract({});
+      cl.parent.onInteract(UTILITY.Interaction.new(atr));
     }
   };
   atr.interactAtPoint = function(point){
@@ -225,6 +227,13 @@ ACTOR.new = function(){
     let actorPos = atr.centeredPosition();
     let distance = pos.distance(actorPos);
     return distance < SETTINGS.interactionRange;
+  };
+  atr.pickUp = function(item){
+    item.quantity = atr.hotbar.pickUp(item);
+    if(item.quantity > 0){
+      item.quantity = atr.inventory.pickUp(item);
+    }
+    return item.quantity;
   };
   atr.toString = function(){
     let str = "[";

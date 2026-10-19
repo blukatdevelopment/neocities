@@ -91,6 +91,14 @@ VECTOR2.northEast = function(){ return VECTOR2.new(1, 1); };
 VECTOR2.southWest = function(){ return VECTOR2.new(-1, -1); };
 VECTOR2.southEast = function(){ return VECTOR2.new(1, -1); };
 
+UTILITY.Interaction = {};
+UTILITY.Interaction.new = function(initiator){
+    let int = {
+        initiator: initiator
+    };
+    return int;
+};
+
 var SHAPES = {};
 SHAPES.RECT = {};
 SHAPES.RECT.new = function(position, size){

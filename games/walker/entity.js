@@ -13,12 +13,13 @@ ENTITYFACTORY.Scenery = function(_sprite){
 };
 
 // Is picked up by actors
-ENTITYFACTORY.Pickup = function(_sprite){
-    let pu = ENTITY.PickUp.new();
-    pu.renderer.setSprite(_sprite);
-    pu.collider.rect.size = VECTOR2.new(16, 16);
-    pu.name = "Pickup" + pu.getEntityId();
-    return pu;
+ENTITYFACTORY.Pickup = function(itemName, quantity, durability){
+    let item = ITEMS.create(itemName, quantity, durability);
+    if(item){
+        let pu = ENTITY.PickUp.new(item);
+        return pu;    
+    }
+    UTILITY.log("ENTITYFACTORY.Pickup", "Could not create pickup", { name: itemName, quantity: quantity, durability: durability });
 };
 
 let ENTITY = {};
@@ -78,6 +79,7 @@ ENTITY.baseEntity.new = function(){
     be.die = function(){
         SCENE.destroyEntity(be);
     };
+    be.pickUp = function(item){ return item.quantity; };
 
     return be;
 };
@@ -91,18 +93,27 @@ ENTITY.Scenery.new = function(){
 
 // An item intended to be picked up by the player
 ENTITY.PickUp = {};
-ENTITY.PickUp.new = function(){
+ENTITY.PickUp.new = function(item){
     let pue = ENTITY.baseEntity.new();
     pue.setCollider(PHYSICS.BoxCollider.new());
     pue.collider.rigid = false;
-    pue.onCollide = function(collision){
-        //SCENE.destroyEntity(pue);
-    };
+    pue.item = item;
+    pue.name = item.name;
+    pue.sprite = item.sprite;
+    pue.renderer.setSprite(item.sprite);
+    let size = VECTOR2.new(0, 0);
+    size.x = item.sprite.sheet.cellResolutionX;
+    size.y = item.sprite.sheet.cellResolutionY;
+    pue.collider.rect.size = size;
+    pue.onCollide = function(collision){};
     pue.onInteract = function(interaction){
-        SCENE.destroyEntity(pue);
+        if(interaction.initiator){
+            pue.item.quantity = interaction.initiator.pickUp(pue.item);
+            if(pue.item.quantity == 0){
+                SCENE.destroyEntity(pue);
+            }
+        }
     };
-    pue.onAttacked = function(attack){
-        //SCENE.destroyEntity(pue);
-    };
+    pue.onAttacked = function(attack){};
     return pue;
 };

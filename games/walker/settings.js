@@ -171,4 +171,5 @@ SETTINGS.init = function(){
 	for(let sheet of SETTINGS.staticSheetList){
 		SPRITES.loadStaticSprites(sheet);
 	}
+	ITEMS.init();
 };

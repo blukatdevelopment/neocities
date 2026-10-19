@@ -31,7 +31,7 @@ GAME.setup = function(){
   }
 
   for(let i = 0; i < 10; i++){
-    let pu = ENTITYFACTORY.Pickup(SPRITES.static.items.Two);
+    let pu = ENTITYFACTORY.Pickup(ITEMS.Names.YellowBlob, 1);
     pu.setPosition(VECTOR2.new(i * 32, 100));
     GAME.addEntity(pu);
   }

@@ -48,10 +48,6 @@ UI.COMPONENTS.Hotbar.new = function(manager){
 	hb.manager = manager;
 	hb.activeSlot = 0;
 	hb.slotCount = 9;
-	hb.slots = [];
-	for(let i = 0; i < 28; i++){
-		hb.slots.push(null);
-	}
 	hb.update = function(){
 		// Using the number keys to select a slot
 		if(INPUT.keyPress(INPUT.KEYS.K_1)){
@@ -155,14 +151,11 @@ UI.COMPONENTS.Inventory.new = function(manager){
 	let rect = SHAPES.RECT.new(VECTOR2.new(123, 328), VECTOR2.new(154, 54));
 	let sprite = SPRITES.static.inventory.inventory;	
 	let inv = UI.COMPONENTS.BaseComponent.new(rect, sprite);
+	inv.linkedInv = false;
 	inv.manager = manager;
 	inv.activeSlot = 0;
 	inv.slotCount = 9;
 	inv.active = false;
-	inv.slots = [];
-	for(let i = 0; i < 28; i++){
-		inv.slots.push(null);
-	}
 	inv.update = function(){
 		if(INPUT.keyPress(INPUT.KEYS.K_TAB)){
 			inv.toggleActive();
@@ -210,12 +203,10 @@ UI.COMPONENTS.Inventory.new = function(manager){
 		if(inv.active){
 			SCENE.setGameState(GAMESTATES.play);
 			inv.active = false;
-			console.log("Setting active=true");
 		}
 		else{
 			SCENE.setGameState(GAMESTATES.inventory);
 			inv.active = true;
-			console.log("Setting active=false");
 		}
 	};
 
