@@ -178,6 +178,12 @@ SHAPES.RECT.new = function(position, size){
         }
         return false;
     };
+    rect.isInside = function(otherRect){
+        return otherRect.contains(rect.topLeft()) &&
+            otherRect.contains(rect.topRight()) &&
+            otherRect.contains(rect.topRight()) &&
+            otherRect.contains(rect.topRight());
+    };
     rect.overlaps = function(otherRect){
         let largest = rect;
         let smallest = otherRect;
@@ -292,10 +298,13 @@ PHYSICS.BoxCollider.new = function(){
         let rect = SHAPES.RECT.new(pos, size);
         return rect;
     };
-    // Vector2
     bc.contains = function(point){
         let rect = bc.absoluteRect();
         return rect.contains(point);
+    };
+    bc.isInside = function(otherRect){
+        let rect = bc.absoluteRect();
+        return rect.isInside(otherRect);
     };
     // Assumes another box collider
     bc.overlaps = function(otherCollider){
@@ -303,35 +312,48 @@ PHYSICS.BoxCollider.new = function(){
         let otherRect = otherCollider.absoluteRect();
         return otherRect.overlaps(rect);    
     };
+    // Check if collider would remain within the level if moved
+    bc.boundsCheck = function(destination){
+        let levelRect = SCENE.getLevelRect();
+        if(levelRect == null){
+            return true;
+        }
+        let rect = bc.absoluteRect();
+        rect.position = destination;
+        return rect.isInside(levelRect);
+    };
     // Makes one check, assuming distance is less than scale
     bc.moveAndCollideShort = function(destination, suppressCollisionEvents){
-        if(bc.controller && bc.parent){
-            let previous = bc.parent.getPosition();
-            bc.parent.setPosition(VECTOR2.new(destination.x, destination.y));
-            let excludeList = [];
-            excludeList.push(bc.parent.getEntityId());
-            let ret = bc.controller.checkForCollision(excludeList, bc);
-            if(suppressCollisionEvents){
-                return ret;
-            }
-            if(ret){
-                if(ret.second.rigid){
-                    //revert upon collision with rigid collider
-                    bc.parent.setPosition(previous);
-                    
-                }
-                // Emit collision events
-                bc.parent.onCollide(ret);
-                if(ret.second && ret.second.parent){
-                    ret.second.parent.onCollide(ret);
-                }
-                return ret;
-            }
+        if(bc.controller == null || bc.parent == null){
+            UTILITY.log("BoxCollider.moveAndCollide()", "BoxCollider not assigned to physics controller.", { controller: bc.controller == null, parent: bc.parent == null});
             return null;
         }
-        else{
-            UTILITY.log("BoxCollider.moveAndCollide()", "BoxCollider not assigned to physics controller.", { controller: bc.controller == null, parent: bc.parent == null});
+        if(!bc.boundsCheck(destination)){
+            // Don't move out of bounds.
+            return null;
         }
+        let previous = bc.parent.getPosition();
+        bc.parent.setPosition(VECTOR2.new(destination.x, destination.y));
+        let excludeList = [];
+        excludeList.push(bc.parent.getEntityId());
+        let ret = bc.controller.checkForCollision(excludeList, bc);
+        if(suppressCollisionEvents){
+            return ret;
+        }
+        if(ret){
+            if(ret.second.rigid){
+                //revert upon collision with rigid collider
+                bc.parent.setPosition(previous);
+                
+            }
+            // Emit collision events
+            bc.parent.onCollide(ret);
+            if(ret.second && ret.second.parent){
+                ret.second.parent.onCollide(ret);
+            }
+            return ret;
+        }
+        return null;
     };
     bc.resize = function(updatedSize){
         bc.rect.size = updatedSize;

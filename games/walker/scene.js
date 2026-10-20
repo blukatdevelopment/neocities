@@ -13,6 +13,7 @@ SCENE.DEFAULT_SCENE = SCENE.SCENES.START;
 
 SCENE._activeScene = SCENE.DEFAULT_SCENE;
 SCENE._cursorSprite = null;
+SCENE._levelRect = null;
 
 SCENE.update = function(){
   var activeScene = SCENE.getActiveScene();
@@ -77,4 +78,12 @@ SCENE.setGameState = function(gameState){
 SCENE.getGameState = function(){
   var activeScene = SCENE.getActiveScene();
   return activeScene.getGameState();
+};
+
+SCENE.setLevelRect = function(rect){
+  SCENE._levelRect = rect;
+};
+
+SCENE.getLevelRect = function(){
+  return SCENE._levelRect;
 };

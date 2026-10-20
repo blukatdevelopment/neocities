@@ -13,7 +13,7 @@ LEVEL.Renderer.new = function(){
     let lr = {
         player: null,
         entities: [],
-        scenery: [], // rendered first,
+        scenery: [], // excluded from collisions
         ui: null
     };
     lr.init = function(){
@@ -25,15 +25,17 @@ LEVEL.Renderer.new = function(){
         lr.ui.linkInventories(lr.player);
     };
     lr.loadData = function(data){
+        let levelSize = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;
+        let levelRect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(levelSize, levelSize));
+        SCENE.setLevelRect(levelRect);
+
         if(data.tileMap){
-            console.log("tilemap exists with " + data.tileMap.tiles.length + " tiles.");
             let tileMap = data.tileMap;
             for(let i = 0; i < tileMap.tiles.length; i++){
                 let sprite = tileMap.getSpriteByIndex(i);
                 let pos = tileMap.getPositionByIndex(i);
                 let tile = ENTITYFACTORY.Scenery(sprite, pos);
                 lr.scenery.push(tile);
-                console.log("Adding tile at " + tile.position.toString());
             }
         }
         for(let entityData of data.entityData){
@@ -148,7 +150,6 @@ LEVEL.Generate.UniformTileMap = function(sprite, size){
     let sprites = [];
     sprites.push(sprite);
     let tiles = [];
-    console.log("Generating " + size*size + " tiles");
     for(let i = 0; i < size*size; i++){
         tiles.push(0);
     }
