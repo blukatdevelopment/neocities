@@ -17,6 +17,8 @@ SETTINGS.interactionRange = 100;
 SETTINGS.damageCooldown = 500; // Time between hits registering
 SETTINGS.defaultFontSize = 10;
 SETTINGS.defaultColor = "black";
+SETTINGS.DefaultLevelTileSize = 1024;
+SETTINGS.DefaultLevelSize = 9;
 
 // Stats
 STATS = {};

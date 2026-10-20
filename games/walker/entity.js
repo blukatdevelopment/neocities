@@ -4,11 +4,12 @@
 
 let ENTITYFACTORY = {};
 // Static object with collision box
-ENTITYFACTORY.Scenery = function(_sprite){
+ENTITYFACTORY.Scenery = function(_sprite, position){
     let sc = ENTITY.Scenery.new();
     sc.renderer.setSprite(_sprite);
     sc.collider.resize(VECTOR2.new(16, 16));
     sc.name = "scenery" + sc.getEntityId();
+    sc.setPosition(position);
     return sc;
 };
 

@@ -13,6 +13,7 @@ MAIN.FRAMES_TO_ADVANCE = 0;
 MAIN.nextEntityId = 0;
 MAIN.DISPLAY_MODE = 0;
 MAIN.DELAYED_EXECUTIONS = [];
+MAIN.LEVEL_RECT = null;
 
 MAIN.GameLoop = function(){
   requestAnimationFrame(MAIN.GameLoop, GRAPHICS.getCanvas());

@@ -25,12 +25,22 @@ LEVEL.Renderer.new = function(){
         lr.ui.linkInventories(lr.player);
     };
     lr.loadData = function(data){
-        if(data.backgroundSprite){
-            let background = SPRITES.SpriteRenderer.new(data.backgroundSprite, VECTOR2.new(0, 0));
-            lr.scenery.push(background);
+        if(data.tileMap){
+            console.log("tilemap exists with " + data.tileMap.tiles.length + " tiles.");
+            let tileMap = data.tileMap;
+            for(let i = 0; i < tileMap.tiles.length; i++){
+                let sprite = tileMap.getSpriteByIndex(i);
+                let pos = tileMap.getPositionByIndex(i);
+                let tile = ENTITYFACTORY.Scenery(sprite, pos);
+                lr.scenery.push(tile);
+                console.log("Adding tile at " + tile.position.toString());
+            }
         }
         for(let entityData of data.entityData){
             lr.addEntity(ENTITYFACTORY.Load(entityData));
+        }
+        if(data.playerPosition && lr.player){
+            lr.player.setPosition(data.playerPosition);
         }
     };
     lr.update = function(){
@@ -91,11 +101,38 @@ LEVEL.Renderer.new = function(){
     return lr;
 };
 
+LEVEL.TileMap = {};
+LEVEL.TileMap.new = function(sprites, tiles, size){
+    let tm = {
+        tileSprites: sprites,
+        tiles: tiles,
+        size: size, // Assumed to be square
+    };
+    tm.getRect = function(){
+        let pos = VECTOR2.new(0,0);
+        let tileSize = SETTINGS.DefaultLevelTileSize;
+        let levelSize = tileSize * tm.size; 
+        return SHAPES.RECT.new(pos, VECTOR2.new(levelSize, levelSize));
+    };
+    tm.getPositionByIndex = function(index){
+        let coords = VECTOR2.new(index % tm.size, Math.trunc(index / tm.size));
+        coords.x *= SETTINGS.DefaultLevelTileSize;
+        coords.y *= SETTINGS.DefaultLevelTileSize;
+        return coords;
+    };
+    tm.getSpriteByIndex = function(index){
+        return tm.tileSprites[tm.tiles[index]];
+    };
+    return tm;
+};
+
+
 LEVEL.Data = {};
 LEVEL.Data.new = function(){
     let ld = {
-        backgroundSprite: null,
-        entityData: []
+        tileMap: null,
+        entityData: [],
+        playerPosition: null
     };
     return ld;
 };
@@ -104,12 +141,27 @@ LEVEL.RandomPosition = function(){
     return VECTOR2.new(UTILITY.randRange(0, 5000), UTILITY.randRange(0, 5000));
 };
 
-
 // Creates level data
 LEVEL.Generate = {};
+
+LEVEL.Generate.UniformTileMap = function(sprite, size){
+    let sprites = [];
+    sprites.push(sprite);
+    let tiles = [];
+    console.log("Generating " + size*size + " tiles");
+    for(let i = 0; i < size*size; i++){
+        tiles.push(0);
+    }
+    return LEVEL.TileMap.new(sprites, tiles, size);
+};
+
 LEVEL.Generate.Grass = function(){
     let data = LEVEL.Data.new();
-    data.backgroundSprite = SPRITES.static.village.village;
+    data.tileMap = LEVEL.Generate.UniformTileMap(SPRITES.static.village.village, SETTINGS.DefaultLevelSize);
+
+    let center = (SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize)/2;
+    data.playerPosition = VECTOR2.new(center, center);
+    
     for(let i = 0; i < 1; i++){
         data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.YellowBlob, LEVEL.RandomPosition()));
     }
