@@ -63,7 +63,6 @@ ACTORFACTORY.simpleEnemy = function(){
     let dir = pos.x < targetPos.x ? DIRECTIONS.east : DIRECTIONS.west;
     let attackData = ACTOR.AttackData.new(dir, -se.activeAttack.damage, se, { knockback: 10 });
     target.onAttacked(attackData);
-    
   };
 
   se.stats = ACTOR.StatsController.new(3, 3);
@@ -130,6 +129,10 @@ ACTOR.new = function(){
     }
   };
   atr.draw = function(){
+    if(!GRAPHICS.isOnScreen(atr.collider.rect)){
+      // Don't render when off screen
+      return;
+    }
     atr.animator.update(atr.position.x, atr.position.y);
     if(atr.label != ""){
       GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.y + atr.size + SETTINGS.defaultFontSize);

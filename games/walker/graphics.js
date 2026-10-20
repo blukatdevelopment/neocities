@@ -24,6 +24,11 @@ GRAPHICS.Camera.new = function(position, size){
   return cam;
 };
 
+GRAPHICS.isOnScreen = function(rect){
+  let cr = GRAPHICS._camera.rect;
+  let ret = cr.overlaps(rect);
+  return true;
+};
 
 GRAPHICS.getDisplayMode = function(){
   return GRAPHICS._displayMode;

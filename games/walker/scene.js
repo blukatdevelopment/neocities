@@ -25,7 +25,6 @@ SCENE.update = function(){
 // Returns iScene
 // TODO: make scenes configurable
 SCENE.getActiveScene = function(){
-  console.log("Active scene: " + SCENE._activeScene);
   switch(SCENE._activeScene){
     case SCENE.SCENES.GAME:
       return GAME;

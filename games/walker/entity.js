@@ -30,8 +30,8 @@ ENTITYFACTORY.Load = function(data){
         entity.setPosition(data.position);
     }
     if(data.entityId == ENTITY.ENTITIES.Enemy){
-        ret = ACTORFACTORY.simpleEnemy();
-        ret.setPosition(data.position);
+        entity = ACTORFACTORY.simpleEnemy();
+        entity.setPosition(data.position);
     }
     return entity;
 };
@@ -70,6 +70,10 @@ ENTITY.baseEntity.new = function(){
     }
     be.update = function(){};
     be.draw = function(){
+        if(!GRAPHICS.isOnScreen(be.collider.rect)){
+            // Don't render if the entity is offscreen.
+            return;
+        }
         if(be.renderer){
             be.renderer.draw();
         }

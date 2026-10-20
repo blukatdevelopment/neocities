@@ -100,18 +100,22 @@ LEVEL.Data.new = function(){
     return ld;
 };
 
+LEVEL.RandomPosition = function(){
+    return VECTOR2.new(UTILITY.randRange(0, 5000), UTILITY.randRange(0, 5000));
+};
+
 
 // Creates level data
 LEVEL.Generate = {};
 LEVEL.Generate.Grass = function(){
     let data = LEVEL.Data.new();
     data.backgroundSprite = SPRITES.static.village.village;
-    let randPos = null;
-    for(let i = 0; i < 10; i++){
-        randPos = VECTOR2.new(UTILITY.randRange(0, 100),UTILITY.randRange(0, 100));
-        data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.YellowBlob, randPos));
+    for(let i = 0; i < 1; i++){
+        data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.YellowBlob, LEVEL.RandomPosition()));
     }
-    randPos = VECTOR2.new(UTILITY.randRange(0, 100),UTILITY.randRange(0, 100));
-    data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.Enemy, randPos));
+    for(let i = 0; i < 1; i++){
+        randPos = VECTOR2.new(UTILITY.randRange(0, 5000),UTILITY.randRange(0, 5000));
+        data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.Enemy, LEVEL.RandomPosition()));
+    }
     return data;
 };
