@@ -106,6 +106,28 @@ SETTINGS.actorList.push({
 	]
 });
 
+SETTINGS.actorList.push({
+	name: "slime",
+	sheet: "slime.png",
+	resolutionX: 32,
+	resolutionY: 32,
+	cells: 2,
+	animations: [
+		[ ACTOR_ANIMATIONS.idleUp, 0, 1],
+		[ ACTOR_ANIMATIONS.idleDown, 0, 1],
+		[ ACTOR_ANIMATIONS.idleRight, 0, 1],
+		[ ACTOR_ANIMATIONS.idleLeft, 0, 1],
+		[ ACTOR_ANIMATIONS.walkUp, 0, 1],
+		[ ACTOR_ANIMATIONS.walkDown, 0, 1],
+		[ ACTOR_ANIMATIONS.walkRight, 0, 1],
+		[ ACTOR_ANIMATIONS.walkLeft, 0, 1],
+		[ ACTOR_ANIMATIONS.meleeUp, 0, 1],
+		[ ACTOR_ANIMATIONS.meleeDown, 0, 1],
+		[ ACTOR_ANIMATIONS.meleeRight, 0, 1],
+		[ ACTOR_ANIMATIONS.meleeLeft, 0, 1]
+	]
+});
+
 SETTINGS.staticSheetList = [];
 SETTINGS.staticSheetList.push({
 	name: "village",

@@ -168,7 +168,7 @@ LEVEL.Generate.Grass = function(){
     for(let i = 0; i < 20; i++){
         data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.YellowBlob, LEVEL.RandomPosition()));
     }
-    for(let i = 0; i < 20; i++){
+    for(let i = 0; i < 100; i++){
         randPos = VECTOR2.new(UTILITY.randRange(0, 5000),UTILITY.randRange(0, 5000));
         data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.Enemy, LEVEL.RandomPosition()));
     }

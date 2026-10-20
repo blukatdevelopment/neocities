@@ -219,10 +219,15 @@ GRAPHICS.drawText = function(text, x, y, _textSize){
 };
 
 // Draw text relative to viewport
-GRAPHICS.drawTextRelative = function(text, x, y){
-  GRAPHICS._context.imageSmoothingEnabled = false;
+GRAPHICS.drawTextRelative = function(text, x, y, color){
+  let ctx = GRAPHICS.getContext();
+  ctx.imageSmoothingEnabled = false;
+  if(color){
+    ctx.fillStyle = color;
+  }
   let relative = GRAPHICS.relativeToCamera(VECTOR2.new(x, y));
   GRAPHICS.drawText(text, relative.x, relative.y);
+  ctx.fillStyle = SETTINGS.defaultColor;
 };
 
 GRAPHICS.loadImage = function(fileName){

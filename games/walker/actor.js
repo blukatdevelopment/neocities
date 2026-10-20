@@ -30,7 +30,7 @@ ACTORFACTORY.playerOne = function(){
 };
 
 ACTORFACTORY.simpleEnemy = function(){
-  let config = UTILITY.getActorConfig("wrath");
+  let config = UTILITY.getActorConfig("slime");
   let se = ACTOR.new();
   let anm = SPRITES.Animator.new();
   anm.animation = SPRITES.animations[config.name][ACTOR_ANIMATIONS.idleLeft]
@@ -46,7 +46,7 @@ ACTORFACTORY.simpleEnemy = function(){
   se.setCollider(PHYSICS.BoxCollider.new());
   se.getCollider().rect.position = VECTOR2.new(13, 0);
   se.getCollider().rect.size = VECTOR2.new(11, 32);
-  se.name = "Enemy";
+  se.name = "Slime";
   se.label = se.name;
 
   se.attacks.push(ACTOR.AttackFactory.UNARMED());
@@ -88,6 +88,8 @@ ACTOR.new = function(){
   atr.stats = null;
   atr.hotbar = ITEMS.Inventory.new(9);
   atr.inventory = ITEMS.Inventory.new(27);
+  atr.damageLabel = null;
+  atr.damageLabelFrames = 0;
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
@@ -136,6 +138,12 @@ ACTOR.new = function(){
     atr.animator.update(atr.position.x, atr.position.y);
     if(atr.label != ""){
       GRAPHICS.drawTextRelative(atr.label, atr.position.x, atr.position.y + atr.size + SETTINGS.defaultFontSize);
+    }
+    if(atr.damageLabel && atr.damageLabel != "" && atr.damageLabelFrames > 0){
+      GRAPHICS.drawTextRelative(atr.damageLabel, atr.position.x, atr.position.y + SETTINGS.defaultFontSize, "red");
+    }
+    if(atr.damageLabelFrames > 0){
+      atr.damageLabelFrames -= 1;
     }
   };
   atr.attack = function(){
@@ -213,6 +221,8 @@ ACTOR.new = function(){
       }
       let prevHealth = atr.stats.health.value;
       atr.stats.health.change(attackData.damage);
+      atr.damageLabel = attackData.damage + "";
+      atr.damageLabelFrames = 12;
       //console.log(atr.name + " attacked for " + attackData.damage + " and now has " + atr.stats.health.value + " health.");
       if(atr.stats.health.value < 1){
         atr.die();
