@@ -145,9 +145,9 @@ SETTINGS.staticSheetList.push({
 	resolutionY: 16,
 	cells: 16,
 	sprites: [
-		"One", "Two", "Three", "Four",
-		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
-		"Placeholder", "Placeholder", "Placeholder", "Placeholder",
+		"Apple", "Seeds", "Talon", "Stick",
+		"Rope", "Rock", "RockGrass", "Root",
+		"RedBerry", "GreenBerry", "BlueBerry", "Placeholder",
 		"Placeholder", "Placeholder", "Placeholder", "Placeholder"
 	]
 });

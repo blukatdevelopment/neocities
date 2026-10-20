@@ -25,6 +25,10 @@ UTILITY.randRange = function(min, max){
   return Math.round(Math.random() * (max - min) + min);
 };
 
+UTILITY.randChoice = function(optionsList){
+  return optionsList[UTILITY.randRange(0, optionsList.length-1)];
+};
+
 UTILITY.isInsideBox = function(topLeft, bottomRight, point){
   var inX = point.x < bottomRight.x && point.x > topLeft.x;
   var inY = point.y < bottomRight.y && point.y > topLeft.y;

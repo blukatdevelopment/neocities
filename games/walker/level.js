@@ -165,9 +165,14 @@ LEVEL.Generate.Grass = function(){
     let center = (SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize)/2;
     data.playerPosition = VECTOR2.new(center, center);
     
-    for(let i = 0; i < 20; i++){
-        data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.YellowBlob, LEVEL.RandomPosition()));
+    let spawns = [
+        ITEMS.Names.Stick,
+        ITEMS.Names.Rock
+    ];
+    for(let i = 0; i < 200; i++){
+        data.entityData.push(ENTITY.Data.ItemStack(UTILITY.randChoice(spawns), LEVEL.RandomPosition()));
     }
+
     for(let i = 0; i < 100; i++){
         randPos = VECTOR2.new(UTILITY.randRange(0, 5000),UTILITY.randRange(0, 5000));
         data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.Enemy, LEVEL.RandomPosition()));

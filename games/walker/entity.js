@@ -26,8 +26,8 @@ ENTITYFACTORY.Pickup = function(itemName, quantity, durability){
 ENTITYFACTORY.Load = function(data){
     let entity = null;
     
-    if(data.entityId == ENTITY.ENTITIES.YellowBlob){
-        entity = ENTITYFACTORY.Pickup(ITEMS.Names.YellowBlob, 1, 1);
+    if(data.entityId == ENTITY.ENTITIES.ItemStack){
+        entity = ENTITYFACTORY.Pickup(data.item, 1, 1);
         entity.setPosition(data.position);
     }
     if(data.entityId == ENTITY.ENTITIES.Enemy){
@@ -40,15 +40,22 @@ ENTITYFACTORY.Load = function(data){
 let ENTITY = {};
 
 ENTITY.ENTITIES = {};
-ENTITY.ENTITIES.YellowBlob = "YellowBlob";
+ENTITY.ENTITIES.ItemStack = "ItemStack";
 ENTITY.ENTITIES.Enemy = "Enemy";
 
 ENTITY.Data = {};
 ENTITY.Data.new = function(entityId, position){
     let data = {
         entityId: entityId,
-        position: position
+        position: position,
+        item: null
     };
+    return data;
+};
+
+ENTITY.Data.ItemStack = function(itemName, position){
+    let data = ENTITY.Data.new(ENTITY.ENTITIES.ItemStack, position);
+    data.item = itemName;
     return data;
 };
 

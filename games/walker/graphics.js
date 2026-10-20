@@ -204,18 +204,22 @@ GRAPHICS.drawImage = function(image, x, y, width, height){
 };
 
 // Draw text at static point
-GRAPHICS.drawText = function(text, x, y, _textSize){
-  GRAPHICS._context.imageSmoothingEnabled = false;
+GRAPHICS.drawText = function(text, x, y, _textSize, color){
+  let ctx = GRAPHICS.getContext();
+  ctx.imageSmoothingEnabled = false;
   let textSize = GRAPHICS.scale(SETTINGS.defaultFontSize);
   if(_textSize){
     textSize = _textSize;
   }
+  if(color){
+    ctx.fillStyle = color;
+  }
   x = GRAPHICS.scale(x);
   y = GRAPHICS.scale(y);
-  let context = GRAPHICS.getContext()
-  context.font = "" + textSize + "px Arial";
-  context.fillText(text, x, y);
-  GRAPHICS._context.imageSmoothingEnabled = false;
+  ctx.font = "" + textSize + "px Arial";
+  ctx.fillText(text, x, y);
+  ctx.fillStyle = SETTINGS.defaultColor;
+  ctx.imageSmoothingEnabled = false;
 };
 
 // Draw text relative to viewport
