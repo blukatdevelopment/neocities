@@ -380,7 +380,8 @@ PHYSICS.Controller = {};
 PHYSICS.Controller.new = function(){
     let ctl = {
         colliders: [],
-        rigidColliders: []
+        rigidColliders: [],
+        collisionGrid: null
     };
     ctl.registerCollider = function(collider){
         ctl.colliders.push(collider);
@@ -390,7 +391,9 @@ PHYSICS.Controller.new = function(){
         ctl.colliders = ctl.colliders.filter((cl) => cl !== collider);
     };
     ctl.checkForCollision = function(excludeList, collider){
-        for(let cl of ctl.rigidColliders){
+        // Used by BoxCollider.moveAndCollideShort()
+        let colliders = ctl.getLocalColliders(collider.absoluteRect().position);
+        for(let cl of colliders){
             if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
                 if(cl.parent.getEntityId() == 1){
                     let str = cl.toString() + ", " + collider.toString() + ", " + collider.overlaps(cl);
@@ -402,6 +405,12 @@ PHYSICS.Controller.new = function(){
             }         
         }
         return null;
+    };
+    ctl.getLocalColliders = function(point){
+        if(ctl.collisionGrid){
+            return ctl.collisionGrid.getLocalColliders(point);
+        }
+        return ctl.rigidColliders;
     };
     ctl.getCollidersByPoint = function(excludeList, point){
         let cols = [];
@@ -429,6 +438,7 @@ PHYSICS.Controller.new = function(){
     // Call this each frame before collision checks are made
     ctl.update = function(){
         ctl.refreshRigidCollidersList();
+        ctl.refreshCollisionGrid();
     };
     ctl.refreshRigidCollidersList = function(){
         ctl.rigidColliders = [];
@@ -438,7 +448,43 @@ PHYSICS.Controller.new = function(){
             }
         }
     };
+    ctl.refreshCollisionGrid = function(){
+        let size = Math.ceil((SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize) / PHYSICS.CollisionCellSize);
+        ctl.collisionGrid = PHYSICS.CellGrid.new(ctl.rigidColliders, size);
+    };
     return ctl;
+};
+
+// Divide the map up into cells for faster collision scans
+PHYSICS.CellGrid = {};
+PHYSICS.CollisionCellSize = 400;
+PHYSICS.CellGrid.new = function(colliders, size){
+    let grid = {
+        size: size,
+        cells: []
+    };
+
+    grid.init = function(){
+        for(let i = 0; i< size*size; i++){
+            grid.cells.push([]);
+        }
+        for(let collider of colliders){
+            let cellIndex = grid.posToCellIndex(collider.absoluteRect().position);
+            grid.cells[cellIndex].push(collider);
+        }
+    };
+    grid.posToCellIndex = function(position){
+        let cellSize = PHYSICS.CollisionCellSize;
+        let gridX = Math.floor(position.x / cellSize);
+        let gridY = Math.floor(position.y / cellSize);
+        return gridX + (grid.size * gridY)
+    };
+    grid.getLocalColliders = function(point){
+        let index = grid.posToCellIndex(point);
+        return grid.cells[index];
+    };
+    grid.init();
+    return grid;
 };
 
 UTILITY.delayExecute = function(frames, funct){
