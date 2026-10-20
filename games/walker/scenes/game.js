@@ -10,6 +10,7 @@ GAME.levelRenderer = null;
 GAME.setup = function(){
   GAME.levelRenderer = LEVEL.Renderer.new();
   GAME.levelRenderer.init();
+  GAME.levelRenderer.loadData(LEVEL.Generate.Grass());
   GAME.isSetup = true;
 };
 
@@ -27,3 +28,7 @@ GAME.setGameState = function(gameState){
 GAME.getGameState = function(){
   return GAME.gameState;
 }
+
+GAME.destroyEntity = function(entity){
+  GAME.levelRenderer.destroyEntity(entity);
+};

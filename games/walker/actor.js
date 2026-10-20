@@ -70,7 +70,6 @@ ACTORFACTORY.simpleEnemy = function(){
   return se;
 };
 
-
 // inherits base entity
 var ACTOR = {};
 ACTOR.new = function(){

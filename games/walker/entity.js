@@ -22,7 +22,35 @@ ENTITYFACTORY.Pickup = function(itemName, quantity, durability){
     UTILITY.log("ENTITYFACTORY.Pickup", "Could not create pickup", { name: itemName, quantity: quantity, durability: durability });
 };
 
+ENTITYFACTORY.Load = function(data){
+    let entity = null;
+    
+    if(data.entityId == ENTITY.ENTITIES.YellowBlob){
+        entity = ENTITYFACTORY.Pickup(ITEMS.Names.YellowBlob, 1, 1);
+        entity.setPosition(data.position);
+    }
+    if(data.entityId == ENTITY.ENTITIES.Enemy){
+        ret = ACTORFACTORY.simpleEnemy();
+        ret.setPosition(data.position);
+    }
+    return entity;
+};
+
 let ENTITY = {};
+
+ENTITY.ENTITIES = {};
+ENTITY.ENTITIES.YellowBlob = "YellowBlob";
+ENTITY.ENTITIES.Enemy = "Enemy";
+
+ENTITY.Data = {};
+ENTITY.Data.new = function(entityId, position){
+    let data = {
+        entityId: entityId,
+        position: position
+    };
+    return data;
+};
+
 
 ENTITY.baseEntity = {};
 ENTITY.baseEntity.new = function(){

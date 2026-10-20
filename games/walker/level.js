@@ -3,11 +3,6 @@
 ##############################################################################*/
 
 let LEVEL = {};
-LEVEL.Data = {};
-LEVEL.Data.new = function(){
-    let ld = {};
-    return ld;
-};
 
 LEVEL.Renderer = {};
 LEVEL.Renderer.Layers = {};
@@ -30,7 +25,13 @@ LEVEL.Renderer.new = function(){
         lr.ui.linkInventories(lr.player);
     };
     lr.loadData = function(data){
-
+        if(data.backgroundSprite){
+            let background = SPRITES.SpriteRenderer.new(data.backgroundSprite, VECTOR2.new(0, 0));
+            lr.scenery.push(background);
+        }
+        for(let entityData of data.entityData){
+            lr.addEntity(ENTITYFACTORY.Load(entityData));
+        }
     };
     lr.update = function(){
         if(SCENE.getGameState() === GAMESTATES.play){
@@ -70,6 +71,9 @@ LEVEL.Renderer.new = function(){
       lr.ui.draw();
     }
     lr.addEntity = function(entity){
+        if(entity == null){
+            return;
+        }
         lr.entities.push(entity);
         lr.physics.registerCollider(entity.getCollider());
     };
@@ -85,4 +89,29 @@ LEVEL.Renderer.new = function(){
       lr.physics.unregisterCollider(entity.getCollider());
     };
     return lr;
+};
+
+LEVEL.Data = {};
+LEVEL.Data.new = function(){
+    let ld = {
+        backgroundSprite: null,
+        entityData: []
+    };
+    return ld;
+};
+
+
+// Creates level data
+LEVEL.Generate = {};
+LEVEL.Generate.Grass = function(){
+    let data = LEVEL.Data.new();
+    data.backgroundSprite = SPRITES.static.village.village;
+    let randPos = null;
+    for(let i = 0; i < 10; i++){
+        randPos = VECTOR2.new(UTILITY.randRange(0, 100),UTILITY.randRange(0, 100));
+        data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.YellowBlob, randPos));
+    }
+    randPos = VECTOR2.new(UTILITY.randRange(0, 100),UTILITY.randRange(0, 100));
+    data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.Enemy, randPos));
+    return data;
 };

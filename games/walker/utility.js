@@ -21,10 +21,6 @@ UTILITY.StopWatch.new = function(){
     return sw;
 };
 
-
-UTILITY.distanceInt = function(a, b){
-
-};
 UTILITY.randRange = function(min, max){
   return Math.round(Math.random() * (max - min) + min);
 };
