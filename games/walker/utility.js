@@ -379,7 +379,8 @@ PHYSICS.BoxCollider.new = function(){
 PHYSICS.Controller = {};
 PHYSICS.Controller.new = function(){
     let ctl = {
-        colliders: []
+        colliders: [],
+        rigidColliders: []
     };
     ctl.registerCollider = function(collider){
         ctl.colliders.push(collider);
@@ -389,7 +390,7 @@ PHYSICS.Controller.new = function(){
         ctl.colliders = ctl.colliders.filter((cl) => cl !== collider);
     };
     ctl.checkForCollision = function(excludeList, collider){
-        for(let cl of ctl.colliders){
+        for(let cl of ctl.rigidColliders){
             if(cl.parent && !excludeList.includes(cl.parent.getEntityId())){
                 if(cl.parent.getEntityId() == 1){
                     let str = cl.toString() + ", " + collider.toString() + ", " + collider.overlaps(cl);
@@ -424,6 +425,18 @@ PHYSICS.Controller.new = function(){
             }
         }
         return cols;
+    };
+    // Call this each frame before collision checks are made
+    ctl.update = function(){
+        ctl.refreshRigidCollidersList();
+    };
+    ctl.refreshRigidCollidersList = function(){
+        ctl.rigidColliders = [];
+        for(let collider of ctl.colliders){
+            if(collider.rigid){
+                ctl.rigidColliders.push(collider);
+            }
+        }
     };
     return ctl;
 };

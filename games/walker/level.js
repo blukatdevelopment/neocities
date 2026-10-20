@@ -46,6 +46,7 @@ LEVEL.Renderer.new = function(){
         }
     };
     lr.update = function(){
+        lr.physics.update();
         if(SCENE.getGameState() === GAMESTATES.play){
             for(let entity of lr.entities){
                 if(entity){
@@ -140,7 +141,8 @@ LEVEL.Data.new = function(){
 };
 
 LEVEL.RandomPosition = function(){
-    return VECTOR2.new(UTILITY.randRange(0, 5000), UTILITY.randRange(0, 5000));
+    let size = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;
+    return VECTOR2.new(UTILITY.randRange(0, size), UTILITY.randRange(0, size));
 };
 
 // Creates level data
@@ -163,10 +165,10 @@ LEVEL.Generate.Grass = function(){
     let center = (SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize)/2;
     data.playerPosition = VECTOR2.new(center, center);
     
-    for(let i = 0; i < 1; i++){
+    for(let i = 0; i < 50; i++){
         data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.YellowBlob, LEVEL.RandomPosition()));
     }
-    for(let i = 0; i < 1; i++){
+    for(let i = 0; i < 50; i++){
         randPos = VECTOR2.new(UTILITY.randRange(0, 5000),UTILITY.randRange(0, 5000));
         data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.Enemy, LEVEL.RandomPosition()));
     }
