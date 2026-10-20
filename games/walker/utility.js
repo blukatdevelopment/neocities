@@ -83,6 +83,9 @@ VECTOR2.new = function(x, y){
         }
         return ret;
     };
+    v2.clone = function(){
+        return VECTOR2.new(v2.x, v2.y);
+    };
     return v2;
 };
 VECTOR2.vectorFromDirection = function(direction){
@@ -210,6 +213,9 @@ SHAPES.RECT.new = function(position, size){
         ret += ", " + rect.size.toString();
         ret += "]";
         return ret;
+    };
+    rect.clone = function(){
+        return SHAPES.RECT.new(rect.position.clone(), rect.size.clone());
     };
 
     return rect;
