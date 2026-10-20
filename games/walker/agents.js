@@ -52,6 +52,9 @@ AGENT.PLAYER_ONE.new = function(actor){
 	    	}
 	    }
 	    let inRange = atr.cursorInRange();
+	    if(INPUT.keyPress(INPUT.KEYS.K_M)){
+	    	SCENE.setActiveScene(SCENE.SCENES.WORLDMAP);
+	    }
 	    if(INPUT.keyPress(INPUT.KEYS.K_SPACE) || (inRange && INPUT.mouseClick(INPUT.LEFT_CLICK))){
     		atr.attack();	    	
 	    }

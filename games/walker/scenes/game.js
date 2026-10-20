@@ -18,6 +18,7 @@ GAME.update = function(){
   if(!GAME.isSetup){
     GAME.setup();
   }
+  GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
   GAME.levelRenderer.update();
 };
 

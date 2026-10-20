@@ -19,6 +19,9 @@ WORLDMAP.update = function(){
     if(!WORLDMAP.isSetup){
         WORLDMAP.setup();
     }
+    if(INPUT.keyPress(INPUT.KEYS.K_M)){
+    	SCENE.setActiveScene(SCENE.SCENES.GAME);
+    }
     WORLDMAP.map.draw();
 };
 
