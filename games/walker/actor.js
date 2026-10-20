@@ -62,7 +62,7 @@ ACTORFACTORY.simpleEnemy = function(){
     let targetPos = target.centeredPosition();
     let dir = pos.x < targetPos.x ? DIRECTIONS.east : DIRECTIONS.west;
     let attackData = ACTOR.AttackData.new(dir, -se.activeAttack.damage, se, { knockback: 10 });
-    //target.onAttacked(attackData);
+    target.onAttacked(attackData);
   };
 
   se.stats = ACTOR.StatsController.new(3, 3);
