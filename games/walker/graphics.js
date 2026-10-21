@@ -15,6 +15,13 @@ GRAPHICS.init = function(){
   GRAPHICS.setDisplayMode(DISPLAY_MODES.static);
 }
 
+GRAPHICS.Colors = {};
+// Referencing LibreSprite's NES presets
+GRAPHICS.Colors.Beige = "rgb(255, 243, 146)";
+GRAPHICS.Colors.Red = "rgb(178, 16, 48)";
+GRAPHICS.Colors.Blue = "rgb(65, 97, 251)";
+GRAPHICS.Colors.Green = "rgb(81, 162, 0)";
+
 // Basic rectangular camera that can be panned
 GRAPHICS.Camera = {};
 GRAPHICS.Camera.new = function(position, size){
@@ -64,7 +71,7 @@ GRAPHICS.getDisplayMode = function(){
 };
 
 GRAPHICS.setDisplayMode = function(mode){
-  UTILITY.log("GRAPHICS", "Setting display mode", {mode: mode});
+  //UTILITY.log("GRAPHICS", "Setting display mode", {mode: mode});
   GRAPHICS._displayMode = mode;
 };
 
@@ -176,6 +183,10 @@ GRAPHICS.fillBox = function(x, y, width, height, color){
   if(color){
     ctx.fillStyle = color;
   }
+  x = GRAPHICS.scale(x);
+  y = GRAPHICS.scale(y);
+  width = GRAPHICS.scale(width);
+  height = GRAPHICS.scale(height);
   ctx.fillRect(x, y, width, height);
   ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = SETTINGS.defaultColor;

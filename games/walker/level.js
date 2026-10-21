@@ -22,7 +22,7 @@ LEVEL.Renderer.new = function(){
         lr.player = ACTORFACTORY.playerOne();
         lr.addEntity(lr.player);
         lr.ui = UI.COMPONENTS.ComponentManager.new();
-        lr.ui.linkInventories(lr.player);
+        lr.ui.linkActor(lr.player);
     };
     lr.loadData = function(data){
         let levelSize = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;

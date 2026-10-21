@@ -22,8 +22,9 @@ SETTINGS.DefaultLevelSize = 9;
 
 // Stats
 STATS = {};
-STATS.health = "health";
-STATS.energy = "energy";
+STATS.health = "Health";
+STATS.energy = "Energy";
+STATS.magic = "Magic";
 
 // States that effect rendering.
 let GAMESTATES = {};
@@ -179,6 +180,15 @@ SETTINGS.staticSheetList.push({
 	resolutionY: 52,
 	cells: 1,
 	sprites: ["inventory"]
+});
+
+SETTINGS.staticSheetList.push({
+	name: "statusbar",
+	sheet: "statusbar.png",
+	resolutionX: 80,
+	resolutionY: 89,
+	cells: 1,
+	sprites: ["statusbar"]
 });
 
 // Sprite config

@@ -24,7 +24,7 @@ ACTORFACTORY.playerOne = function(){
   pone.attacks.push(ACTOR.AttackFactory.UNARMED());
   pone.activeAttack = pone.attacks[0];
 
-  pone.stats = ACTOR.StatsController.new(100, 100);
+  pone.stats = ACTOR.StatsController.new(10, 10, 0);
 
   return pone;
 };
@@ -65,7 +65,7 @@ ACTORFACTORY.simpleEnemy = function(){
     target.onAttacked(attackData);
   };
 
-  se.stats = ACTOR.StatsController.new(3, 3);
+  se.stats = ACTOR.StatsController.new(3, 3, 0);
   return se;
 };
 
@@ -400,14 +400,16 @@ ACTOR.AttackFactory.UNARMED = function(){
 
 
 ACTOR.StatsController = {};
-ACTOR.StatsController.new = function(maxHealth, maxEnergy){
+ACTOR.StatsController.new = function(maxHealth, maxEnergy, maxMagic){
   let stc = {
     health: ACTOR.Stat.new(STATS.health, maxHealth),
-    energy: ACTOR.Stat.new(STATS.energy, maxEnergy)
+    energy: ACTOR.Stat.new(STATS.energy, maxEnergy),
+    magic: ACTOR.Stat.new(STATS.magic, maxMagic),
   };
   stc.fullRestore = function(){
     stc.health.reset();
     stc.energy.reset();
+    stc.magic.reset();
   };
   return stc;
 };
@@ -430,6 +432,16 @@ ACTOR.Stat.new = function(name, max){
   st.change = function(delta){
     st.value += delta;
     st.value = UTILITY.clamp(st.value);
+  };
+  st.toString = function(){
+    let ret = "Stat[";
+    ret += "name: " + st.name;
+    ret += ", value: " + st.value;
+    ret += ", max: " + st.max;
+    ret += ", min: " + st.min;
+    ret += ", damageCooldown: " + st.damageCooldown;
+    ret += "]";
+    return ret;
   };
   return st;
 };

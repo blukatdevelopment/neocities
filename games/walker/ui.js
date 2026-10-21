@@ -13,11 +13,13 @@ UI.COMPONENTS.ComponentManager.new = function(){
 	let cm = {};
 	cm.hotbar = UI.COMPONENTS.Hotbar.new(cm);
 	cm.inventory = UI.COMPONENTS.Inventory.new(cm);
+	cm.statusbar = UI.COMPONENTS.StatusBar.new();
 	cm.dragged = null;
 
 	cm.update = function(){
 		cm.hotbar.update();
 		cm.inventory.update();
+		cm.statusbar.update();
 		if(SCENE.getGameState() !== GAMESTATES.inventory){
 			return;
 		}
@@ -49,6 +51,7 @@ UI.COMPONENTS.ComponentManager.new = function(){
 	cm.draw = function(){
 		cm.hotbar.draw();
 		cm.inventory.draw();
+		cm.statusbar.draw();
 		if(cm.dragged == null){
 			return;
 		}
@@ -85,9 +88,11 @@ UI.COMPONENTS.ComponentManager.new = function(){
 		}
 		return null;
 	};
-	cm.linkInventories = function(actor){
+	cm.linkActor = function(actor){
 		cm.hotbar.linkedInv = actor.hotbar;
 		cm.inventory.linkedInv = actor.inventory;
+		cm.statusbar.linkActor(actor);
+
 	};
 	return cm;
 };
@@ -351,7 +356,7 @@ UI.COMPONENTS.Map.new = function(grid){
 	};
 	map.rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(400, 400));
 	map.draw = function(){
-		let cellSize = GRAPHICS.scale(map.cellSize);
+		let cellSize = map.cellSize;
 		for(let i = 0; i < map.grid.terrainMap.length; i++){
 			let terrain = map.grid.terrainMap[i];
 			let color = WORLD.TerrainData[terrain].color;
@@ -362,4 +367,78 @@ UI.COMPONENTS.Map.new = function(grid){
 		}
 	}
 	return map;
+};
+
+UI.COMPONENTS.StatusBar = {};
+UI.COMPONENTS.StatusBar.new = function(){
+	let sbRect = SHAPES.RECT.new(
+		VECTOR2.new(320, 320),
+		VECTOR2.new(80, 80)
+	);
+	let sprite = SPRITES.static.statusbar.statusbar;	
+	let sb = UI.COMPONENTS.BaseComponent.new(sbRect, sprite);
+	sb.stats = null;
+	sb.healthRect = SHAPES.RECT.new(
+		VECTOR2.new(5, 6),
+		VECTOR2.new(22, 50)
+	);
+	sb.energyRect = SHAPES.RECT.new(
+		VECTOR2.new(29, 6),
+		VECTOR2.new(22, 50)
+	);
+	sb.magicRect = SHAPES.RECT.new(
+		VECTOR2.new(53, 6),
+		VECTOR2.new(22, 50)
+	);
+	sb.linkActor = function(actor){
+		sb.stats = actor.stats;
+	};
+	sb.draw = function(){
+		if(sb.stats == null){
+			console.log("Stats null");
+			return;
+		}
+		console.log("drawing");
+		let pos = sb.rect.position;
+		SPRITES.renderSprite(pos.x, pos.y, sb.sprite.index, sb.sprite.sheet, DISPLAY_MODES.static);
+		sb.shroudStat(sb.stats.health, sb.healthRect);
+		sb.shroudStat(sb.stats.energy, sb.energyRect);
+		sb.shroudStat(sb.stats.magic, sb.magicRect);
+		sb.renderStatText(sb.healthRect, sb.stats.health, GRAPHICS.Colors.Red);
+		sb.renderStatText(sb.energyRect, sb.stats.energy, GRAPHICS.Colors.Green);
+		sb.renderStatText(sb.magicRect, sb.stats.magic, GRAPHICS.Colors.Blue);
+	};
+	sb.shroudStat = function(stat, rect){
+		let barHeight = rect.size.y;
+		let shroudHeight = sb.getShroudHeight(stat.value, stat.max, barHeight);
+		let shroudPos = rect.position.add(sb.rect.position);
+		let x = shroudPos.x;
+		let y = shroudPos.y;
+		let width = rect.size.x;
+		let height = shroudHeight;
+		GRAPHICS.fillBox(shroudPos.x, shroudPos.y, rect.size.x, shroudHeight, GRAPHICS.Colors.Beige);
+	};
+	sb.getShroudHeight = function(value, max, barHeight){
+		if(max == 0){
+			return barHeight;
+		}
+		let barPercentage = value / max; // how full is the bar
+		let shroudPercentage = 1 - barPercentage;
+		let shroudHeight = barHeight * shroudPercentage;
+		return shroudHeight;
+	};
+	sb.renderStatText = function(barRect, stat, color){
+		if(stat.max == 0){
+			return;
+		}
+		let textSize = SETTINGS.defaultFontSize;
+		let x = sb.rect.position.x + barRect.position.x;
+		let y = sb.rect.position.y + barRect.position.y + barRect.size.y + textSize;
+		let text = stat.name;
+		GRAPHICS.drawText(text, x, y, textSize, color);
+		y += textSize;
+		text = stat.value + "/" + stat.max;
+		GRAPHICS.drawText(text, x, y, textSize, color);
+	};
+	return sb;
 };
