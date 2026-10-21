@@ -378,6 +378,7 @@ UI.COMPONENTS.StatusBar.new = function(){
 	let sprite = SPRITES.static.statusbar.statusbar;	
 	let sb = UI.COMPONENTS.BaseComponent.new(sbRect, sprite);
 	sb.stats = null;
+	sb.recentThreshold = 3;
 	sb.healthRect = SHAPES.RECT.new(
 		VECTOR2.new(5, 6),
 		VECTOR2.new(22, 50)
@@ -395,7 +396,9 @@ UI.COMPONENTS.StatusBar.new = function(){
 	};
 	sb.draw = function(){
 		if(sb.stats == null){
-			console.log("Stats null");
+			return;
+		}
+		if(!sb.isChangedRecently()){
 			return;
 		}
 		console.log("drawing");
@@ -439,6 +442,18 @@ UI.COMPONENTS.StatusBar.new = function(){
 		y += textSize;
 		text = stat.value + "/" + stat.max;
 		GRAPHICS.drawText(text, x, y, textSize, color);
+	};
+	sb.isChangedRecently = function(){
+		if(sb.stats.health.changeAgeSeconds() && sb.stats.health.changeAgeSeconds() <= sb.recentThreshold){
+			return true;
+		}
+		if(sb.stats.energy.changeAgeSeconds() && sb.stats.energy.changeAgeSeconds() <= sb.recentThreshold){
+			return true;
+		}
+		if(sb.stats.magic.changeAgeSeconds() && sb.stats.magic.changeAgeSeconds() <= sb.recentThreshold){
+			return true;
+		}
+		return false;
 	};
 	return sb;
 };

@@ -421,7 +421,9 @@ ACTOR.Stat.new = function(name, max){
     value: max,
     max: max,
     min: 0,
-    damageCooldown: null
+    damageCooldown: null,
+    lastChangeTime: null,
+    lastChangeDelta: null
   };
   st.reset = function(){
     st.value = st.max;
@@ -432,7 +434,19 @@ ACTOR.Stat.new = function(name, max){
   st.change = function(delta){
     st.value += delta;
     st.value = UTILITY.clamp(st.value);
+    st.lastChangeDelta = delta;
+    st.lastChangeTime = Date.now();
   };
+  st.changeAgeSeconds = function(){
+    if(st.lastChangeTime == null){
+      return null;
+    }
+    let last = st.lastChangeTime;
+    let now = Date.now();
+    let elapsed = now - last;
+    let elapsedSeconds = elapsed/1000;
+    return elapsedSeconds;
+  }
   st.toString = function(){
     let ret = "Stat[";
     ret += "name: " + st.name;
