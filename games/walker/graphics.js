@@ -21,6 +21,14 @@ GRAPHICS.Colors.Beige = "rgb(255, 243, 146)";
 GRAPHICS.Colors.Red = "rgb(178, 16, 48)";
 GRAPHICS.Colors.Blue = "rgb(65, 97, 251)";
 GRAPHICS.Colors.Green = "rgb(81, 162, 0)";
+GRAPHICS.Colors.Black = "black";
+
+// Alpha colors
+GRAPHICS.Colors.Black50 = "rgb(0 0 0 / 50%)";
+GRAPHICS.Colors.White50 = "rgb(255 255 255 / 50%)";
+GRAPHICS.Colors.Red50 = "rgb(178 16 48 / 50%)";
+GRAPHICS.Colors.Green50 = "rgb(65 97 251 / 50%)";
+GRAPHICS.Colors.Blue50 = "rgb(81 162 0 / 50%)";
 
 // Basic rectangular camera that can be panned
 GRAPHICS.Camera = {};

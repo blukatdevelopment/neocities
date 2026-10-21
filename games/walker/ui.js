@@ -379,17 +379,18 @@ UI.COMPONENTS.StatusBar.new = function(){
 	let sb = UI.COMPONENTS.BaseComponent.new(sbRect, sprite);
 	sb.stats = null;
 	sb.recentThreshold = 3;
+	sb.blinkDuration = 250;
 	sb.healthRect = SHAPES.RECT.new(
-		VECTOR2.new(5, 6),
-		VECTOR2.new(22, 50)
+		VECTOR2.new(6, 6),
+		VECTOR2.new(20, 50)
 	);
 	sb.energyRect = SHAPES.RECT.new(
-		VECTOR2.new(29, 6),
-		VECTOR2.new(22, 50)
+		VECTOR2.new(30, 6),
+		VECTOR2.new(20, 50)
 	);
 	sb.magicRect = SHAPES.RECT.new(
 		VECTOR2.new(53, 6),
-		VECTOR2.new(22, 50)
+		VECTOR2.new(21, 50)
 	);
 	sb.linkActor = function(actor){
 		sb.stats = actor.stats;
@@ -401,15 +402,51 @@ UI.COMPONENTS.StatusBar.new = function(){
 		if(!sb.isChangedRecently()){
 			return;
 		}
-		console.log("drawing");
 		let pos = sb.rect.position;
 		SPRITES.renderSprite(pos.x, pos.y, sb.sprite.index, sb.sprite.sheet, DISPLAY_MODES.static);
 		sb.shroudStat(sb.stats.health, sb.healthRect);
 		sb.shroudStat(sb.stats.energy, sb.energyRect);
 		sb.shroudStat(sb.stats.magic, sb.magicRect);
-		sb.renderStatText(sb.healthRect, sb.stats.health, GRAPHICS.Colors.Red);
-		sb.renderStatText(sb.energyRect, sb.stats.energy, GRAPHICS.Colors.Green);
-		sb.renderStatText(sb.magicRect, sb.stats.magic, GRAPHICS.Colors.Blue);
+		sb.renderStatText(sb.healthRect, sb.stats.health);
+		sb.renderStatText(sb.energyRect, sb.stats.energy);
+		sb.renderStatText(sb.magicRect, sb.stats.magic);
+		sb.highlightDelta(sb.healthRect, sb.stats.health);
+		sb.highlightDelta(sb.energyRect, sb.stats.energy);
+		sb.highlightDelta(sb.magicRect, sb.stats.magic);
+	};
+	sb.highlightDelta = function(barRect, stat){
+		if(stat.changeDelta() == null || stat.changeDelta() == 0){
+			return;
+		}
+		// Blink the highlight
+		let blinks = Math.trunc(stat.changeAgeMilliseconds() / sb.blinkDuration);
+		let blinkOff = blinks % 2 == 0; 
+		console.log("Blinks " + blinks + "  blinkoff " + blinkOff);
+		if(blinkOff){
+			// Highlighting blinks on and off.
+			return;
+		}
+		if(stat.changeDelta() > 0){
+			sb.highlightGain(barRect, stat);
+		}
+		else if(stat.changeDelta() < 0){
+			sb.highlightLoss(barRect, stat);
+		}
+	};
+	sb.highlightGain = function(barRect, stat){
+		// TODO
+	};
+	sb.highlightLoss = function(barRect, stat){
+		let delta = stat.changeDelta() * -1;
+		let deltaPercentage = delta / stat.max;
+		let deltaHeight = deltaPercentage * barRect.size.y;
+		let shroudHeight = sb.getShroudHeight(stat.value, stat.max, barRect.size.y);
+
+		let x = barRect.position.x + sb.rect.position.x;
+		let y = barRect.position.y + sb.rect.position.y + shroudHeight - deltaHeight ;
+		let width = barRect.size.x;
+		let height = deltaHeight;
+		GRAPHICS.fillBox(x, y, width, height, stat.transparentColor);
 	};
 	sb.shroudStat = function(stat, rect){
 		let barHeight = rect.size.y;
@@ -419,7 +456,11 @@ UI.COMPONENTS.StatusBar.new = function(){
 		let y = shroudPos.y;
 		let width = rect.size.x;
 		let height = shroudHeight;
-		GRAPHICS.fillBox(shroudPos.x, shroudPos.y, rect.size.x, shroudHeight, GRAPHICS.Colors.Beige);
+		let color = GRAPHICS.Colors.Black;
+		if(stat.max == 0){
+			color = GRAPHICS.Colors.Beige;
+		}
+		GRAPHICS.fillBox(shroudPos.x, shroudPos.y, rect.size.x, shroudHeight, color);
 	};
 	sb.getShroudHeight = function(value, max, barHeight){
 		if(max == 0){
@@ -430,10 +471,11 @@ UI.COMPONENTS.StatusBar.new = function(){
 		let shroudHeight = barHeight * shroudPercentage;
 		return shroudHeight;
 	};
-	sb.renderStatText = function(barRect, stat, color){
+	sb.renderStatText = function(barRect, stat){
 		if(stat.max == 0){
 			return;
 		}
+		let color = stat.color;
 		let textSize = SETTINGS.defaultFontSize;
 		let x = sb.rect.position.x + barRect.position.x;
 		let y = sb.rect.position.y + barRect.position.y + barRect.size.y + textSize;
@@ -444,13 +486,13 @@ UI.COMPONENTS.StatusBar.new = function(){
 		GRAPHICS.drawText(text, x, y, textSize, color);
 	};
 	sb.isChangedRecently = function(){
-		if(sb.stats.health.changeAgeSeconds() && sb.stats.health.changeAgeSeconds() <= sb.recentThreshold){
+		if(sb.stats.health.changeAgeSeconds() != null && sb.stats.health.changeAgeSeconds() <= sb.recentThreshold){
 			return true;
 		}
-		if(sb.stats.energy.changeAgeSeconds() && sb.stats.energy.changeAgeSeconds() <= sb.recentThreshold){
+		if(sb.stats.energy.changeAgeSeconds() != null && sb.stats.energy.changeAgeSeconds() <= sb.recentThreshold){
 			return true;
 		}
-		if(sb.stats.magic.changeAgeSeconds() && sb.stats.magic.changeAgeSeconds() <= sb.recentThreshold){
+		if(sb.stats.magic.changeAgeSeconds() != null && sb.stats.magic.changeAgeSeconds() <= sb.recentThreshold){
 			return true;
 		}
 		return false;

@@ -402,9 +402,9 @@ ACTOR.AttackFactory.UNARMED = function(){
 ACTOR.StatsController = {};
 ACTOR.StatsController.new = function(maxHealth, maxEnergy, maxMagic){
   let stc = {
-    health: ACTOR.Stat.new(STATS.health, maxHealth),
-    energy: ACTOR.Stat.new(STATS.energy, maxEnergy),
-    magic: ACTOR.Stat.new(STATS.magic, maxMagic),
+    health: ACTOR.Stat.new(STATS.health, maxHealth, GRAPHICS.Colors.Red, GRAPHICS.Colors.Red50),
+    energy: ACTOR.Stat.new(STATS.energy, maxEnergy, GRAPHICS.Colors.Green, GRAPHICS.Colors.Green50),
+    magic: ACTOR.Stat.new(STATS.magic, maxMagic, GRAPHICS.Colors.Blue, GRAPHICS.Colors.Blue50),
   };
   stc.fullRestore = function(){
     stc.health.reset();
@@ -415,7 +415,7 @@ ACTOR.StatsController.new = function(maxHealth, maxEnergy, maxMagic){
 };
 
 ACTOR.Stat = {};
-ACTOR.Stat.new = function(name, max){
+ACTOR.Stat.new = function(name, max, color, transparentColor){
   let st = {
     name: name,
     value: max,
@@ -423,7 +423,9 @@ ACTOR.Stat.new = function(name, max){
     min: 0,
     damageCooldown: null,
     lastChangeTime: null,
-    lastChangeDelta: null
+    lastChangeDelta: null,
+    color: color,
+    transparentColor: transparentColor
   };
   st.reset = function(){
     st.value = st.max;
@@ -437,16 +439,24 @@ ACTOR.Stat.new = function(name, max){
     st.lastChangeDelta = delta;
     st.lastChangeTime = Date.now();
   };
+  st.changeDelta = function(){
+    return st.lastChangeDelta;
+  };
   st.changeAgeSeconds = function(){
+    if(st.lastChangeTime == null){
+      return null;
+    }
+    return Math.trunc(st.changeAgeMilliseconds()/1000);
+  };
+  st.changeAgeMilliseconds = function(){
     if(st.lastChangeTime == null){
       return null;
     }
     let last = st.lastChangeTime;
     let now = Date.now();
     let elapsed = now - last;
-    let elapsedSeconds = elapsed/1000;
-    return elapsedSeconds;
-  }
+    return elapsed;
+  };
   st.toString = function(){
     let ret = "Stat[";
     ret += "name: " + st.name;
