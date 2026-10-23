@@ -19,14 +19,15 @@ AGENT.PLAYER_ONE.new = function(actor){
 		// TODO: move code currently in GAME.mouseDown here to break tight coupling
 		let atr = pone.actor;
 		let aId = atr.entityId;
-		let speed = pone.actor.speed;
+		if(INPUT.key(INPUT.KEYS.K_LEFT_SHIFT)){
+			atr.sprint();
+		}
 		let x_movement = 0;
 	    let y_movement = 0;
-	    // Key inputs weighted by speed
-	    let k_w = INPUT.key(INPUT.KEYS.K_W) ? speed : 0;
-	    let k_s = INPUT.key(INPUT.KEYS.K_S) ? speed : 0;
-	    let k_a = INPUT.key(INPUT.KEYS.K_A) ? speed : 0;
-	    let k_d = INPUT.key(INPUT.KEYS.K_D) ? speed : 0;
+	    let k_w = INPUT.key(INPUT.KEYS.K_W) ? 1 : 0;
+	    let k_s = INPUT.key(INPUT.KEYS.K_S) ? 1 : 0;
+	    let k_a = INPUT.key(INPUT.KEYS.K_A) ? 1 : 0;
+	    let k_d = INPUT.key(INPUT.KEYS.K_D) ? 1 : 0;
 
 	    // Net inputs
 	    let x = k_d - k_a;

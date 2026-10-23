@@ -24,8 +24,10 @@ ACTORFACTORY.playerOne = function(){
   pone.attacks.push(ACTOR.AttackFactory.UNARMED());
   pone.activeAttack = pone.attacks[0];
 
-  pone.stats = ACTOR.StatsController.new(10, 10, 0);
-
+  pone.stats = STATS.StatsController.new();
+  pone.stats.getStat(STATS.Resources.health).updateMax(10);
+  pone.stats.getStat(STATS.Resources.energy).updateMax(10);
+  pone.stats.addEffect(STATS.Effect.EnergyRegen(2000, STATS.Resources.energy, STATS.Effect.Sources.Body));
   return pone;
 };
 
@@ -41,7 +43,6 @@ ACTORFACTORY.simpleEnemy = function(){
   se.agent = agent;
   se.animator = anm;
   se.lockCamera = false;
-  se.speed = 1.5;
 
   se.setCollider(PHYSICS.BoxCollider.new());
   se.getCollider().rect.position = VECTOR2.new(13, 0);
@@ -65,7 +66,9 @@ ACTORFACTORY.simpleEnemy = function(){
     target.onAttacked(attackData);
   };
 
-  se.stats = ACTOR.StatsController.new(3, 3, 0);
+  se.stats = STATS.StatsController.new();
+  se.stats.getStat(STATS.Resources.health).updateMax(3);
+  se.stats.setAttributeValue(STATS.Attributes.speed, 1.5);
   return se;
 };
 
@@ -80,7 +83,6 @@ ACTOR.new = function(){
   atr.moving = false;
   atr.prevMoving = false;
   atr.size = 32;
-  atr.speed = 5;
   atr.lockCamera = false;
   atr.attacks = [];
   atr.activeAttack = null;
@@ -96,6 +98,9 @@ ACTOR.new = function(){
     if(atr.lockCamera && GRAPHICS.getDisplayMode() == DISPLAY_MODES.camera){
       GRAPHICS.centerCamera(VECTOR2.new(atr.position.x, atr.position.y));
     }
+    if(atr.stats){
+      atr.stats.update();
+    }
   };
   atr.teleport = function(destination){
     atr.position = destination;
@@ -107,22 +112,24 @@ ACTOR.new = function(){
       return;
     }
     atr.moving = true;
+    let speed = atr.stats.getAttribute(STATS.Attributes.speed);
     let dest = VECTOR2.new(atr.position.x, atr.position.y);
+    
     switch(direction){
       case DIRECTIONS.north:
-        dest.y -= atr.speed;
+        dest.y -= speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.south:
-        dest.y += atr.speed;
+        dest.y += speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.east:
-        dest.x += atr.speed;
+        dest.x += speed;
         atr.direction = direction;
       break;
       case DIRECTIONS.west:
-        dest.x -= atr.speed;
+        dest.x -= speed;
         atr.direction = direction;
       break;
     }
@@ -177,6 +184,33 @@ ACTOR.new = function(){
     });
     
   };
+  atr.canSprint = function(){
+    if(atr.stats == null){
+      // No stats, no problems!
+      return true;
+    }
+    if(atr.stats.getEffect(STATS.Effect.Names.Sprinting, STATS.Effect.Sources.Body)){
+      // You're already sprinting.
+      return false;
+    }
+    let energy = atr.stats.getResourceValue(STATS.Resources.energy);
+    if(energy > 0){
+      // You can afford to sprint
+      return true;
+    }
+    // You can't afford it
+    return false;
+  };
+  // Call this each frame before moving
+  atr.sprint = function(){
+    if(!atr.canSprint()){
+      return;
+    }
+    let cost = STATS.Effect.SprintCost();
+    let buff = STATS.Effect.SprintBuff();
+    atr.stats.addEffect(cost);
+    atr.stats.addEffect(buff);
+  };
   atr.attackHitscan = function(atk){
 
     let dest = atr.centeredPosition().move(atr.direction, atr.size);
@@ -219,12 +253,13 @@ ACTOR.new = function(){
         //console.log("Ignoring attack until cooldown finishes");
         return;
       }
-      let prevHealth = atr.stats.health.value;
-      atr.stats.health.change(attackData.damage);
+      let health = atr.stats.getStat(STATS.Resources.health);
+      let prevHealth = health.value;
+      health.change(attackData.damage);
       atr.damageLabel = attackData.damage + "";
       atr.damageLabelFrames = 12;
       //console.log(atr.name + " attacked for " + attackData.damage + " and now has " + atr.stats.health.value + " health.");
-      if(atr.stats.health.value < 1){
+      if(health.value < 1){
         atr.die();
       }
       if(attackData.knockback > 0){
@@ -396,76 +431,4 @@ ACTOR.AttackFactory.UNARMED = function(){
   atk.frames = 3;
   atk.damageFrames = [1];
   return atk;
-};
-
-
-ACTOR.StatsController = {};
-ACTOR.StatsController.new = function(maxHealth, maxEnergy, maxMagic){
-  let stc = {
-    health: ACTOR.Stat.new(STATS.health, maxHealth, GRAPHICS.Colors.Red, GRAPHICS.Colors.Red50),
-    energy: ACTOR.Stat.new(STATS.energy, maxEnergy, GRAPHICS.Colors.Green, GRAPHICS.Colors.Green50),
-    magic: ACTOR.Stat.new(STATS.magic, maxMagic, GRAPHICS.Colors.Blue, GRAPHICS.Colors.Blue50),
-  };
-  stc.fullRestore = function(){
-    stc.health.reset();
-    stc.energy.reset();
-    stc.magic.reset();
-  };
-  return stc;
-};
-
-ACTOR.Stat = {};
-ACTOR.Stat.new = function(name, max, color, transparentColor){
-  let st = {
-    name: name,
-    value: max,
-    max: max,
-    min: 0,
-    damageCooldown: null,
-    lastChangeTime: null,
-    lastChangeDelta: null,
-    color: color,
-    transparentColor: transparentColor
-  };
-  st.reset = function(){
-    st.value = st.max;
-  };
-  st.clear = function(){
-    st.value = st.min;
-  };
-  st.change = function(delta){
-    st.value += delta;
-    st.value = UTILITY.clamp(st.value);
-    st.lastChangeDelta = delta;
-    st.lastChangeTime = Date.now();
-  };
-  st.changeDelta = function(){
-    return st.lastChangeDelta;
-  };
-  st.changeAgeSeconds = function(){
-    if(st.lastChangeTime == null){
-      return null;
-    }
-    return Math.trunc(st.changeAgeMilliseconds()/1000);
-  };
-  st.changeAgeMilliseconds = function(){
-    if(st.lastChangeTime == null){
-      return null;
-    }
-    let last = st.lastChangeTime;
-    let now = Date.now();
-    let elapsed = now - last;
-    return elapsed;
-  };
-  st.toString = function(){
-    let ret = "Stat[";
-    ret += "name: " + st.name;
-    ret += ", value: " + st.value;
-    ret += ", max: " + st.max;
-    ret += ", min: " + st.min;
-    ret += ", damageCooldown: " + st.damageCooldown;
-    ret += "]";
-    return ret;
-  };
-  return st;
 };

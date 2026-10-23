@@ -20,12 +20,6 @@ SETTINGS.defaultColor = "black";
 SETTINGS.DefaultLevelTileSize = 1024;
 SETTINGS.DefaultLevelSize = 9;
 
-// Stats
-STATS = {};
-STATS.health = "Health";
-STATS.energy = "Energy";
-STATS.magic = "Magic";
-
 // States that effect rendering.
 let GAMESTATES = {};
 GAMESTATES.play = "play";

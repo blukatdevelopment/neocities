@@ -27,8 +27,8 @@ GRAPHICS.Colors.Black = "black";
 GRAPHICS.Colors.Black50 = "rgb(0 0 0 / 50%)";
 GRAPHICS.Colors.White50 = "rgb(255 255 255 / 50%)";
 GRAPHICS.Colors.Red50 = "rgb(178 16 48 / 50%)";
-GRAPHICS.Colors.Green50 = "rgb(65 97 251 / 50%)";
-GRAPHICS.Colors.Blue50 = "rgb(81 162 0 / 50%)";
+GRAPHICS.Colors.Green50 = "rgb(81 162 0 / 50%)";
+GRAPHICS.Colors.Blue50 = "rgb(65 97 251 / 50%)";
 
 // Basic rectangular camera that can be panned
 GRAPHICS.Camera = {};

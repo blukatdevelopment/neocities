@@ -402,17 +402,20 @@ UI.COMPONENTS.StatusBar.new = function(){
 		if(!sb.isChangedRecently()){
 			return;
 		}
+		let health = sb.stats.getStat(STATS.Resources.health);
+		let energy = sb.stats.getStat(STATS.Resources.energy);
+		let magic = sb.stats.getStat(STATS.Resources.magic);
 		let pos = sb.rect.position;
 		SPRITES.renderSprite(pos.x, pos.y, sb.sprite.index, sb.sprite.sheet, DISPLAY_MODES.static);
-		sb.shroudStat(sb.stats.health, sb.healthRect);
-		sb.shroudStat(sb.stats.energy, sb.energyRect);
-		sb.shroudStat(sb.stats.magic, sb.magicRect);
-		sb.renderStatText(sb.healthRect, sb.stats.health);
-		sb.renderStatText(sb.energyRect, sb.stats.energy);
-		sb.renderStatText(sb.magicRect, sb.stats.magic);
-		sb.highlightDelta(sb.healthRect, sb.stats.health);
-		sb.highlightDelta(sb.energyRect, sb.stats.energy);
-		sb.highlightDelta(sb.magicRect, sb.stats.magic);
+		sb.shroudStat(health, sb.healthRect);
+		sb.shroudStat(energy, sb.energyRect);
+		sb.shroudStat(magic, sb.magicRect);
+		sb.renderStatText(sb.healthRect, health);
+		sb.renderStatText(sb.energyRect, energy);
+		sb.renderStatText(sb.magicRect, magic);
+		sb.highlightDelta(sb.healthRect, health);
+		sb.highlightDelta(sb.energyRect, energy);
+		sb.highlightDelta(sb.magicRect, magic);
 	};
 	sb.highlightDelta = function(barRect, stat){
 		if(stat.changeDelta() == null || stat.changeDelta() == 0){
@@ -421,7 +424,6 @@ UI.COMPONENTS.StatusBar.new = function(){
 		// Blink the highlight
 		let blinks = Math.trunc(stat.changeAgeMilliseconds() / sb.blinkDuration);
 		let blinkOff = blinks % 2 == 0; 
-		console.log("Blinks " + blinks + "  blinkoff " + blinkOff);
 		if(blinkOff){
 			// Highlighting blinks on and off.
 			return;
@@ -486,13 +488,16 @@ UI.COMPONENTS.StatusBar.new = function(){
 		GRAPHICS.drawText(text, x, y, textSize, color);
 	};
 	sb.isChangedRecently = function(){
-		if(sb.stats.health.changeAgeSeconds() != null && sb.stats.health.changeAgeSeconds() <= sb.recentThreshold){
+		let health = sb.stats.getStat(STATS.Resources.health);
+		if(health.changeAgeSeconds() != null && health.changeAgeSeconds() <= sb.recentThreshold){
 			return true;
 		}
-		if(sb.stats.energy.changeAgeSeconds() != null && sb.stats.energy.changeAgeSeconds() <= sb.recentThreshold){
+		let energy = sb.stats.getStat(STATS.Resources.energy);
+		if(energy.changeAgeSeconds() != null && energy.changeAgeSeconds() <= sb.recentThreshold){
 			return true;
 		}
-		if(sb.stats.magic.changeAgeSeconds() != null && sb.stats.magic.changeAgeSeconds() <= sb.recentThreshold){
+		let magic = sb.stats.getStat(STATS.Resources.magic);
+		if(magic.changeAgeSeconds() != null && magic.changeAgeSeconds() <= sb.recentThreshold){
 			return true;
 		}
 		return false;
