@@ -7,7 +7,8 @@ let ENTITYFACTORY = {};
 ENTITYFACTORY.Scenery = function(_sprite, position){
     let sc = ENTITY.Scenery.new();
     sc.renderer.setSprite(_sprite);
-    sc.collider.resize(VECTOR2.new(16, 16));
+    let size = VECTOR2.new(_sprite.sheet.cellResolutionX, _sprite.sheet.cellResolutionX);
+    sc.collider.resize(size);
     sc.name = "scenery" + sc.getEntityId();
     sc.setPosition(position);
     return sc;

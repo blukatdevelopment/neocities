@@ -1,5 +1,5 @@
 /*##############################################################################
-# Manages Rendering, generating, and serializing/deserializing levels
+# Level Renderer
 ##############################################################################*/
 
 let LEVEL = {};
@@ -104,6 +104,10 @@ LEVEL.Renderer.new = function(){
     return lr;
 };
 
+/*##############################################################################
+# Level Generator
+##############################################################################*/
+
 LEVEL.TileMap = {};
 LEVEL.TileMap.new = function(sprites, tiles, size){
     let tm = {
@@ -178,4 +182,14 @@ LEVEL.Generate.Grass = function(){
         data.entityData.push(ENTITY.Data.new(ENTITY.ENTITIES.Enemy, LEVEL.RandomPosition()));
     }
     return data;
+};
+
+LEVEL.Generate.Grass.Cells = {};
+LEVEL.Generate.Grass.Cells.Clearing = function(data, rect){
+};
+LEVEL.Generate.Grass.Cells.LightForest = function(data, rect){
+};
+LEVEL.Generate.Grass.Cells.ThickForest = function(data, rect){
+};
+LEVEL.Generate.Grass.Cells.Shrubs = function(data, rect){
 };

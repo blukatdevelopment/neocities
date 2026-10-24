@@ -166,7 +166,17 @@ SETTINGS.staticSheetList.push({
 	cells: 1,
 	sprites: ["hotbar"]
 });
-
+SETTINGS.staticSheetList.push({
+	name: "scenery64",
+	sheet: "scenery64.png",
+	resolutionX: 64,
+	resolutionY: 64,
+	cells: 7,
+	sprites: [
+		"tree", "bush", "berryBush",
+		"boulder", "slimepit", "hovel", "campfire"
+	]
+});
 SETTINGS.staticSheetList.push({
 	name: "inventory",
 	sheet: "inventory.png",
