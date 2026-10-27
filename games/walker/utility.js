@@ -202,8 +202,8 @@ SHAPES.RECT.new = function(position, size){
     rect.isInside = function(otherRect){
         return otherRect.contains(rect.topLeft()) &&
             otherRect.contains(rect.topRight()) &&
-            otherRect.contains(rect.topRight()) &&
-            otherRect.contains(rect.topRight());
+            otherRect.contains(rect.bottomLeft()) &&
+            otherRect.contains(rect.bottomRight());
     };
     rect.overlaps = function(otherRect){
         let largest = rect;
