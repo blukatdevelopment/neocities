@@ -418,7 +418,7 @@ UI.COMPONENTS.StatusBar.new = function(){
 		sb.highlightDelta(sb.magicRect, magic);
 	};
 	sb.highlightDelta = function(barRect, stat){
-		if(stat.changeDelta() == null || stat.changeDelta() == 0){
+		if(stat.changeDelta() == null || stat.changeDelta() == 0 || stat.changeAgeSeconds() > sb.recentThreshold){
 			return;
 		}
 		// Blink the highlight
