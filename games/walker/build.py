@@ -40,5 +40,3 @@ def main():
 
     destination = Path(EXPORT_FILE)
     destination.write_text(html)
-
-main()
