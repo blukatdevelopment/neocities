@@ -21,7 +21,7 @@ ENTITYFACTORY.ItemStack = function(itemName, quantity, durability){
         let pu = ENTITY.ItemStack.new(item);
         return pu;
     }
-    UTILITY.log("ENTITYFACTORY.Pickup", "Could not create pickup", { name: itemName, quantity: quantity, durability: durability });
+    UTILITY.log("ENTITYFACTORY.ItemStack", "Could not create ItemStack", { name: itemName, quantity: quantity, durability: durability });
 };
 
 ENTITYFACTORY.Load = function(data){
@@ -167,5 +167,10 @@ ENTITY.ItemStack.new = function(item){
         }
     };
     pue.onAttacked = function(attack){};
+    pue.getData = function(){
+        let data = ENTITY.Data.new(pue.type, pue.position);
+        data.item = pue.item.name;
+        return data;
+    };
     return pue;
 };

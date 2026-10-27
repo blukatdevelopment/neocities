@@ -168,22 +168,22 @@ LEVEL.Generate.Grass = function(){
 
     let center = (SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize)/2;
     data.playerPosition = VECTOR2.new(center, center);
-    let spawns = [
-        ITEMS.Names.Stick,
-        ITEMS.Names.Rock
-    ];
+    let ent = null;
     for(let i = 0; i < 200; i++){
-        let ent = 
-        data.entityData.push(ENTITY.Data.ItemStack(UTILITY.choice(spawns), LEVEL.RandomPosition()));
+        ent = ENTITYFACTORY.ItemStack(ITEMS.Names.Stick, 1, 1);
+        ent.position = LEVEL.RandomPosition();
+        data.entityData.push(ent.getData());
     }
 
     for(let i = 0; i < 100; i++){
-        randPos = VECTOR2.new(UTILITY.randRange(0, 5000),UTILITY.randRange(0, 5000));
-        data.entityData.push(ENTITY.Data.new(ENTITY.TYPES.Enemy, LEVEL.RandomPosition()));
+        ent = ACTORFACTORY.simpleEnemy();
+        ent.position = LEVEL.RandomPosition();
+        data.entityData.push(ent.getData());
     }
     return data;
 };
 
+LEVEL.Generate.Cell = {};
 LEVEL.Generate.Cell.new = function(data, rect){
     let cg = {
         data: data,
