@@ -4,6 +4,8 @@ from pathlib import Path
 EXPORT_FILE = "walker.build.html"
 INJECT_PATTERN = "REPLACETHIS"
 HTML_FILE = "./walker.html"
+FIRST_FILE = "namespaces.js"
+LAST_FILE = "main.js"
 
 def get_files_at_path(path):
     js_files = [file for file in Path(path).glob('*.js')]
@@ -19,12 +21,17 @@ def main():
     payload = ""
 
     for file in file_list:
-        if file.name != "main.js":
+        if file.name == FIRST_FILE:
             payload += "\n"
             payload += file.read_text()
 
     for file in file_list:
-        if file.name == "main.js":
+        if file.name != LAST_FILE and file.name != FIRST_FILE:
+            payload += "\n"
+            payload += file.read_text()
+
+    for file in file_list:
+        if file.name == LAST_FILE:
             payload += "\n"
             payload += file.read_text()
 
