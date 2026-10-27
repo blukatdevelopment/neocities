@@ -399,7 +399,9 @@ UI.COMPONENTS.StatusBar.new = function(){
 		if(sb.stats == null){
 			return;
 		}
-		if(!sb.isChangedRecently()){
+		if(!sb.isChangedRecently() && SCENE.getGameState() == GAMESTATES.play){
+			// Hide unless the inventory menu's already up
+			// or something's changing during play
 			return;
 		}
 		let health = sb.stats.getStat(STATS.Resources.health);
