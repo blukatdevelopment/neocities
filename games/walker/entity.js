@@ -27,11 +27,11 @@ ENTITYFACTORY.Pickup = function(itemName, quantity, durability){
 ENTITYFACTORY.Load = function(data){
     let entity = null;
     
-    if(data.entityId == ENTITY.ENTITIES.ItemStack){
+    if(data.entityType == ENTITY.TYPES.ItemStack){
         entity = ENTITYFACTORY.Pickup(data.item, 1, 1);
         entity.setPosition(data.position);
     }
-    if(data.entityId == ENTITY.ENTITIES.Enemy){
+    if(data.entityType == ENTITY.TYPES.Enemy){
         entity = ACTORFACTORY.simpleEnemy();
         entity.setPosition(data.position);
     }
@@ -40,14 +40,14 @@ ENTITYFACTORY.Load = function(data){
 
 let ENTITY = {};
 
-ENTITY.ENTITIES = {};
-ENTITY.ENTITIES.ItemStack = "ItemStack";
-ENTITY.ENTITIES.Enemy = "Enemy";
+ENTITY.TYPES = {};
+ENTITY.TYPES.ItemStack = "ItemStack";
+ENTITY.TYPES.Enemy = "Enemy";
 
 ENTITY.Data = {};
-ENTITY.Data.new = function(entityId, position){
+ENTITY.Data.new = function(entityType, position){
     let data = {
-        entityId: entityId,
+        entityType: entityType,
         position: position,
         item: null
     };
@@ -55,7 +55,7 @@ ENTITY.Data.new = function(entityId, position){
 };
 
 ENTITY.Data.ItemStack = function(itemName, position){
-    let data = ENTITY.Data.new(ENTITY.ENTITIES.ItemStack, position);
+    let data = ENTITY.Data.new(ENTITY.TYPES.ItemStack, position);
     data.item = itemName;
     return data;
 };
