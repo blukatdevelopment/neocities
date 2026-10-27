@@ -2,8 +2,6 @@
 # Agents
 # Code that determines actor behavior
 ##############################################################################*/
-var AGENT = {};
-
 AGENT.PLAYER_ONE = {};
 AGENT.PLAYER_ONE.new = function(actor){
 	var pone = {

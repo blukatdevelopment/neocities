@@ -2,7 +2,6 @@
 # Non-actor entities
 ##############################################################################*/
 
-let ENTITYFACTORY = {};
 // Static object with collision box
 ENTITYFACTORY.Scenery = function(_sprite, position){
     let sc = ENTITY.Scenery.new();
@@ -40,8 +39,6 @@ ENTITYFACTORY.Load = function(data){
     }
     return entity;
 };
-
-let ENTITY = {};
 
 ENTITY.TYPES = {};
 ENTITY.TYPES.Scenery = "Scenery";

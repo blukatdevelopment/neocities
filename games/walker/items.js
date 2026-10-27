@@ -2,8 +2,6 @@
 # Items
 # Code that deals with item config and behavior
 ##############################################################################*/
-
-let ITEMS = {};
 ITEMS.create = function(name, quantity, durability){
     let item = ITEMS.getByName(name);
     if(item == null){

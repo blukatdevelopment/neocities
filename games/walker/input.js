@@ -3,7 +3,6 @@
 # TODO: Add another layer of abstraction to hide actual keys behind actions
 # in order to allow dynamic keybinding through an input menu.
 ##############################################################################*/
-var INPUT = {};
 INPUT._mousePos = null;
 INPUT._mouseWheelInput = 0;
 INPUT._mouseClick = [false, false, false];

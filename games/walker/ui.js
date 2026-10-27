@@ -1,10 +1,7 @@
 /*##############################################################################
 # Components and functionality for user interface
 ##############################################################################*/
-
-let UI = {};
 UI.COMPONENTS = {};
-
 UI.COMPONENTS.Manager = {};
 
 // Provides inter-component interaction.

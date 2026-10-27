@@ -3,8 +3,6 @@
 # One script to rule them all.
 # God object/singleton. Runs before all other scripts, runs main game loop
 ##############################################################################*/
-var MAIN = {};
-
 MAIN.START_TIME = Date.now();
 MAIN.LAG = 0;
 MAIN.ANIM_START_TIME = Date.now();

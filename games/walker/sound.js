@@ -2,7 +2,6 @@
 # SFX
 # TODO: Add an init which loads all sounds at startup
 ##############################################################################*/
-var SOUND = {}
 
 SOUND.EFFECTS = {
   PEW: "https://github.com/blukatdevelopment/neocities/raw/main/assets/pew.mp3",

@@ -2,8 +2,6 @@
 # Level Renderer
 ##############################################################################*/
 
-let LEVEL = {};
-
 LEVEL.Renderer = {};
 LEVEL.Renderer.Layers = {};
 LEVEL.Renderer.Layers.Background = "background";

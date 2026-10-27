@@ -1,8 +1,6 @@
 /*##############################################################################
 # Settings, configuration, and constants
 ##############################################################################*/
-var SETTINGS = {};
-
 SETTINGS.logLevel = 0;
 SETTINGS.devMode = true;
 SETTINGS.devUrl = "file:///home/blukat/localdev/neocities/games/walker/";

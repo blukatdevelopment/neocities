@@ -1,8 +1,6 @@
 /*##############################################################################
 # Actor-related classes
 ##############################################################################*/
-var ACTORFACTORY = {};
-
 ACTORFACTORY.playerOne = function(){
   let config = UTILITY.getActorConfig("wrath");
   let pone = ACTOR.new();
@@ -77,7 +75,6 @@ ACTORFACTORY.slime = function(){
 };
 
 // inherits base entity
-var ACTOR = {};
 ACTOR.new = function(){
   let atr = ENTITY.baseEntity.new();
   atr.stateMachine = null;
@@ -296,9 +293,6 @@ ACTOR.new = function(){
   }
   return atr;
 }
-
-
-var Actor = {};
 
 ACTOR.AnimationStateMachine = {};
 ACTOR.AnimationStateMachine.new = function(name, animations, animator){
