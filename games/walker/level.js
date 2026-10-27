@@ -174,7 +174,7 @@ LEVEL.Generate.Grass = function(){
         ITEMS.Names.Rock
     ];
     for(let i = 0; i < 200; i++){
-        data.entityData.push(ENTITY.Data.ItemStack(UTILITY.randChoice(spawns), LEVEL.RandomPosition()));
+        data.entityData.push(ENTITY.Data.ItemStack(UTILITY.choice(spawns), LEVEL.RandomPosition()));
     }
 
     for(let i = 0; i < 100; i++){
