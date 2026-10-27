@@ -165,20 +165,13 @@ LEVEL.Generate.UniformTileMap = function(sprite, size){
 LEVEL.Generate.Grass = function(){
     let data = LEVEL.Data.new();
     data.tileMap = LEVEL.Generate.UniformTileMap(SPRITES.static.village.village, SETTINGS.DefaultLevelSize);
-
-    let center = (SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize)/2;
-    data.playerPosition = VECTOR2.new(center, center);
-    let ent = null;
-    for(let i = 0; i < 200; i++){
-        ent = ENTITYFACTORY.ItemStack(ITEMS.Names.Stick, 1, 1);
-        ent.position = LEVEL.RandomPosition();
-        data.entityData.push(ent.getData());
-    }
-
-    for(let i = 0; i < 100; i++){
-        ent = ACTORFACTORY.simpleEnemy();
-        ent.position = LEVEL.RandomPosition();
-        data.entityData.push(ent.getData());
+    let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(SETTINGS.DefaultLevelTileSize, SETTINGS.DefaultLevelTileSize));
+    for(let y = 0; y < SETTINGS.DefaultLevelSize; y++){
+        for(let x = 0; x < SETTINGS.DefaultLevelSize; x++){
+            rect.position.x = x * SETTINGS.DefaultLevelTileSize;
+            rect.position.y = y * SETTINGS.DefaultLevelTileSize;
+            LEVEL.Generate.Cell.GrassClearing(data, rect);
+        }
     }
     return data;
 };
@@ -206,11 +199,15 @@ LEVEL.Generate.Cell.new = function(data, rect){
     cg.attemptPlacement = function(rect){
         
     };
+    cg.placeEntity = function(entity){
+        entity.position = cg.getRandomPosition();
+        cg.addEntity(entity);
+    };
     cg.canPlace = function(rect){
 
     };
     cg.addEntity = function(entity){
-        cg.data.entityData.push(entity);
+        cg.data.entityData.push(entity.getData());
         cg.entities.push(entity);
     };
     cg.generateEntities = function(){};
@@ -218,28 +215,22 @@ LEVEL.Generate.Cell.new = function(data, rect){
 };
 
 
-LEVEL.Generate.Cell.GrassClearing = function(cg){
-    let rect = cg.rect;
-    let data = cg.data;
-    cg.generateEntities = function(){
-        let items = [
-            ITEMS.Names.Apple,
-            ITEMS.Names.Seeds,
-            ITEMS.Names.Talon,
-            ITEMS.Names.Stick,
-            ITEMS.Names.Rock,
-            ITEMS.Names.RedBerry,
-            ITEMS.Names.GreenBerry,
-            ITEMS.Names.BlueBerry
-        ];
-        cg.addEntity(ENTITY.Data.new(
-                    ENTITY.ENTITIES.Enemy,
-                    cg.getRandomPosition()));
-        for(let i = 0; i< 10; i++){
-            cg.addEntity(ENTITY.Data.ItemStack(
-                UTILITY.choice(items),
-                cg.getRandomPosition()));
-        }
-    };
-    return cg;
+LEVEL.Generate.Cell.GrassClearing = function(data, rect){
+    let cg = LEVEL.Generate.Cell.new(data, rect);
+    let items = [
+        ITEMS.Names.Apple,
+        ITEMS.Names.Seeds,
+        ITEMS.Names.Talon,
+        ITEMS.Names.Stick,
+        ITEMS.Names.Rock,
+        ITEMS.Names.RedBerry,
+        ITEMS.Names.GreenBerry,
+        ITEMS.Names.BlueBerry
+    ];
+    let slime = ACTORFACTORY.simpleEnemy();
+    cg.placeEntity(slime);
+    for(let i = 0; i< 10; i++){
+        let item = ENTITYFACTORY.ItemStack(UTILITY.choice(items), 1, 1);
+        cg.placeEntity(item);
+    }
 };
