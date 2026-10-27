@@ -189,22 +189,33 @@ LEVEL.Generate.Cell.new = function(data, rect){
     cg.getRandomPosition = function(){
         let minX = cg.rect.position.x;
         let minY = cg.rect.position.y;
-        let maxX = minX + SETTINGS.DefaultLevelTileSize;
-        let maxY = minY + SETTINGS.DefaultLevelTileSize;
+        let maxX = minX + cg.rect.size.x;
+        let maxY = minY + cg.rect.size.y;
         return VECTOR2.new(
             UTILITY.randRange(minX, maxX),
             UTILITY.randRange(minY, maxY)
         );
     };
-    cg.attemptPlacement = function(rect){
-        
-    };
-    cg.placeEntity = function(entity){
-        entity.position = cg.getRandomPosition();
+    cg.placeEntityRandomly = function(entity){
+        let iterations = 0;
+
+        while(iterations < 5000){
+            iterations++;
+            entity.position = cg.getRandomPosition();
+            if(cg.canPlace(entity)){
+                iterations = 5000;
+            }
+        }
+
         cg.addEntity(entity);
     };
-    cg.canPlace = function(rect){
-
+    cg.canPlace = function(_entity){
+        for(let entity of cg.entities){
+            if(_entity.collider.overlaps(entity.collider)){
+                return false;
+            }
+        }
+        return true;
     };
     cg.addEntity = function(entity){
         cg.data.entityData.push(entity.getData());
@@ -228,9 +239,9 @@ LEVEL.Generate.Cell.GrassClearing = function(data, rect){
         ITEMS.Names.BlueBerry
     ];
     let slime = ACTORFACTORY.simpleEnemy();
-    cg.placeEntity(slime);
+    cg.placeEntityRandomly(slime);
     for(let i = 0; i< 10; i++){
         let item = ENTITYFACTORY.ItemStack(UTILITY.choice(items), 1, 1);
-        cg.placeEntity(item);
+        cg.placeEntityRandomly(item);
     }
 };
