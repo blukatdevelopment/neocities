@@ -15,10 +15,10 @@ ENTITYFACTORY.Scenery = function(_sprite, position){
 };
 
 // Is picked up by actors
-ENTITYFACTORY.Pickup = function(itemName, quantity, durability){
+ENTITYFACTORY.ItemStack = function(itemName, quantity, durability){
     let item = ITEMS.create(itemName, quantity, durability);
     if(item){
-        let pu = ENTITY.PickUp.new(item);
+        let pu = ENTITY.ItemStack.new(item);
         return pu;
     }
     UTILITY.log("ENTITYFACTORY.Pickup", "Could not create pickup", { name: itemName, quantity: quantity, durability: durability });
@@ -28,7 +28,7 @@ ENTITYFACTORY.Load = function(data){
     let entity = null;
     
     if(data.entityType == ENTITY.TYPES.ItemStack){
-        entity = ENTITYFACTORY.Pickup(data.item, 1, 1);
+        entity = ENTITYFACTORY.ItemStack(data.item, 1, 1);
         entity.setPosition(data.position);
     }
     if(data.entityType == ENTITY.TYPES.Enemy){
@@ -142,8 +142,8 @@ ENTITY.Scenery.new = function(){
 };
 
 // An item intended to be picked up by the player
-ENTITY.PickUp = {};
-ENTITY.PickUp.new = function(item){
+ENTITY.ItemStack = {};
+ENTITY.ItemStack.new = function(item){
     let pue = ENTITY.baseEntity.new();
     pue.type = ENTITY.TYPES.ItemStack;
     pue.setCollider(PHYSICS.BoxCollider.new());

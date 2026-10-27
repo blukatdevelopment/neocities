@@ -168,12 +168,12 @@ LEVEL.Generate.Grass = function(){
 
     let center = (SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize)/2;
     data.playerPosition = VECTOR2.new(center, center);
-    
     let spawns = [
         ITEMS.Names.Stick,
         ITEMS.Names.Rock
     ];
     for(let i = 0; i < 200; i++){
+        let ent = 
         data.entityData.push(ENTITY.Data.ItemStack(UTILITY.choice(spawns), LEVEL.RandomPosition()));
     }
 
@@ -184,12 +184,62 @@ LEVEL.Generate.Grass = function(){
     return data;
 };
 
-LEVEL.Generate.Grass.Cells = {};
-LEVEL.Generate.Grass.Cells.Clearing = function(data, rect){
+LEVEL.Generate.Cell.new = function(data, rect){
+    let cg = {
+        data: data,
+        rect: rect,
+        entities: []
+    };
+    cg.generate = function(){
+        cg.generateEntities();
+    };
+    cg.getRandomPosition = function(){
+        let minX = cg.rect.position.x;
+        let minY = cg.rect.position.y;
+        let maxX = minX + SETTINGS.DefaultLevelTileSize;
+        let maxY = minY + SETTINGS.DefaultLevelTileSize;
+        return VECTOR2.new(
+            UTILITY.randRange(minX, maxX),
+            UTILITY.randRange(minY, maxY)
+        );
+    };
+    cg.attemptPlacement = function(rect){
+        
+    };
+    cg.canPlace = function(rect){
+
+    };
+    cg.addEntity = function(entity){
+        cg.data.entityData.push(entity);
+        cg.entities.push(entity);
+    };
+    cg.generateEntities = function(){};
+    return cg;
 };
-LEVEL.Generate.Grass.Cells.LightForest = function(data, rect){
-};
-LEVEL.Generate.Grass.Cells.ThickForest = function(data, rect){
-};
-LEVEL.Generate.Grass.Cells.Shrubs = function(data, rect){
+
+
+LEVEL.Generate.Cell.GrassClearing = function(cg){
+    let rect = cg.rect;
+    let data = cg.data;
+    cg.generateEntities = function(){
+        let items = [
+            ITEMS.Names.Apple,
+            ITEMS.Names.Seeds,
+            ITEMS.Names.Talon,
+            ITEMS.Names.Stick,
+            ITEMS.Names.Rock,
+            ITEMS.Names.RedBerry,
+            ITEMS.Names.GreenBerry,
+            ITEMS.Names.BlueBerry
+        ];
+        cg.addEntity(ENTITY.Data.new(
+                    ENTITY.ENTITIES.Enemy,
+                    cg.getRandomPosition()));
+        for(let i = 0; i< 10; i++){
+            cg.addEntity(ENTITY.Data.ItemStack(
+                UTILITY.choice(items),
+                cg.getRandomPosition()));
+        }
+    };
+    return cg;
 };
