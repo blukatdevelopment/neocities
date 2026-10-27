@@ -41,8 +41,10 @@ ENTITYFACTORY.Load = function(data){
 let ENTITY = {};
 
 ENTITY.TYPES = {};
+ENTITY.TYPES.Scenery = "Scenery";
 ENTITY.TYPES.ItemStack = "ItemStack";
 ENTITY.TYPES.Enemy = "Enemy";
+ENTITY.TYPES.Player = "Player";
 
 ENTITY.Data = {};
 ENTITY.Data.new = function(entityType, position){
@@ -54,9 +56,13 @@ ENTITY.Data.new = function(entityType, position){
     return data;
 };
 
-ENTITY.Data.ItemStack = function(itemName, position){
+ENTITY.Data.ItemStack = function(itemName, position, quantity){
     let data = ENTITY.Data.new(ENTITY.TYPES.ItemStack, position);
     data.item = itemName;
+    data.quantity = 1;
+    if(quantity){
+        data.quantity = quantity;
+    }
     return data;
 };
 
@@ -64,6 +70,7 @@ ENTITY.Data.ItemStack = function(itemName, position){
 ENTITY.baseEntity = {};
 ENTITY.baseEntity.new = function(){
     let be = {
+        entityType: ENTITY.TYPES.Scenery,
         name: "",
         entityId: UTILITY.getNextEntityId(),
         position: VECTOR2.new(0, 0),
@@ -121,7 +128,9 @@ ENTITY.baseEntity.new = function(){
         SCENE.destroyEntity(be);
     };
     be.pickUp = function(item){ return item.quantity; };
-
+    be.getData = function(){
+        return ENTITY.Data.new(be.type, be.position);
+    };
     return be;
 };
 
@@ -136,6 +145,7 @@ ENTITY.Scenery.new = function(){
 ENTITY.PickUp = {};
 ENTITY.PickUp.new = function(item){
     let pue = ENTITY.baseEntity.new();
+    pue.type = ENTITY.TYPES.ItemStack;
     pue.setCollider(PHYSICS.BoxCollider.new());
     pue.collider.rigid = false;
     pue.item = item;
@@ -151,7 +161,6 @@ ENTITY.PickUp.new = function(item){
         if(interaction.initiator){
             let prevQuant = pue.item.quantity;
             pue.item.quantity = interaction.initiator.pickUp(pue.item);
-            console.log("Item went from " + prevQuant  + " to " + pue.item.quantity);
             if(pue.item.quantity == 0){
                 SCENE.destroyEntity(pue);
             }
