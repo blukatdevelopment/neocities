@@ -2,17 +2,16 @@
 # Scene management
 ##############################################################################*/
 
-// Configured for the current project
-SCENE.SCENES = {};
-SCENE.SCENES.START = "start";
-SCENE.SCENES.GAME = "game";
-SCENE.SCENES.WORLDMAP = "worldmap";
+// Place an instance of each scene here
+SCENE._instances = {};
 
-SCENE.DEFAULT_SCENE = SCENE.SCENES.START;
-
-SCENE._activeScene = SCENE.DEFAULT_SCENE;
 SCENE._cursorSprite = null;
 SCENE._levelRect = null;
+SCENE._activeScene = null;
+
+SCENE.getDefaultScene = function(){
+  return SCENE.SCENES.Start();
+};
 
 SCENE.update = function(){
   var activeScene = SCENE.getActiveScene();
@@ -20,26 +19,33 @@ SCENE.update = function(){
     activeScene.update();
     SCENE.drawCursor();  
   }
+  else{
+    console.log("Scene is null")
+  }
 };
 
-// Returns iScene
 // TODO: make scenes configurable
 SCENE.getActiveScene = function(){
-  switch(SCENE._activeScene){
-    case SCENE.SCENES.GAME:
-      return GAME;
-    case SCENE.SCENES.START:
-      return START;
-    case SCENE.SCENES.WORLDMAP:
-      return WORLDMAP;
+  if(SCENE._activeScene == null){
+    SCENE.setActiveScene(SCENE.getDefaultScene());
   }
-      return null;
+  if(SCENE._instances[SCENE._activeScene]){
+    return SCENE._instances[SCENE._activeScene];
+  }
+  return null;
 };
 
 // accepts iScene
 SCENE.setActiveScene = function(scene){
-  UTILITY.log("SCENE.setActiveScene", "Setting scene " + scene, {});
-  SCENE._activeScene = scene;
+  UTILITY.log("SCENE.setActiveScene", "Setting scene " + scene.name, {});
+  SCENE._activeScene = scene.name;
+  if(SCENE._instances[scene.name]){
+    
+  }
+  else{
+    SCENE._instances[scene.name] = scene;
+  }
+  
 };
 
 SCENE.debugMessage = function(message){

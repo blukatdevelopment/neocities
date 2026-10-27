@@ -1,36 +1,27 @@
 /*##############################################################################
-# View a WORLDMAP WORLDMAP
+# View a world map
 ##############################################################################*/
+SCENE.SCENES.WorldMap = function(){
+    let wm = SCENE.SCENES.BaseScene();
+    wm.name = "worldmap";
+    wm.worldGrid = SCENE.SCENES.BaseScene
+    wm.setup = function(){
+        wm.isSetup = true;
+        GRAPHICS.setDisplayMode(DISPLAY_MODES.static);
+        wm.worldGrid = WORLD.Generate.DetailedWorld();
+        wm.map = UI.COMPONENTS.Map.new(wm.worldGrid);
+        console.log("wm Scene Loaded");
+    };
 
-let WORLDMAP = {};
-WORLDMAP.worldGrid = null;
+    wm.update = function(){
+        if(!wm.isSetup){
+            wm.setup();
+        }
+        if(INPUT.keyPress(INPUT.KEYS.K_M)){
+            SCENE.setActiveScene(SCENE.SCENES.Game());
+        }
+        wm.map.draw();
+    };
 
-WORLDMAP.isSetup = false;
-
-WORLDMAP.setup = function(){
-    WORLDMAP.isSetup = true;
-    GRAPHICS.setDisplayMode(DISPLAY_MODES.static);
-    WORLDMAP.worldGrid = WORLD.Generate.DetailedWorld();
-    WORLDMAP.map = UI.COMPONENTS.Map.new(WORLDMAP.worldGrid);
-    console.log("WORLDMAP Scene Loaded");
+    return wm;
 };
-
-WORLDMAP.update = function(){
-    if(!WORLDMAP.isSetup){
-        WORLDMAP.setup();
-    }
-    if(INPUT.keyPress(INPUT.KEYS.K_M)){
-    	SCENE.setActiveScene(SCENE.SCENES.GAME);
-    }
-    WORLDMAP.map.draw();
-};
-
-
-WORLDMAP.debugMessage = function(message){
-
-};
-
-WORLDMAP.destroyEntity = function(entity){};
-
-WORLDMAP.setGameState = function(gameState){};
-WORLDMAP.getGameState = function(){ return null; };

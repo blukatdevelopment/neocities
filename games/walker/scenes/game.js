@@ -1,35 +1,30 @@
 /*##############################################################################
 # Scene: gameplay
 ##############################################################################*/
+SCENE.SCENES.Game = function(){
+  let gm = SCENE.SCENES.BaseScene();
+  gm.name = "Game";
+  gm.isSetup = false;
+  gm.gameState = GAMESTATES.play;
+  gm.levelRenderer = null;
 
-var GAME = {};
-GAME.isSetup = false;
-GAME.gameState = GAMESTATES.play;
-GAME.levelRenderer = null;
+  gm.setup = function(){
+    gm.levelRenderer = LEVEL.Renderer.new();
+    gm.levelRenderer.init();
+    gm.levelRenderer.loadData(LEVEL.Generate.Grass());
+    gm.isSetup = true;
+  };
 
-GAME.setup = function(){
-  GAME.levelRenderer = LEVEL.Renderer.new();
-  GAME.levelRenderer.init();
-  GAME.levelRenderer.loadData(LEVEL.Generate.Grass());
-  GAME.isSetup = true;
-};
+  gm.update = function(){
+    if(!gm.isSetup){
+      gm.setup();
+    }
+    GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
+    gm.levelRenderer.update();
+  };
 
-GAME.update = function(){
-  if(!GAME.isSetup){
-    GAME.setup();
-  }
-  GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
-  GAME.levelRenderer.update();
-};
-
-GAME.setGameState = function(gameState){
-  GAME.gameState = gameState;
-};
-
-GAME.getGameState = function(){
-  return GAME.gameState;
-}
-
-GAME.destroyEntity = function(entity){
-  GAME.levelRenderer.destroyEntity(entity);
+  gm.destroyEntity = function(entity){
+    gm.levelRenderer.destroyEntity(entity);
+  };
+  return gm;
 };

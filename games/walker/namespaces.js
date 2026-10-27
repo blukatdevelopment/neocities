@@ -2,7 +2,9 @@
 # Declare global objects which will work as namespaces in this file
 # so that dependent scrips have them
 ##############################################################################*/
-let SCENE = {};
+let SCENE = {
+    SCENES: {}
+};
 let SOUND = {};
 let SPRITES = {};
 let STATS = {};
