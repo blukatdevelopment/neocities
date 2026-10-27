@@ -6,7 +6,7 @@ var ACTORFACTORY = {};
 ACTORFACTORY.playerOne = function(){
   let config = UTILITY.getActorConfig("wrath");
   let pone = ACTOR.new();
-  pone.type = ENTITY.TYPES.Player;
+  pone.entityYype = ENTITY.TYPES.Player;
   let anm = SPRITES.Animator.new();
   anm.animation = SPRITES.animations[config.name][ACTOR_ANIMATIONS.idleLeft]
   let asm = ACTOR.AnimationStateMachine.new(name, SPRITES.animations[config.name], anm);
@@ -32,10 +32,12 @@ ACTORFACTORY.playerOne = function(){
   return pone;
 };
 
-ACTORFACTORY.simpleEnemy = function(){
+
+
+ACTORFACTORY.slime = function(){
   let config = UTILITY.getActorConfig("slime");
   let se = ACTOR.new();
-  se.type = ENTITY.TYPES.Enemy;
+  se.entityType = ENTITY.TYPES.Enemy;
   let anm = SPRITES.Animator.new();
   anm.animation = SPRITES.animations[config.name][ACTOR_ANIMATIONS.idleLeft]
   let asm = ACTOR.AnimationStateMachine.new(name, SPRITES.animations[config.name], anm);

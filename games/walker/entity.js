@@ -32,8 +32,11 @@ ENTITYFACTORY.Load = function(data){
         entity.setPosition(data.position);
     }
     if(data.entityType == ENTITY.TYPES.Enemy){
-        entity = ACTORFACTORY.simpleEnemy();
+        entity = ACTORFACTORY.slime();
         entity.setPosition(data.position);
+    }
+    if(data.entityType == ENTITY.TYPES.Scenery){
+        entity = ENTITYFACTORY.Scenery(data.sprite, data.position);
     }
     return entity;
 };
@@ -51,7 +54,8 @@ ENTITY.Data.new = function(entityType, position){
     let data = {
         entityType: entityType,
         position: position,
-        item: null
+        item: null,
+        sprite: null
     };
     return data;
 };
@@ -129,7 +133,9 @@ ENTITY.baseEntity.new = function(){
     };
     be.pickUp = function(item){ return item.quantity; };
     be.getData = function(){
-        return ENTITY.Data.new(be.type, be.position);
+        let data = ENTITY.Data.new(be.entityType, be.position);
+        data.sprite = be.renderer.sprite;
+        return data;
     };
     return be;
 };
@@ -145,7 +151,7 @@ ENTITY.Scenery.new = function(){
 ENTITY.ItemStack = {};
 ENTITY.ItemStack.new = function(item){
     let pue = ENTITY.baseEntity.new();
-    pue.type = ENTITY.TYPES.ItemStack;
+    pue.entityType = ENTITY.TYPES.ItemStack;
     pue.setCollider(PHYSICS.BoxCollider.new());
     pue.collider.rigid = false;
     pue.item = item;
@@ -168,7 +174,7 @@ ENTITY.ItemStack.new = function(item){
     };
     pue.onAttacked = function(attack){};
     pue.getData = function(){
-        let data = ENTITY.Data.new(pue.type, pue.position);
+        let data = ENTITY.Data.new(pue.entityType, pue.position);
         data.item = pue.item.name;
         return data;
     };
