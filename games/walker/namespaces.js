@@ -19,6 +19,7 @@ let UI = {};
 UI.COMPONENTS = {};
 let INPUT = {};
 let ITEMS = {};
+ITEMS.Names = {};
 let LEVEL = {};
 var MAIN = {};
 var SETTINGS = {};
