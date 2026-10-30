@@ -22,4 +22,5 @@ let ITEMS = {};
 let LEVEL = {};
 var MAIN = {};
 var SETTINGS = {};
-
+var SHAPES = {};
+let PHYSICS = {};
