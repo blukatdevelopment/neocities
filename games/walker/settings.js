@@ -4,7 +4,7 @@
 SETTINGS.logLevel = 0;
 SETTINGS.devMode = true;
 SETTINGS.devUrl = "file:///home/blukat/localdev/neocities/games/walker/";
-SETTINGS.prodUrl = "https://raw.githubusercontent.com/blukatdevelopment/neocities/main/games/walker/";
+SETTINGS.prodUrl = "https://blukat.neocities.org/games/walker/";
 SETTINGS.assetsDirectory = "assets/";
 SETTINGS.defaultPlayerActor = "wrath";
 
