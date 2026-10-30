@@ -15,6 +15,7 @@ let AGENT = {};
 let ENTITYFACTORY = {};
 let ENTITY = {};
 ENTITY.Data = {};
+ENTITY.ENTITIES = {};
 let UI = {};
 UI.COMPONENTS = {};
 let INPUT = {};

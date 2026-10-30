@@ -11,7 +11,9 @@ SCENE.SCENES.Game = function(){
   gm.setup = function(){
     gm.levelRenderer = LEVEL.Renderer.new();
     gm.levelRenderer.init();
-    gm.levelRenderer.loadData(LEVEL.Generate.Grass());
+    // TODO: Change this when done debugging
+    SETTINGS.DefaultLevelSize = 1;
+    gm.levelRenderer.loadData(LEVEL.Generate.DebugLevel());
     gm.isSetup = true;
   };
 

@@ -25,3 +25,11 @@ ENTITYFACTORY.Load = function(data){
     }
     return entity;
 };
+
+ENTITYFACTORY.Create = function(entityName){
+    if(ENTITY.Entities[entityName] && ENTITYFACTORY[entityName]){
+        let constructor = ENTITYFACTORY[entityName];
+        return constructor();
+    }
+    return null;
+};

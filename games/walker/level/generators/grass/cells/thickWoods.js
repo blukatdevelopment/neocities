@@ -7,9 +7,9 @@ LEVEL.Generate.Cell.GrassThickWoods = function(data, rect){
     ];
     LEVEL.Generate.Cell.addRandomItems(cg, items, 3);
     
-    let scenerySprites = [
-        SPRITES.static.scenery64.tree,
-        SPRITES.static.scenery64.bush,
+    let scenery = [
+        ENTITYFACTORY.BirchTree,
+        ENTITYFACTORY.Bush,
     ];
-    LEVEL.Generate.Cell.addRandomScenery(cg, scenerySprites, 20);
+    LEVEL.Generate.Cell.addRandomScenery(cg, scenery, 20);
 };

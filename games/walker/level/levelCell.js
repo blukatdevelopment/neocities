@@ -52,9 +52,10 @@ LEVEL.Generate.Cell.addScenery = function(cg, sprite){
     let scenery = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
     cg.placeEntityRandomly(scenery);
 };
-LEVEL.Generate.Cell.addRandomScenery = function(cg, scenerySprites, numberToAdd){
+LEVEL.Generate.Cell.addRandomScenery = function(cg, sceneryConstructors, numberToAdd){
     for(let i = 0; i < numberToAdd; i++){
-        let scenery = ENTITYFACTORY.Scenery(UTILITY.choice(scenerySprites), VECTOR2.new(0,0));
+        let constructor = UTILITY.choice(sceneryConstructors);
+        let scenery = constructor();
         cg.placeEntityRandomly(scenery);
     }
 };

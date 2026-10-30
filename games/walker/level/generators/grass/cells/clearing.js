@@ -4,9 +4,9 @@ LEVEL.Generate.Cell.GrassClearing = function(data, rect){
         ITEMS.Names.Rock
     ];
     LEVEL.Generate.Cell.addRandomItems(cg, items, UTILITY.randRange(1, 10));
-    let scenerySprites = [
-        SPRITES.static.scenery64.bush,
-        SPRITES.static.scenery64.berryBush
+    let scenery = [
+        ENTITYFACTORY.Bush,
+        ENTITYFACTORY.BerryBush
     ];
-    LEVEL.Generate.Cell.addRandomScenery(cg, scenerySprites, UTILITY.randRange(3, 5));
+    LEVEL.Generate.Cell.addRandomScenery(cg, scenery, UTILITY.randRange(3, 5));
 };

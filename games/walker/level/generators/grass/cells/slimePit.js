@@ -2,7 +2,8 @@ LEVEL.Generate.Cell.GrassSlimePit = function(data, rect){
     let cg = LEVEL.Generate.Cell.new(data, rect);
     
     let center = rect.center();
-    let slimePit = ENTITYFACTORY.Scenery(SPRITES.static.scenery64.slimepit, center);
+    let slimePit = ENTITYFACTORY.SlimePit();
+    slimePit.position = center;
     cg.addEntity(slimePit);
 
     let slimePositions = [
@@ -28,9 +29,10 @@ LEVEL.Generate.Cell.GrassSlimePit = function(data, rect){
     ];
     LEVEL.Generate.Cell.addRandomItems(cg, items, 10);
 
-    let scenerySprites = [
-        SPRITES.static.scenery64.tree,
-        SPRITES.static.scenery64.bush
+    let scenery = [
+        ENTITYFACTORY.BirchTree,
+        ENTITYFACTORY.Bush
     ];
-    LEVEL.Generate.Cell.addRandomScenery(cg, scenerySprites, UTILITY.randRange(1, 10));
+
+    LEVEL.Generate.Cell.addRandomScenery(cg, scenery, UTILITY.randRange(1, 10));
 };
