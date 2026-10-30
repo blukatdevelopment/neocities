@@ -21,6 +21,7 @@ let INPUT = {};
 let ITEMS = {};
 ITEMS.Names = {};
 let LEVEL = {};
+LEVEL.Generate = {};
 var MAIN = {};
 var SETTINGS = {};
 SETTINGS.sheets = {};
