@@ -11,6 +11,12 @@ This game uses the abstraction of loadable "scenes", collections of logic, UI, a
 ### Update / Game loop
 A rather familiar pattern for game dev. `main.js` runs the gameloop, which calles `update` on the active scene, which updates all the entities in that scene. 
 
+### Entities
+Any object that exists in the game world is represented by the entitiy. `/entities/entities/` contains individual entity definitions.
+
+### Actors
+A subclass of entity which acts on its own. Helper classes can be found in `/actors/`, and individual actor definitions can be found in `/actors/actors/`.
+
 ### Settings file
 Global constants and application settings are consolidated
 into `settings.js`. 

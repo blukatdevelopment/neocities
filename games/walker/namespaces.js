@@ -14,10 +14,12 @@ let ACTOR = {};
 let AGENT = {};
 let ENTITYFACTORY = {};
 let ENTITY = {};
+ENTITY.Data = {};
 let UI = {};
+UI.COMPONENTS = {};
 let INPUT = {};
 let ITEMS = {};
 let LEVEL = {};
 var MAIN = {};
 var SETTINGS = {};
-ENTITY.Data = {};
+
