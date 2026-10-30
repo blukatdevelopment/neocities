@@ -19,6 +19,7 @@ let UI = {};
 UI.COMPONENTS = {};
 let INPUT = {};
 let ITEMS = {};
+ITEMS.Config = {};
 ITEMS.Names = {};
 let LEVEL = {};
 LEVEL.Generate = {};
