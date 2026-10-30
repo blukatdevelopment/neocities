@@ -20,6 +20,7 @@ def main():
     file_list = list(p.glob('**/*.js'))
     payload = ""
 
+    #print("Loaded files: " + file_list)
     for file in file_list:
         if file.name == FIRST_FILE:
             payload += "\n"
@@ -37,6 +38,10 @@ def main():
 
     html = get_html()
     html = html.replace(INJECT_PATTERN, payload, 1)
-
+    #print("Writing to " + EXPORT_FILE)
     destination = Path(EXPORT_FILE)
     destination.write_text(html)
+
+
+if __name__ == "__main__":
+    main()

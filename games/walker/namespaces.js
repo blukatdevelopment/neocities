@@ -20,3 +20,4 @@ let ITEMS = {};
 let LEVEL = {};
 var MAIN = {};
 var SETTINGS = {};
+ENTITY.Data = {};
