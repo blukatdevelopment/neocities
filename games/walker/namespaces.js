@@ -25,3 +25,4 @@ var MAIN = {};
 var SETTINGS = {};
 var SHAPES = {};
 let PHYSICS = {};
+var GRAPHICS = {};
