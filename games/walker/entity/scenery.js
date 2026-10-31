@@ -19,8 +19,5 @@ ENTITYFACTORY.Scenery = function(_sprite, position, rect){
     sc.renderer.setSprite(_sprite);
     sc.name = "scenery" + sc.getEntityId();
     sc.setPosition(position);
-    sc.getLabel = function(){
-        return sc.collider.toString();
-    };
     return sc;
 };

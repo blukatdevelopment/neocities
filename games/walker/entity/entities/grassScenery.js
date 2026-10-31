@@ -8,8 +8,8 @@ ENTITYFACTORY.Bush = function(){
     let sprite = SPRITES.static.scenery64.bush;
     let ent = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
     ent.collider.rect = SHAPES.RECT.new(
-        VECTOR2.new(0,56),
-        VECTOR2.new(8,64)
+        VECTOR2.new(0, 56),
+        VECTOR2.new(64, 8)
     );
     return ent;
 };
@@ -19,8 +19,8 @@ ENTITYFACTORY.BerryBush = function(){
     let sprite = SPRITES.static.scenery64.berryBush;
     let ent = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
     ent.collider.rect = SHAPES.RECT.new(
-        VECTOR2.new(0,56),
-        VECTOR2.new(8,64)
+        VECTOR2.new(0, 56),
+        VECTOR2.new(64, 8)
     );
     return ent;
 };

@@ -67,7 +67,6 @@ SHAPES.RECT.new = function(position, size){
             largest = otherRect;
             smallest = rect;
         }
-
         let points = smallest.getPoints();
         for(let point of points){
             if(largest.contains(point)){                
