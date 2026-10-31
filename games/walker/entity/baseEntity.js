@@ -28,8 +28,8 @@ ENTITY.baseEntity.new = function(){
         if(be.renderer){
             be.renderer.draw();
         }
-        if(be.label != ""){
-            GRAPHICS.drawTextRelative(be.label, be.position.x, be.position.y);
+        if(be.getLabel() != ""){
+            GRAPHICS.drawTextRelative(be.getLabel(), be.position.x, be.position.y);
         }
     };
     be.getPosition = function(){ return be.position; };
@@ -66,7 +66,9 @@ ENTITY.baseEntity.new = function(){
     be.getData = function(){
         let data = ENTITY.Data.new(be.entityType, be.position);
         data.sprite = be.renderer.sprite;
+        data.rect = be.collider.rect;
         return data;
     };
+    be.getLabel = function(){ return ""; };
     return be;
 };

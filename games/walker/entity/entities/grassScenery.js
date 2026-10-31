@@ -9,8 +9,7 @@ ENTITYFACTORY.Bush = function(){
     let ent = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
     ent.collider.rect = SHAPES.RECT.new(
         VECTOR2.new(0,56),
-        VECTOR2.new(0,0)
-        //VECTOR2.new(8,64)
+        VECTOR2.new(8,64)
     );
     return ent;
 };

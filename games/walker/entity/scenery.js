@@ -10,12 +10,17 @@ ENTITY.Scenery.new = function(){
 };
 
 // Static object with collision box
-ENTITYFACTORY.Scenery = function(_sprite, position){
+ENTITYFACTORY.Scenery = function(_sprite, position, rect){
     let sc = ENTITY.Scenery.new();
+    if(rect){
+        console.log("Setting rect " + rect.toString());
+        sc.collider.rect = rect;
+    };
     sc.renderer.setSprite(_sprite);
-    let size = VECTOR2.new(_sprite.sheet.cellResolutionX, _sprite.sheet.cellResolutionX);
-    sc.collider.resize(size);
     sc.name = "scenery" + sc.getEntityId();
     sc.setPosition(position);
+    sc.getLabel = function(){
+        return sc.collider.toString();
+    };
     return sc;
 };

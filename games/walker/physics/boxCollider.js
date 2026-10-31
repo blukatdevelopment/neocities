@@ -77,7 +77,10 @@ PHYSICS.BoxCollider.new = function(){
         return null;
     };
     bc.resize = function(updatedSize){
-        bc.rect.size = updatedSize;
+        bc.rect.size = updatedSize.clone();
+    };
+    bc.reposition = function(updatedPosition){
+        bc.rect.position = updatedPosition.clone();
     };
     bc.toString = function(){
         let parent = "null";

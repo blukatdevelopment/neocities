@@ -21,7 +21,7 @@ ENTITYFACTORY.Load = function(data){
         entity.setPosition(data.position);
     }
     if(data.entityType == ENTITY.TYPES.Scenery){
-        entity = ENTITYFACTORY.Scenery(data.sprite, data.position);
+        entity = ENTITYFACTORY.Scenery(data.sprite, data.position, data.rect);
     }
     return entity;
 };
