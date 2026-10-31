@@ -12,7 +12,7 @@ SCENE.SCENES.Game = function(){
     gm.levelRenderer = LEVEL.Renderer.new();
     gm.levelRenderer.init();
     // TODO: Change this when done debugging
-    gm.levelRenderer.loadData(LEVEL.Generate.DebugLevel());
+    gm.levelRenderer.loadData(LEVEL.Generate.Grass());
     gm.isSetup = true;
   };
 

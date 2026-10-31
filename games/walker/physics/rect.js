@@ -34,6 +34,26 @@ SHAPES.RECT.new = function(position, size){
             rect.position.y+rect.size.y
         );
     };
+    rect.rightEdge = function(){
+        return SHAPES.Line.new(rect.topRight(), rect.bottomRight());
+    };
+    rect.leftEdge = function(){
+        return SHAPES.Line.new(rect.topLeft(), rect.bottomLeft());
+    };
+    rect.topEdge = function(){
+        return SHAPES.Line.new(rect.topLeft(), rect.topRight());
+    };
+    rect.bottomEdge = function(){
+        return SHAPES.Line.new(rect.bottomLeft(), rect.bottomRight());
+    };
+    rect.getEdges = function(){
+        let edges = [];
+        edges.push(rect.rightEdge());
+        edges.push(rect.leftEdge());
+        edges.push(rect.topEdge());
+        edges.push(rect.bottomEdge());
+        return edges;
+    };
     // Returns polygonal points
     rect.getPoints = function(){
         let points = [
@@ -61,19 +81,19 @@ SHAPES.RECT.new = function(position, size){
             otherRect.contains(rect.bottomRight());
     };
     rect.overlaps = function(otherRect){
-        let largest = rect;
-        let smallest = otherRect;
-        if(otherRect.size.x * otherRect.size.y > rect.size.x * rect.size.y){
-            largest = otherRect;
-            smallest = rect;
+        let tl1 = rect.topLeft();
+        let br1 = rect.bottomRight();
+        let tl2 = otherRect.topLeft();
+        let br2 = otherRect.bottomRight();
+
+        let above = tl1.y > br2.y;
+        let below = tl2.y > br1.y;
+        let toRight = tl1.x > br2.x;
+        let toLeft = tl2.x > br1.x;
+        if(above || below || toRight || toLeft){
+            return false;
         }
-        let points = smallest.getPoints();
-        for(let point of points){
-            if(largest.contains(point)){                
-                return true;
-            }
-        }
-        return false;
+        return true;
     };
     rect.recenter = function(point){
         let halfSize = VECTOR2.new(rect.size.x/2, rect.size.y/2);
