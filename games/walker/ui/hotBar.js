@@ -63,6 +63,10 @@ UI.COMPONENTS.Hotbar.new = function(manager){
             // Highlight active slot
             rect = hb.getSlotRect(hb.activeSlot);
             GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
+            let hoveredItem = hb.getHoveredItem();
+            if(hoveredItem){
+                GRAPHICS.drawTooltip(hoveredItem.name);
+            }
         }
         else if(SCENE.getGameState() === GAMESTATES.inventory){
             // Highlight slot that's hovered over
@@ -70,6 +74,10 @@ UI.COMPONENTS.Hotbar.new = function(manager){
             if(hoveredSlot > -1){
                 rect = hb.getSlotRect(hoveredSlot);
                 GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
+                let hoveredItem = hb.getHoveredItem();
+                if(hoveredItem){
+                    GRAPHICS.drawTooltip(hoveredItem.name);
+                }
             }
         }
     };
@@ -134,6 +142,10 @@ UI.COMPONENTS.Hotbar.new = function(manager){
             }
         }
         return ret;
+    };
+    hb.getHoveredItem = function(){
+        let hoveredSlot = hb.getHoveredSlot();
+        return hb.linkedInv.getItem(hoveredSlot);
     };
     return hb;
 };

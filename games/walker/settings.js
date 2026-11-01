@@ -18,6 +18,8 @@ SETTINGS.defaultColor = "black";
 SETTINGS.DefaultLevelTileSize = 1024;
 SETTINGS.DefaultLevelSize = 9;
 
+SETTINGS.CursorSize = 8;
+
 // States that effect rendering.
 let GAMESTATES = {};
 GAMESTATES.play = "play";

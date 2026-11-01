@@ -34,6 +34,10 @@ UI.COMPONENTS.Inventory.new = function(manager){
         if(hoveredSlot > -1){
             let rect = inv.getSlotRect(hoveredSlot);
             GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
+            let hoveredItem = inv.getHoveredItem();
+            if(hoveredItem){
+                GRAPHICS.drawTooltip(hoveredItem.name);
+            }
         }
     };
     inv.drawSlot = function(slot){
@@ -85,6 +89,10 @@ UI.COMPONENTS.Inventory.new = function(manager){
             }
         }
         return ret;
+    };
+    inv.getHoveredItem = function(){
+        let hoveredSlot = inv.getHoveredSlot();
+        return inv.linkedInv.getItem(hoveredSlot);
     };
     inv.toggleActive = function(){
         if(inv.active){

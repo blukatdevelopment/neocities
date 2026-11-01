@@ -141,6 +141,18 @@ GRAPHICS.drawBox = function(x, y, width, height){
   GRAPHICS._context.imageSmoothingEnabled = false;
 };
 
+GRAPHICS.drawTooltip = function(text){
+  let pos = INPUT.getMousePosition();
+  let cs = SETTINGS.CursorSize;
+  pos.x = GRAPHICS.downScale(pos.x);
+  pos.y = GRAPHICS.downScale(pos.y);
+  let length = text.length;
+  let height = 8;
+  let width = height * length;
+  GRAPHICS.fillBox(pos.x+cs, pos.y, width, height, GRAPHICS.Colors.Beige);
+  GRAPHICS.drawText(text, pos.x+cs, pos.y+cs, 20);
+};
+
 // XY is for the top left corner.
 GRAPHICS.fillBox = function(x, y, width, height, color){
   let ctx = GRAPHICS._context;
