@@ -1,8 +1,8 @@
 /*##############################################################################
-# Provides inter-component interaction, particularly for moving items
+# Manages click-and-drag functionality for items between components.
 ##############################################################################*/
-UI.COMPONENTS.ComponentManager = {};
-UI.COMPONENTS.ComponentManager.new = function(){
+UI.COMPONENTS.InventoryManager = {};
+UI.COMPONENTS.InventoryManager.new = function(){
     let cm = {};
     cm.hotbar = UI.COMPONENTS.Hotbar.new(cm);
     cm.inventory = UI.COMPONENTS.Inventory.new(cm);

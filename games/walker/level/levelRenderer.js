@@ -14,7 +14,7 @@ LEVEL.Renderer.new = function(){
         lr.physics = PHYSICS.Controller.new();
         lr.player = ACTORFACTORY.playerOne();
         lr.addEntity(lr.player);
-        lr.ui = UI.COMPONENTS.ComponentManager.new();
+        lr.ui = UI.COMPONENTS.InventoryManager.new();
         lr.ui.linkActor(lr.player);
     };
     lr.loadData = function(data){
