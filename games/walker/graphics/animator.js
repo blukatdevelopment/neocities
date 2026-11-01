@@ -57,5 +57,8 @@ SPRITES.Animator.new = function(){
       UTILITY.log("SPRITES", "Animator has no animation", + JSON.stringify(anr));
     }
   };
+  anr.getSize = function(){
+    return VECTOR2.new(anr.animation.sheet.cellResolutionX, anr.animation.sheet.cellResolutionY);
+  };
   return anr;
 };

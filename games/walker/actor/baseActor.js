@@ -66,7 +66,7 @@ ACTOR.new = function(){
     }
   };
   atr.draw = function(){
-    if(!GRAPHICS.isOnScreen(atr.collider.rect)){
+    if(!GRAPHICS.isOnScreen(atr.getSpriteRect())){
       // Don't render when off screen
       return;
     }
@@ -210,6 +210,12 @@ ACTOR.new = function(){
       item.quantity = atr.inventory.pickUp(item);
     }
     return item.quantity;
+  };
+  atr.getSpriteRect = function(){
+    return SHAPES.RECT.new(
+      atr.position,
+      atr.animator.getSize()
+    );
   };
   atr.toString = function(){
     let str = "[";

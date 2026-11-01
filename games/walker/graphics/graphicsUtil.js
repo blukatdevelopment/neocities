@@ -27,16 +27,16 @@ GRAPHICS.Colors.Blue50 = "rgb(65 97 251 / 50%)";
 
 GRAPHICS.isOnScreen = function(rect){
   let cr = GRAPHICS._camera.rect;
-  let ret = cr.overlaps(rect);
-  return true;
+  return cr.overlaps(rect);
 };
 
 GRAPHICS.getDisplayMode = function(){
   return GRAPHICS._displayMode;
 };
 
+
 GRAPHICS.setDisplayMode = function(mode){
-  //UTILITY.log("GRAPHICS", "Setting display mode", {mode: mode});
+  //UTILITY.log("GRAPHICS", "Ssrng display mode", {mode: mode});
   GRAPHICS._displayMode = mode;
 };
 

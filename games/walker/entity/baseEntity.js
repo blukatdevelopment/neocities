@@ -21,7 +21,7 @@ ENTITY.baseEntity.new = function(){
     }
     be.update = function(){};
     be.draw = function(){
-        if(!GRAPHICS.isOnScreen(be.collider.rect)){
+        if(!GRAPHICS.isOnScreen(be.getSpriteRect())){
             // Don't render if the entity is offscreen.
             return;
         }
@@ -68,6 +68,9 @@ ENTITY.baseEntity.new = function(){
         data.sprite = be.renderer.sprite;
         data.rect = be.collider.rect;
         return data;
+    };
+    be.getSpriteRect = function(){
+        return be.renderer.getRect();
     };
     be.getLabel = function(){ return ""; };
     return be;

@@ -22,6 +22,19 @@ SPRITES.SpriteRenderer.new = function(sprite, position){
   sr.setSprite = function(newSprite){
     sr.sprite = newSprite;
   };
+  sr.getRect = function(){
+    if(sr.sprite == null){
+      return SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(0,0));
+    }
+    let position = VECTOR2.new(0,0);
+    if(sr.parent){
+      position = sr.parent.position;
+    }
+    return SHAPES.RECT.new(
+      position,
+      VECTOR2.new(sr.sprite.sheet.cellResolutionX,sr.sprite.sheet.cellResolutionY)
+    );
+  };
   sr.toString = function(){
     let ret = "Renderer[";
     ret += "sprite: " + sr.sprite.name;

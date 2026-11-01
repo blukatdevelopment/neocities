@@ -13,7 +13,6 @@ ENTITY.Scenery.new = function(){
 ENTITYFACTORY.Scenery = function(_sprite, position, rect){
     let sc = ENTITY.Scenery.new();
     if(rect){
-        console.log("Setting rect " + rect.toString());
         sc.collider.rect = rect;
     };
     sc.renderer.setSprite(_sprite);

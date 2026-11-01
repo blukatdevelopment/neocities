@@ -66,16 +66,36 @@ LEVEL.Renderer.new = function(){
           }
     };
     lr.drawLevel = function(){
-          GRAPHICS.clearCanvas();
-      for(let renderer of lr.scenery){
-        renderer.draw();
-      }
-      for(let e in lr.entities){
-        let entity = lr.entities[e];
-        entity.draw();
-      }
-      lr.ui.draw();
+        GRAPHICS.clearCanvas();
+
+        for(let renderer of lr.scenery){
+            renderer.draw();
+        }
+        for(let ent of lr.getRenderSortedEntities()){
+            ent.draw();
+        }
+        lr.ui.draw();
     }
+    lr.getRenderSortedEntities = function(){
+        let onScreen = [];
+        for(let ent of lr.entities){
+            if(GRAPHICS.isOnScreen(ent.getSpriteRect())){
+                onScreen.push(ent);
+            }
+        }
+        onScreen.sort((a, b) => {
+            let aY = a.position.y + a.getSpriteRect().size.y;
+            let bY = b.position.y + b.getSpriteRect().size.y;
+            if(aY < bY){
+                return -1;
+            }
+            if(aY > bY){
+                return 1;
+            }
+            return 0;
+        });
+        return onScreen;
+    };
     lr.addEntity = function(entity){
         if(entity == null){
             return;
