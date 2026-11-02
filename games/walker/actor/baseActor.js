@@ -231,10 +231,23 @@ ACTOR.new = function(){
     atr.stats.addEffects(item.effects);
   }
   atr.canEat = function(item){
-    if(item.type == ITEMS.Types.Food){
-      return true;
+    if(item.type != ITEMS.Types.Food){
+      return false;
     }
-    return false;
+    if(atr.getActiveFoods().length > 2){
+      UTILITY.notification("You're full.");
+      return false;
+    }
+    for(let food of atr.getActiveFoods()){
+      if(food.name == item.name){
+        UTILITY.notification("You can't eat more of that food right now.");
+        return false;
+      }
+    }
+    return true;
+  };
+  atr.getActiveFoods = function(){
+    return atr.stats.getActiveFoods();
   };
   atr.getSpriteRect = function(){
     return SHAPES.RECT.new(

@@ -35,6 +35,7 @@ SETTINGS.viewportMax = 400;
 SETTINGS.canvasMin = 0;
 SETTINGS.canvasMax = 700;
 SETTINGS.drawScale = SETTINGS.canvasMax / SETTINGS.viewportMax;
+SETTINGS.foodPrefix = "Food: ";
 
 let DISPLAY_MODES = {};
 DISPLAY_MODES.static = "static";
@@ -43,6 +44,8 @@ DISPLAY_MODES.camera = "camera";
 // Entity Factory
 let ENTITY_FACTORY = {};
 
+TIME.second = 1000;
+TIME.minute = 60000;
 
 // Event config
 let EVENT_TYPES = {};

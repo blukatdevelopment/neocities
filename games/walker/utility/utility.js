@@ -12,7 +12,6 @@ UTILITY.clamp = function(value, min, max){
     return value;
 }
 
-
 UTILITY.Interaction = {};
 UTILITY.Interaction.new = function(initiator){
     let interaction = {

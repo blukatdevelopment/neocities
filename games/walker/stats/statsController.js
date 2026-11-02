@@ -116,6 +116,35 @@ STATS.StatsController.new = function(){
     }
     return false;
   };
+  stc.getActiveFoods = function(){
+    let foodEffects = {};
+    for(let effect of stc.effects){
+      if(effect.source.includes(SETTINGS.foodPrefix)){
+        // De-dupes by adding to object this way
+        foodEffects[effect.source] = effect;
+      }
+    }
+    let foods = [];
+    let now = Date.now();
+    for(let source of Object.keys(foodEffects)){
+      let effect = foodEffects[source];
+      let foodName = source.replace(SETTINGS.foodPrefix, "");
+      let foodItem = ITEMS.getByName(foodName);
+      let remainingTime = effect.expiration - now;
+      let food = STATS.FoodStatus.new(foodName, foodItem.sprite, remainingTime);
+      foods.push(food);
+    }
+    foods.sort((a, b) => {
+            if(a.remaining < b.remaining){
+                return -1;
+            }
+            if(a.remaining > b.remaining){
+                return 1;
+            }
+            return 0;
+    });
+    return foods;
+  }
   stc.updateResourceEffect = function(effect){
     // Effects apply their delta only after the interval passes
     if(effect.lastApplied == null){

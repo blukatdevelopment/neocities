@@ -43,10 +43,10 @@ UI.COMPONENTS.Hotbar.new = function(manager){
         // change slot based on mouse wheel
         let wheelInput = INPUT.getMouseWheel();
         if(wheelInput > 0){
-            hb.prevSlot();
+            hb.nextSlot();
         }
         else if(wheelInput < 0){
-            hb.nextSlot();
+            hb.prevSlot();
         }
     };
     hb.draw = function(){
