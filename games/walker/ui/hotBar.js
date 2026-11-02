@@ -121,11 +121,17 @@ UI.COMPONENTS.Hotbar.new = function(manager){
         if(hb.activeSlot >= hb.slotCount){
             hb.activeSlot = 0;
         }
+        if(SCENE.getPlayerOne()){
+            SCENE.getPlayerOne().hotbar.activeSlot = hb.activeSlot;
+        }
     };
     hb.prevSlot = function(){
         hb.activeSlot -= 1;
         if(hb.activeSlot < 0){
             hb.activeSlot = hb.slotCount-1;
+        }
+        if(SCENE.getPlayerOne()){
+            SCENE.getPlayerOne().hotbar.activeSlot = hb.activeSlot;
         }
     };
     hb.setActiveSlot = function(index){
