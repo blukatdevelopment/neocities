@@ -124,6 +124,9 @@ STATS.StatsController.new = function(){
       let inverseDelta = effect.modifier * -1;
       stc.changeAttributeModifier(effect.attribute, inverseDelta);
     }
+    stc.resources[STATS.Resources.health].update();
+    stc.resources[STATS.Resources.energy].update();
+    stc.resources[STATS.Resources.magic].update();
   };
   stc.update = function(){
     stc.updateEffects();
@@ -224,6 +227,11 @@ STATS.Resource.new = function(name, value, maxAttribute, color, transparentColor
     color: color,
     transparentColor: transparentColor,
     controller: null // The stats controller containing this resource
+  };
+  st.update = function(){
+    if(st.value > st.max()){
+      st.value = st.max();
+    }
   };
   st.reset = function(){
     st.value = st.max();
