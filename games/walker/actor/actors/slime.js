@@ -35,7 +35,7 @@ ACTORFACTORY.slime = function(){
   };
 
   se.stats = STATS.StatsController.new();
-  se.stats.getStat(STATS.Resources.health).updateMax(3);
+  se.stats.setAttributeValue(STATS.Attributes.healthMax, 3);
   se.stats.setAttributeValue(STATS.Attributes.speed, 1.5);
   return se;
 };

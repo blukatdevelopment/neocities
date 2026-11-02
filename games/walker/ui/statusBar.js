@@ -74,9 +74,9 @@ UI.COMPONENTS.StatusBar.new = function(){
     };
     sb.highlightLoss = function(barRect, stat){
         let delta = stat.changeDelta() * -1;
-        let deltaPercentage = delta / stat.max;
+        let deltaPercentage = delta / stat.max();
         let deltaHeight = deltaPercentage * barRect.size.y;
-        let shroudHeight = sb.getShroudHeight(stat.value, stat.max, barRect.size.y);
+        let shroudHeight = sb.getShroudHeight(stat.value, stat.max(), barRect.size.y);
 
         let x = barRect.position.x + sb.rect.position.x;
         let y = barRect.position.y + sb.rect.position.y + shroudHeight - deltaHeight ;
@@ -86,14 +86,14 @@ UI.COMPONENTS.StatusBar.new = function(){
     };
     sb.shroudStat = function(stat, rect){
         let barHeight = rect.size.y;
-        let shroudHeight = sb.getShroudHeight(stat.value, stat.max, barHeight);
+        let shroudHeight = sb.getShroudHeight(stat.value, stat.max(), barHeight);
         let shroudPos = rect.position.add(sb.rect.position);
         let x = shroudPos.x;
         let y = shroudPos.y;
         let width = rect.size.x;
         let height = shroudHeight;
         let color = GRAPHICS.Colors.Black;
-        if(stat.max == 0){
+        if(stat.max() == 0){
             color = GRAPHICS.Colors.Beige;
         }
         GRAPHICS.fillBox(shroudPos.x, shroudPos.y, rect.size.x, shroudHeight, color);
@@ -108,7 +108,7 @@ UI.COMPONENTS.StatusBar.new = function(){
         return shroudHeight;
     };
     sb.renderStatText = function(barRect, stat){
-        if(stat.max == 0){
+        if(stat.max() == 0){
             return;
         }
         let color = stat.color;
@@ -118,7 +118,7 @@ UI.COMPONENTS.StatusBar.new = function(){
         let text = stat.name;
         GRAPHICS.drawText(text, x, y, textSize, color);
         y += textSize;
-        text = stat.value + "/" + stat.max;
+        text = stat.value + "/" + stat.max();
         GRAPHICS.drawText(text, x, y, textSize, color);
     };
     sb.isChangedRecently = function(){

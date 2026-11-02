@@ -6,14 +6,21 @@ ITEMS.Config.StarterPack = function(){
     
     ITEMS.Names.Apple = "Apple";
     config.push({
+            type: ITEMS.Types.Food,
             name: ITEMS.Names.Apple,
             description: "One a day keeps the doctor away",
             sprite: SPRITES.static.items.Apple,
-            stackSize: 8
+            stackSize: 8,
+            effects: [
+                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.Apple),
+                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.Apple),
+                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.Apple)
+            ]
     });
 
     ITEMS.Names.Seeds = "Seeds";
     config.push({
+            type: ITEMS.Types.Base,
             name: ITEMS.Names.Seeds,
             description: "Should I eat these, or plant them?",
             sprite: SPRITES.static.items.Seeds,
@@ -22,6 +29,7 @@ ITEMS.Config.StarterPack = function(){
 
     ITEMS.Names.Talon = "Talon";
     config.push({
+            type: ITEMS.Types.Base,
             name: ITEMS.Names.Talon,
             description: "Seems sharp",
             sprite: SPRITES.static.items.Talon,
@@ -30,6 +38,7 @@ ITEMS.Config.StarterPack = function(){
 
     ITEMS.Names.Stick = "Stick";
     config.push({
+            type: ITEMS.Types.Base,
             name: ITEMS.Names.Stick,
             description: "Was once part of a tree",
             sprite: SPRITES.static.items.Stick,
@@ -38,6 +47,7 @@ ITEMS.Config.StarterPack = function(){
 
     ITEMS.Names.Rope = "Rope";
     config.push({
+            type: ITEMS.Types.Base,
             name: ITEMS.Names.Rope,
             description: "Seems sturdy",
             sprite: SPRITES.static.items.Rope,
@@ -46,6 +56,7 @@ ITEMS.Config.StarterPack = function(){
 
     ITEMS.Names.Rock = "Rock";
     config.push({
+            type: ITEMS.Types.Base,
             name: ITEMS.Names.Rock,
             description: "Has some heft to it",
             sprite: SPRITES.static.items.Rock,
@@ -54,26 +65,44 @@ ITEMS.Config.StarterPack = function(){
 
     ITEMS.Names.RedBerry = "RedBerry";
     config.push({
+            type: ITEMS.Types.Food,
             name: ITEMS.Names.RedBerry,
             description: "Sweet and mildly tart.",
             sprite: SPRITES.static.items.RedBerry,
-            stackSize: 8
+            stackSize: 8,
+            effects: [
+                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.RedBerry),
+                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.RedBerry),
+                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.RedBerry)
+            ]
     });
 
     ITEMS.Names.GreenBerry = "GreenBerry";
     config.push({
+            type: ITEMS.Types.Food,
             name: ITEMS.Names.GreenBerry,
             description: "What plant does this come from?",
             sprite: SPRITES.static.items.GreenBerry,
-            stackSize: 8
+            stackSize: 8,
+            effects: [
+                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry),
+                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry),
+                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry)
+            ]
     });
 
     ITEMS.Names.BlueBerry = "BlueBerry";
     config.push({
+            type: ITEMS.Types.Food,
             name: ITEMS.Names.BlueBerry,
             description: "It's actually purple, not blue.",
             sprite: SPRITES.static.items.BlueBerry,
-            stackSize: 8
+            stackSize: 8,
+            effects: [
+                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry),
+                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry),
+                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry)
+            ]
     });
 
     return config;

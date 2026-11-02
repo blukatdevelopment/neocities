@@ -5,10 +5,25 @@ ITEMS.Inventory = {};
 ITEMS.Inventory.new = function(size){
     let inv = {
         slots: [],
-        size: size
+        size: size,
+        activeSlot: 0
     };
     for(let i = 0; i < size; i++){
         inv.slots.push(null);
+    };
+    inv.removeItem = function(item){
+        for(let i = 0; i < inv.slots.length; i++){
+            let slotItem = inv.slots[i];
+            if(item == slotItem){
+                inv.slots[i] = null;
+            }
+        }
+    };
+    inv.getActiveItem = function(){
+        if(inv.activeSlot == -1){
+            return null;
+        }
+        return inv.slots[inv.activeSlot];
     };
     inv.getItem = function(slot){
         if(slot > -1 && slot < inv.size){

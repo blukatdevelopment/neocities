@@ -130,6 +130,9 @@ UI.COMPONENTS.Hotbar.new = function(manager){
     };
     hb.setActiveSlot = function(index){
         hb.activeSlot = index;
+        if(SCENE.getPlayerOne()){
+            SCENE.getPlayerOne().hotbar.activeSlot = index;
+        }
     };
     hb.getHoveredSlot = function(){
         let mousePos = INPUT.getDownScaledMousePosition();

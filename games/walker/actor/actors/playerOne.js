@@ -11,7 +11,6 @@ ACTORFACTORY.playerOne = function(){
   pone.agent = agent;
   pone.animator = anm;
   pone.lockCamera = true;
-
   pone.setCollider(PHYSICS.BoxCollider.new());
   pone.getCollider().rect.position = VECTOR2.new(13, 0);
   pone.getCollider().rect.size = VECTOR2.new(11, 32);
@@ -21,8 +20,9 @@ ACTORFACTORY.playerOne = function(){
   pone.activeAttack = pone.attacks[0];
 
   pone.stats = STATS.StatsController.new();
-  pone.stats.getStat(STATS.Resources.health).updateMax(10);
-  pone.stats.getStat(STATS.Resources.energy).updateMax(10);
+  pone.stats.setAttributeValue(STATS.Attributes.healthMax, 10);
+  pone.stats.setAttributeValue(STATS.Attributes.energyMax, 10);
+  pone.stats.setAttributeValue(STATS.Attributes.magicMax, 0);
   pone.stats.addEffect(STATS.Effect.EnergyRegen(2000, STATS.Resources.energy, STATS.Effect.Sources.Body));
   return pone;
 };

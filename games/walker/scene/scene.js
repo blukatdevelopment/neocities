@@ -97,3 +97,8 @@ SCENE.setLevelRect = function(rect){
 SCENE.getLevelRect = function(){
   return SCENE._levelRect;
 };
+
+SCENE.getPlayerOne = function(){
+  var activeScene = SCENE.getActiveScene();
+  return activeScene.getPlayerOne();
+};

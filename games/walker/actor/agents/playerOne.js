@@ -56,6 +56,9 @@ AGENT.PLAYER_ONE.new = function(actor){
         if(INPUT.keyPress(INPUT.KEYS.K_E)){
             atr.interact();         
         }
+        if(INPUT.keyPress(INPUT.KEYS.K_F)){
+            atr.useItem();
+        }
         if(inRange && INPUT.mouseClick(INPUT.RIGHT_CLICK)){
             let point = INPUT.getMousePosition();
             point.x = GRAPHICS.downScale(point.x);

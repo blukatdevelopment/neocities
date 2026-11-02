@@ -3,6 +3,9 @@
 ##############################################################################*/
 STATS.Attributes = {};
 STATS.Attributes.speed = "Speed";
+STATS.Attributes.healthMax = "healthMax";
+STATS.Attributes.energyMax = "energyMax";
+STATS.Attributes.magicMax = "magicMax";
 
 
 STATS.Resources = {};
@@ -15,11 +18,15 @@ STATS.Effect = {};
 STATS.Effect.Types = {};
 STATS.Effect.Types.Attribute = "Attribute";
 STATS.Effect.Types.Resource = "Resource";
+STATS.Effect.Types.ResourceMax = "ResourceMax";
 
 STATS.Effect.Names = {};
 STATS.Effect.Names.SprintCost = "SprintCost";
 STATS.Effect.Names.SprintBuff = "SprintBuff";
 STATS.Effect.Names.Regen = "Regen";
+STATS.Effect.Names.HealthMax = "HealthMax";
+STATS.Effect.Names.EnergyMax = "EnergyMax";
+STATS.Effect.Names.MagicMax = "MagicMax";
 
 STATS.Effect.Sources = {};
 STATS.Effect.Sources.Body = "Body";
@@ -31,6 +38,9 @@ STATS.StatsController.new = function(){
     resources: STATS.getDefaultResources(),
     effects: []
   };
+  stc.resources[STATS.Resources.health].controller = stc;
+  stc.resources[STATS.Resources.energy].controller = stc;
+  stc.resources[STATS.Resources.magic].controller = stc;
   stc.getStat = function(name){
     if(stc.attributes[name]){
       return stc.attributes[name];
@@ -75,9 +85,20 @@ STATS.StatsController.new = function(){
     }
     return null;
   };
+  stc.addEffects = function(effects){
+    if(effects == null){
+      return;
+    }
+    for(let _effect of effects){
+      stc.addEffect(_effect);
+    }
+  };
   stc.addEffect = function(_effect){
     if(_effect == null){
       return;
+    }
+    if(_effect.duration){
+      _effect.expiration = _effect.duration + Date.now();
     }
     // Re-adding the same effect just updates it
     let existing = null;
@@ -183,31 +204,35 @@ STATS.Attribute.new = function(name, value){
 STATS.getDefaultAttributes = function(){
   let attributes = {};
   attributes[STATS.Attributes.speed] = STATS.Attribute.new(STATS.Attributes.speed, 5);
+  attributes[STATS.Attributes.healthMax] = STATS.Attribute.new(STATS.Attributes.healthMax, 10);
+  attributes[STATS.Attributes.energyMax] = STATS.Attribute.new(STATS.Attributes.energyMax, 10);
+  attributes[STATS.Attributes.magicMax] = STATS.Attribute.new(STATS.Attributes.magicMax, 0);
   return attributes;
 };
 
 
 STATS.Resource = {};
-STATS.Resource.new = function(name, max, color, transparentColor){
+STATS.Resource.new = function(name, value, maxAttribute, color, transparentColor){
   let st = {
     name: name,
-    value: max,
-    max: max,
+    value: value,
+    maxAttribute: maxAttribute,
     min: 0,
     damageCooldown: null,
     lastChangeTime: null,
     lastChangeDelta: null,
     color: color,
-    transparentColor: transparentColor
+    transparentColor: transparentColor,
+    controller: null // The stats controller containing this resource
   };
   st.reset = function(){
-    st.value = st.max;
+    st.value = st.max();
   };
   st.clear = function(){
     st.value = st.min;
   };
   st.change = function(delta){
-    if(delta > 0 && st.value == st.max){
+    if(delta > 0 && st.value == st.max()){
       // Already full
       return;
     }
@@ -219,12 +244,6 @@ STATS.Resource.new = function(name, max, color, transparentColor){
     st.value = UTILITY.clamp(st.value);
     st.lastChangeDelta = delta;
     st.lastChangeTime = Date.now();
-  };
-  st.updateMax = function(newMax){
-    st.max = newMax;
-    if(st.value > st.max){
-      st.value = st.max;
-    }
   };
   st.changeDelta = function(){
     return st.lastChangeDelta;
@@ -244,11 +263,18 @@ STATS.Resource.new = function(name, max, color, transparentColor){
     let elapsed = now - last;
     return elapsed;
   };
+  st.max = function(){
+    if(st.controller == null){
+      UTILITY.log("STATS.Resource.max","Controller not set",{name: st.name});
+      return -1;
+    }
+    return st.controller.getAttribute(st.maxAttribute);
+  };
   st.toString = function(){
     let ret = "Stat[";
     ret += "name: " + st.name;
     ret += ", value: " + st.value;
-    ret += ", max: " + st.max;
+    ret += ", max: " + st.max();
     ret += ", min: " + st.min;
     ret += ", damageCooldown: " + st.damageCooldown;
     ret += "]";
@@ -262,19 +288,22 @@ STATS.getDefaultResources = function(){
   
   resources[STATS.Resources.health] = STATS.Resource.new(
     STATS.Resources.health, // name
-    100,  // defaultmax
+    10,
+    STATS.Attributes.healthMax,  // defaultmax
     GRAPHICS.Colors.Red, // color
    GRAPHICS.Colors.Red50); // transparent color
   
   resources[STATS.Resources.energy] = STATS.Resource.new(
     STATS.Resources.energy, // name
-    100,  // defaultmax
+    10,
+    STATS.Attributes.energyMax,  // defaultmax
     GRAPHICS.Colors.Green, // color
    GRAPHICS.Colors.Green50); // transparent color
   
   resources[STATS.Resources.magic] = STATS.Resource.new(
     STATS.Resources.magic, // name
-    0,  // defaultmax
+    0,
+    STATS.Attributes.magicMax,  // defaultmax
     GRAPHICS.Colors.Blue, // color
    GRAPHICS.Colors.Blue50); // transparent color
   
@@ -284,14 +313,15 @@ STATS.getDefaultResources = function(){
 
 // A change to the modifier of a static stat
 STATS.Effect.AttributeEffect = {};
-STATS.Effect.AttributeEffect.new = function(name, source, attribute, modifier, expiration){
+STATS.Effect.AttributeEffect.new = function(name, source, attribute, modifier, duration){
   let se = {
     effectType: STATS.Effect.Types.Attribute,
     name: name,
     source: source,
     attribute: attribute,
     modifier: modifier,
-    expiration: expiration,
+    duration: duration,
+    expiration: null,
   };
   return se;
 };
@@ -302,13 +332,43 @@ STATS.Effect.SprintBuff = function(){
     STATS.Effect.Sources.Body, // Source
     STATS.Attributes.speed, // attribute
     5, // modifier
-    Date.now() + 1000 // Expiration
+    1000 // Duration
+  );
+};
+
+STATS.Effect.HealthMax = function(amount, duration, source){
+  return STATS.Effect.AttributeEffect.new(
+    STATS.Effect.Names.HealthMax, // name
+    source, // Source
+    STATS.Attributes.healthMax, // attribute
+    amount, // modifier
+    duration // Duration
+  );
+};
+
+STATS.Effect.EnergyMax = function(amount, duration, source){
+  return STATS.Effect.AttributeEffect.new(
+    STATS.Effect.Names.EnergyMax, // name
+    source, // Source
+    STATS.Attributes.energyMax, // attribute
+    amount, // modifier
+    duration // Duration
+  );
+};
+
+STATS.Effect.MagicMax = function(amount, duration, source){
+  return STATS.Effect.AttributeEffect.new(
+    STATS.Effect.Names.MagicMax, // name
+    source, // Source
+    STATS.Attributes.magicMax, // attribute
+    amount, // modifier
+    duration // Duration
   );
 };
 
 // A change over time applied to a status, such as regen or drain.
 STATS.Effect.ResourceEffect = {};
-STATS.Effect.ResourceEffect.new = function(name, source, resource, delta, interval, expiration){
+STATS.Effect.ResourceEffect.new = function(name, source, resource, delta, interval, duration){
   let se = {
     effectType: STATS.Effect.Types.Resource,
     name: name,
@@ -316,7 +376,8 @@ STATS.Effect.ResourceEffect.new = function(name, source, resource, delta, interv
     resource: resource,
     delta: delta,
     interval: interval,
-    expiration: expiration,
+    duration: duration,
+    expiration: null,
     lastApplied: null,
     blockedByEffect: null
   };
@@ -331,7 +392,7 @@ STATS.Effect.SprintCost = function(){
       STATS.Resources.energy, // Resource
       -1, // Delta
       1000, // Interval
-      Date.now() + 1000 // Expiration
+      1000 // Duration
     );
 };
 
@@ -343,7 +404,7 @@ STATS.Effect.EnergyRegen = function(interval, resource, source){
       resource, // Resource
       1, // Delta
       interval, // Interval
-      null // Expiration
+      null // Duration
     );
   regen.blockedByEffect = STATS.Effect.Names.SprintCost;
   return regen;

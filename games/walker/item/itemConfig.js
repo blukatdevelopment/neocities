@@ -1,6 +1,10 @@
 /*##############################################################################
 # Configures items. Add new item configs in a script in /configs 
 ##############################################################################*/
+ITEMS.Types = {};
+ITEMS.Types.Base = "Base";
+ITEMS.Types.Food = "Food";
+
 ITEMS.ItemList = [];
 
 ITEMS.getByName = function(name){
@@ -14,19 +18,15 @@ ITEMS.getByName = function(name){
 
 
 ITEMS.loadFromConfig = function(config){
-    let item = ITEMS.Item.new();
-    item.name = config.name;
-    item.description = config.description;
-    item.sprite = config.sprite;
-    if(Object.hasOwn(config, "stackSize") && config.stackSize > 0){
-        item.quantity = 1;
-        item.stackSize = config.stackSize;
+    switch(config.type){
+        case ITEMS.Types.Base:
+            return ITEMS.loadBaseItem(config);
+            break;
+        case ITEMS.Types.Food:
+            return ITEMS.loadFood(config);
+            break; 
     }
-    if(Object.hasOwn(config, "durabilityMax") && config.durability > 0){
-        item.durability = config.durabilityMax;
-        item.durability = config.durabilityMax;
-    }
-    return item;
+    return null;
 };
 
 // Load configs into item list

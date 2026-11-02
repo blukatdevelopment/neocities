@@ -65,6 +65,10 @@ ACTOR.new = function(){
       return;
     }
   };
+  atr.destroyItem = function(item){
+    atr.hotbar.removeItem(item);
+    atr.inventory.removeItem(item);
+  };
   atr.draw = function(){
     if(!GRAPHICS.isOnScreen(atr.getSpriteRect())){
       // Don't render when off screen
@@ -210,6 +214,27 @@ ACTOR.new = function(){
       item.quantity = atr.inventory.pickUp(item);
     }
     return item.quantity;
+  };
+  atr.useItem = function(){
+    let item = atr.hotbar.getActiveItem();
+    if(item == null){
+      console.log("No item selected");
+      return;
+    }
+    console.log("Using item: " + item.name);
+    item.use(atr);
+  };
+  atr.eat = function(item){
+    if(!atr.canEat(item)){
+      return;
+    }
+    atr.stats.addEffects(item.effects);
+  }
+  atr.canEat = function(item){
+    if(item.type == ITEMS.Types.Food){
+      return true;
+    }
+    return false;
   };
   atr.getSpriteRect = function(){
     return SHAPES.RECT.new(

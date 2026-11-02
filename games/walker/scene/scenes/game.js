@@ -30,5 +30,8 @@ SCENE.SCENES.Game = function(){
   gm.notification = function(message){
     gm.levelRenderer.notification(message);
   }
+  gm.getPlayerOne = function(){
+    return gm.levelRenderer.player;
+  };
   return gm;
 };
