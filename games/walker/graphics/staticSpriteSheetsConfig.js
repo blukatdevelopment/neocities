@@ -72,3 +72,12 @@ SETTINGS.staticSheetList.push({
     cells: 1,
     sprites: ["statusbar"]
 });
+
+SETTINGS.staticSheetList.push({
+    name: "foodbar",
+    sheet: "foodbar.png",
+    resolutionX: 48,
+    resolutionY: 64,
+    cells: 1,
+    sprites: ["foodbar"]
+});
