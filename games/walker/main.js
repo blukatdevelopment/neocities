@@ -19,8 +19,11 @@ MAIN.GameLoop = function(){
   let elapsed = current_time - MAIN.START_TIME;
   MAIN.START_TIME = current_time;
   MAIN.LAG += elapsed;
-  while(MAIN.LAG >= SETTINGS.frameDuration){
+  let iterations = 0;
+  let maxIterations = 3;
 
+  while(MAIN.LAG >= SETTINGS.frameDuration && iterations < maxIterations){
+    iterations++;
     SCENE.update();
     INPUT.clearPresses();
     MAIN.LAG -= SETTINGS.frameDuration;
@@ -35,6 +38,9 @@ MAIN.GameLoop = function(){
       MAIN.ANIM_LAG = 0;
       MAIN.updateDelayedExecutions();
     }
+  }
+  if(iterations == maxIterations){
+    MAIN.LAG = 0;
   }
 }
 
