@@ -79,30 +79,30 @@ STATS.Effect.SprintBuff = function(){
   );
 };
 
-STATS.Effect.HealthMax = function(amount, duration, source){
+STATS.Effect.FoodHealth = function(amount, duration, source){
   return STATS.Effect.AttributeEffect.new(
     STATS.Effect.Names.HealthMax, // name
-    source, // Source
+    "Food: " + source, // Source
     STATS.Attributes.healthMax, // attribute
     amount, // modifier
     duration // Duration
   );
 };
 
-STATS.Effect.EnergyMax = function(amount, duration, source){
+STATS.Effect.FoodEnergy = function(amount, duration, source){
   return STATS.Effect.AttributeEffect.new(
     STATS.Effect.Names.EnergyMax, // name
-    source, // Source
+    "Food: " + source, // Source
     STATS.Attributes.energyMax, // attribute
     amount, // modifier
     duration // Duration
   );
 };
 
-STATS.Effect.MagicMax = function(amount, duration, source){
+STATS.Effect.FoodMagic = function(amount, duration, source){
   return STATS.Effect.AttributeEffect.new(
     STATS.Effect.Names.MagicMax, // name
-    source, // Source
+    "Food: " + source, // Source
     STATS.Attributes.magicMax, // attribute
     amount, // modifier
     duration // Duration

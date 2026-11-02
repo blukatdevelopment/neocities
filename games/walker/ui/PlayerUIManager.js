@@ -1,19 +1,21 @@
 /*##############################################################################
-# Manages click-and-drag functionality for items between components.
+# Manages in-game UI
 ##############################################################################*/
-UI.COMPONENTS.InventoryManager = {};
-UI.COMPONENTS.InventoryManager.new = function(){
+UI.COMPONENTS.PlayerUIManager = {};
+UI.COMPONENTS.PlayerUIManager.new = function(){
     let cm = {};
     cm.hotbar = UI.COMPONENTS.Hotbar.new(cm);
     cm.inventory = UI.COMPONENTS.Inventory.new(cm);
     cm.statusbar = UI.COMPONENTS.StatusBar.new();
     cm.notificationsBar = UI.COMPONENTS.NotificationBar.new();
+    cm.foodbar = UI.COMPONENTS.FoodBar.new();
     cm.dragged = null;
 
     cm.update = function(){
         cm.hotbar.update();
         cm.inventory.update();
         cm.statusbar.update();
+        cm.foodbar.update();
         if(SCENE.getGameState() !== GAMESTATES.inventory){
             return;
         }
@@ -47,6 +49,7 @@ UI.COMPONENTS.InventoryManager.new = function(){
         cm.inventory.draw();
         cm.statusbar.draw();
         cm.notificationsBar.draw();
+        cm.foodbar.draw();
         if(cm.dragged == null){
             return;
         }

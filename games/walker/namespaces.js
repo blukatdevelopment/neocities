@@ -21,6 +21,7 @@ ENTITY.Data = {};
 ENTITY.ENTITIES = {};
 let UI = {};
 UI.COMPONENTS = {};
+UI.COMPONENTS.FoodBar = {};
 let INPUT = {};
 let ITEMS = {};
 ITEMS.Config = {};

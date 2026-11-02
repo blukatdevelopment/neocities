@@ -12,9 +12,9 @@ ITEMS.Config.StarterPack = function(){
             sprite: SPRITES.static.items.Apple,
             stackSize: 8,
             effects: [
-                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.Apple),
-                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.Apple),
-                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.Apple)
+                STATS.Effect.FoodHealth(10, 5 * 60 * 1000, ITEMS.Names.Apple),
+                STATS.Effect.FoodEnergy(10, 5 * 60 * 1000, ITEMS.Names.Apple),
+                STATS.Effect.FoodMagic(10, 5 * 60 * 1000, ITEMS.Names.Apple)
             ]
     });
 
@@ -71,9 +71,9 @@ ITEMS.Config.StarterPack = function(){
             sprite: SPRITES.static.items.RedBerry,
             stackSize: 8,
             effects: [
-                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.RedBerry),
-                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.RedBerry),
-                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.RedBerry)
+                STATS.Effect.FoodHealth(10, 5 * 60 * 1000, ITEMS.Names.RedBerry),
+                STATS.Effect.FoodEnergy(10, 5 * 60 * 1000, ITEMS.Names.RedBerry),
+                STATS.Effect.FoodMagic(10, 5 * 60 * 1000, ITEMS.Names.RedBerry)
             ]
     });
 
@@ -85,9 +85,9 @@ ITEMS.Config.StarterPack = function(){
             sprite: SPRITES.static.items.GreenBerry,
             stackSize: 8,
             effects: [
-                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry),
-                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry),
-                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry)
+                STATS.Effect.FoodHealth(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry),
+                STATS.Effect.FoodEnergy(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry),
+                STATS.Effect.FoodMagic(10, 5 * 60 * 1000, ITEMS.Names.GreenBerry)
             ]
     });
 
@@ -99,9 +99,9 @@ ITEMS.Config.StarterPack = function(){
             sprite: SPRITES.static.items.BlueBerry,
             stackSize: 8,
             effects: [
-                STATS.Effect.HealthMax(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry),
-                STATS.Effect.EnergyMax(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry),
-                STATS.Effect.MagicMax(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry)
+                STATS.Effect.FoodHealth(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry),
+                STATS.Effect.FoodEnergy(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry),
+                STATS.Effect.FoodMagic(10, 5 * 60 * 1000, ITEMS.Names.BlueBerry)
             ]
     });
 

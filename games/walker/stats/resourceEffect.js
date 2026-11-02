@@ -1,6 +1,5 @@
 
 // A change over time applied to a status, such as regen or drain.
-STATS.Effect.ResourceEffect = {};
 STATS.Effect.ResourceEffect.new = function(name, source, resource, delta, interval, duration){
   let se = {
     effectType: STATS.Effect.Types.Resource,
