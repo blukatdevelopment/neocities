@@ -25,6 +25,10 @@ UTILITY.Interaction.new = function(initiator){
 UTILITY.debugMessage = function(message){
     SCENE.debugMessage(message);
 };
+// Queue a notification when possible.
+UTILITY.notification = function(message){
+    SCENE.notification(message);
+}
 
 // Console output wrapper
 UTILITY.log = function(sender, message, context){

@@ -7,6 +7,7 @@ UI.COMPONENTS.InventoryManager.new = function(){
     cm.hotbar = UI.COMPONENTS.Hotbar.new(cm);
     cm.inventory = UI.COMPONENTS.Inventory.new(cm);
     cm.statusbar = UI.COMPONENTS.StatusBar.new();
+    cm.notificationsBar = UI.COMPONENTS.NotificationBar.new();
     cm.dragged = null;
 
     cm.update = function(){
@@ -45,6 +46,7 @@ UI.COMPONENTS.InventoryManager.new = function(){
         cm.hotbar.draw();
         cm.inventory.draw();
         cm.statusbar.draw();
+        cm.notificationsBar.draw();
         if(cm.dragged == null){
             return;
         }

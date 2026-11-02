@@ -20,6 +20,12 @@ ENTITY.ItemStack.new = function(item){
         if(interaction.initiator){
             let prevQuant = pue.item.quantity;
             pue.item.quantity = interaction.initiator.pickUp(pue.item);
+            let delta = prevQuant - pue.item.quantity;
+            let message = "Picked up " + pue.item.name;
+            if(delta > 1){
+                message += "(" + delta + ")";
+            }
+            UTILITY.notification(message);
             if(pue.item.quantity == 0){
                 SCENE.destroyEntity(pue);
             }

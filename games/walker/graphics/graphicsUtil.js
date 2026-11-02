@@ -17,6 +17,7 @@ GRAPHICS.Colors.Red = "rgb(178, 16, 48)";
 GRAPHICS.Colors.Blue = "rgb(65, 97, 251)";
 GRAPHICS.Colors.Green = "rgb(81, 162, 0)";
 GRAPHICS.Colors.Black = "black";
+GRAPHICS.Colors.White = "rgb(255, 255, 255)";
 
 // Alpha colors
 GRAPHICS.Colors.Black50 = "rgb(0 0 0 / 50%)";

@@ -19,6 +19,7 @@ SETTINGS.DefaultLevelTileSize = 1024;
 SETTINGS.DefaultLevelSize = 9;
 
 SETTINGS.CursorSize = 8;
+SETTINGS.NotificationDuration = 3000;
 
 // States that effect rendering.
 let GAMESTATES = {};

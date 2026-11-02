@@ -27,5 +27,8 @@ SCENE.SCENES.Game = function(){
   gm.destroyEntity = function(entity){
     gm.levelRenderer.destroyEntity(entity);
   };
+  gm.notification = function(message){
+    gm.levelRenderer.notification(message);
+  }
   return gm;
 };

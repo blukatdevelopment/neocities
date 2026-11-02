@@ -114,5 +114,10 @@ LEVEL.Renderer.new = function(){
       lr.entities = lr.entities.filter((ent) => ent !== entity);
       lr.physics.unregisterCollider(entity.getCollider());
     };
+    lr.notification = function(message){
+        if(lr.ui){
+            lr.ui.notificationsBar.notification(message);
+        }
+    };
     return lr;
 };

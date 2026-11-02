@@ -53,6 +53,11 @@ SCENE.debugMessage = function(message){
   activeScene.debugMessage(message);
 };
 
+SCENE.notification = function(message){
+  let activeScene = SCENE.getActiveScene();
+  activeScene.notification(message);
+};
+
 SCENE.destroyEntity = function(entity){
   var activeScene = SCENE.getActiveScene();
   activeScene.destroyEntity(entity);
