@@ -6,7 +6,7 @@ ITEMS.Inventory.new = function(size){
     let inv = {
         slots: [],
         size: size,
-        activeSlot: 0
+        activeSlot: 0,
     };
     for(let i = 0; i < size; i++){
         inv.slots.push(null);
@@ -76,6 +76,9 @@ ITEMS.Inventory.new = function(size){
             }
         }
         return -1;
-    }
+    };
+    inv.canSetItem = function(slot, item){
+        return true;
+    };
     return inv;
 };

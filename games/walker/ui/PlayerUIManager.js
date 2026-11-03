@@ -38,9 +38,12 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
                 let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
                 let displacedItem = destComponent.getItem(destSlot);
                 
+                console.log("DestSlot:" + destSlot);
                 // Swap contents of slots
-                destComponent.setItem(destSlot, draggedItem);
-                cm.dragged.component.setItem(cm.dragged.slot, displacedItem);
+                if(destComponent.canSetItem(destSlot, draggedItem) && cm.dragged.component.canSetItem(cm.dragged.slot, displacedItem)){
+                    destComponent.setItem(destSlot, draggedItem);
+                    cm.dragged.component.setItem(cm.dragged.slot, displacedItem);
+                }
             }
             // Stop dragging
             cm.dragged = null;
@@ -77,6 +80,9 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
         if(cm.inventory.getHoveredSlot() != -1 && cm.inventory.getItem(cm.inventory.getHoveredSlot()) != null){
             return cm.inventory;
         }
+        if(cm.paperdoll.getHoveredSlot() != null && cm.paperdoll.getHoveredItem() != null){
+            return cm.paperdoll;
+        }
         return null;
     };
     // Component whose slot is hovered over
@@ -87,13 +93,16 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
         if(cm.inventory.getHoveredSlot() != -1){
             return cm.inventory;
         }
+        if(cm.paperdoll.getHoveredSlot() != null){
+            return cm.paperdoll;
+        }
         return null;
     };
     cm.linkActor = function(actor){
         cm.hotbar.linkedInv = actor.hotbar;
         cm.inventory.linkedInv = actor.inventory;
         cm.statusbar.linkActor(actor);
-
+        cm.paperdoll.linkedInv = actor.paperdoll;
     };
     return cm;
 };

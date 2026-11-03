@@ -34,16 +34,16 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
         SPRITES.renderSprite(pos.x, pos.y, pd.sprite.index, pd.sprite.sheet, DISPLAY_MODES.static);
         for(let slot of Object.keys(pd.slotPositions)){
             let slotRect = pd.getSlotRect(slot);
-            let item = pd.getItem(slot);
+            let item = pd.getItemBySlotName(slot);
             if(item != null){
                 SPRITES.renderSprite(slotRect.position.x, slotRect.position.y, item.sprite.index, item.sprite.sheet, DISPLAY_MODES.static);
             }
         }
-        let hoveredSlot = pd.getHoveredSlot();
+        let hoveredSlot = pd.getHoveredSlotName();
         if(hoveredSlot){
             let rect = pd.getSlotRect(hoveredSlot);
             GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
-            let hoveredItem = pd.getItem(hoveredSlot);
+            let hoveredItem = pd.getItemBySlotName(hoveredSlot);
             if(hoveredItem){
                 GRAPHICS.drawTooltip(hoveredItem.name);
             }
@@ -59,21 +59,39 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
             pd.active = true;
         }
     };
-    pd.getItem = function(slot){
+    pd.getItemBySlotName = function(slot){
         if(pd.linkedInv == null){
             return null;
         }
         let slotIndex = GEAR.slotIndices[slot];
         return pd.linkedInv.getItem(slotIndex);
     };
-    pd.setItem = function(slot, item){
-        if(pd.linkedInv){
-            pd.linkedInv.setItem(slot, item);
+    pd.getItem = function(slotIndex){
+        if(pd.linkedInv == null){
+            return null;
         }
-        let slotIndex = GEAR.slotIndices[slot];
+        return pd.linkedInv.getItem(slotIndex);
+    };
+    pd.setItem = function(slotIndex, item){
+        if(pd.linkedInv == null){
+            return;
+        }
         pd.linkedInv.setItem(slotIndex, item);
     };
+    pd.canSetItem = function(slotIndex, item){
+        return true;
+    };
     pd.getHoveredSlot = function(){
+        let mousePos = INPUT.getDownScaledMousePosition();
+        for(let slot of Object.keys(pd.slotPositions)){
+            let rect = pd.getSlotRect(slot);
+            if(rect && rect.contains(mousePos)){
+                return GEAR.slotIndices[slot];
+            }
+        }
+        return null;
+    };
+    pd.getHoveredSlotName = function(){
         let mousePos = INPUT.getDownScaledMousePosition();
         for(let slot of Object.keys(pd.slotPositions)){
             let rect = pd.getSlotRect(slot);
@@ -93,11 +111,11 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
         return SHAPES.RECT.new(pos, size)
     };
     pd.getHoveredItem = function(){
-        let slot = pd.getHoveredSlot();
+        let slot = pd.getHoveredSlotName();
         if(slot == null){
             return null;
         }
-        return pd.getItem(slot);
+        return pd.getItemBySlotName(slot);
     };
     return pd;
 };

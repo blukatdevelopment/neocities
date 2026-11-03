@@ -18,6 +18,7 @@ ACTOR.new = function(){
   atr.stats = null;
   atr.hotbar = ITEMS.Inventory.new(9);
   atr.inventory = ITEMS.Inventory.new(27);
+  atr.paperdoll = ITEMS.EquipInventory.new(9, atr);
   atr.damageLabel = null;
   atr.damageLabelFrames = 0;
   atr.update = function(){
@@ -262,5 +263,11 @@ ACTOR.new = function(){
     str += "]";
     return str;
   }
+  atr.equip = function(item){
+    UTILITY.notification("Equipped " + item.name);
+  };
+  atr.unequip = function(item){
+    UTILITY.notification("Unequipped " + item.name);
+  };
   return atr;
 };

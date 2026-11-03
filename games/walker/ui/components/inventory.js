@@ -78,6 +78,9 @@ UI.COMPONENTS.Inventory.new = function(manager){
             inv.linkedInv.setItem(slot, item);
         }
     };
+    inv.canSetItem = function(slot, item){
+        return true;
+    };
     inv.getHoveredSlot = function(){
         let mousePos = INPUT.getDownScaledMousePosition();
 

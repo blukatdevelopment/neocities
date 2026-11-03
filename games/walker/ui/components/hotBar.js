@@ -116,6 +116,9 @@ UI.COMPONENTS.Hotbar.new = function(manager){
             hb.linkedInv.setItem(slot, item);
         }
     };
+    hb.canSetItem = function(slot, item){
+        return true;
+    };
     hb.nextSlot = function(){
         hb.activeSlot += 1;
         if(hb.activeSlot >= hb.slotCount){
