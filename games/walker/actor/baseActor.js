@@ -178,27 +178,29 @@ ACTOR.new = function(){
   };
   atr.onCollide = function(collision){};
   atr.onAttacked = function(attackData){
-    if(atr.stats){
-      if(atr.stats.damageCooldown == null || atr.stats.damageCooldown < Date.now()){
-        atr.stats.damageCooldown = Date.now() + SETTINGS.damageCooldown;
-      }
-      else{
-        //console.log("Ignoring attack until cooldown finishes");
-        return;
-      }
-      let health = atr.stats.getStat(STATS.Resources.health);
-      let prevHealth = health.value;
-      health.change(attackData.damage);
-      atr.damageLabel = UTILITY.formatDamage(attackData.damage);
-      atr.damageLabelFrames = 12;
-      //console.log(atr.name + " attacked for " + attackData.damage + " and now has " + atr.stats.health.value + " health.");
-      if(health.value < 1){
-        atr.die();
-      }
-      if(attackData.knockback > 0){
-        //console.log("Being knocked back in direction" + attackData.direction);
-        atr.onKnockback(attackData.direction, attackData.knockback);
-      }
+    if(atr.stats == null){
+      return;
+    }
+
+    if(atr.stats.damageCooldown == null || atr.stats.damageCooldown < Date.now()){
+      atr.stats.damageCooldown = Date.now() + SETTINGS.damageCooldown;
+    }
+    else{
+      //console.log("Ignoring attack until cooldown finishes");
+      return;
+    }
+    let damageDealt = atr.stats.receiveAttack(attackData);
+    
+    atr.damageLabel = UTILITY.formatDamage(damageDealt);
+    atr.damageLabelFrames = 12;
+
+    let health = atr.stats.getStat(STATS.Resources.health);
+    if(health.value < 1){
+      atr.die();
+    }
+    if(attackData.knockback > 0){
+      //console.log("Being knocked back in direction" + attackData.direction);
+      atr.onKnockback(attackData.direction, attackData.knockback);
     }
   };
   atr.onInteract = function(interaction){};
@@ -264,10 +266,25 @@ ACTOR.new = function(){
     return str;
   }
   atr.equip = function(item){
+    if(item == null){
+      return;
+    }
     UTILITY.notification("Equipped " + item.name);
+    if(item.effects){
+      atr.stats.addEffects(item.effects);  
+    }
   };
   atr.unequip = function(item){
+    if(item == null){
+      return;
+    }
     UTILITY.notification("Unequipped " + item.name);
+    if(item.effects == null){
+      return;  
+    }
+    for(let effect of item.effects){
+      atr.stats.removeEffect(effect.name, effect.source);
+    }
   };
   return atr;
 };

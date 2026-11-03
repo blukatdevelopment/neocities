@@ -11,7 +11,9 @@ ITEMS.Config.leatherPack = function(){
             description: "Protects your noggin",
             sprite: SPRITES.static.items.Apple,
             stackSize: 1,
-            effects: [],
+            effects: [
+                STATS.Effect.Armor(1, null, ITEMS.Names.LeatherHelm)
+            ],
             slots: [
                 GEAR.slots.head
             ]
@@ -24,7 +26,9 @@ ITEMS.Config.leatherPack = function(){
             description: "Keeps your torso warm",
             sprite: SPRITES.static.items.Apple,
             stackSize: 1,
-            effects: [],
+            effects: [
+                STATS.Effect.Armor(1, null, ITEMS.Names.LeatherTunic)
+            ],
             slots: [
                 GEAR.slots.torso
             ]
@@ -37,7 +41,9 @@ ITEMS.Config.leatherPack = function(){
             description: "Keeps your legs warm",
             sprite: SPRITES.static.items.Apple,
             stackSize: 1,
-            effects: [],
+            effects: [
+                STATS.Effect.Armor(1, null, ITEMS.Names.LeatherLeggings)
+            ],
             slots: [
                 GEAR.slots.legs
             ]
@@ -50,7 +56,9 @@ ITEMS.Config.leatherPack = function(){
             description: "Keeps your feet warm",
             sprite: SPRITES.static.items.Apple,
             stackSize: 1,
-            effects: [],
+            effects: [
+                STATS.Effect.Armor(1, null, ITEMS.Names.LeatherShoes)
+            ],
             slots: [
                 GEAR.slots.feet
             ]
@@ -63,7 +71,9 @@ ITEMS.Config.leatherPack = function(){
             description: "Flutters behind you",
             sprite: SPRITES.static.items.Apple,
             stackSize: 1,
-            effects: [],
+            effects: [
+                STATS.Effect.Armor(1, null, ITEMS.Names.LeatherCape)
+            ],
             slots: [
                 GEAR.slots.special1
             ]

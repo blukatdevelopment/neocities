@@ -23,6 +23,7 @@ ACTORFACTORY.playerOne = function(){
   pone.stats.setAttributeValue(STATS.Attributes.healthMax, 40);
   pone.stats.setAttributeValue(STATS.Attributes.energyMax, 10);
   pone.stats.setAttributeValue(STATS.Attributes.magicMax, 0);
+  pone.stats.fullRestore();
   pone.stats.addEffect(STATS.Effect.EnergyRegen(2000, STATS.Resources.energy, STATS.Effect.Sources.Body));
   return pone;
 };

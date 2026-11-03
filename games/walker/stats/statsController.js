@@ -169,15 +169,34 @@ STATS.StatsController.new = function(){
     }
   };
   stc.updateAttributeEffect = function(effect){
+    if(effect.duration == null){
+      return;
+    }
     let now = Date.now();
     if(now > effect.expiration){
       stc.removeEffect(effect.name, effect.source);
     }
   };
   stc.fullRestore = function(){
-    stc.health.reset();
-    stc.energy.reset();
-    stc.magic.reset();
+    for(let resourceName of Object.keys(stc.resources)){
+      stc.resources[resourceName].reset();
+    }
+  };
+  // return damage dealt
+  stc.receiveAttack = function(attack){
+    let damage = attack.damage;
+    let armor = stc.getAttribute(STATS.Attributes.armorValue);
+    if(armor == null){
+      armor = 0;
+    }
+    // Damage is negative, so add to reduce it
+    let damageDealt = damage + armor;
+    if(damageDealt > -1){
+      return 0;
+    }
+    let health = stc.getStat(STATS.Resources.health);
+    health.change(damageDealt);
+    return damageDealt;
   };
   return stc;
 };

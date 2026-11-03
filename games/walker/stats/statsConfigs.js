@@ -6,6 +6,7 @@ STATS.Attributes.speed = "Speed";
 STATS.Attributes.healthMax = "healthMax";
 STATS.Attributes.energyMax = "energyMax";
 STATS.Attributes.magicMax = "magicMax";
+STATS.Attributes.armorValue = "armorValue";
 
 
 STATS.Resources = {};
@@ -26,6 +27,7 @@ STATS.Effect.Names.Regen = "Regen";
 STATS.Effect.Names.HealthMax = "HealthMax";
 STATS.Effect.Names.EnergyMax = "EnergyMax";
 STATS.Effect.Names.MagicMax = "MagicMax";
+STATS.Effect.Names.Armor = "Armor";
 
 STATS.Effect.Sources = {};
 STATS.Effect.Sources.Body = "Body";
@@ -36,6 +38,7 @@ STATS.getDefaultAttributes = function(){
   attributes[STATS.Attributes.healthMax] = STATS.Attribute.new(STATS.Attributes.healthMax, 10);
   attributes[STATS.Attributes.energyMax] = STATS.Attribute.new(STATS.Attributes.energyMax, 10);
   attributes[STATS.Attributes.magicMax] = STATS.Attribute.new(STATS.Attributes.magicMax, 0);
+  attributes[STATS.Attributes.armorValue] = STATS.Attribute.new(STATS.Attributes.armorValue, 0);
   return attributes;
 };
 
@@ -104,6 +107,16 @@ STATS.Effect.FoodMagic = function(amount, duration, source){
     STATS.Effect.Names.MagicMax, // name
     SETTINGS.foodPrefix + source, // Source
     STATS.Attributes.magicMax, // attribute
+    amount, // modifier
+    duration // Duration
+  );
+};
+
+STATS.Effect.Armor = function(amount, duration, source){
+  return STATS.Effect.AttributeEffect.new(
+    STATS.Effect.Names.Armor, // name
+    source, // Source
+    STATS.Attributes.armorValue, // attribute
     amount, // modifier
     duration // Duration
   );
