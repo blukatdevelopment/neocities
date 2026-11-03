@@ -38,7 +38,6 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
                 let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
                 let displacedItem = destComponent.getItem(destSlot);
                 
-                console.log("DestSlot:" + destSlot);
                 // Swap contents of slots
                 if(destComponent.canSetItem(destSlot, draggedItem) && cm.dragged.component.canSetItem(cm.dragged.slot, displacedItem)){
                     destComponent.setItem(destSlot, draggedItem);

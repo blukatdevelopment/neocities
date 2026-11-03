@@ -22,12 +22,31 @@ UI.COMPONENTS.NotificationBar.new = function(){
             return;
         }
         if(nb.expireTime == null){
-            nb.expireTime = now + SETTINGS.NotificationDuration;
+            nb.expireTime = now + nb.notificationDuration();
         }
         GRAPHICS.drawText(nb.notifications[0], 0, 20, 20, GRAPHICS.Colors.White);
     };
+    nb.notificationDuration = function(){
+        let base = SETTINGS.NotificationDuration;
+        if(nb.notifications.length == 0){
+            return base;
+        }
+        return Math.trunc(base/nb.notifications.length);
+    };
+    nb.updateDuration = function(){
+        if(nb.expireTime == null){
+            return;
+        }
+        let now = Date.now();
+        let current = nb.expireTime - now;
+        let updated = nb.notificationDuration();
+        if(current > updated){
+            nb.expireTime = now + updated;
+        }
+    };
     nb.notification = function(message){
         nb.notifications.push(message);
+        nb.updateDuration();
     };
     return nb;
 };

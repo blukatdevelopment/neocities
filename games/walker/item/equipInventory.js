@@ -6,7 +6,6 @@ ITEMS.EquipInventory.new = function(size, linkedActor){
     let ei = ITEMS.Inventory.new(size);
     ei.linkedActor = linkedActor;
     ei.setItem = function(slot, item){
-        console.log("set item slot:" + slot + " item: " + item);
         if(slot > -1 && slot < ei.size){
             let prevItem = ei.slots[slot];
             ei.slots[slot] = item;
