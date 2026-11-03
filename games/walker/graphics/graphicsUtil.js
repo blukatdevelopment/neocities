@@ -12,7 +12,7 @@ GRAPHICS.init = function(){
 
 GRAPHICS.Colors = {};
 // Referencing LibreSprite's NES presets
-GRAPHICS.Colors.Beige = "rgb(255, 243, 146)";
+GRAPHICS.Colors.Beige = "rgb(255, 219, 162)";
 GRAPHICS.Colors.Red = "rgb(178, 16, 48)";
 GRAPHICS.Colors.Blue = "rgb(65, 97, 251)";
 GRAPHICS.Colors.Green = "rgb(81, 162, 0)";

@@ -47,6 +47,26 @@ let ENTITY_FACTORY = {};
 TIME.second = 1000;
 TIME.minute = 60000;
 
+GEAR.slots.head = "head";
+GEAR.slots.hand = "hand";
+GEAR.slots.offHand = "offHand";
+GEAR.slots.torso = "torso";
+GEAR.slots.legs = "legs";
+GEAR.slots.feet = "feet";
+GEAR.slots.special1 = "special1";
+GEAR.slots.special2 = "special2";
+GEAR.slots.special3 = "special3";
+
+GEAR.slotIndices.head = 0;
+GEAR.slotIndices.hand = 1;
+GEAR.slotIndices.offHand = 2;
+GEAR.slotIndices.torso = 3;
+GEAR.slotIndices.legs = 4;
+GEAR.slotIndices.feet = 5;
+GEAR.slotIndices.special1 = 6;
+GEAR.slotIndices.special2 = 7;
+GEAR.slotIndices.special3 = 8;
+
 // Event config
 let EVENT_TYPES = {};
 EVENT_TYPES.actor = "actor";

@@ -37,3 +37,6 @@ var SHAPES = {};
 let PHYSICS = {};
 var GRAPHICS = {};
 let TIME = {};
+let GEAR = {};
+GEAR.slots = {};
+GEAR.slotIndices = {};
