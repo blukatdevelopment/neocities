@@ -9,6 +9,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
     cm.statusbar = UI.COMPONENTS.StatusBar.new();
     cm.notificationsBar = UI.COMPONENTS.NotificationBar.new();
     cm.foodbar = UI.COMPONENTS.FoodBar.new();
+    cm.paperdoll = UI.COMPONENTS.PaperDoll.new();
     cm.dragged = null;
 
     cm.update = function(){
@@ -16,6 +17,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
         cm.inventory.update();
         cm.statusbar.update();
         cm.foodbar.update();
+        cm.paperdoll.update();
         if(SCENE.getGameState() !== GAMESTATES.inventory){
             return;
         }
@@ -50,6 +52,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
         cm.statusbar.draw();
         cm.notificationsBar.draw();
         cm.foodbar.draw();
+        cm.paperdoll.draw();
         if(cm.dragged == null){
             return;
         }

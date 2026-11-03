@@ -81,3 +81,12 @@ SETTINGS.staticSheetList.push({
     cells: 1,
     sprites: ["foodbar"]
 });
+
+SETTINGS.staticSheetList.push({
+    name: "paperdoll",
+    sheet: "paperdoll.png",
+    resolutionX: 89,
+    resolutionY: 80,
+    cells: 1,
+    sprites: ["paperdoll"]
+});
