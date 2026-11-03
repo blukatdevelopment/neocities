@@ -20,7 +20,7 @@ ACTORFACTORY.playerOne = function(){
   pone.activeAttack = pone.attacks[0];
 
   pone.stats = STATS.StatsController.new();
-  pone.stats.setAttributeValue(STATS.Attributes.healthMax, 10);
+  pone.stats.setAttributeValue(STATS.Attributes.healthMax, 40);
   pone.stats.setAttributeValue(STATS.Attributes.energyMax, 10);
   pone.stats.setAttributeValue(STATS.Attributes.magicMax, 0);
   pone.stats.addEffect(STATS.Effect.EnergyRegen(2000, STATS.Resources.energy, STATS.Effect.Sources.Body));

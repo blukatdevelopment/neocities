@@ -21,24 +21,34 @@ UTILITY.Interaction.new = function(initiator){
 };
 
 
-UTILITY.formatHealth(health){
+UTILITY.formatHealth = function(health){
     return Math.trunc(health/4);
 }
 
-UTILITY.formatDamage(damage){
+UTILITY.formatDamage = function(damage){
+    let sign = "-";
     let wholeNumber = Math.trunc(damage/4);
+    if(wholeNumber < 0){
+        wholeNumber *= -1;
+    }
+    let prefix = "" + wholeNumber;
+
     let remainder = damage % 4;
-    let remainderText = "";
+    if(remainder < 0){
+        remainder *= -1;
+    }
+    
+    let suffix = "";
     if(remainder == 1){
-        remainderText = ".25";
+        suffix = ".25";
     }
     if(remainder == 2){
-        remainderText = ".5";
+        suffix = ".5";
     }
     if(remainder == 3){
-        remainderText = ".75";
+        suffix = ".75";
     }
-    return wholeNumber + remainder;
+    return sign + "" + prefix + "" + suffix;
 }
 
 // Print to screen for active scene when possible.

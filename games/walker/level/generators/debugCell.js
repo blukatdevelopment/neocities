@@ -23,8 +23,13 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
     let slimePit = ENTITYFACTORY.SlimePit();
     slimePit.position = VECTOR2.new(500, 100);
     cg.addEntity(slimePit);
-    let item = null;
+
+    let slime = ACTORFACTORY.slime();
+    slime.position = VECTOR2.new(600, 100);
+    cg.addEntity(slime);
     
+
+    let item = null;
     for(let i = 0; i < 10; i++){
         item = ENTITYFACTORY.ItemStack(ITEMS.Names.RedBerry, 1, null);
         item.position = VECTOR2.new(100 + (32 * i), 300);

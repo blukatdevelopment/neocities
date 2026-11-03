@@ -119,6 +119,9 @@ UI.COMPONENTS.StatusBar.new = function(){
         GRAPHICS.drawText(text, x, y, textSize, color);
         y += textSize;
         text = stat.value + "/" + stat.max();
+        if(stat.name == STATS.Resources.health){
+            text = UTILITY.formatHealth(stat.value) + "/" + UTILITY.formatHealth(stat.max());
+        }
         GRAPHICS.drawText(text, x, y, textSize, color);
     };
     sb.isChangedRecently = function(){

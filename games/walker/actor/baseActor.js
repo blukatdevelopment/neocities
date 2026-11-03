@@ -189,7 +189,7 @@ ACTOR.new = function(){
       let health = atr.stats.getStat(STATS.Resources.health);
       let prevHealth = health.value;
       health.change(attackData.damage);
-      atr.damageLabel = attackData.damage + "";
+      atr.damageLabel = UTILITY.formatDamage(attackData.damage);
       atr.damageLabelFrames = 12;
       //console.log(atr.name + " attacked for " + attackData.damage + " and now has " + atr.stats.health.value + " health.");
       if(health.value < 1){
