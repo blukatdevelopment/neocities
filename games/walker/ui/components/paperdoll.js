@@ -26,6 +26,16 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
         }
 
     };
+    pd.slotIndexToName = function(slotIndex){
+        if(slotIndex < 0){
+            return null;
+        }
+        let keys = Object.keys(pd.slotPositions);
+        if(slotIndex >= keys.length){
+            return null;
+        }
+        return keys[slotIndex];
+    };
     pd.draw = function(){
         if(!pd.active){
             return;
@@ -79,7 +89,23 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
         pd.linkedInv.setItem(slotIndex, item);
     };
     pd.canSetItem = function(slotIndex, item){
-        return true;
+        if(item == null){
+            // Can always clear slot
+            return true;
+        }
+        let slotName = pd.slotIndexToName(slotIndex);
+        if(slotName == null){
+            return false;
+        }
+        if(item.type != ITEMS.Types.Gear){
+            UTILITY.notification("Cannot equip that");
+            return false;
+        }
+        if(item.slots && item.slots.includes(slotName)){
+            return true;
+        }
+        UTILITY.notification("Cannot equip that there");
+        return false;
     };
     pd.getHoveredSlot = function(){
         let mousePos = INPUT.getDownScaledMousePosition();

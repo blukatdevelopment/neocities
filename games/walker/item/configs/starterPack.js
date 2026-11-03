@@ -1,7 +1,7 @@
 /*##############################################################################
 # First batch of items.
 ##############################################################################*/
-ITEMS.Config.StarterPack = function(){
+ITEMS.Config.starterPack = function(){
     let config = [];
     
     ITEMS.Names.Apple = "Apple";

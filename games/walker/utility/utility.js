@@ -20,6 +20,27 @@ UTILITY.Interaction.new = function(initiator){
     return interaction;
 };
 
+
+UTILITY.formatHealth(health){
+    return Math.trunc(health/4);
+}
+
+UTILITY.formatDamage(damage){
+    let wholeNumber = Math.trunc(damage/4);
+    let remainder = damage % 4;
+    let remainderText = "";
+    if(remainder == 1){
+        remainderText = ".25";
+    }
+    if(remainder == 2){
+        remainderText = ".5";
+    }
+    if(remainder == 3){
+        remainderText = ".75";
+    }
+    return wholeNumber + remainder;
+}
+
 // Print to screen for active scene when possible.
 UTILITY.debugMessage = function(message){
     SCENE.debugMessage(message);

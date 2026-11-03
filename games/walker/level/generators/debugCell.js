@@ -38,5 +38,24 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
         item.position = VECTOR2.new(100 + (32 * i), 360);
         cg.addEntity(item);
     }
-    
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherHelm, 1, null);
+    item.position = VECTOR2.new(100, 500);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherTunic, 1, null);
+    item.position = VECTOR2.new(130, 500);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherLeggings, 1, null);
+    item.position = VECTOR2.new(160, 500);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherShoes, 1, null);
+    item.position = VECTOR2.new(190, 500);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherCape, 1, null);
+    item.position = VECTOR2.new(220, 500);
+    cg.addEntity(item);
 };

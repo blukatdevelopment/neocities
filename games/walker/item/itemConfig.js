@@ -4,6 +4,7 @@
 ITEMS.Types = {};
 ITEMS.Types.Base = "Base";
 ITEMS.Types.Food = "Food";
+ITEMS.Types.Gear = "Gear";
 
 ITEMS.ItemList = [];
 
@@ -13,6 +14,7 @@ ITEMS.getByName = function(name){
             return item;
         }
     }
+    console.log("Item " + name  + " not found.");
     return null;
 };
 
@@ -25,6 +27,9 @@ ITEMS.loadFromConfig = function(config){
         case ITEMS.Types.Food:
             return ITEMS.loadFood(config);
             break; 
+        case ITEMS.Types.Gear:
+            return ITEMS.loadGear(config);
+            break;
     }
     return null;
 };
@@ -38,6 +43,7 @@ ITEMS.init = function(){
 
 ITEMS.getConfig = function(){
     let config = [];
-    config.push(...ITEMS.Config.StarterPack());
+    config.push(...ITEMS.Config.starterPack());
+    config.push(...ITEMS.Config.leatherPack());
     return config;    
 };

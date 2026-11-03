@@ -33,7 +33,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
         if(INPUT.fullClick()){
             // Deposit dropped item if possible
             let destComponent = cm.getHoveredComponent();
-            if(destComponent){
+            if(destComponent && cm.dragged){
                 let destSlot = destComponent.getHoveredSlot();
                 let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
                 let displacedItem = destComponent.getItem(destSlot);
