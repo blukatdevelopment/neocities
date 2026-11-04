@@ -45,5 +45,6 @@ ITEMS.getConfig = function(){
     let config = [];
     config.push(...ITEMS.Config.starterPack());
     config.push(...ITEMS.Config.leatherPack());
+    config.push(...ITEMS.Config.flintPack());
     return config;    
 };

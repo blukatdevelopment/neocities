@@ -63,4 +63,20 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
     item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherCape, 1, null);
     item.position = VECTOR2.new(220, 500);
     cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintKnife, 1, null);
+    item.position = VECTOR2.new(100, 600);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintAxe, 1, null);
+    item.position = VECTOR2.new(130, 600);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintSword, 1, null);
+    item.position = VECTOR2.new(160, 600);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintSpear, 1, null);
+    item.position = VECTOR2.new(190, 600);
+    cg.addEntity(item);
 };

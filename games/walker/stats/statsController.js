@@ -182,9 +182,9 @@ STATS.StatsController.new = function(){
       stc.resources[resourceName].reset();
     }
   };
-  // return damage dealt
-  stc.receiveAttack = function(attack){
-    let damage = attack.damage;
+ 
+  stc.receiveAttack = function(attackData){
+    let damage = attackData.damage;
     let armor = stc.getAttribute(STATS.Attributes.armorValue);
     if(armor == null){
       armor = 0;

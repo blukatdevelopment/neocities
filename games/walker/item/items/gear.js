@@ -47,5 +47,11 @@ ITEMS.loadGear = function(config){
     else{
         console.log("Misconfigured gear; " + item.name + " lacks slots");
     }
+    if(Object.hasOwn(config, "slots")){
+        item.attacks = config.attacks;
+    }
+    if(Object.hasOwn(config, "cost")){
+        item.cost = config.cost;
+    }
     return item;
 };

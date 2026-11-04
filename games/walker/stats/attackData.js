@@ -8,7 +8,8 @@ STATS.AttackData.new = function(direction, damage, sender, options){
     direction: direction,
     damage: damage,
     sender: sender,
-    knockback: 0,    
+    knockback: 0,
+    cost: 0
   };
   if(options.knockback){
     ad.knockback = options.knockback;

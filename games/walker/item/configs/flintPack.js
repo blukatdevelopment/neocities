@@ -24,6 +24,9 @@ ITEMS.Config.flintPack = function(){
             slots: [
                 GEAR.slots.hand,
                 GEAR.slots.offHand
+            ],
+            attacks: [
+                STATS.AttackFactory.Knife()
             ]
     });
 
@@ -38,20 +41,26 @@ ITEMS.Config.flintPack = function(){
             slots: [
                 GEAR.slots.hand,
                 GEAR.slots.offHand
+            ],
+            attacks: [
+                STATS.AttackFactory.Axe()
             ]
     });
 
     ITEMS.Names.FlintSpear = "FlintSpear";
     config.push({
             type: ITEMS.Types.Gear,
-            name: ITEMS.Names.FlintKnife,
-            description: "A hunter's weapon",
+            name: ITEMS.Names.FlintSpear,
+            description: "A tool of the hunt",
             sprite: SPRITES.static.items.Apple,
             stackSize: 1,
             effects: [],
             slots: [
                 GEAR.slots.hand,
                 GEAR.slots.offHand
+            ],
+            attacks: [
+                STATS.AttackFactory.Spear()
             ]
     });
 
@@ -66,34 +75,9 @@ ITEMS.Config.flintPack = function(){
             slots: [
                 GEAR.slots.hand,
                 GEAR.slots.offHand
-            ]
-    });
-
-    ITEMS.Names.FlintKnife = "FlintKnife";
-    config.push({
-            type: ITEMS.Types.Gear,
-            name: ITEMS.Names.FlintKnife,
-            description: "Good for cutting cordage.",
-            sprite: SPRITES.static.items.Apple,
-            stackSize: 1,
-            effects: [],
-            slots: [
-                GEAR.slots.hand,
-                GEAR.slots.offHand
-            ]
-    });
-
-    ITEMS.Names.FlintKnife = "FlintKnife";
-    config.push({
-            type: ITEMS.Types.Gear,
-            name: ITEMS.Names.FlintKnife,
-            description: "Good for cutting cordage.",
-            sprite: SPRITES.static.items.Apple,
-            stackSize: 1,
-            effects: [],
-            slots: [
-                GEAR.slots.hand,
-                GEAR.slots.offHand
+            ],
+            attacks: [
+                STATS.AttackFactory.Sword()
             ]
     });
 
