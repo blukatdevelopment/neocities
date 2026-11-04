@@ -12,7 +12,7 @@ LEVEL.Generate.Grass = function(){
         for(let x = 0; x < SETTINGS.DefaultLevelSize; x++){
             rect.position.x = x * SETTINGS.DefaultLevelTileSize;
             rect.position.y = y * SETTINGS.DefaultLevelTileSize;
-            let cellGenerator = UTILITY.choice(cellGenerators);
+            let cellGenerator = RANDOM.choice(cellGenerators);
             cellGenerator(data, rect);
         }
     }

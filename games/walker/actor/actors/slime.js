@@ -18,7 +18,7 @@ ACTORFACTORY.slime = function(){
   se.name = "Slime";
   se.label = se.name;
 
-  se.attacks.push(ACTOR.AttackFactory.UNARMED());
+  se.attacks.push(STATS.AttackFactory.Unarmed());
   se.activeAttack = se.attacks[0];
 
   // Deal damage and knock target away
@@ -30,7 +30,7 @@ ACTORFACTORY.slime = function(){
     let pos = se.centeredPosition();
     let targetPos = target.centeredPosition();
     let dir = pos.x < targetPos.x ? DIRECTIONS.east : DIRECTIONS.west;
-    let attackData = ACTOR.AttackData.new(dir, -se.activeAttack.damage, se, { knockback: 10 });
+    let attackData = STATS.AttackData.new(dir, -se.activeAttack.damage, se, { knockback: 10 });
     target.onAttacked(attackData);
   };
 

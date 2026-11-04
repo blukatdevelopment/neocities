@@ -16,7 +16,7 @@ ACTORFACTORY.playerOne = function(){
   pone.getCollider().rect.size = VECTOR2.new(11, 32);
   pone.name = "Wrath";
 
-  pone.attacks.push(ACTOR.AttackFactory.UNARMED());
+  pone.attacks.push(STATS.AttackFactory.Unarmed());
   pone.activeAttack = pone.attacks[0];
 
   pone.stats = STATS.StatsController.new();

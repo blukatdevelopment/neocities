@@ -2,8 +2,8 @@
 # Record consumed by Entity.onAttacked()
 ##############################################################################*/
 // Valid options: knockback
-ACTOR.AttackData = {};
-ACTOR.AttackData.new = function(direction, damage, sender, options){
+STATS.AttackData = {};
+STATS.AttackData.new = function(direction, damage, sender, options){
   let ad = {
     direction: direction,
     damage: damage,

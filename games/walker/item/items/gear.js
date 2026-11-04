@@ -3,6 +3,8 @@ ITEMS.Gear.new = function(){
     let g = ITEMS.BaseItem.new();
     g.type = ITEMS.Types.Gear;
     g.effects = [];
+    g.slots = [];
+    g.attacks = [];
     g.clone = function(){
         let clone = ITEMS.Gear.new();
         clone.name = g.name;
@@ -14,6 +16,7 @@ ITEMS.Gear.new = function(){
         clone.durabilityMax = g.durabilityMax;
         clone.effects = g.effects;
         clone.slots = g.slots;
+        clone.attacks = g.attacks;
         return clone;
     };
     return g;

@@ -1,8 +1,8 @@
 /*##############################################################################
 # Record representing one attack an actor can perform
 ##############################################################################*/
-ACTOR.Attack = {};
-ACTOR.Attack.new = function(){
+STATS.Attack = {};
+STATS.Attack.new = function(){
   let atk = {
     upAnimation: null,
     downAnimation: null,

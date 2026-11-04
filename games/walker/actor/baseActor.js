@@ -91,7 +91,6 @@ ACTOR.new = function(){
       return;
     }
     let atk = atr.activeAttack;
-    
 
     // Execute immediately
     atr.cooldown = false;
@@ -151,7 +150,7 @@ ACTOR.new = function(){
     rect.recenter(dest);
 
     let colliders = atr.collider.controller.rectHitScan([atr.getEntityId()], rect);
-    let attackData = ACTOR.AttackData.new(atr.direction, -atk.damage, atr, { knockback: 10 });
+    let attackData = STATS.AttackData.new(atr.direction, -atk.damage, atr, { knockback: 10 });
     for(let cl of colliders){
       cl.parent.onAttacked(attackData);
     }

@@ -40,3 +40,4 @@ let TIME = {};
 let GEAR = {};
 GEAR.slots = {};
 GEAR.slotIndices = {};
+let RANDOM = {};
