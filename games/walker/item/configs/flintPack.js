@@ -27,7 +27,9 @@ ITEMS.Config.flintPack = function(){
             ],
             attacks: [
                 STATS.AttackFactory.Knife()
-            ]
+            ],
+            gearType: ITEMS.Gear.Types.Weapon
+
     });
 
     ITEMS.Names.FlintAxe = "FlintAxe";
@@ -44,7 +46,8 @@ ITEMS.Config.flintPack = function(){
             ],
             attacks: [
                 STATS.AttackFactory.Axe()
-            ]
+            ],
+            gearType: ITEMS.Gear.Types.Weapon
     });
 
     ITEMS.Names.FlintSpear = "FlintSpear";
@@ -61,7 +64,8 @@ ITEMS.Config.flintPack = function(){
             ],
             attacks: [
                 STATS.AttackFactory.Spear()
-            ]
+            ],
+            gearType: ITEMS.Gear.Types.Weapon
     });
 
     ITEMS.Names.FlintSword = "Flintsword";
@@ -78,7 +82,8 @@ ITEMS.Config.flintPack = function(){
             ],
             attacks: [
                 STATS.AttackFactory.Sword()
-            ]
+            ],
+            gearType: ITEMS.Gear.Types.Weapon
     });
 
     return config;

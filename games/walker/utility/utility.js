@@ -2,6 +2,12 @@
 # Util
 ##############################################################################*/
 
+UTILITY.copyProperty = function(sourceObj, destObj, property){
+    if(Object.hasOwn(sourceObj, property)){
+        destObj[property] = sourceObj[property];
+    }
+}
+
 UTILITY.clamp = function(value, min, max){
     if(value < min){
         return min;

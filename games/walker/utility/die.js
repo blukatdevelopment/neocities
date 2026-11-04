@@ -3,7 +3,7 @@ RANDOM.Die.new = function(sides){
     let die = {};
     die.sides = sides;
     die.roll = function(){
-        return RANDOM.range(1, die.sides);
+        return UTILITY.randRange(1, die.sides);
     };
     return die;
 };

@@ -46,25 +46,23 @@ AGENT.PLAYER_ONE.new = function(actor){
                 atr.move(DIRECTIONS.north);
             }
         }
-        let inRange = atr.cursorInRange();
         if(INPUT.keyPress(INPUT.KEYS.K_M)){
             SCENE.setActiveScene(SCENE.SCENES.WorldMap());
         }
-        if(INPUT.keyPress(INPUT.KEYS.K_SPACE) || (inRange && INPUT.mouseClick(INPUT.LEFT_CLICK))){
-            atr.attack();           
+        if(INPUT.keyPress(INPUT.KEYS.K_SPACE) || INPUT.mouseClick(INPUT.LEFT_CLICK)){
+            atr.primaryAction();         
         }
         if(INPUT.keyPress(INPUT.KEYS.K_E)){
-            atr.interact();         
+            atr.interact();
         }
         if(INPUT.keyPress(INPUT.KEYS.K_F)){
             atr.useItem();
         }
-        if(inRange && INPUT.mouseClick(INPUT.RIGHT_CLICK)){
-            let point = INPUT.getMousePosition();
-            point.x = GRAPHICS.downScale(point.x);
-            point.y = GRAPHICS.downScale(point.y);
-            let worldPoint = GRAPHICS.getWorldPoint(point);
-            atr.interactAtPoint(worldPoint);
+        if(INPUT.keyPress(INPUT.KEYS.K_R)){
+            atr.toggleItemsDrawn();
+        }
+        if(INPUT.mouseClick(INPUT.RIGHT_CLICK)){
+            atr.secondaryAction();            
         }
     };
     return pone;

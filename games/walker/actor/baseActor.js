@@ -21,6 +21,7 @@ ACTOR.new = function(){
   atr.paperdoll = ITEMS.EquipInventory.new(9, atr);
   atr.damageLabel = null;
   atr.damageLabelFrames = 0;
+  atr.itemsDrawn = false;
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
@@ -86,11 +87,71 @@ ACTOR.new = function(){
       atr.damageLabelFrames -= 1;
     }
   };
-  atr.attack = function(){
+  atr.toggleItemsDrawn = function(){
+    if(atr.itemsDrawn){
+      atr.itemsDrawn = false;
+      UTILITY.notification("Items are now stashed");
+    }
+    else{
+      let handItem = atr.paperdoll.slots[GEAR.slotIndices.hand];
+      let offHandItem = atr.paperdoll.slots[GEAR.slotIndices.offHand];
+      // Only draw your items if you have items to draw    
+      if(handItem || offHandItem){
+        atr.itemsDrawn = true;
+        UTILITY.notification("Items are now drawn");  
+      }
+      
+    }
+  };
+  // Left click
+  atr.primaryAction = function(){
+    let inRange = atr.cursorInRange();
+    if(atr.itemsDrawn){
+      atr.useHandItem();
+    }
+    else{
+      // Melee Attack
+      atr.attack(atr.activeAttack);
+    }
+  };
+  // Right click
+  atr.secondaryAction = function(){
+    let inRange = atr.cursorInRange();
+    if(atr.itemsDrawn){
+      atr.useOffhandItem();
+    }
+    else if(inRange){
+        let point = INPUT.getMousePosition();
+        point.x = GRAPHICS.downScale(point.x);
+        point.y = GRAPHICS.downScale(point.y);
+        let worldPoint = GRAPHICS.getWorldPoint(point);
+        atr.interactAtPoint(worldPoint);
+    }
+  };
+  atr.useHandItem = function(){
+    let handItem = atr.paperdoll.slots[GEAR.slotIndices.hand];
+    if(handItem){
+      handItem.primaryUse(handItem, atr);
+    }
+  };
+  atr.useOffhandItem = function(){
+    let handItem = atr.paperdoll.slots[GEAR.slotIndices.hand];
+    let offHandItem = atr.paperdoll.slots[GEAR.slotIndices.offHand];
+    if(handItem == null && offHandItem == null){
+      return; // Nothing to do
+    }
+    if(offHandItem == null){
+      handItem.secondaryUse(handItem, atr);
+    }
+    else{
+      offHandItem.primaryUse(offHandItem, atr);
+    }
+  };
+  atr.attack = function(attack){
     if(!atr.cooldown){
       return;
     }
-    let atk = atr.activeAttack;
+    let atk = attack;
 
     // Execute immediately
     atr.cooldown = false;
@@ -220,10 +281,8 @@ ACTOR.new = function(){
   atr.useItem = function(){
     let item = atr.hotbar.getActiveItem();
     if(item == null){
-      console.log("No item selected");
       return;
     }
-    console.log("Using item: " + item.name);
     item.use(atr);
   };
   atr.eat = function(item){
