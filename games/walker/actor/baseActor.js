@@ -323,13 +323,19 @@ ACTOR.new = function(){
     str += "]";
     return str;
   }
-  atr.equip = function(item){
+  atr.equip = function(item, slot){
     if(item == null){
       return;
     }
     UTILITY.notification("Equipped " + item.name);
     if(item.effects){
       atr.stats.addEffects(item.effects);  
+    }
+    if(slot == GEAR.slotIndices.hand || slot == GEAR.slotIndices.offHand){
+      if(!atr.itemsDrawn){
+        // Draw your item on equip
+        atr.toggleItemsDrawn();
+      }
     }
   };
   atr.unequip = function(item){
@@ -338,10 +344,16 @@ ACTOR.new = function(){
     }
     UTILITY.notification("Unequipped " + item.name);
     if(item.effects == null){
-      return;  
+      return;
     }
     for(let effect of item.effects){
       atr.stats.removeEffect(effect.name, effect.source);
+    }
+    let handItem = atr.paperdoll.slots[GEAR.slotIndices.hand];
+    let offHandItem = atr.paperdoll.slots[GEAR.slotIndices.offHand];  
+    // If you have no items, you have nothing to have drawn
+    if(atr.itemsDrawn && handItem == null && offHandItem == null){
+      atr.toggleItemsDrawn();
     }
   };
   return atr;

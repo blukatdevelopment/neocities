@@ -10,10 +10,10 @@ ITEMS.EquipInventory.new = function(size, linkedActor){
             let prevItem = ei.slots[slot];
             ei.slots[slot] = item;
             if(prevItem && ei.linkedActor){
-                ei.linkedActor.unequip(prevItem);
+                ei.linkedActor.unequip(prevItem, slot);
             }
             if(item && ei.linkedActor){
-                ei.linkedActor.equip(item);
+                ei.linkedActor.equip(item, slot);
             }
         }
     };
