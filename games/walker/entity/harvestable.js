@@ -23,7 +23,6 @@ ENTITY.Harvestable.new = function(){
         if(sprite == null || h.renderer == null){
             return;
         }
-        console.log("Sprite: " + sprite.name);
         h.renderer.setSprite(sprite);
         h.renderer.draw();
         
@@ -40,7 +39,6 @@ ENTITY.Harvestable.new = function(){
         return true;
     };
     h.onInteract = function(interaction){
-        console.log("Interaction initiated");
         if(interaction.initiator == null){
             return;
         }
@@ -70,7 +68,6 @@ ENTITY.Harvestable.new = function(){
 
 
 ENTITYFACTORY.Harvestable = function(items, empty, full, rect, rigid){
-    console.log("Sprites" + empty.name + ", " + full.name);
     let h = ENTITY.Harvestable.new();
     h.items = items;
     h.emptySprite = empty;
