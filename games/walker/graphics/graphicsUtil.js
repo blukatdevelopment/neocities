@@ -12,12 +12,15 @@ GRAPHICS.init = function(){
 
 GRAPHICS.Colors = {};
 // Referencing LibreSprite's NES presets
+GRAPHICS.Colors.DarkBrown = "rgb(121, 65, 0)";
+GRAPHICS.Colors.LightBrown = "rgb(195, 113, 0)";
 GRAPHICS.Colors.Beige = "rgb(255, 219, 162)";
 GRAPHICS.Colors.Red = "rgb(178, 16, 48)";
 GRAPHICS.Colors.Blue = "rgb(65, 97, 251)";
 GRAPHICS.Colors.Green = "rgb(81, 162, 0)";
 GRAPHICS.Colors.Black = "black";
 GRAPHICS.Colors.White = "rgb(255, 255, 255)";
+
 
 // Alpha colors
 GRAPHICS.Colors.Black50 = "rgb(0 0 0 / 50%)";
@@ -128,9 +131,13 @@ GRAPHICS.clearCanvas = function(){
 };
 
 // XY is for top left corner.
-GRAPHICS.drawBox = function(x, y, width, height){
-
-  GRAPHICS._context.imageSmoothingEnabled = false;
+GRAPHICS.drawBox = function(x, y, width, height, color){
+  let ctx = GRAPHICS.getContext();
+  ctx.imageSmoothingEnabled = false;
+  if(color){
+    ctx.strokeStyle = color;
+  }
+  
   // Top
   GRAPHICS.drawLine(x, y, x+width, y);
   // Left
@@ -139,7 +146,8 @@ GRAPHICS.drawBox = function(x, y, width, height){
   GRAPHICS.drawLine(x, y+height, x+width, y+height);
   // Right
   GRAPHICS.drawLine(x+width, y, x+width, y+height);
-  GRAPHICS._context.imageSmoothingEnabled = false;
+  ctx.strokeStyle = SETTINGS.defaultColor;
+  ctx.imageSmoothingEnabled = false;
 };
 
 GRAPHICS.drawTooltip = function(text){
@@ -192,6 +200,8 @@ GRAPHICS.drawImage = function(image, x, y, width, height){
   GRAPHICS._context.imageSmoothingEnabled = false;
 };
 
+
+
 // Draw text at static point
 GRAPHICS.drawText = function(text, x, y, _textSize, color){
   let ctx = GRAPHICS.getContext();
@@ -209,6 +219,14 @@ GRAPHICS.drawText = function(text, x, y, _textSize, color){
   ctx.fillText(text, x, y);
   ctx.fillStyle = SETTINGS.defaultColor;
   ctx.imageSmoothingEnabled = false;
+};
+
+
+GRAPHICS.getTextSize = function(text, textSize){
+  let ctx = GRAPHICS.getContext();
+  ctx.font = "" + textSize + "px Arial";
+  let measurement = ctx.measureText(text);
+  return VECTOR2.new(measurement.width, measurement.height);
 };
 
 // Draw text relative to viewport

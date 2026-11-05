@@ -55,6 +55,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
         cm.notificationsBar.draw();
         cm.foodbar.draw();
         cm.paperdoll.draw();
+        cm.button.draw();
         if(cm.dragged == null){
             return;
         }
