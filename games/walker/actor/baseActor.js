@@ -356,5 +356,13 @@ ACTOR.new = function(){
       atr.toggleItemsDrawn();
     }
   };
+  atr.canStoreItem = function(item){
+    let spaceNeeded = item.quantity;
+    let spaceAvailable = 0;
+    spaceAvailable += atr.hotbar.getAvailableSpaceForItem(item);
+    spaceAvailable += atr.inventory.getAvailableSpaceForItem(item);
+    return spaceNeeded <= spaceAvailable;
+  };
+
   return atr;
 };

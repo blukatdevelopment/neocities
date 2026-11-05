@@ -8,6 +8,7 @@ ENTITY.TYPES.Scenery = "Scenery";
 ENTITY.TYPES.ItemStack = "ItemStack";
 ENTITY.TYPES.Enemy = "Enemy";
 ENTITY.TYPES.Player = "Player";
+ENTITY.TYPES.Harvestable = "Harvestable";
 
 ENTITYFACTORY.Load = function(data){
     let entity = null;
@@ -22,6 +23,10 @@ ENTITYFACTORY.Load = function(data){
     }
     if(data.entityType == ENTITY.TYPES.Scenery){
         entity = ENTITYFACTORY.Scenery(data.sprite, data.position, data.rect);
+    }
+    if(data.entityType == ENTITY.TYPES.Harvestable){
+        entity = ENTITYFACTORY.Harvestable(data.items, data.emptySprite, data.fullSprite, data.rect, data.rigid);
+        entity.setPosition(data.position);
     }
     return entity;
 };

@@ -16,12 +16,17 @@ ENTITYFACTORY.Bush = function(){
 
 ENTITY.ENTITIES.BerryBush = "BerryBush";
 ENTITYFACTORY.BerryBush = function(){
-    let sprite = SPRITES.static.scenery64.berryBush;
-    let ent = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
-    ent.collider.rect = SHAPES.RECT.new(
+    let items = [
+        ITEMS.create(ITEMS.Names.RedBerry, 1, null)
+    ];
+    let emptySprite = SPRITES.static.scenery64.bush;
+    let fullSprite = SPRITES.static.scenery64.berryBush;
+    let rigid = true;
+    let rect = SHAPES.RECT.new(
         VECTOR2.new(0, 56),
         VECTOR2.new(64, 8)
     );
+    let ent = ENTITYFACTORY.Harvestable(items, emptySprite, fullSprite, rect, rigid);
     return ent;
 };
 

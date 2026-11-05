@@ -13,6 +13,9 @@ SPRITES.SpriteRenderer.new = function(sprite, position){
     sr.draw();
   };
   sr.draw = function(){
+    if(sr.sprite == null){
+      return;
+    }
     let pos = sr.position;
     if(sr.parent){
       pos = sr.parent.getPosition();

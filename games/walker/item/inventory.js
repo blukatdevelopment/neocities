@@ -80,5 +80,24 @@ ITEMS.Inventory.new = function(size){
     inv.canSetItem = function(slot, item){
         return true;
     };
+    inv.getAvailableSpaceForItem = function(item){
+        if(inv.findEmptySlot() > -1){
+            return item.stackSize;
+        }
+        let stacks = [];
+        for(let i = 0; i< inv.slots.length; i++){
+            if(inv.slots[i] && inv.slots[i].name === item.name && inv.slots[i].stackSpace() > 0){
+                stacks.push(inv.slots[i]);
+            }
+        }
+        if(stacks.length == 0){
+            return 0;
+        }
+        let space = 0;
+        for(let _item of stacks){
+            space += _item.stackSize - _item.quantity;
+        }
+        return space;
+    };
     return inv;
 };
