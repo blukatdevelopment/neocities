@@ -12,16 +12,7 @@ UI.COMPONENTS.Inventory.new = function(manager){
     inv.manager = manager;
     inv.activeSlot = 0;
     inv.slotCount = 9;
-    inv.active = false;
-    inv.update = function(){
-        if(INPUT.keyPress(INPUT.KEYS.K_TAB)){
-            inv.toggleActive();
-        }
-    };
     inv.draw = function(){
-        if(!inv.active){
-            return;
-        }
         let pos = inv.rect.position;
         SPRITES.renderSprite(pos.x, pos.y, inv.sprite.index, inv.sprite.sheet, DISPLAY_MODES.static);
         if(inv.linkedInv){
@@ -96,16 +87,6 @@ UI.COMPONENTS.Inventory.new = function(manager){
     inv.getHoveredItem = function(){
         let hoveredSlot = inv.getHoveredSlot();
         return inv.linkedInv.getItem(hoveredSlot);
-    };
-    inv.toggleActive = function(){
-        if(inv.active){
-            SCENE.setGameState(GAMESTATES.play);
-            inv.active = false;
-        }
-        else{
-            SCENE.setGameState(GAMESTATES.inventory);
-            inv.active = true;
-        }
     };
 
     return inv;

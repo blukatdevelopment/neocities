@@ -19,13 +19,6 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
     pd.slotPositions[GEAR.slots.special1] = VECTOR2.new(67,13);
     pd.slotPositions[GEAR.slots.special2] = VECTOR2.new(67,32);
     pd.slotPositions[GEAR.slots.special3] = VECTOR2.new(67,51);
-
-    pd.update = function(){
-        if(INPUT.keyPress(INPUT.KEYS.K_TAB)){
-            pd.toggleActive();
-        }
-
-    };
     pd.slotIndexToName = function(slotIndex){
         if(slotIndex < 0){
             return null;
@@ -37,9 +30,6 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
         return keys[slotIndex];
     };
     pd.draw = function(){
-        if(!pd.active){
-            return;
-        }
         let pos = pd.rect.position;
         SPRITES.renderSprite(pos.x, pos.y, pd.sprite.index, pd.sprite.sheet, DISPLAY_MODES.static);
         for(let slot of Object.keys(pd.slotPositions)){
@@ -57,16 +47,6 @@ UI.COMPONENTS.PaperDoll.new = function(manager){
             if(hoveredItem){
                 GRAPHICS.drawTooltip(hoveredItem.name);
             }
-        }
-    };
-    pd.toggleActive = function(){
-        if(pd.active){
-            SCENE.setGameState(GAMESTATES.play);
-            pd.active = false;
-        }
-        else{
-            SCENE.setGameState(GAMESTATES.inventory);
-            pd.active = true;
         }
     };
     pd.getItemBySlotName = function(slot){

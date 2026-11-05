@@ -24,9 +24,14 @@ SETTINGS.NotificationDuration = 3000;
 // States that effect rendering.
 let GAMESTATES = {};
 GAMESTATES.play = "play";
-GAMESTATES.inventory = "inventory";
+GAMESTATES.playerMenus = "inventory";
 GAMESTATES.dialogue = "dialogue";
 GAMESTATES.pause = "pause";
+
+let MENUS = {}
+MENUS.None = "None";
+MENUS.Inventory = "Inventory";
+MENUS.Crafting = "Crafting";
 
 // Graphics
 SETTINGS.viewportMin = 0;

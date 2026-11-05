@@ -68,7 +68,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
                 GRAPHICS.drawTooltip(hoveredItem.name);
             }
         }
-        else if(SCENE.getGameState() === GAMESTATES.inventory){
+        else if(SCENE.getGameState() === GAMESTATES.playerMenus){
             // Highlight slot that's hovered over
             let hoveredSlot = hb.getHoveredSlot();
             if(hoveredSlot > -1){

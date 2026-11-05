@@ -2,25 +2,45 @@
 # Manages in-game UI
 ##############################################################################*/
 UI.COMPONENTS.PlayerUIManager = {};
+
+
 UI.COMPONENTS.PlayerUIManager.new = function(){
     let cm = {};
     cm.hotbar = UI.COMPONENTS.Hotbar.new(cm);
     cm.inventory = UI.COMPONENTS.Inventory.new(cm);
-    cm.statusbar = UI.COMPONENTS.StatusBar.new();
+    cm.statusbar = UI.COMPONENTS.StatusBar.new(cm);
     cm.notificationsBar = UI.COMPONENTS.NotificationBar.new();
-    cm.foodbar = UI.COMPONENTS.FoodBar.new();
-    cm.paperdoll = UI.COMPONENTS.PaperDoll.new();
+    cm.foodbar = UI.COMPONENTS.FoodBar.new(cm);
+    cm.paperdoll = UI.COMPONENTS.PaperDoll.new(cm);
     cm.dragged = null;
+    cm.activeMenu = MENUS.None;
 
     cm.update = function(){
-        cm.hotbar.update();
-        cm.inventory.update();
-        cm.statusbar.update();
-        cm.foodbar.update();
-        cm.paperdoll.update();
-        if(SCENE.getGameState() !== GAMESTATES.inventory){
+        // Always update notifications
+        cm.notificationsBar.update();
+
+
+        if(INPUT.keyPress(INPUT.KEYS.K_TAB)){
+            console.log("Tab pressed");
+            if(cm.activeMenu == MENUS.None){
+                cm.activeMenu = MENUS.Inventory;
+                SCENE.setGameState(GAMESTATES.PlayerMenus);
+            }
+            else if(cm.activeMenu == MENUS.Inventory){
+                cm.activeMenu = MENUS.None;
+                SCENE.setGameState(GAMESTATES.Play);
+            }
+            else if(cm.activeMenu == MENUS.Crafting){
+                cm.activeMenu = MENUS.Inventory;
+            }
+        }
+
+        if(SCENE.getGameState() !== GAMESTATES.playerMenus){
+            cm.hotbar.update();
             return;
         }
+        
+
         if(INPUT.mouseClick(INPUT.LEFT_CLICK)){
             let draggedComponent = cm.getDraggedComponent();
             if(draggedComponent){
@@ -47,14 +67,28 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
             // Stop dragging
             cm.dragged = null;
         }
+
     };
     cm.draw = function(){
-        cm.hotbar.draw();
-        cm.inventory.draw();
-        cm.statusbar.draw();
+        // Always draw notifications bar
         cm.notificationsBar.draw();
-        cm.foodbar.draw();
-        cm.paperdoll.draw();
+
+        if(cm.activeMenu == MENUS.None){
+            cm.statusbar.draw();
+            cm.foodbar.draw();
+            cm.hotbar.draw();
+        }
+        else if(cm.activeMenu == MENUS.Inventory){
+            cm.hotbar.draw();
+            cm.inventory.draw();
+            cm.paperdoll.draw();
+            cm.statusbar.draw();
+            cm.foodbar.draw();
+        }
+        else if(cm.activeMenu == MENUS.Crafting){
+
+        }
+        
         if(cm.dragged == null){
             return;
         }

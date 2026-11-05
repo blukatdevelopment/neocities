@@ -2,13 +2,14 @@
 # Shows the health, energy, and magic of the player
 ##############################################################################*/
 UI.COMPONENTS.StatusBar = {};
-UI.COMPONENTS.StatusBar.new = function(){
+UI.COMPONENTS.StatusBar.new = function(manager){
     let sbRect = SHAPES.RECT.new(
         VECTOR2.new(320, 320),
         VECTOR2.new(80, 80)
     );
     let sprite = SPRITES.static.statusbar.statusbar;    
     let sb = UI.COMPONENTS.BaseComponent.new(sbRect, sprite);
+    sb.manager = manager;
     sb.stats = null;
     sb.recentThreshold = 3;
     sb.blinkDuration = 250;

@@ -7,7 +7,6 @@ UI.COMPONENTS.NotificationBar.new = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(40, 40)
     );
-    let sprite = SPRITES.static.statusbar.statusbar;    
     let nb = UI.COMPONENTS.BaseComponent.new(nbRect, null);
     nb.notifications = [];
     nb.expireTime = null;
