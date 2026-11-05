@@ -12,6 +12,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
     cm.notificationsBar = UI.COMPONENTS.NotificationBar.new();
     cm.foodbar = UI.COMPONENTS.FoodBar.new(cm);
     cm.paperdoll = UI.COMPONENTS.PaperDoll.new(cm);
+    cm.navBar = UI.COMPONENTS.MenuNavBar.new(cm);
     cm.dragged = null;
     cm.activeMenu = MENUS.None;
 
@@ -35,12 +36,16 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
             }
         }
 
-        if(SCENE.getGameState() !== GAMESTATES.playerMenus){
+        if(SCENE.getGameState() == GAMESTATES.play){
             cm.hotbar.update();
             return;
         }
-        
+        cm.navBar.update();
+        cm.handleDrag();
 
+    };
+    
+    cm.handleDrag = function(){
         if(INPUT.mouseClick(INPUT.LEFT_CLICK)){
             let draggedComponent = cm.getDraggedComponent();
             if(draggedComponent){
@@ -67,7 +72,6 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
             // Stop dragging
             cm.dragged = null;
         }
-
     };
     cm.draw = function(){
         // Always draw notifications bar
@@ -84,9 +88,10 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
             cm.paperdoll.draw();
             cm.statusbar.draw();
             cm.foodbar.draw();
+            cm.navBar.draw();
         }
         else if(cm.activeMenu == MENUS.Crafting){
-
+            cm.navBar.draw();
         }
         
         if(cm.dragged == null){

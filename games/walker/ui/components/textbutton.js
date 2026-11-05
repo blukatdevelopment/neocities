@@ -46,6 +46,9 @@ UI.COMPONENTS.TextButton.new = function(rect, text, onClick){
         // Draw inner border
         offset = 1;
         color = GRAPHICS.Colors.LightBrown;
+        let xOff = 3;
+        let center = btn.rect.center();
+        let textSize = 10;
         GRAPHICS.drawBox(
             pos.x+offset, pos.y+offset,
             size.x-offset, size.y-offset,
