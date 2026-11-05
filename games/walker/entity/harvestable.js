@@ -51,7 +51,7 @@ ENTITY.Harvestable.new = function(){
         }
         for(let item of h.items){
             interaction.initiator.pickUp(item.clone());
-            let message = "Picked up " + item.name;
+            let message = "Harvested " + item.name;
             if(item.quantity > 1){
                 message += "(" + item.quantity + ")";
             }

@@ -11,6 +11,7 @@ UI.COMPONENTS.NotificationBar.new = function(){
     let nb = UI.COMPONENTS.BaseComponent.new(nbRect, null);
     nb.notifications = [];
     nb.expireTime = null;
+    nb.rows = 3;
     nb.draw = function(){
         if(nb.notifications.length == 0){
             return;
@@ -24,7 +25,13 @@ UI.COMPONENTS.NotificationBar.new = function(){
         if(nb.expireTime == null){
             nb.expireTime = now + nb.notificationDuration();
         }
-        GRAPHICS.drawText(nb.notifications[0], 0, 20, 20, GRAPHICS.Colors.White);
+        let textHeight = 10;
+        for(let i = 0; i < nb.rows; i++){
+            let yOff = i * textHeight;
+            if(nb.notifications.length > i){
+                GRAPHICS.drawText(nb.notifications[i], 0, 20+yOff, 20, GRAPHICS.Colors.White);
+            }
+        }
     };
     nb.notificationDuration = function(){
         let base = SETTINGS.NotificationDuration;
