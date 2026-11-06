@@ -11,13 +11,34 @@ UI.COMPONENTS.CraftingMenu.new = function(manager){
     cm.pageSize = 5;
     cm.page = UTILITY.PagedArray.new(UI.COMPONENTS.CraftingMenu.getRecipeComponents(), cm.pageSize);
     cm.panel = UI.COMPONENTS.Panel.new(cm.rect);
+    cm.nextButton = UI.COMPONENTS.TextButton.new(
+        SHAPES.RECT.new(
+            VECTOR2.new(278, 288),
+            VECTOR2.new(41,20)
+        ),
+        "Next",
+        () => { cm.page.nextPage(); }
+    );
+    cm.prevButton = UI.COMPONENTS.TextButton.new(
+        SHAPES.RECT.new(
+            VECTOR2.new(278, 308),
+            VECTOR2.new(41,20)
+        ),
+        "Previous",
+        () => { cm.page.previousPage(); }
+    );
+    // Left: 278 Bottom: 328
     cm.update = function(){
         for(let recipe of cm.page.getPageElements()){
             recipe.update();
         }
+        cm.nextButton.update();
+        cm.prevButton.update();
     };
     cm.draw = function(){
         cm.panel.draw();
+        cm.nextButton.draw();
+        cm.prevButton.draw();
         let recipeHeight = 20;
 
         let recipes = cm.page.getPageElements();
