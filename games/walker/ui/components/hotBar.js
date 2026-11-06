@@ -65,7 +65,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
             GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
             let hoveredItem = hb.getHoveredItem();
             if(hoveredItem){
-                GRAPHICS.drawTooltip(hoveredItem.name);
+                GRAPHICS.drawTooltip(hoveredItem.toString());
             }
         }
         else if(SCENE.getGameState() === GAMESTATES.playerMenus){
@@ -76,7 +76,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
                 GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
                 let hoveredItem = hb.getHoveredItem();
                 if(hoveredItem){
-                    GRAPHICS.drawTooltip(hoveredItem.name);
+                    GRAPHICS.drawTooltip(hoveredItem.toString());
                 }
             }
         }
@@ -90,10 +90,12 @@ UI.COMPONENTS.Hotbar.new = function(manager){
             let rect = hb.getSlotRect(slot);
             SPRITES.renderSprite(rect.position.x, rect.position.y, item.sprite.index, item.sprite.sheet, DISPLAY_MODES.static);
             let quant = item.quantity;
-            let xOff = 1;
+            let xOff = 10;
             let yOff = 15;
-            let label = item.quantity + "/" + item.stackSize;
-            GRAPHICS.drawText(label, rect.position.x+xOff, rect.position.y+yOff, 10);
+            let label = item.quantity;
+            // Maybe try again later.
+            GRAPHICS.drawText(label, rect.position.x+xOff, rect.position.y+yOff, 20, GRAPHICS.Colors.Black);
+            GRAPHICS.drawText(label, rect.position.x+xOff, rect.position.y+yOff, 15, GRAPHICS.Colors.White);
         }
     };
     // Returns the rect for one inventory slot
