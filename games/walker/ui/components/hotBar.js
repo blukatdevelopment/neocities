@@ -62,7 +62,7 @@ UI.COMPONENTS.Hotbar.new = function(manager){
         if(SCENE.getGameState() === GAMESTATES.play){
             // Highlight active slot
             rect = hb.getSlotRect(hb.activeSlot);
-            GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y);
+            GRAPHICS.drawBox(rect.position.x, rect.position.y, rect.size.x, rect.size.y, GRAPHICS.Colors.Black);
             let hoveredItem = hb.getHoveredItem();
             if(hoveredItem){
                 GRAPHICS.drawTooltip(hoveredItem.toString());

@@ -137,15 +137,13 @@ GRAPHICS.drawBox = function(x, y, width, height, color){
   if(color){
     ctx.strokeStyle = color;
   }
-  
-  // Top
-  GRAPHICS.drawLine(x, y, x+width, y);
-  // Left
-  GRAPHICS.drawLine(x, y, x, y+height); 
-  // Bottom
-  GRAPHICS.drawLine(x, y+height, x+width, y+height);
-  // Right
-  GRAPHICS.drawLine(x+width, y, x+width, y+height);
+  console.log(ctx.strokeStyle);
+  let scaledX = GRAPHICS.scale(x);
+  let scaledY = GRAPHICS.scale(y);
+  let scaledWidth = GRAPHICS.scale(width);
+  let scaledHeight = GRAPHICS.scale(height);
+
+  ctx.strokeRect(scaledX, scaledY, scaledWidth, scaledHeight);
   ctx.strokeStyle = SETTINGS.defaultColor;
   ctx.imageSmoothingEnabled = false;
 };
