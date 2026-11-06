@@ -99,5 +99,29 @@ ITEMS.Inventory.new = function(size){
         }
         return space;
     };
+    inv.queryItemQuantity = function(itemName){
+        let quantity = 0;
+        for(let item of inv.slots){
+            if(item && item.name === itemName){
+                quantity += item.quantity;
+            }
+        }
+        return quantity;
+    };
+    inv.removeItemQuantity = function(itemName, quantity){
+        let quantityLeft = quantity + 0;
+        for(let i = 0; i < inv.slots.length; i++){
+            let item = inv.slots[i];
+            if(item != null){
+                if(quantityLeft < item.quantity){
+                    item.quantity -= quantityLeft;
+                    return;
+                }
+                quantityLeft -= item.quantity;
+                inv.slots[i] = null;
+            }
+        }
+        return quantityLeft;
+    };
     return inv;
 };

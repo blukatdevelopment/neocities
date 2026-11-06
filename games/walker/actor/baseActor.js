@@ -363,6 +363,47 @@ ACTOR.new = function(){
     spaceAvailable += atr.inventory.getAvailableSpaceForItem(item);
     return spaceNeeded <= spaceAvailable;
   };
-
+  atr.canCraft = function(recipe){
+    for(let ingredient of recipe.ingredients){
+      if(ingredient.quantity > atr.queryItemQuantity(ingredient.itemName)){
+        UTILITY.notification("Recipe requires more " + ingredient.itemName);
+        return false;
+      }
+    }
+    let product = ITEMS.getByName(recipe.product.itemName);
+    product.quantity = recipe.product.quantity;
+    if(!atr.canStoreItem(product)){
+      UTILITY.notification("Nowhere to put " + recipe.product.itemName);
+      return false;
+    }
+    return true;
+  };
+  atr.craft = function(recipe){
+    if(!atr.canCraft(recipe)){
+      return;
+    }
+    for(let ingredient of recipe.ingredients){
+      atr.removeItemQuantity(ingredient.itemName, ingredient.quantity);
+    }
+    let product = ITEMS.getByName(recipe.product.itemName);
+    product.quantity = recipe.product.quantity;
+    atr.pickUp(product);
+    let text = "Crafted " + product.name;
+    if(product.quantity > 1){
+      text += "(" + product.quantity + ")";
+    }
+    UTILITY.notification(text);
+  };
+  atr.queryItemQuantity = function(itemName){
+    let quantity = 0;
+    quantity += atr.inventory.queryItemQuantity(itemName);
+    quantity += atr.hotbar.queryItemQuantity(itemName);
+    return quantity;
+  };
+  atr.removeItemQuantity = function(itemName, quantity){
+    let quantityLeft = quantity;
+    quantityLeft = atr.inventory.removeItemQuantity(itemName, quantityLeft);
+    quantityLeft = atr.hotbar.removeItemQuantity(itemName, quantityLeft);
+  };
   return atr;
 };

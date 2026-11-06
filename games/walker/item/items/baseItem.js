@@ -46,6 +46,9 @@ ITEMS.BaseItem.new = function(){
         clone.durabilityMax = item.durabilityMax;
         return clone;
     };
+    item.toString = function(){
+        return item.name + "(" + item.quantity + ")";
+    };
     return item;
 };
 

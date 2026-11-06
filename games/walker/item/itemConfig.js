@@ -10,12 +10,19 @@ ITEMS.ItemList = [];
 
 ITEMS.getByName = function(name){
     for(let item of ITEMS.ItemList){
-        if(item.name === name){
-            return item;
+        if(item.name == name){
+            return item.clone();
         }
     }
-    console.log("Item " + name  + " not found.");
     return null;
+};
+
+ITEMS.getSpriteByName = function(name){
+    let item = ITEMS.getByName(name);
+    if(item == null){
+        return null;
+    }
+    return item.sprite;
 };
 
 

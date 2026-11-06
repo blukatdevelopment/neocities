@@ -41,3 +41,7 @@ let GEAR = {};
 GEAR.slots = {};
 GEAR.slotIndices = {};
 let RANDOM = {};
+let CRAFTING = {};
+CRAFTING.Config = {};
+CRAFTING.Recipes = [];
+CRAFTING.RecipeNames = {};

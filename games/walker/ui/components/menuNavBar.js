@@ -13,16 +13,16 @@ UI.COMPONENTS.MenuNavBar.new = function(manager){
             VECTOR2.new(278,328),
             VECTOR2.new(41,20)
         ),
-        "Inventory",
-        () => { mnb.manager.activeMenu = MENUS.Inventory; }
+        "Equip",
+        () => { mnb.manager.activeMenu = MENUS.Equip; }
     );
     mnb.craftingButton = UI.COMPONENTS.TextButton.new(
         SHAPES.RECT.new(
             VECTOR2.new(278, 348),
             VECTOR2.new(41,20)
         ),
-        "Crafting",
-        () => { mnb.manager.activeMenu = MENUS.Crafting; }
+        "Craft",
+        () => { mnb.manager.activeMenu = MENUS.Craft; }
     );
     
     mnb.update = function(){

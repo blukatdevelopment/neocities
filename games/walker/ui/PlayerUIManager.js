@@ -13,6 +13,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
     cm.foodbar = UI.COMPONENTS.FoodBar.new(cm);
     cm.paperdoll = UI.COMPONENTS.PaperDoll.new(cm);
     cm.navBar = UI.COMPONENTS.MenuNavBar.new(cm);
+    cm.craftingMenu = UI.COMPONENTS.CraftingMenu.new(cm);
     cm.dragged = null;
     cm.activeMenu = MENUS.None;
 
@@ -22,17 +23,16 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
 
 
         if(INPUT.keyPress(INPUT.KEYS.K_TAB)){
-            console.log("Tab pressed");
             if(cm.activeMenu == MENUS.None){
-                cm.activeMenu = MENUS.Inventory;
-                SCENE.setGameState(GAMESTATES.PlayerMenus);
+                cm.activeMenu = MENUS.Equip;
+                SCENE.setGameState(GAMESTATES.playerMenus);
             }
-            else if(cm.activeMenu == MENUS.Inventory){
+            else if(cm.activeMenu == MENUS.Equip){
                 cm.activeMenu = MENUS.None;
-                SCENE.setGameState(GAMESTATES.Play);
+                SCENE.setGameState(GAMESTATES.play);
             }
-            else if(cm.activeMenu == MENUS.Crafting){
-                cm.activeMenu = MENUS.Inventory;
+            else if(cm.activeMenu == MENUS.Craft){
+                cm.activeMenu = MENUS.Equip;
             }
         }
 
@@ -41,10 +41,13 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
             return;
         }
         cm.navBar.update();
+        if(cm.activeMenu == MENUS.Craft){
+            cm.craftingMenu.update();
+        }
         cm.handleDrag();
 
     };
-    
+
     cm.handleDrag = function(){
         if(INPUT.mouseClick(INPUT.LEFT_CLICK)){
             let draggedComponent = cm.getDraggedComponent();
@@ -82,7 +85,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
             cm.foodbar.draw();
             cm.hotbar.draw();
         }
-        else if(cm.activeMenu == MENUS.Inventory){
+        else if(cm.activeMenu == MENUS.Equip){
             cm.hotbar.draw();
             cm.inventory.draw();
             cm.paperdoll.draw();
@@ -90,8 +93,11 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
             cm.foodbar.draw();
             cm.navBar.draw();
         }
-        else if(cm.activeMenu == MENUS.Crafting){
+        else if(cm.activeMenu == MENUS.Craft){
+            cm.craftingMenu.draw();
             cm.navBar.draw();
+            cm.hotbar.draw();
+            cm.inventory.draw();
         }
         
         if(cm.dragged == null){

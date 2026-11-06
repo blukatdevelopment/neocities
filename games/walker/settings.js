@@ -30,8 +30,8 @@ GAMESTATES.pause = "pause";
 
 let MENUS = {}
 MENUS.None = "None";
-MENUS.Inventory = "Inventory";
-MENUS.Crafting = "Crafting";
+MENUS.Equip = "Equip";
+MENUS.Craft = "Craft";
 
 // Graphics
 SETTINGS.viewportMin = 0;
@@ -93,4 +93,5 @@ SETTINGS.init = function(){
 		SPRITES.loadStaticSprites(sheet);
 	}
 	ITEMS.init();
+    CRAFTING.Config.init();
 };
