@@ -8,7 +8,7 @@ UI.COMPONENTS.CraftingMenu.new = function(manager){
         VECTOR2.new(123,128),
         VECTOR2.new(155,200)
     );
-    cm.pageSize = 5;
+    cm.pageSize = 10;
     cm.page = UTILITY.PagedArray.new(UI.COMPONENTS.CraftingMenu.getRecipeComponents(), cm.pageSize);
     cm.panel = UI.COMPONENTS.Panel.new(cm.rect);
     cm.nextButton = UI.COMPONENTS.TextButton.new(
