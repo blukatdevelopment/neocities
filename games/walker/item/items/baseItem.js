@@ -47,7 +47,14 @@ ITEMS.BaseItem.new = function(){
         return clone;
     };
     item.toString = function(){
-        return item.name + "(" + item.quantity + ")";
+        let ret = item.name;
+        if(item.stackSize > 0){
+            ret += "(" + item.quantity + "/" + item.stackSize + ")";
+        }
+        else{
+            ret += "(" + item.quantity + ")"
+        }
+        return ret;
     };
     return item;
 };
