@@ -22,6 +22,7 @@ ACTOR.new = function(){
   atr.damageLabel = null;
   atr.damageLabelFrames = 0;
   atr.itemsDrawn = false;
+  atr.lootTable = false;
   atr.update = function(){
     atr.stateMachine.update();
     atr.agent.update();
@@ -410,6 +411,28 @@ ACTOR.new = function(){
     let quantityLeft = quantity;
     quantityLeft = atr.inventory.removeItemQuantity(itemName, quantityLeft);
     quantityLeft = atr.hotbar.removeItemQuantity(itemName, quantityLeft);
+  };
+  atr.die = function(){
+    console.log("Dead!");
+    if(atr.lootTable){
+      let loot = atr.lootTable.getLoot();
+      for(let item of loot){
+        atr.dropItem(item);
+      }
+    }
+    SCENE.destroyEntity(atr);
+  };
+  atr.dropItem = function(item){
+    // Create an item stack within short range of body
+    console.log("Dropping item "+ item.toString());
+
+    let itemStack = ENTITY.ItemStack.new(item);
+    let position = atr.position.clone();
+    let drift = 32;
+    position.x += UTILITY.randRange(-drift, drift);
+    position.y += UTILITY.randRange(-drift, drift);
+    itemStack.position = position;
+    SCENE.createEntity(itemStack);
   };
   return atr;
 };

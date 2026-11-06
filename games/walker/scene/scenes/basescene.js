@@ -13,6 +13,7 @@ SCENE.SCENES.BaseScene = function(){
     bs.getGameState  = function(){
         return bs.gameState;
     };
+    bs.createEntity = function(entity){};
     bs.destroyEntity = function(entity){};
     bs.debugMessage = function(){};
     bs.notification = function(message){};

@@ -58,6 +58,11 @@ SCENE.notification = function(message){
   activeScene.notification(message);
 };
 
+SCENE.createEntity = function(entity){
+  var activeScene = SCENE.getActiveScene();
+  activeScene.createEntity(entity);
+};
+
 SCENE.destroyEntity = function(entity){
   var activeScene = SCENE.getActiveScene();
   activeScene.destroyEntity(entity);

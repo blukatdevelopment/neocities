@@ -24,7 +24,9 @@ SCENE.SCENES.Game = function(){
     GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
     gm.levelRenderer.update();
   };
-
+  gm.createEntity = function(entity){
+    gm.levelRenderer.addEntity(entity);
+  };
   gm.destroyEntity = function(entity){
     gm.levelRenderer.destroyEntity(entity);
   };

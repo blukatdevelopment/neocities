@@ -37,5 +37,12 @@ ACTORFACTORY.slime = function(){
   se.stats = STATS.StatsController.new();
   se.stats.setAttributeValue(STATS.Attributes.healthMax, 3);
   se.stats.setAttributeValue(STATS.Attributes.speed, 1.5);
+
+  let lootTable = ITEMS.LootTable.new();
+  lootTable.addItem(ITEMS.getByName(ITEMS.Names.Apple), 2, 1);
+  lootTable.addItem(ITEMS.getByName(ITEMS.Names.RedBerry), 1, 3);
+  lootTable.addItem(ITEMS.getByName(ITEMS.Names.BlueBerry), 2, 3);
+  lootTable.addItem(ITEMS.getByName(ITEMS.Names.GreenBerry), 3, 50);
+  se.lootTable = lootTable;
   return se;
 };
