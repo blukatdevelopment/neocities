@@ -137,6 +137,7 @@ GRAPHICS.drawBox = function(x, y, width, height, color){
   if(color){
     ctx.strokeStyle = color;
   }
+  ctx.lineWidth = 2;
   console.log(ctx.strokeStyle);
   let scaledX = GRAPHICS.scale(x);
   let scaledY = GRAPHICS.scale(y);
