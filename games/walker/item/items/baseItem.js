@@ -24,25 +24,25 @@ ITEMS.BaseItem.new = function(){
         }
     };
     item.stack = function(quantity){
-        item.quantity += quantity;
-        let overflow = item.quantity - item.stackSize;
-        if(overflow > 0){
-            item.quantity = item.stackSize;
+        let space = item.stackSize - item.quantity;
+        let quantityStored = space;
+        if(space > quantity){
+            quantityStored = quantity;
         }
-        if(overflow < 0){
-            return 0;
-        }
+        let overflow = quantity - quantityStored;
+
+        item.quantity += quantityStored;
         return overflow;
     };
     item.use = function(){};
     item.clone = function(){
         let clone = ITEMS.BaseItem.new();
         clone.name = item.name;
-        clone.description = item.description;
         clone.sprite = item.sprite;
         clone.quantity = item.quantity;
         clone.stackSize = item.stackSize;
         clone.durability = item.durability;
+        clone.description = item.description;
         clone.durabilityMax = item.durabilityMax;
         return clone;
     };

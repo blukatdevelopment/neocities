@@ -27,7 +27,10 @@ ITEMS.Inventory.new = function(size){
     };
     inv.getItem = function(slot){
         if(slot > -1 && slot < inv.size){
-            return inv.slots[slot];
+            let item = inv.slots[slot];
+            if(item){
+                return item.clone();
+            }
         }
         return null;
     };
@@ -38,36 +41,39 @@ ITEMS.Inventory.new = function(size){
     };
     // Returns overflow quantity
     inv.pickUp = function(_item){
+        let quantityLeft = _item.quantity;
         let item = _item.clone();
         if(item.stackSize > 0){
-            item.quantity = inv.stackItem(item);
+            quantityLeft = inv.stackItem(item);
         }
-        if(item.quantity > 0){
-            let slot = inv.findEmptySlot();
-            if(slot > -1){
-                inv.slots[slot] = item.clone();
-                return 0;
+        if(quantityLeft == 0){
+            return 0;
+        }
+
+        item = _item.clone();
+        item.quantity = quantityLeft;
+
+        for(let i = 0; i < inv.slots.length; i++){
+            if(inv.slots[i] == null){
+                inv.slots[i] = item;
+                return 0
             }
         }
-        return item.quantity;
+        
+        return quantityLeft;
     };
     // Returns quantity overflow after adding item stacks to existing stacks
     inv.stackItem = function(_item){
-        let item = _item.clone();
-        let stackingSlot = inv.findStackingSlot(item);
-        while(stackingSlot > -1 && item.quantity > 0){
-            item.quantity = inv.slots[stackingSlot].stack(item.quantity);
-            stackingSlot = inv.findStackingSlot(item);
-        }
-        return item.quantity;
-    };
-    inv.findStackingSlot = function(item){
+        let quantityLeft = _item.quantity;
         for(let i = 0; i< inv.slots.length; i++){
-            if(inv.slots[i] && inv.slots[i].name === item.name && inv.slots[i].stackSpace() > 0){
-                return i;
+            if(inv.slots[i] && _item.name == inv.slots[i].name){
+                quantityLeft = inv.slots[i].stack(quantityLeft);
+            }
+            if(quantityLeft == 0){
+                return 0;
             }
         }
-        return -1;
+        return quantityLeft;
     };
     inv.findEmptySlot = function(){
         for(let i = 0; i< inv.slots.length; i++){
@@ -109,13 +115,19 @@ ITEMS.Inventory.new = function(size){
         return quantity;
     };
     inv.removeItemQuantity = function(itemName, quantity){
+        if(quantity == null){
+            return 0;
+        }
         let quantityLeft = quantity + 0;
         for(let i = 0; i < inv.slots.length; i++){
+            if(quantityLeft < 1){
+                return quantityLeft;
+            }
             let item = inv.slots[i];
-            if(item != null){
+            if(item != null && itemName == item.name){
                 if(quantityLeft < item.quantity){
-                    item.quantity -= quantityLeft;
-                    return;
+                    item.quantity -= quantityLeft;   
+                    return 0;
                 }
                 quantityLeft -= item.quantity;
                 inv.slots[i] = null;

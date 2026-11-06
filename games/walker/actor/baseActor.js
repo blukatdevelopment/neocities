@@ -271,12 +271,18 @@ ACTOR.new = function(){
     return distance < SETTINGS.interactionRange;
   };
   atr.pickUp = function(_item){
+    let quantityLeft = _item.quantity;
     let item = _item.clone();
-    item.quantity = atr.hotbar.pickUp(item);
-    if(item.quantity > 0){
-      item.quantity = atr.inventory.pickUp(item);
+    //console.log("stashing " + item.quantity + " into hotbar");
+    quantityLeft = atr.hotbar.pickUp(item);
+
+    if(quantityLeft > 0){
+      item = _item.clone();
+      item.quantity = quantityLeft;
+      quantityLeft = atr.inventory.pickUp(item);
+
     }
-    return item.quantity;
+    return quantityLeft;
   };
   atr.useItem = function(){
     let item = atr.hotbar.getActiveItem();

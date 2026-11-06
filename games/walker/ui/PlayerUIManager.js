@@ -44,8 +44,9 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
         if(cm.activeMenu == MENUS.Craft){
             cm.craftingMenu.update();
         }
-        cm.handleDrag();
-
+        if(cm.activeMenu == MENUS.Equip){
+            cm.handleDrag();    
+        }
     };
 
     cm.handleDrag = function(){
