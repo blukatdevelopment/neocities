@@ -66,9 +66,22 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
                 let destSlot = destComponent.getHoveredSlot();
                 let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
                 let displacedItem = destComponent.getItem(destSlot);
-                
-                // Swap contents of slots
-                if(destComponent.canSetItem(destSlot, draggedItem) && cm.dragged.component.canSetItem(cm.dragged.slot, displacedItem)){
+                let nullCheck = draggedItem != null && displacedItem != null;
+                if(nullCheck && draggedItem.name == displacedItem.name){
+                    // Try to stack like items. Do not swap places.
+                    let space = displacedItem.stackSpace();
+                    if(space >= draggedItem.quantity){
+                        displacedItem.stack(draggedItem.quantity);
+                        cm.dragged.component.setItem(cm.dragged.slot, null)
+                    }
+                    else{
+                        let overflow = draggedItem.quantity - space;
+                        displacedItem.stack(space);
+                        draggedItem.quantity = overflow;
+                    }
+                }
+                else if(destComponent.canSetItem(destSlot, draggedItem) && cm.dragged.component.canSetItem(cm.dragged.slot, displacedItem)){
+                    // Swap contents of slots
                     destComponent.setItem(destSlot, draggedItem);
                     cm.dragged.component.setItem(cm.dragged.slot, displacedItem);
                 }

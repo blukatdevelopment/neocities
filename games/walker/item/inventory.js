@@ -29,7 +29,7 @@ ITEMS.Inventory.new = function(size){
         if(slot > -1 && slot < inv.size){
             let item = inv.slots[slot];
             if(item){
-                return item.clone();
+                return item;
             }
         }
         return null;
