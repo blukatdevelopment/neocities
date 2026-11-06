@@ -86,6 +86,13 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
                     cm.dragged.component.setItem(cm.dragged.slot, displacedItem);
                 }
             }
+            else if(cm.dragged){
+                // Drop item
+                let player = SCENE.getPlayerOne();
+                let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
+                player.dropItem(draggedItem);
+                cm.dragged.component.setItem(cm.dragged.slot, null);
+            }
             // Stop dragging
             cm.dragged = null;
         }
