@@ -65,6 +65,7 @@ ENTITY.baseEntity.new = function(){
     be.pickUp = function(item){ return item.quantity; };
     be.getData = function(){
         let data = ENTITY.Data.new(be.entityType, be.position);
+        data.name = be.name;
         data.sprite = be.renderer.sprite;
         data.rect = be.collider.rect;
         return data;

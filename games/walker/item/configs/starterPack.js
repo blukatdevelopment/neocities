@@ -105,5 +105,19 @@ ITEMS.Config.starterPack = function(){
             ]
     });
 
+    ITEMS.Names.Venison = "Venison";
+    config.push({
+            type: ITEMS.Types.Food,
+            name: ITEMS.Names.Venison,
+            description: "Very savory, lean meat",
+            sprite: SPRITES.static.items.MeatSteak,
+            stackSize: 8,
+            effects: [
+                STATS.Effect.FoodHealth(10, 5 * TIME.minute, ITEMS.Names.BlueBerry),
+                STATS.Effect.FoodEnergy(10, 5 * TIME.minute, ITEMS.Names.BlueBerry),
+                STATS.Effect.FoodMagic(10, 5 * TIME.minute, ITEMS.Names.BlueBerry)
+            ]
+    });
+
     return config;
 };

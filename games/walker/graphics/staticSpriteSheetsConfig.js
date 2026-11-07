@@ -23,7 +23,11 @@ SETTINGS.staticSheetList.push({
         "RedBerry", "GreenBerry", "BlueBerry", "Flint",
         "FlintKnife", "FlintAxe", "FlintSpear", "FlintSword",
         "LeatherHelm","LeatherTunic","LeatherLeggings","LeatherShoes",
-        "LeatherCape", "Leather"
+        "LeatherCape", "Leather", "YellowShroom1", "YellowShroom2",
+        "YellowShroom3", "GreyShroom", "MeatSteak", "MeatDrumstick",
+        "MeatLeg", "Flower1", "Flower2", "Flower3",
+        "Flower4", "Flower5", "Flower6", "SeedPouch",
+        "Grass", "Shrub1", "Shrub2", "Shrub3"
     ]
 });
 

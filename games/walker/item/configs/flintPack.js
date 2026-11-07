@@ -73,7 +73,7 @@ ITEMS.Config.flintPack = function(){
             type: ITEMS.Types.Gear,
             name: ITEMS.Names.FlintSword,
             description: "A tool of war",
-            sprite: SPRITES.static.items.FlintSpear,
+            sprite: SPRITES.static.items.FlintSword,
             stackSize: 1,
             effects: [],
             slots: [

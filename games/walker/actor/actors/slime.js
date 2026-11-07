@@ -1,7 +1,8 @@
-ACTORFACTORY.slime = function(){
+ACTOR.Names.Slime = "Slime"
+ACTORFACTORY.Slime = function(){
   let config = UTILITY.getActorConfig("slime");
   let se = ACTOR.new();
-  se.entityType = ENTITY.TYPES.Enemy;
+  se.entityType = ENTITY.TYPES.NPC;
   let anm = SPRITES.Animator.new();
   anm.animation = SPRITES.animations[config.name][ACTOR_ANIMATIONS.idleLeft]
   let asm = ACTOR.AnimationStateMachine.new(name, SPRITES.animations[config.name], anm);
@@ -15,7 +16,7 @@ ACTORFACTORY.slime = function(){
   se.setCollider(PHYSICS.BoxCollider.new());
   se.getCollider().rect.position = VECTOR2.new(13, 0);
   se.getCollider().rect.size = VECTOR2.new(11, 32);
-  se.name = "Slime";
+  se.name = ACTOR.Names.Slime;
   se.label = se.name;
 
   se.attacks.push(STATS.AttackFactory.Unarmed());

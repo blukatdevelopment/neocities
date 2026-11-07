@@ -38,6 +38,24 @@ SETTINGS.actorList.push({
 });
 
 SETTINGS.actorList.push({
+    name: "deer",
+    sheet: "deer_sprites.png",
+    resolutionX: 32,
+    resolutionY: 32,
+    cells: 8,
+    animations: [
+        [ ACTOR_ANIMATIONS.idleUp, 0, 0],
+        [ ACTOR_ANIMATIONS.idleDown, 1, 1],
+        [ ACTOR_ANIMATIONS.idleRight, 2, 2],
+        [ ACTOR_ANIMATIONS.idleLeft, 3, 3],
+        [ ACTOR_ANIMATIONS.walkUp, 4, 5],
+        [ ACTOR_ANIMATIONS.walkDown, 6, 7],
+        [ ACTOR_ANIMATIONS.walkRight, 8, 9],
+        [ ACTOR_ANIMATIONS.walkLeft, 10, 11]
+    ]
+});
+
+SETTINGS.actorList.push({
     name: "slime",
     sheet: "slime.png",
     resolutionX: 32,

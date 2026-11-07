@@ -24,10 +24,13 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
     slimePit.position = VECTOR2.new(500, 100);
     cg.addEntity(slimePit);
 
-    let slime = ACTORFACTORY.slime();
+    let slime = ACTORFACTORY.Slime();
     slime.position = VECTOR2.new(600, 100);
     cg.addEntity(slime);
-    
+
+    let deer = ACTORFACTORY.Deer();
+    deer.position = VECTOR2.new(100, 100);
+    cg.addEntity(deer);
 
     let item = null;
     for(let i = 0; i < 10; i++){

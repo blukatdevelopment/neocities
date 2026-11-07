@@ -6,7 +6,7 @@
 ENTITY.TYPES = {};
 ENTITY.TYPES.Scenery = "Scenery";
 ENTITY.TYPES.ItemStack = "ItemStack";
-ENTITY.TYPES.Enemy = "Enemy";
+ENTITY.TYPES.NPC = "NPC";
 ENTITY.TYPES.Player = "Player";
 ENTITY.TYPES.Harvestable = "Harvestable";
 
@@ -17,8 +17,9 @@ ENTITYFACTORY.Load = function(data){
         entity = ENTITYFACTORY.ItemStack(data.item, 1, 1);
         entity.setPosition(data.position);
     }
-    if(data.entityType == ENTITY.TYPES.Enemy){
-        entity = ACTORFACTORY.slime();
+    let actorNames = Object.keys(ACTOR.Names);
+    if(data.entityType == ENTITY.TYPES.NPC && actorNames.includes(data.name)){
+        entity = ACTORFACTORY[data.name]();
         entity.setPosition(data.position);
     }
     if(data.entityType == ENTITY.TYPES.Scenery){

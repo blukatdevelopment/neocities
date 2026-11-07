@@ -15,6 +15,7 @@ STATS.FoodStatus = {};
 let UTILITY = {};
 let ACTORFACTORY = {};
 let ACTOR = {};
+ACTOR.Names = {};
 let AGENT = {};
 let ENTITYFACTORY = {};
 let ENTITY = {};

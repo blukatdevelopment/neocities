@@ -12,7 +12,7 @@ LEVEL.Generate.Cell.GrassSlimePit = function(data, rect){
         center.add(VECTOR2.new(50, 50))
     ];
     for(let slimePos of slimePositions){
-        let slime = ACTORFACTORY.slime();
+        let slime = ACTORFACTORY.Slime();
         slime.teleport(slimePos);
         cg.addEntity(slime);
     }
