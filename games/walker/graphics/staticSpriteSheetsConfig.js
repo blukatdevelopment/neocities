@@ -16,12 +16,14 @@ SETTINGS.staticSheetList.push({
     sheet: "items.png",
     resolutionX: 16,
     resolutionY: 16,
-    cells: 16,
+    cells: 22,
     sprites: [
         "Apple", "Seeds", "Talon", "Stick",
         "Rope", "Rock", "RockGrass", "Root",
-        "RedBerry", "GreenBerry", "BlueBerry", "Placeholder",
-        "Placeholder", "Placeholder", "Placeholder", "Placeholder"
+        "RedBerry", "GreenBerry", "BlueBerry", "Flint",
+        "FlintKnife", "FlintAxe", "FlintSpear", "FlintSword",
+        "LeatherHelm","LeatherTunic","LeatherLeggings","LeatherShoes",
+        "LeatherCape", "Leather"
     ]
 });
 

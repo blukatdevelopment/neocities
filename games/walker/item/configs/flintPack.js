@@ -9,7 +9,7 @@ ITEMS.Config.flintPack = function(){
             type: ITEMS.Types.Base,
             name: ITEMS.Names.Flint,
             description: "An upgrade from bone and wood",
-            sprite: SPRITES.static.items.Apple,
+            sprite: SPRITES.static.items.Flint,
             stackSize: 1
     });
 
@@ -18,7 +18,7 @@ ITEMS.Config.flintPack = function(){
             type: ITEMS.Types.Gear,
             name: ITEMS.Names.FlintKnife,
             description: "Good for cutting cordage.",
-            sprite: SPRITES.static.items.Apple,
+            sprite: SPRITES.static.items.FlintKnife,
             stackSize: 1,
             effects: [],
             slots: [
@@ -37,7 +37,7 @@ ITEMS.Config.flintPack = function(){
             type: ITEMS.Types.Gear,
             name: ITEMS.Names.FlintAxe,
             description: "Good for felling trees.",
-            sprite: SPRITES.static.items.Apple,
+            sprite: SPRITES.static.items.FlintAxe,
             stackSize: 1,
             effects: [],
             slots: [
@@ -55,7 +55,7 @@ ITEMS.Config.flintPack = function(){
             type: ITEMS.Types.Gear,
             name: ITEMS.Names.FlintSpear,
             description: "A tool of the hunt",
-            sprite: SPRITES.static.items.Apple,
+            sprite: SPRITES.static.items.FlintSpear,
             stackSize: 1,
             effects: [],
             slots: [
@@ -73,7 +73,7 @@ ITEMS.Config.flintPack = function(){
             type: ITEMS.Types.Gear,
             name: ITEMS.Names.FlintSword,
             description: "A tool of war",
-            sprite: SPRITES.static.items.Apple,
+            sprite: SPRITES.static.items.FlintSpear,
             stackSize: 1,
             effects: [],
             slots: [
