@@ -119,5 +119,29 @@ ITEMS.Config.starterPack = function(){
             ]
     });
 
+    ITEMS.Names.Resin = "Resin";
+    config.push({
+            type: ITEMS.Types.Base,
+            name: ITEMS.Names.Resin,
+            description: "Sticky and flammable",
+            sprite: SPRITES.static.items.Resin,
+            stackSize: 8,
+    });
+    ITEMS.Names.Torch = "Torch";
+    config.push({
+            type: ITEMS.Types.Gear,
+            name: ITEMS.Names.Torch,
+            description: "One a day keeps the doctor away",
+            sprite: SPRITES.static.items.Torch,
+            stackSize: 8,
+            effects: [
+                STATS.Effect.Torch(50, null, ITEMS.Types.Gear + "" + ITEMS.Names.Torch)
+            ],
+            slots: [
+                GEAR.slots.hand,
+                GEAR.slots.offHand
+            ]
+    });
+
     return config;
 };

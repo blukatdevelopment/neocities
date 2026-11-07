@@ -82,4 +82,12 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
     item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintSpear, 1, null);
     item.position = VECTOR2.new(190, 600);
     cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.Torch, 1, null);
+    item.position = VECTOR2.new(210, 600);
+    cg.addEntity(item);
+
+    item = ENTITYFACTORY.ItemStack(ITEMS.Names.Torch, 1, null);
+    item.position = VECTOR2.new(240, 600);
+    cg.addEntity(item);
 };

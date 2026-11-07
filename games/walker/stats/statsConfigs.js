@@ -7,6 +7,7 @@ STATS.Attributes.healthMax = "healthMax";
 STATS.Attributes.energyMax = "energyMax";
 STATS.Attributes.magicMax = "magicMax";
 STATS.Attributes.armorValue = "armorValue";
+STATS.Attributes.lightRadius = "lightRadius";
 
 
 STATS.Resources = {};
@@ -28,6 +29,7 @@ STATS.Effect.Names.HealthMax = "HealthMax";
 STATS.Effect.Names.EnergyMax = "EnergyMax";
 STATS.Effect.Names.MagicMax = "MagicMax";
 STATS.Effect.Names.Armor = "Armor";
+STATS.Effect.Names.Torch = "Torch";
 
 STATS.Effect.Sources = {};
 STATS.Effect.Sources.Body = "Body";
@@ -39,10 +41,9 @@ STATS.getDefaultAttributes = function(){
   attributes[STATS.Attributes.energyMax] = STATS.Attribute.new(STATS.Attributes.energyMax, 10);
   attributes[STATS.Attributes.magicMax] = STATS.Attribute.new(STATS.Attributes.magicMax, 0);
   attributes[STATS.Attributes.armorValue] = STATS.Attribute.new(STATS.Attributes.armorValue, 0);
+  attributes[STATS.Attributes.lightRadius] = STATS.Attribute.new(STATS.Attributes.lightRadius, 0);
   return attributes;
 };
-
-
 
 
 STATS.getDefaultResources = function(){
@@ -147,4 +148,14 @@ STATS.Effect.EnergyRegen = function(interval, resource, source){
     );
   regen.blockedByEffect = STATS.Effect.Names.SprintCost;
   return regen;
+};
+
+STATS.Effect.Torch = function(amount, duration, source){
+  return STATS.Effect.AttributeEffect.new(
+    STATS.Effect.Names.Torch, // name
+    source, // Source
+    STATS.Attributes.lightRadius, // attribute
+    amount, // modifier
+    duration // Duration
+  );
 };

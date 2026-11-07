@@ -7,7 +7,8 @@ LEVEL.Renderer.new = function(){
         player: null,
         entities: [],
         scenery: [], // excluded from collisions
-        ui: null
+        ui: null,
+        lighting: GRAPHICS.LightingController.new()
     };
     lr.init = function(){
         GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
@@ -74,6 +75,7 @@ LEVEL.Renderer.new = function(){
         for(let ent of lr.getRenderSortedEntities()){
             ent.draw();
         }
+        lr.lighting.draw();
         lr.ui.draw();
     }
     lr.getRenderSortedEntities = function(){
@@ -119,5 +121,10 @@ LEVEL.Renderer.new = function(){
             lr.ui.notificationsBar.notification(message);
         }
     };
+    lr.emitLight = function(light){
+        if(lr.lighting){
+            lr.lighting.emitLight(light);
+        }
+    }
     return lr;
 };

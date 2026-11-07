@@ -33,6 +33,17 @@ ACTOR.new = function(){
       atr.stats.update();
     }
   };
+  atr.emitLight = function(radius){
+    let rect = SHAPES.RECT.new(
+      VECTOR2.new(0,0),
+      VECTOR2.new(radius*2, radius*2)
+    );
+    let centeredPos = atr.centeredPosition();
+    rect.recenter(centeredPos);
+    let color = GRAPHICS.Colors.Yellow15;
+    let light = GRAPHICS.LightSource.new(rect, radius, color);
+    SCENE.emitLight(light);
+  };
   atr.teleport = function(destination){
     atr.position = destination;
     atr.prevPosition = destination;
@@ -86,6 +97,13 @@ ACTOR.new = function(){
     }
     if(atr.damageLabelFrames > 0){
       atr.damageLabelFrames -= 1;
+    }
+    if(atr.stats == null){
+      return;
+    }
+    let lightRadius = atr.stats.getAttribute(STATS.Attributes.lightRadius);
+    if(lightRadius > 0){
+      atr.emitLight(lightRadius);
     }
   };
   atr.toggleItemsDrawn = function(){

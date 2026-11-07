@@ -36,5 +36,8 @@ SCENE.SCENES.Game = function(){
   gm.getPlayerOne = function(){
     return gm.levelRenderer.player;
   };
+  gm.emitLight = function(light){
+    gm.levelRenderer.emitLight(light);
+  };
   return gm;
 };

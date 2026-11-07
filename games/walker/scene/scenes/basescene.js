@@ -17,6 +17,7 @@ SCENE.SCENES.BaseScene = function(){
     bs.destroyEntity = function(entity){};
     bs.debugMessage = function(){};
     bs.notification = function(message){};
-    bs.getPlayerOne = function(){ return null; }
+    bs.getPlayerOne = function(){};
+    bs.emitLight = function(light){};
     return bs;
 };

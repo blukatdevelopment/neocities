@@ -20,6 +20,7 @@ GRAPHICS.Colors.Blue = "rgb(65, 97, 251)";
 GRAPHICS.Colors.Green = "rgb(81, 162, 0)";
 GRAPHICS.Colors.Black = "black";
 GRAPHICS.Colors.White = "rgb(255, 255, 255)";
+GRAPHICS.Colors.Yellow = "rgb(235 211 32)";
 
 
 // Alpha colors
@@ -28,6 +29,7 @@ GRAPHICS.Colors.White50 = "rgb(255 255 255 / 50%)";
 GRAPHICS.Colors.Red50 = "rgb(178 16 48 / 50%)";
 GRAPHICS.Colors.Green50 = "rgb(81 162 0 / 50%)";
 GRAPHICS.Colors.Blue50 = "rgb(65 97 251 / 50%)";
+GRAPHICS.Colors.Yellow15 = "rgb(235 211 32 / 15%)";
 
 GRAPHICS.isOnScreen = function(rect){
   let cr = GRAPHICS._camera.rect;

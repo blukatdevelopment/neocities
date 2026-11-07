@@ -107,3 +107,8 @@ SCENE.getPlayerOne = function(){
   var activeScene = SCENE.getActiveScene();
   return activeScene.getPlayerOne();
 };
+
+SCENE.emitLight = function(light){
+  var activeScene = SCENE.getActiveScene();
+  return activeScene.emitLight(light);
+};
