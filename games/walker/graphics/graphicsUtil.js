@@ -58,6 +58,12 @@ GRAPHICS.centerCamera = function(point){
   GRAPHICS._camera.move(centered);
 };
 
+GRAPHICS.panCamera = function(vector){
+  let cam = GRAPHICS._camera;
+  let dest = vector.add(cam.rect.center());
+  GRAPHICS.centerCamera(dest);
+};
+
 // Returns position relative to camera VECTOR2
 GRAPHICS.relativeToCamera = function(point){
   //console.log("From " + point.toString() + " to " + GRAPHICS._camera.rect.position.toString());

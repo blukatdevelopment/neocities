@@ -48,7 +48,9 @@ LEVEL.Renderer.new = function(){
                 }
             }
         }
-        lr.ui.update();
+        if(lr.ui){
+            lr.ui.update();
+        }
         lr.updateCursor();
         lr.drawLevel();
         if(INPUT.keyPress(INPUT.KEYS.K_F)){
@@ -80,7 +82,10 @@ LEVEL.Renderer.new = function(){
             ent.draw();
         }
         lr.lighting.draw();
-        lr.ui.draw();
+        if(lr.ui){
+            lr.ui.draw();    
+        }
+        
     }
     lr.getRenderSortedEntities = function(){
         let onScreen = [];

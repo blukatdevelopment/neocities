@@ -25,61 +25,46 @@ INPUT.KEYS = {
   K_7: 55,
   K_8: 56,
   K_9: 57,
-  K_W: 87,
   K_A: 65,
-  K_S: 83,
+  K_B: 66,
+  K_C: 67,
   K_D: 68,
   K_E: 69,
   K_F: 70,
+  K_G: 71,
+  K_H: 72,
+  K_I: 73,
+  K_J: 74,
+  K_K: 75,
+  K_L: 76,
   K_M: 77,
+  K_N: 78,
+  K_O: 79,
+  K_P: 80,
+  K_Q: 81,
   K_R: 82,
+  K_S: 83,
+  K_T: 84,
+  K_U: 85,
+  K_V: 86,
+  K_W: 87,
+  K_X: 88,
+  K_Y: 89,
+  K_Z: 90,
   K_SPACE: 32,
   K_TAB: 9,
-  K_LEFT_SHIFT: 16
+  K_LEFT_SHIFT: 16,
+  K_LEFT_CTRL: 17
 };
 
 // Configure which keys will be used for ondown
 var KEYS_USED = [
-  INPUT.KEYS.K_W, 
-  INPUT.KEYS.K_A,
-  INPUT.KEYS.K_S,
-  INPUT.KEYS.K_D,
-  INPUT.KEYS.K_E,
-  INPUT.KEYS.K_F,
-  INPUT.KEYS.K_SPACE,
-  INPUT.KEYS.K_M,
-  INPUT.KEYS.K_R,
-  INPUT.KEYS.K_1,
-  INPUT.KEYS.K_2,
-  INPUT.KEYS.K_3,
-  INPUT.KEYS.K_4,
-  INPUT.KEYS.K_5,
-  INPUT.KEYS.K_6,
-  INPUT.KEYS.K_7,
-  INPUT.KEYS.K_8,
-  INPUT.KEYS.K_9,
-  INPUT.KEYS.K_TAB,
-  INPUT.KEYS.K_LEFT_SHIFT
+
 ];
 
 // Configure keys to check for presses
 var KEY_PRESSES_USED = [
-  INPUT.KEYS.K_SPACE,
-  INPUT.KEYS.K_E,
-  INPUT.KEYS.K_F,
-  INPUT.KEYS.K_M,
-  INPUT.KEYS.K_R,
-  INPUT.KEYS.K_1,
-  INPUT.KEYS.K_2,
-  INPUT.KEYS.K_3,
-  INPUT.KEYS.K_4,
-  INPUT.KEYS.K_5,
-  INPUT.KEYS.K_6,
-  INPUT.KEYS.K_7,
-  INPUT.KEYS.K_8,
-  INPUT.KEYS.K_9,
-  INPUT.KEYS.K_TAB,
-  INPUT.KEYS.K_LEFT_SHIFT
+
 ];
 
 // Key state
@@ -220,6 +205,10 @@ INPUT.getMouseWheel = function(){
 };
 
 INPUT.initInput = function(){
+  for(let key of Object.keys(INPUT.KEYS)){
+    KEYS_USED.push(INPUT.KEYS[key]);
+    KEY_PRESSES_USED.push(INPUT.KEYS[key]);
+  }
   for(let i in KEYS_USED){
     let key = KEYS_USED[i];
     INPUT.activeKeys[key] = false;

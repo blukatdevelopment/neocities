@@ -29,6 +29,7 @@ let ITEMS = {};
 ITEMS.Config = {};
 ITEMS.Names = {};
 let LEVEL = {};
+LEVEL.Editor = {};
 LEVEL.Generate = {};
 var MAIN = {};
 var SETTINGS = {};
