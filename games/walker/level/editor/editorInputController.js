@@ -1,5 +1,5 @@
 /*##############################################################################
-# Handles most for level editor
+# Handles most input for level editor
 ##############################################################################*/
 LEVEL.Editor.EditorInputController = {};
 LEVEL.Editor.EditorInputController.new = function(parent){
@@ -14,8 +14,24 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         }
     };
     ic.handleSelectEntity = function(){
-        
+        let worldPoint = GRAPHICS.getWorldCursor();
+        //ic.parent.tooltip = worldPoint.toString();
+        if(!INPUT.mouseClick(INPUT.LEFT_CLICK)){
+            return;
+        }
+        let size = 10;
+        let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(size, size));
+        rect.recenter(worldPoint);
+        //console.log(rect.toString());
+        let colliders = ic.parent.physics.rectHitScan([], rect);
+        if(colliders.length > 0){
+            ic.parent.selected = colliders[0].parent;
+        }
+        else{
+            ic.parent.selected = null;
+        }
     };
+
     ic.handleCameraControls = function(){
         let vector = VECTOR2.new(0,0);
         let speed = 5;

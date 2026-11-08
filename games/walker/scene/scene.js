@@ -70,9 +70,11 @@ SCENE.destroyEntity = function(entity){
 
 SCENE.drawCursor = function(){
   let pos = GRAPHICS.getWorldCursor();
-
+  let cursorSize = 8;
   if(pos && SCENE._cursorSprite){
     let sprite = SCENE._cursorSprite;
+    pos.x -= cursorSize/2;
+    pos.y -= cursorSize/2;
     SPRITES.renderSprite(pos.x, pos.y, sprite.index, sprite.sheet);
   }
 };

@@ -53,6 +53,9 @@ PHYSICS.Controller.new = function(){
                 if(otherRect.overlaps(rect)){
                     cols.push(cl);
                 }
+                else{
+                    //console.log(rect.toString() + " does not overlap " + cl.parent.name + " " + otherRect.toString());
+                }
             }
         }
         return cols;

@@ -8,6 +8,9 @@ SCENE.SCENES.LevelEditor = function(){
   le.gameState = GAMESTATES.pause;
   le.levelRenderer = null;
   le.input = LEVEL.Editor.EditorInputController.new(le);
+  le.physics = null;
+  le.selected = null;
+  le.tooltip = null;
 
   le.setup = function(){
     le.levelRenderer = LEVEL.Renderer.new();
@@ -18,6 +21,7 @@ SCENE.SCENES.LevelEditor = function(){
     le.levelRenderer.updateCursor = function(){
       SCENE.updateCursor(SPRITES.static.cursors.roundBlack);
     };
+    le.physics = le.levelRenderer.physics;
     //le.levelRenderer.loadData(LEVEL.Generate.Grass());
     le.isSetup = true;
   };
@@ -29,6 +33,9 @@ SCENE.SCENES.LevelEditor = function(){
     GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
     le.levelRenderer.update();
     le.input.update();
+    if(le.tooltip){
+      GRAPHICS.drawTooltip(le.tooltip);
+    }
   };
   le.createEntity = function(entity){
     le.levelRenderer.addEntity(entity);
