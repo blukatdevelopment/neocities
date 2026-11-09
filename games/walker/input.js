@@ -93,8 +93,8 @@ INPUT.mouseClick = function(mouseButton){
   }
 };
 
-INPUT.isMouseDragging = function(){
-  return INPUT._mouseDown[0] && !INPUT._mouseClick[0];
+INPUT.isMouseDragging = function(mouseButton){
+  return INPUT._mouseDown[mouseButton] && !INPUT._mouseClick[mouseButton];
 };
 
 INPUT.fullClick = function(){

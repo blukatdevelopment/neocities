@@ -8,6 +8,7 @@ LEVEL.Editor.EditorInputController.new = function(parent){
     };
     ic.update = function(){
         ic.handleSelectEntity();
+        ic.handleDragEntity();
         ic.handleCameraControls();
         if(INPUT.key(INPUT.KEYS.K_P)){
             console.log("Export");
@@ -31,7 +32,16 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             ic.parent.selected = null;
         }
     };
-
+    ic.handleDragEntity = function(){
+        if(!INPUT.isMouseDragging(INPUT.LEFT_CLICK)){
+            return;
+        }
+        if(ic.parent.selected == null){
+            return;
+        }
+        let mPos = GRAPHICS.getWorldCursor();
+        ic.parent.selected.recenter(mPos);
+    }
     ic.handleCameraControls = function(){
         let vector = VECTOR2.new(0,0);
         let speed = 5;

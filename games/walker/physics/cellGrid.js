@@ -13,7 +13,9 @@ PHYSICS.CellGrid.new = function(colliders, size){
         }
         for(let collider of colliders){
             let cellIndex = grid.posToCellIndex(collider.absoluteRect().position);
-            grid.cells[cellIndex].push(collider);
+            if(grid.cells[cellIndex] != null){
+                grid.cells[cellIndex].push(collider);
+            }
         }
     };
     grid.posToCellIndex = function(position){

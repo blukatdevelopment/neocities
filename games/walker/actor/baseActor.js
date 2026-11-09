@@ -44,10 +44,6 @@ ACTOR.new = function(){
     let light = GRAPHICS.LightSource.new(rect, radius, color);
     SCENE.emitLight(light);
   };
-  atr.teleport = function(destination){
-    atr.position = destination;
-    atr.prevPosition = destination;
-  };
   atr.move = function(direction){
     // No moving while attacking
     if(!atr.cooldown){

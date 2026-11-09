@@ -73,6 +73,11 @@ ENTITY.baseEntity.new = function(){
     be.getSpriteRect = function(){
         return be.renderer.getRect();
     };
+    be.recenter = function(position){
+        let rect = be.getSpriteRect();
+        rect.recenter(position);
+        be.position = rect.position;
+    };
     be.getLabel = function(){ return ""; };
     return be;
 };
