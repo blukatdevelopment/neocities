@@ -4,11 +4,14 @@
 LEVEL.Editor.EditorInputController = {};
 LEVEL.Editor.EditorInputController.new = function(parent){
     let ic = {
-        parent: parent
+        parent: parent,
+        mouseDragOrigin: null,
+        camDragOrigin: null
     };
     ic.update = function(){
         ic.handleSelectEntity();
         ic.handleDragEntity();
+        ic.handleDragCamera();
         ic.handleCameraControls();
         if(INPUT.key(INPUT.KEYS.K_P)){
             console.log("Export");
@@ -17,7 +20,7 @@ LEVEL.Editor.EditorInputController.new = function(parent){
     ic.handleSelectEntity = function(){
         let worldPoint = GRAPHICS.getWorldCursor();
         //ic.parent.tooltip = worldPoint.toString();
-        if(!INPUT.mouseClick(INPUT.LEFT_CLICK)){
+        if(!INPUT.mouseClick(INPUT.LEFT_MOUSE)){
             return;
         }
         let size = 10;
@@ -33,7 +36,7 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         }
     };
     ic.handleDragEntity = function(){
-        if(!INPUT.isMouseDragging(INPUT.LEFT_CLICK)){
+        if(!INPUT.isMouseDragging(INPUT.LEFT_MOUSE)){
             return;
         }
         if(ic.parent.selected == null){
@@ -41,6 +44,25 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         }
         let mPos = GRAPHICS.getWorldCursor();
         ic.parent.selected.recenter(mPos);
+    };
+    ic.handleDragCamera = function(){
+        if(!INPUT.isMouseDragging(INPUT.RIGHT_MOUSE)){
+            ic.camDragOrigin = null;
+            ic.mouseDragOrigin = null;
+            return;
+        }
+        if(ic.camDragOrigin == null){
+            ic.camDragOrigin = GRAPHICS.getCameraCenter();
+            ic.mouseDragOrigin = INPUT.getMousePosition();
+            return;
+        }
+        let old = ic.mouseDragOrigin;
+        let current = INPUT.getMousePosition();
+        let mouseDelta = old.subtract(current);
+        
+        let oldCamPos = ic.camDragOrigin;
+        let updated = oldCamPos.add(mouseDelta);
+        GRAPHICS.centerCamera(updated);
     }
     ic.handleCameraControls = function(){
         let vector = VECTOR2.new(0,0);

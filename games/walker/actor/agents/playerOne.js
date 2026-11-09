@@ -49,7 +49,7 @@ AGENT.PLAYER_ONE.new = function(actor){
         if(INPUT.keyPress(INPUT.KEYS.K_M)){
             SCENE.setActiveScene(SCENE.SCENES.WorldMap());
         }
-        if(INPUT.keyPress(INPUT.KEYS.K_SPACE) || INPUT.mouseClick(INPUT.LEFT_CLICK)){
+        if(INPUT.keyPress(INPUT.KEYS.K_SPACE) || INPUT.mouseClick(INPUT.LEFT_MOUSE)){
             atr.primaryAction();         
         }
         if(INPUT.keyPress(INPUT.KEYS.K_E)){
@@ -61,7 +61,7 @@ AGENT.PLAYER_ONE.new = function(actor){
         if(INPUT.keyPress(INPUT.KEYS.K_R)){
             atr.toggleItemsDrawn();
         }
-        if(INPUT.mouseClick(INPUT.RIGHT_CLICK)){
+        if(INPUT.mouseClick(INPUT.RIGHT_MOUSE)){
             atr.secondaryAction();            
         }
     };

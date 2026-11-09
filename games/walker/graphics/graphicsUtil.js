@@ -51,11 +51,14 @@ GRAPHICS.getCamera = function(){
   return GRAPHICS._camera;
 };
 
-// Vector2
 GRAPHICS.centerCamera = function(point){
   let size = GRAPHICS._camera.rect.size;
   let centered = VECTOR2.new(point.x - (size.x/2), point.y - (size.y/2));
   GRAPHICS._camera.move(centered);
+};
+
+GRAPHICS.getCameraCenter = function(){
+  return GRAPHICS._camera.rect.center();
 };
 
 GRAPHICS.panCamera = function(vector){

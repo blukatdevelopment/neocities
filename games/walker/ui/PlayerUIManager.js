@@ -50,7 +50,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
     };
 
     cm.handleDrag = function(){
-        if(INPUT.mouseClick(INPUT.LEFT_CLICK)){
+        if(INPUT.mouseClick(INPUT.LEFT_MOUSE)){
             let draggedComponent = cm.getDraggedComponent();
             if(draggedComponent){
                 cm.dragged = {

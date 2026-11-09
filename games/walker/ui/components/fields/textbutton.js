@@ -9,7 +9,7 @@ UI.COMPONENTS.TextButton.new = function(rect, text, onClick){
         onClick: onClick
     };
     btn.update = function(){
-        if(!INPUT.mouseClick(INPUT.LEFT_CLICK)){
+        if(!INPUT.mouseClick(INPUT.LEFT_MOUSE)){
             return;
         }
         let mPos = INPUT.getDownScaledMousePosition();

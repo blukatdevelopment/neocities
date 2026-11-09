@@ -10,7 +10,7 @@ UI.COMPONENTS.SpriteButton.new = function(rect, sprite, onClick, toolTip){
         toolTip: toolTip
     };
     btn.update = function(){
-        if(!INPUT.mouseClick(INPUT.LEFT_CLICK)){
+        if(!INPUT.mouseClick(INPUT.LEFT_MOUSE)){
             return;
         }
         

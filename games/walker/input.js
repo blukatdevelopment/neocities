@@ -9,9 +9,9 @@ INPUT._mouseClick = [false, false, false];
 INPUT._mouseDown = [false, false, false];
 INPUT._fullClick = false;
 
-INPUT.LEFT_CLICK = 0;
-INPUT.MIDDLE_CLICK = 1;
-INPUT.RIGHT_CLICK = 2;
+INPUT.LEFT_MOUSE = 0;
+INPUT.MIDDLE_MOUSE = 1;
+INPUT.RIGHT_MOUSE = 2;
 
 
 // Define all possible keys
