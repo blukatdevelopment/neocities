@@ -25,7 +25,7 @@ SCENE.SCENES.Start = function(){
         GRAPHICS.clearCanvas();
         this.drawStartButton();
         if(INPUT.mouseClick(INPUT.LEFT_CLICK) && this.isStartButtonSelected()){
-            SCENE.setActiveScene(SCENE.SCENES.LevelEditor());
+            SCENE.setActiveScene(SCENE.SCENES.Game());
         }
     };
 

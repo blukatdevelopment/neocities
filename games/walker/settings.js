@@ -20,6 +20,7 @@ SETTINGS.DefaultLevelSize = 9;
 
 SETTINGS.CursorSize = 8;
 SETTINGS.NotificationDuration = 3000;
+SETTINGS.PiecesPerHeart = 4;
 
 // States that effect rendering.
 let GAMESTATES = {};

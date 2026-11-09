@@ -23,6 +23,7 @@ STATS.Attack.new = function(){
       dmg += die.roll();
     }
     dmg *= -1;
+    dmg *= SETTINGS.PiecesPerHeart;
     return dmg;
   };
   return atk;
