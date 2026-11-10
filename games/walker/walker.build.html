@@ -692,7 +692,6 @@ ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, is
             return;
         }
         h.renderer.setSprite(sprite);
-        console.log("Rendering with sprite " + sprite.toJs());
         h.renderer.draw();
         
         if(h.getLabel() != ""){
@@ -1638,9 +1637,6 @@ LEVEL.Renderer.new = function(){
     lr.addEntity = function(entity){
         if(entity == null){
             return;
-        }
-        if(entity.name == "BerryBush"){
-            console.log( "BerryBush:" + entity.toString());
         }
         lr.entities.push(entity);
         lr.physics.registerCollider(entity.getCollider());

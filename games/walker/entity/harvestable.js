@@ -27,7 +27,6 @@ ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, is
             return;
         }
         h.renderer.setSprite(sprite);
-        console.log("Rendering with sprite " + sprite.toJs());
         h.renderer.draw();
         
         if(h.getLabel() != ""){

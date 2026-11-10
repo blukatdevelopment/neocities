@@ -120,9 +120,6 @@ LEVEL.Renderer.new = function(){
         if(entity == null){
             return;
         }
-        if(entity.name == "BerryBush"){
-            console.log( "BerryBush:" + entity.toString());
-        }
         lr.entities.push(entity);
         lr.physics.registerCollider(entity.getCollider());
     };
