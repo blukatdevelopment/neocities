@@ -1,12 +1,10 @@
 /*##############################################################################
 # Data Object to be serialized
 ##############################################################################*/
-ENTITY.Data.new = function(entityType, position){
+ENTITY.Data.new = function(entityName, position){
     let data = {
-        entityType: entityType,
-        position: position,
-        item: null,
-        sprite: null
+        entityName: entityName,
+        position: position
     };
     return data;
 };

@@ -2,12 +2,15 @@
 # Has an item that can be harvested by interacting
 ##############################################################################*/
 ENTITY.Harvestable = {};
-ENTITY.Harvestable.new = function(){
+ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, isRigid){
     let h = ENTITY.baseEntity.new();
+    h.name = name;
     h.items = [];
     h.harvested = false;
-    h.emptySprite = null;
-    h.fullSprite = null;
+    h.emptySprite = emptySprite;
+    h.fullSprite = fullSprite;
+    h.collider.rect = rect;
+    h.collider.isRigid = isRigid;
     h.getSprite = function(){
         if(h.harvested){
             return h.emptySprite;
@@ -60,31 +63,5 @@ ENTITY.Harvestable.new = function(){
         
         h.harvested = true;
     };
-    h.getData = function(){
-        return ENTITY.Data.Harvestable(h.position, h.items, h.emptySprite, h.fullSprite, h.collider.rect, h.collider.rigid);
-    };
     return h;
-};
-
-
-ENTITYFACTORY.Harvestable = function(items, empty, full, rect, rigid){
-    let h = ENTITY.Harvestable.new();
-    h.items = items;
-    h.emptySprite = empty;
-    h.fullSprite = full;
-    h.collider.rect = rect;
-    h.collider.rigid = rigid;
-    return h;
-};
-
-
-ENTITY.Data.Harvestable = function(position, items, empty, full, rect, rigid){
-    let data = ENTITY.Data.new(ENTITY.TYPES.Harvestable, position);
-    data.items = items;
-    data.emptySprite = empty;
-    data.fullSprite = full;
-    data.rect = rect;
-    data.rigid = rigid;
-
-    return data;
 };

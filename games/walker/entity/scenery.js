@@ -3,20 +3,11 @@
 ##############################################################################*/
 
 ENTITY.Scenery = {};
-ENTITY.Scenery.new = function(){
+ENTITY.Scenery.new = function(name, sprite, position){
     let sc = ENTITY.baseEntity.new();
+    sc.name = name;
+    sc.renderer.sprite = sprite;
+    sc.position = position;
     sc.collider.rigid = true;
-    return sc;
-};
-
-// Static object with collision box
-ENTITYFACTORY.Scenery = function(_sprite, position, rect){
-    let sc = ENTITY.Scenery.new();
-    if(rect){
-        sc.collider.rect = rect;
-    };
-    sc.renderer.setSprite(_sprite);
-    sc.name = "scenery" + sc.getEntityId();
-    sc.setPosition(position);
     return sc;
 };

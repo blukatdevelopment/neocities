@@ -3,11 +3,7 @@
 ##############################################################################*/
 LEVEL.Generate.Cell.Debug = function(data, rect){
     let cg = LEVEL.Generate.Cell.new(data, rect);
-    let items = [
-        ITEMS.Names.Rock
-    ];
-    //LEVEL.Generate.Cell.addRandomItems(cg, items, UTILITY.randRange(1, 10));
-    
+
     let bush = ENTITYFACTORY.Bush();
     bush.position = VECTOR2.new(200, 100);
     cg.addEntity(bush);
@@ -32,62 +28,5 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
     deer.position = VECTOR2.new(100, 100);
     cg.addEntity(deer);
 
-    let item = null;
-    for(let i = 0; i < 10; i++){
-        item = ENTITYFACTORY.ItemStack(ITEMS.Names.RedBerry, 1, null);
-        item.position = VECTOR2.new(100 + (32 * i), 300);
-        cg.addEntity(item);
 
-        item = ENTITYFACTORY.ItemStack(ITEMS.Names.GreenBerry, 1, null);
-        item.position = VECTOR2.new(100 + (32 * i), 330);
-        cg.addEntity(item);
-
-        item = ENTITYFACTORY.ItemStack(ITEMS.Names.BlueBerry, 1, null);
-        item.position = VECTOR2.new(100 + (32 * i), 360);
-        cg.addEntity(item);
-    }
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherHelm, 1, null);
-    item.position = VECTOR2.new(100, 500);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherTunic, 1, null);
-    item.position = VECTOR2.new(130, 500);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherLeggings, 1, null);
-    item.position = VECTOR2.new(160, 500);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherShoes, 1, null);
-    item.position = VECTOR2.new(190, 500);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.LeatherCape, 1, null);
-    item.position = VECTOR2.new(220, 500);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintKnife, 1, null);
-    item.position = VECTOR2.new(100, 600);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintAxe, 1, null);
-    item.position = VECTOR2.new(130, 600);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintSword, 1, null);
-    item.position = VECTOR2.new(160, 600);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.FlintSpear, 1, null);
-    item.position = VECTOR2.new(190, 600);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.Torch, 1, null);
-    item.position = VECTOR2.new(210, 600);
-    cg.addEntity(item);
-
-    item = ENTITYFACTORY.ItemStack(ITEMS.Names.Torch, 1, null);
-    item.position = VECTOR2.new(240, 600);
-    cg.addEntity(item);
 };

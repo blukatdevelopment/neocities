@@ -68,7 +68,7 @@ ITEMS.Config.flintPack = function(){
             gearType: ITEMS.Gear.Types.Weapon
     });
 
-    ITEMS.Names.FlintSword = "Flintsword";
+    ITEMS.Names.FlintSword = "FlintSword";
     config.push({
             type: ITEMS.Types.Gear,
             name: ITEMS.Names.FlintSword,

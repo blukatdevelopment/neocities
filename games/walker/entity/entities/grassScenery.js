@@ -6,7 +6,7 @@
 ENTITY.ENTITIES.Bush = "Bush";
 ENTITYFACTORY.Bush = function(){
     let sprite = SPRITES.static.scenery64.bush;
-    let ent = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.Bush, sprite, VECTOR2.new(0,0));
     ent.collider.rect = SHAPES.RECT.new(
         VECTOR2.new(0, 56),
         VECTOR2.new(64, 8)
@@ -26,14 +26,14 @@ ENTITYFACTORY.BerryBush = function(){
         VECTOR2.new(0, 56),
         VECTOR2.new(64, 8)
     );
-    let ent = ENTITYFACTORY.Harvestable(items, emptySprite, fullSprite, rect, rigid);
+    let ent = ENTITY.Harvestable.new(ENTITY.ENTITIES.BerryBush, items, emptySprite, fullSprite, rect, rigid);
     return ent;
 };
 
 ENTITY.ENTITIES.BirchTree = "BirchTree";
 ENTITYFACTORY.BirchTree = function(){
     let sprite = SPRITES.static.scenery64.tree;
-    let ent = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.BirchTree, sprite, VECTOR2.new(0,0));
     ent.collider.rect = SHAPES.RECT.new(
         VECTOR2.new(24,56),
         VECTOR2.new(8,8)
@@ -44,7 +44,7 @@ ENTITYFACTORY.BirchTree = function(){
 ENTITY.ENTITIES.SlimePit = "SlimePit";
 ENTITYFACTORY.SlimePit = function(){
     let sprite = SPRITES.static.scenery64.slimepit;
-    let ent = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.SlimePit, sprite, VECTOR2.new(0,0));
     ent.collider.rect = SHAPES.RECT.new(
         VECTOR2.new(24,24),
         VECTOR2.new(8,8)

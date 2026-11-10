@@ -112,6 +112,11 @@ UTILITY.delayExecute = function(frames, funct){
 };
 
 
+UTILITY.timeStamp = function(){
+    const date = new Date();
+    return date.toLocaleDateString();
+};
+
 UTILITY.download = function(data, fileName){
     let cType = "text/plain";
     const blob = new Blob([data], { type: cType });

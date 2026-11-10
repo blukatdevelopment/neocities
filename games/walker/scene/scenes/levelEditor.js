@@ -55,10 +55,14 @@ SCENE.SCENES.LevelEditor = function(){
   };
   le.export = function(){
     console.log("Export started");
+    
     console.log("Preparing data");
-    let data = "Hello, world!";
+    let dataObj = le.levelRenderer.getData();
+    let data = dataObj.toJs();
+    
     console.log("Downloading data");
-    UTILITY.download(data, "helloworld.txt");
+    let fileName = "helloWorld_" + UTILITY.timeStamp() + ".txt";
+    UTILITY.download(data, fileName);
   };
   return le;
 };

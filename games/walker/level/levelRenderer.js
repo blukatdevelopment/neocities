@@ -13,7 +13,7 @@ LEVEL.Renderer.new = function(){
     lr.init = function(){
         GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
         lr.physics = PHYSICS.Controller.new();
-        lr.player = ACTORFACTORY.playerOne();
+        lr.player = ACTORFACTORY.PlayerOne();
         lr.addEntity(lr.player);
         lr.ui = UI.COMPONENTS.PlayerUIManager.new();
         lr.ui.linkActor(lr.player);
@@ -28,7 +28,7 @@ LEVEL.Renderer.new = function(){
             for(let i = 0; i < tileMap.tiles.length; i++){
                 let sprite = tileMap.getSpriteByIndex(i);
                 let pos = tileMap.getPositionByIndex(i);
-                let tile = ENTITYFACTORY.Scenery(sprite, pos);
+                let tile = ENTITY.Scenery.new("Tile", sprite, pos);
                 lr.scenery.push(tile);
             }
         }
@@ -38,6 +38,13 @@ LEVEL.Renderer.new = function(){
         if(data.playerPosition && lr.player){
             lr.player.setPosition(data.playerPosition);
         }
+    };
+    lr.getData = function(){
+        let data = LEVEL.Data.new();
+        for(let entity of lr.entities){
+            data.entityData.push(entity.getData());
+        }
+        return data;
     };
     lr.update = function(){
         lr.physics.update();

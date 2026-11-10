@@ -32,31 +32,5 @@ ENTITY.ItemStack.new = function(item){
         }
     };
     pue.onAttacked = function(attack){};
-    pue.getData = function(){
-        let data = ENTITY.Data.new(pue.entityType, pue.position);
-        data.item = pue.item.name;
-        return data;
-    };
     return pue;
-};
-
-// Is picked up by actors
-ENTITYFACTORY.ItemStack = function(itemName, quantity, durability){
-    let item = ITEMS.create(itemName, quantity, durability);
-    if(item){
-        let pu = ENTITY.ItemStack.new(item);
-        return pu;
-    }
-    UTILITY.log("ENTITYFACTORY.ItemStack", "Could not create ItemStack", { name: itemName, quantity: quantity, durability: durability });
-};
-
-
-ENTITY.Data.ItemStack = function(itemName, position, quantity){
-    let data = ENTITY.Data.new(ENTITY.TYPES.ItemStack, position);
-    data.item = itemName;
-    data.quantity = 1;
-    if(quantity){
-        data.quantity = quantity;
-    }
-    return data;
 };

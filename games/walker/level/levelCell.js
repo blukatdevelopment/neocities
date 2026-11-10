@@ -49,7 +49,7 @@ LEVEL.Generate.Cell.new = function(data, rect){
 };
 
 LEVEL.Generate.Cell.addScenery = function(cg, sprite){
-    let scenery = ENTITYFACTORY.Scenery(sprite, VECTOR2.new(0,0));
+    let scenery = ENTITY.Scenery.new(sprite, VECTOR2.new(0,0));
     cg.placeEntityRandomly(scenery);
 };
 LEVEL.Generate.Cell.addRandomScenery = function(cg, sceneryConstructors, numberToAdd){
@@ -61,13 +61,13 @@ LEVEL.Generate.Cell.addRandomScenery = function(cg, sceneryConstructors, numberT
 };
 
 LEVEL.Generate.Cell.addItem = function(cg, itemName){
-    let item = ENTITYFACTORY.ItemStack(itemName, 1, 1);
-    cg.placeEntityRandomly(item);
+    let item = ITEMS.create(itemName, 1, 0);
+    let itemStack = ENTITY.ItemStack.new(item);
+    cg.placeEntityRandomly(itemStack);
 };
 
 LEVEL.Generate.Cell.addRandomItems = function(cg, items, numberToAdd){
     for(let i = 0; i < numberToAdd; i++){
-        let item = ENTITYFACTORY.ItemStack(RANDOM.choice(items), 1, 1);
-        cg.placeEntityRandomly(item);
+        LEVEL.Generate.Cell.addItem(RANDOM.choice(items));
     }
 };

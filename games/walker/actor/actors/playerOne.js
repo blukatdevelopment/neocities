@@ -1,7 +1,8 @@
-ACTORFACTORY.playerOne = function(){
+ACTOR.Names.PlayerOne = "PlayerOne";
+ACTORFACTORY.PlayerOne = function(){
   let config = UTILITY.getActorConfig("wrath");
   let pone = ACTOR.new();
-  pone.entityYype = ENTITY.TYPES.Player;
+  pone.entitytype = ENTITY.TYPES.Player;
   let anm = SPRITES.Animator.new();
   anm.animation = SPRITES.animations[config.name][ACTOR_ANIMATIONS.idleLeft]
   let asm = ACTOR.AnimationStateMachine.new(name, SPRITES.animations[config.name], anm);
@@ -14,7 +15,7 @@ ACTORFACTORY.playerOne = function(){
   pone.setCollider(PHYSICS.BoxCollider.new());
   pone.getCollider().rect.position = VECTOR2.new(13, 0);
   pone.getCollider().rect.size = VECTOR2.new(11, 32);
-  pone.name = "Wrath";
+  pone.name = ACTOR.Names.PlayerOne;
 
   pone.attacks.push(STATS.AttackFactory.Unarmed());
   pone.activeAttack = pone.attacks[0];
@@ -28,5 +29,5 @@ ACTORFACTORY.playerOne = function(){
   return pone;
 };
 
-ENTITY.ENTITIES.playerOne = ACTORFACTORY.playerOne;
-ENTITYFACTORY.playerOne = ACTORFACTORY.playerOne;
+ENTITY.ENTITIES.PlayerOne = ACTORFACTORY.PlayerOne;
+ENTITYFACTORY.PlayerOne = ACTORFACTORY.PlayerOne;

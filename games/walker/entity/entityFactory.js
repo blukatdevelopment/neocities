@@ -11,24 +11,15 @@ ENTITY.TYPES.Player = "Player";
 ENTITY.TYPES.Harvestable = "Harvestable";
 
 ENTITYFACTORY.Load = function(data){
-    let entity = null;
-    
-    if(data.entityType == ENTITY.TYPES.ItemStack){
-        entity = ENTITYFACTORY.ItemStack(data.item, 1, 1);
-        entity.setPosition(data.position);
+    let entity = ENTITYFACTORY.Create(data.entityName);
+    if(entity == null){
+        console.log("Could not load entity data: " + JSON.stringify(data));
+        return;
     }
-    let actorNames = Object.keys(ACTOR.Names);
-    if(data.entityType == ENTITY.TYPES.NPC && actorNames.includes(data.name)){
-        entity = ACTORFACTORY[data.name]();
-        entity.setPosition(data.position);
+    if(data.position){
+        entity.position = data.position;
     }
-    if(data.entityType == ENTITY.TYPES.Scenery){
-        entity = ENTITYFACTORY.Scenery(data.sprite, data.position, data.rect);
-    }
-    if(data.entityType == ENTITY.TYPES.Harvestable){
-        entity = ENTITYFACTORY.Harvestable(data.items, data.emptySprite, data.fullSprite, data.rect, data.rigid);
-        entity.setPosition(data.position);
-    }
+    //console.log("Loaded entity " + JSON.stringify(data));
     return entity;
 };
 
@@ -46,9 +37,13 @@ ENTITYFACTORY.getEntityNames = function(){
 
 
 ENTITYFACTORY.registerItem = function(itemName){
+    // Add an item stack for this item
     let stackName = itemName + "Stack";
     ENTITY.ENTITIES[stackName] = stackName;
     ENTITYFACTORY[stackName] = function(){
-        return ENTITYFACTORY.ItemStack(itemName, 1, 0);
+        let item = ITEMS.create(itemName, 1, 0);
+        let ret = ENTITY.ItemStack.new(item);
+        ret.name = stackName;
+        return ret;
     };
 };

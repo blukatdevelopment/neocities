@@ -5,5 +5,10 @@ LEVEL.Data.new = function(){
         entityData: [],
         playerPosition: null
     };
+    ld.toJs = function(){
+        return JSON.stringify(ld);
+
+        return "This is totally valid JS, trust me ;3";
+    };
     return ld;
 };
