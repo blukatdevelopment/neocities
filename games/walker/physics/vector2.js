@@ -46,6 +46,9 @@ VECTOR2.new = function(x, y){
     v2.clone = function(){
         return VECTOR2.new(v2.x, v2.y);
     };
+    v2.toJs = function(){
+        return "VECTOR2.new(" + v2.x + "," + v2.y + ")";
+    };
     return v2;
 };
 VECTOR2.vectorFromDirection = function(direction){

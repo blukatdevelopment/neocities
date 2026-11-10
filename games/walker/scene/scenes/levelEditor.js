@@ -16,14 +16,13 @@ SCENE.SCENES.LevelEditor = function(){
     le.levelRenderer = LEVEL.Renderer.new();
     le.levelRenderer.init();
     // Toggle debug level
-    le.levelRenderer.loadData(LEVEL.Generate.DebugLevel());
+    le.levelRenderer.loadData(LEVEL.Static.TestLevel());
     le.levelRenderer.ui = UI.COMPONENTS.LevelEditorUIManager.new(le);
     le.ui = le.levelRenderer.ui;
     le.levelRenderer.updateCursor = function(){
       SCENE.updateCursor(SPRITES.static.cursors.roundBlack);
     };
     le.physics = le.levelRenderer.physics;
-    //le.levelRenderer.loadData(LEVEL.Generate.Grass());
     le.isSetup = true;
   };
 
@@ -58,6 +57,7 @@ SCENE.SCENES.LevelEditor = function(){
     
     console.log("Preparing data");
     let dataObj = le.levelRenderer.getData();
+    console.log("Level dataobj:" + JSON.stringify(dataObj));
     let data = dataObj.toJs();
     
     console.log("Downloading data");

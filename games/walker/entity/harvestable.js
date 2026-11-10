@@ -27,6 +27,7 @@ ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, is
             return;
         }
         h.renderer.setSprite(sprite);
+        console.log("Rendering with sprite " + sprite.toJs());
         h.renderer.draw();
         
         if(h.getLabel() != ""){
@@ -62,6 +63,10 @@ ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, is
         }
         
         h.harvested = true;
+    };
+    h.getSpriteRect = function(){
+        h.renderer.setSprite(h.getSprite());
+        return h.renderer.getRect();
     };
     return h;
 };

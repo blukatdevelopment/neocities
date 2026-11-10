@@ -31,6 +31,7 @@ ITEMS.Names = {};
 let LEVEL = {};
 LEVEL.Editor = {};
 LEVEL.Generate = {};
+LEVEL.Static = {};
 var MAIN = {};
 var SETTINGS = {};
 SETTINGS.sheets = {};

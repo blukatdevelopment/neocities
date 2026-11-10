@@ -8,7 +8,8 @@ LEVEL.Renderer.new = function(){
         entities: [],
         scenery: [], // excluded from collisions
         ui: null,
-        lighting: GRAPHICS.LightingController.new()
+        lighting: GRAPHICS.LightingController.new(),
+        tileMap: null
     };
     lr.init = function(){
         GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
@@ -22,8 +23,8 @@ LEVEL.Renderer.new = function(){
         let levelSize = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;
         let levelRect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(levelSize, levelSize));
         SCENE.setLevelRect(levelRect);
-
         if(data.tileMap){
+            lr.tileMap = data.tileMap;
             let tileMap = data.tileMap;
             for(let i = 0; i < tileMap.tiles.length; i++){
                 let sprite = tileMap.getSpriteByIndex(i);
@@ -41,6 +42,7 @@ LEVEL.Renderer.new = function(){
     };
     lr.getData = function(){
         let data = LEVEL.Data.new();
+        data.tileMap = lr.tileMap;
         for(let entity of lr.entities){
             data.entityData.push(entity.getData());
         }
@@ -117,6 +119,9 @@ LEVEL.Renderer.new = function(){
     lr.addEntity = function(entity){
         if(entity == null){
             return;
+        }
+        if(entity.name == "BerryBush"){
+            console.log( "BerryBush:" + entity.toString());
         }
         lr.entities.push(entity);
         lr.physics.registerCollider(entity.getCollider());

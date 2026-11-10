@@ -9,5 +9,8 @@ SPRITES.Sprite.new = function(name, sheet, index){
   st.toString = function(){
     return "Sprite[" + st.name + ", sheet:" + st.sheet.name + ", index:" + st.index + "]";
   };
+  st.toJs = function(){
+    return "SPRITES.static." + st.sheet.name + "." + st.name;
+  };
   return st;
 };
