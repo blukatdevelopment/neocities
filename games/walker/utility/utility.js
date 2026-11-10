@@ -110,3 +110,22 @@ UTILITY.delayExecute = function(frames, funct){
     };
     MAIN.DELAYED_EXECUTIONS.push(execution);
 };
+
+
+UTILITY.download = function(data, fileName){
+    let cType = "text/plain";
+    const blob = new Blob([data], { type: cType });
+
+    const url = URL.createObjectURL(blob);
+
+    const l = document.createElement('a');
+    l.href = url;
+    l.download = fileName;
+    l.style.display = 'none';
+
+    document.body.appendChild(l);
+    l.click();
+
+    document.body.removeChild(l);
+    URL.revokeObjectURL(url);
+};

@@ -53,5 +53,12 @@ SCENE.SCENES.LevelEditor = function(){
   le.emitLight = function(light){
     le.levelRenderer.emitLight(light);
   };
+  le.export = function(){
+    console.log("Export started");
+    console.log("Preparing data");
+    let data = "Hello, world!";
+    console.log("Downloading data");
+    UTILITY.download(data, "helloworld.txt");
+  };
   return le;
 };

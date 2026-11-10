@@ -14,7 +14,7 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         ic.handleDragCamera();
         ic.handleCameraControls();
         if(INPUT.keyPress(INPUT.KEYS.K_P)){
-            console.log("Export");
+            ic.parent.export();
         }
         if(INPUT.keyPress(INPUT.KEYS.K_SPACE) && ic.parent.selected){
             SCENE.destroyEntity(ic.parent.selected);
