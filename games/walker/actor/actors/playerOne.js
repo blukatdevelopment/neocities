@@ -27,3 +27,6 @@ ACTORFACTORY.playerOne = function(){
   pone.stats.addEffect(STATS.Effect.EnergyRegen(2000, STATS.Resources.energy, STATS.Effect.Sources.Body));
   return pone;
 };
+
+ENTITY.ENTITIES.playerOne = ACTORFACTORY.playerOne;
+ENTITYFACTORY.playerOne = ACTORFACTORY.playerOne;

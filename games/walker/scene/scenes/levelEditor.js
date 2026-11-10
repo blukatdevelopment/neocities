@@ -18,6 +18,7 @@ SCENE.SCENES.LevelEditor = function(){
     // Toggle debug level
     le.levelRenderer.loadData(LEVEL.Generate.DebugLevel());
     le.levelRenderer.ui = UI.COMPONENTS.LevelEditorUIManager.new(le);
+    le.ui = le.levelRenderer.ui;
     le.levelRenderer.updateCursor = function(){
       SCENE.updateCursor(SPRITES.static.cursors.roundBlack);
     };

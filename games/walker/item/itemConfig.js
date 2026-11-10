@@ -46,6 +46,9 @@ ITEMS.init = function(){
     for(let config of ITEMS.getConfig()){
         ITEMS.ItemList.push(ITEMS.loadFromConfig(config));
     }
+    for(let key of Object.keys(ITEMS.Names)){
+        ENTITYFACTORY.registerItem(key);
+    }
 };
 
 ITEMS.getConfig = function(){

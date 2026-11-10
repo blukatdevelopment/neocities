@@ -13,11 +13,18 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         ic.handleDragEntity();
         ic.handleDragCamera();
         ic.handleCameraControls();
-        if(INPUT.key(INPUT.KEYS.K_P)){
+        if(INPUT.keyPress(INPUT.KEYS.K_P)){
             console.log("Export");
+        }
+        if(INPUT.keyPress(INPUT.KEYS.K_SPACE) && ic.parent.selected){
+            SCENE.destroyEntity(ic.parent.selected);
+            ic.parent.selected = null;
         }
     };
     ic.handleSelectEntity = function(){
+        if(ic.parent.ui.isHovered()){
+            return;
+        }
         let worldPoint = GRAPHICS.getWorldCursor();
         //ic.parent.tooltip = worldPoint.toString();
         if(!INPUT.mouseClick(INPUT.LEFT_MOUSE)){
@@ -39,6 +46,9 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         if(!INPUT.isMouseDragging(INPUT.LEFT_MOUSE)){
             return;
         }
+        if(ic.parent.ui.isHovered()){
+            return;
+        }
         if(ic.parent.selected == null){
             return;
         }
@@ -49,6 +59,9 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         if(!INPUT.isMouseDragging(INPUT.RIGHT_MOUSE)){
             ic.camDragOrigin = null;
             ic.mouseDragOrigin = null;
+            return;
+        }
+        if(ic.parent.ui.isHovered()){
             return;
         }
         if(ic.camDragOrigin == null){

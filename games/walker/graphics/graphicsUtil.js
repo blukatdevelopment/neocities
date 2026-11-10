@@ -159,14 +159,18 @@ GRAPHICS.drawBox = function(x, y, width, height, color){
   ctx.imageSmoothingEnabled = false;
 };
 
+// Renders text with a background right next to the cursor
 GRAPHICS.drawTooltip = function(text){
+  if(text == null){
+    return;
+  }
   let pos = INPUT.getMousePosition();
   let cs = SETTINGS.CursorSize;
   pos.x = GRAPHICS.downScale(pos.x);
   pos.y = GRAPHICS.downScale(pos.y);
-  let length = text.length;
-  let height = 8;
-  let width = height * length;
+  let textSize = GRAPHICS.getTextSize(text);
+  let height = textSize.y;
+  let width = textSize.x;
   GRAPHICS.fillBox(pos.x+cs, pos.y, width, height, GRAPHICS.Colors.Beige);
   GRAPHICS.drawText(text, pos.x+cs, pos.y+cs, 20);
 };
@@ -234,7 +238,7 @@ GRAPHICS.drawText = function(text, x, y, _textSize, color){
 GRAPHICS.getTextSize = function(text, textSize){
   let ctx = GRAPHICS.getContext();
   ctx.font = "" + textSize + "px Arial";
-  let measurement = ctx.measureText(text);
+  let measurement = ctx.measureText(text, );
   return VECTOR2.new(measurement.width, measurement.height);
 };
 

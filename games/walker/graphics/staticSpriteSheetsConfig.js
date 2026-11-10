@@ -40,7 +40,8 @@ SETTINGS.staticSheetList.push({
     cells: 6,
     sprites: [
         "roundBlack", "roundRed", "roundGreen",
-        "arrowBlack", "arrowRed", "arrowGreen"
+        "arrowBlack", "arrowRed", "arrowGreen",
+        "arrowBlackDown"
     ]
 });
 SETTINGS.staticSheetList.push({

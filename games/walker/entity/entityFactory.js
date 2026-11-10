@@ -33,9 +33,22 @@ ENTITYFACTORY.Load = function(data){
 };
 
 ENTITYFACTORY.Create = function(entityName){
-    if(ENTITY.Entities[entityName] && ENTITYFACTORY[entityName]){
+    if(ENTITY.ENTITIES[entityName] && ENTITYFACTORY[entityName]){
         let constructor = ENTITYFACTORY[entityName];
         return constructor();
     }
     return null;
+};
+
+ENTITYFACTORY.getEntityNames = function(){
+    return Object.keys(ENTITY.ENTITIES);
+};
+
+
+ENTITYFACTORY.registerItem = function(itemName){
+    let stackName = itemName + "Stack";
+    ENTITY.ENTITIES[stackName] = stackName;
+    ENTITYFACTORY[stackName] = function(){
+        return ENTITYFACTORY.ItemStack(itemName, 1, 0);
+    };
 };

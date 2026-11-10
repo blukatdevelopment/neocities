@@ -33,3 +33,6 @@ ACTORFACTORY.Deer = function(){
   se.lootTable = lootTable;
   return se;
 };
+
+ENTITY.ENTITIES.Deer = ACTORFACTORY.Deer;
+ENTITYFACTORY.Deer = ACTORFACTORY.Deer;

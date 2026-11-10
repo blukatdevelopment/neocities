@@ -5,7 +5,7 @@ UI.COMPONENTS.SpriteButton = {};
 UI.COMPONENTS.SpriteButton.new = function(rect, sprite, onClick, toolTip){
     let btn = {
         rect: rect,
-        text: sprite,
+        sprite: sprite,
         onClick: onClick,
         toolTip: toolTip
     };
@@ -14,7 +14,7 @@ UI.COMPONENTS.SpriteButton.new = function(rect, sprite, onClick, toolTip){
             return;
         }
         
-        if(hovered && btn.onClick != null){
+        if(btn.isHovered() && btn.onClick != null){
             btn.onClick();
         }
     };
@@ -52,6 +52,12 @@ UI.COMPONENTS.SpriteButton.new = function(rect, sprite, onClick, toolTip){
             size.x-offset, size.y-offset,
             color
         );
+        if(btn.isHovered() && btn.toolTip != null){
+            GRAPHICS.drawTooltip(btn.toolTip);
+        }
+        if(btn.sprite == null){
+            return;
+        }
         SPRITES.renderSprite(pos.x, pos.y, btn.sprite.index, btn.sprite.sheet, DISPLAY_MODES.static);
     };
     return btn;

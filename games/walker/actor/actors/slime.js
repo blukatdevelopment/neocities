@@ -47,3 +47,6 @@ ACTORFACTORY.Slime = function(){
   se.lootTable = lootTable;
   return se;
 };
+
+ENTITY.ENTITIES.Slime = ACTORFACTORY.Slime;
+ENTITYFACTORY.Slime = ACTORFACTORY.Slime;
