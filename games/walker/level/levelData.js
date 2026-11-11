@@ -3,7 +3,8 @@ LEVEL.Data.new = function(){
     let ld = {
         tileMap: null,
         entityData: [],
-        playerPosition: null
+        playerPosition: null,
+        exterior: true
     };
     ld.toJs = function(){
         let js = `
@@ -60,7 +61,7 @@ LEVEL.Static.LevelName = function(){
             js += "\tdata.entityData.push(";
             js += "ENTITY.Data.new(\"" + entity.entityName +"\"";
             js += ", " + entity.position.toJs() + ")";
-            js += ")\n";
+            js += ");\n";
         }
 
         js += "\treturn data;";

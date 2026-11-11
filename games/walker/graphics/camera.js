@@ -25,13 +25,9 @@ GRAPHICS.Camera.new = function(position, size){
     }
   };
   cam.boundsCheck = function(destination){
-    let levelRect = SCENE.getLevelRect();
-    if(levelRect == null){
-      return true;
-    }
     let rect = cam.rect.clone();
     rect.position = destination;
-    return rect.isInside(levelRect);
+    return SCENE.boundsCheck(rect, true);
   };
   return cam;
 };

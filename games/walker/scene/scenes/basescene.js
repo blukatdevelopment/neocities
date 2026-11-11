@@ -19,5 +19,6 @@ SCENE.SCENES.BaseScene = function(){
     bs.notification = function(message){};
     bs.getPlayerOne = function(){};
     bs.emitLight = function(light){};
+    bs.boundsCheck = function(rect, ignoreTiles){};
     return bs;
 };

@@ -97,12 +97,9 @@ SCENE.getGameState = function(){
   return activeScene.getGameState();
 };
 
-SCENE.setLevelRect = function(rect){
-  SCENE._levelRect = rect;
-};
-
-SCENE.getLevelRect = function(){
-  return SCENE._levelRect;
+SCENE.boundsCheck = function(rect, ignoreTiles){
+  var activeScene = SCENE.getActiveScene();
+  return activeScene.boundsCheck(rect, ignoreTiles);
 };
 
 SCENE.getPlayerOne = function(){

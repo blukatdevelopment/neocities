@@ -16,7 +16,11 @@ SCENE.SCENES.LevelEditor = function(){
     le.levelRenderer = LEVEL.Renderer.new();
     le.levelRenderer.init();
     // Toggle debug level
-    le.levelRenderer.loadData(LEVEL.Static.TestLevel());
+    let data = LEVEL.Static.TestLevel()
+    le.levelRenderer.loadData(data);
+    if(data.playerPosition){
+      GRAPHICS.centerCamera(data.playerPosition);
+    }
     le.levelRenderer.ui = UI.COMPONENTS.LevelEditorUIManager.new(le);
     le.ui = le.levelRenderer.ui;
     le.levelRenderer.updateCursor = function(){
@@ -63,6 +67,9 @@ SCENE.SCENES.LevelEditor = function(){
     console.log("Downloading data");
     let fileName = "LevelName_" + UTILITY.timeStamp() + ".js";
     UTILITY.download(data, fileName);
+  };
+  le.boundsCheck = function(rect, ignoreTiles){
+    return le.levelRenderer.boundsCheck(rect, ignoreTiles);
   };
   return le;
 };

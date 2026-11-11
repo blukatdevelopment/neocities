@@ -1,5 +1,5 @@
 /*##############################################################################
-# Base for other UI components
+# button which shows text
 ##############################################################################*/
 UI.COMPONENTS.TextButton = {};
 UI.COMPONENTS.TextButton.new = function(rect, text, onClick){
@@ -19,6 +19,9 @@ UI.COMPONENTS.TextButton.new = function(rect, text, onClick){
     };
     btn.isHovered = function(){
         let mPos = INPUT.getDownScaledMousePosition();
+        if(mPos == null){
+            return false;
+        }
         return btn.rect.contains(mPos);
     };
     btn.draw = function(){

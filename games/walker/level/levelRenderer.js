@@ -9,7 +9,8 @@ LEVEL.Renderer.new = function(){
         scenery: [], // excluded from collisions
         ui: null,
         lighting: GRAPHICS.LightingController.new(),
-        tileMap: null
+        tileMap: null,
+        levelRect: null
     };
     lr.init = function(){
         GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
@@ -21,8 +22,7 @@ LEVEL.Renderer.new = function(){
     };
     lr.loadData = function(data){
         let levelSize = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;
-        let levelRect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(levelSize, levelSize));
-        SCENE.setLevelRect(levelRect);
+        lr.levelRect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(levelSize, levelSize));
         if(data.tileMap){
             lr.tileMap = data.tileMap;
             let tileMap = data.tileMap;
@@ -144,5 +144,22 @@ LEVEL.Renderer.new = function(){
             lr.lighting.emitLight(light);
         }
     }
+    lr.boundsCheck = function(rect, ignoreTiles){
+        if(lr.levelRect == null){
+            return false;
+        }
+        if(!rect.isInside(lr.levelRect)){
+            return false;
+        }
+        if(lr.tileMap == null || ignoreTiles){
+            return true;
+        }
+        for(let tileRect of lr.tileMap.getNoTraverseRects()){
+            if(rect.overlaps(tileRect)){
+                return false;
+            }
+        }
+        return true;
+    };
     return lr;
 };

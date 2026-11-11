@@ -5,41 +5,28 @@ SCENE.SCENES.Start = function(){
     let st = SCENE.SCENES.BaseScene();
     st.name = "Start";
     st.setup = false;
-
-    st.drawStartButton = function(){
-        GRAPHICS.drawBox(100, 100, 100, 100);
-        GRAPHICS.drawText("Start", 100, 150);
-        if(this.isStartButtonSelected()){
-            GRAPHICS.drawLine(0, 0, 100, 100);
-            GRAPHICS.drawLine(0, 500, 100, 200);
-            GRAPHICS.drawLine(500, 0, 200, 100);
-            GRAPHICS.drawLine(500, 500, 200, 200);
-        }
-    };
-
+    st.playButton = UI.COMPONENTS.TextButton.new(
+        SHAPES.RECT.new(
+            VECTOR2.new(180,180),
+            VECTOR2.new(40,20)
+        ),
+        "Play",
+        () => { SCENE.setActiveScene(SCENE.SCENES.Game()); }
+    );
+    st.editButton = UI.COMPONENTS.TextButton.new(
+        SHAPES.RECT.new(
+            VECTOR2.new(180,200),
+            VECTOR2.new(40,20)
+        ),
+        "Edit",
+        () => { SCENE.setActiveScene(SCENE.SCENES.LevelEditor()); }
+    );
     st.update = function(){
-        if(st.setup == false){
-            GRAPHICS.setDisplayMode(DISPLAY_MODES.static);
-            st.setup = true;
-        }
         GRAPHICS.clearCanvas();
-        this.drawStartButton();
-        if(INPUT.mouseClick(INPUT.LEFT_MOUSE) && this.isStartButtonSelected()){
-            SCENE.setActiveScene(SCENE.SCENES.LevelEditor());
-        }
-    };
-
-    st.isStartButtonSelected = function(){
-        var boxTopLeft = { x: GRAPHICS.scale(100), y: GRAPHICS.scale(100) };
-        var boxBottomRight = { x: GRAPHICS.scale(200), y: GRAPHICS.scale(200)};
-        var point = INPUT.getMousePosition();
-        if(!point){
-          return false;
-        }
-        if(typeof point === "undefined"){
-            return false;
-        }
-        return UTILITY.isInsideBox(boxTopLeft, boxBottomRight, point);
+        st.playButton.update();
+        st.editButton.update();
+        st.playButton.draw();
+        st.editButton.draw();
     };
     return st;
 };

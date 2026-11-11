@@ -12,8 +12,8 @@ SCENE.SCENES.Game = function(){
     gm.levelRenderer = LEVEL.Renderer.new();
     gm.levelRenderer.init();
     // Toggle debug level
+    gm.levelRenderer.loadData(LEVEL.Static.TestLevel());
     gm.levelRenderer.loadData(LEVEL.Generate.DebugLevel());
-    //gm.levelRenderer.loadData(LEVEL.Generate.Grass());
     gm.isSetup = true;
   };
 
@@ -38,6 +38,9 @@ SCENE.SCENES.Game = function(){
   };
   gm.emitLight = function(light){
     gm.levelRenderer.emitLight(light);
+  };
+  gm.boundsCheck = function(rect, ignoreTiles){
+    return gm.levelRenderer.boundsCheck(rect, ignoreTiles);
   };
   return gm;
 };

@@ -12,6 +12,33 @@ SETTINGS.staticSheetList.push({
 });
 
 SETTINGS.staticSheetList.push({
+    name: "grassTile",
+    sheet: "grassTile.png",
+    resolutionX: 1024,
+    resolutionY: 1024,
+    cells: 1,
+    sprites: ["grassTile"]
+});
+
+SETTINGS.staticSheetList.push({
+    name: "emptyTile",
+    sheet: "emptyTile.png",
+    resolutionX: 1024,
+    resolutionY: 1024,
+    cells: 1,
+    sprites: ["emptyTile"]
+});
+
+SETTINGS.staticSheetList.push({
+    name: "stoneTile",
+    sheet: "stoneTile.png",
+    resolutionX: 1024,
+    resolutionY: 1024,
+    cells: 1,
+    sprites: ["stoneTile"]
+});
+
+SETTINGS.staticSheetList.push({
     name: "items",
     sheet: "items.png",
     resolutionX: 16,
