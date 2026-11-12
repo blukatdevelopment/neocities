@@ -39,8 +39,8 @@ SCENE.SCENES.Game = function(){
   gm.emitLight = function(light){
     gm.levelRenderer.emitLight(light);
   };
-  gm.boundsCheck = function(rect, ignoreTiles){
-    return gm.levelRenderer.boundsCheck(rect, ignoreTiles);
+  gm.boundsCheck = function(rect){
+    return gm.levelRenderer.boundsCheck(rect);
   };
   return gm;
 };

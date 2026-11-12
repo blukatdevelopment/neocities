@@ -68,8 +68,8 @@ SCENE.SCENES.LevelEditor = function(){
     let fileName = "LevelName_" + UTILITY.timeStamp() + ".js";
     UTILITY.download(data, fileName);
   };
-  le.boundsCheck = function(rect, ignoreTiles){
-    return le.levelRenderer.boundsCheck(rect, ignoreTiles);
+  le.boundsCheck = function(rect){
+    return le.levelRenderer.boundsCheck(rect);
   };
   return le;
 };

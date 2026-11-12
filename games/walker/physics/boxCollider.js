@@ -35,8 +35,8 @@ PHYSICS.BoxCollider.new = function(){
     };
     // Check if collider would remain within the level if moved
     bc.boundsCheck = function(destination){
-        let rect = bc.absoluteRect();
-        rect.position = destination;
+        let rect = bc.rect.clone();
+        rect.position = destination.add(bc.rect.position);
         return SCENE.boundsCheck(rect);
     };
     // Makes one check, assuming distance is less than scale

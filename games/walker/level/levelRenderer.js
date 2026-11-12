@@ -144,20 +144,12 @@ LEVEL.Renderer.new = function(){
             lr.lighting.emitLight(light);
         }
     }
-    lr.boundsCheck = function(rect, ignoreTiles){
+    lr.boundsCheck = function(rect){
         if(lr.levelRect == null){
             return false;
         }
         if(!rect.isInside(lr.levelRect)){
             return false;
-        }
-        if(lr.tileMap == null || ignoreTiles){
-            return true;
-        }
-        for(let tileRect of lr.tileMap.getNoTraverseRects()){
-            if(rect.overlaps(tileRect)){
-                return false;
-            }
         }
         return true;
     };

@@ -21,7 +21,6 @@ LEVEL.Static.TestLevel = function(){
     0,0,1,0,0,0,0,0,0,
     ];
     data.tileMap = LEVEL.TileMap.new(sprites, tiles, 9);
-    data.tileMap.noTraverseTiles.push(0);
     data.entityData.push(ENTITY.Data.new("Slime", VECTOR2.new(2339,8374)));
     data.entityData.push(ENTITY.Data.new("Slime", VECTOR2.new(2434,8374)));
     data.entityData.push(ENTITY.Data.new("Slime", VECTOR2.new(2539,8374)));

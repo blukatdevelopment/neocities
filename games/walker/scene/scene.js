@@ -97,9 +97,9 @@ SCENE.getGameState = function(){
   return activeScene.getGameState();
 };
 
-SCENE.boundsCheck = function(rect, ignoreTiles){
+SCENE.boundsCheck = function(rect){
   var activeScene = SCENE.getActiveScene();
-  return activeScene.boundsCheck(rect, ignoreTiles);
+  return activeScene.boundsCheck(rect);
 };
 
 SCENE.getPlayerOne = function(){

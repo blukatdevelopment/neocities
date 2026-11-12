@@ -5,6 +5,10 @@ GRAPHICS.Camera.new = function(position, size){
     rect: SHAPES.RECT.new(position, size)
   };
   cam.move = function(destination){
+    if(cam.rect.position.x == destination.x && cam.rect.position.y == destination.y){
+      // Nothing to do
+      return;
+    }
     if(cam.boundsCheck(destination)){
       // Valid destination
       cam.rect.position = destination;
@@ -27,7 +31,7 @@ GRAPHICS.Camera.new = function(position, size){
   cam.boundsCheck = function(destination){
     let rect = cam.rect.clone();
     rect.position = destination;
-    return SCENE.boundsCheck(rect, true);
+    return SCENE.boundsCheck(rect);
   };
   return cam;
 };
