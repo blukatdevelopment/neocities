@@ -3,7 +3,7 @@
 ##############################################################################*/
 SCENE.SCENES.LevelEditor = function(){
   let le = SCENE.SCENES.BaseScene();
-  le.name = "LevelEditor";
+  le.name = SCENES.levelEditor;
   le.isSetup = false;
   le.gameState = GAMESTATES.pause;
   le.levelRenderer = null;

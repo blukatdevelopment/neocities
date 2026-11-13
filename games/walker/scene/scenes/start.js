@@ -3,7 +3,7 @@
 ##############################################################################*/
 SCENE.SCENES.Start = function(){
     let st = SCENE.SCENES.BaseScene();
-    st.name = "Start";
+    st.name = SCENES.startScreen;
     st.setup = false;
     st.playButton = UI.COMPONENTS.TextButton.new(
         SHAPES.RECT.new(

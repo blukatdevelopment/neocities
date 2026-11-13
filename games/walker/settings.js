@@ -29,6 +29,14 @@ GAMESTATES.playerMenus = "inventory";
 GAMESTATES.dialogue = "dialogue";
 GAMESTATES.pause = "pause";
 
+let SCENES = {};
+SCENES.startScreen = "startScreen";
+SCENES.worldMap = "worldMap";
+SCENES.game = "game";
+SCENES.levelEditor = "levelEditor"
+
+
+
 let MENUS = {}
 MENUS.None = "None";
 MENUS.Equip = "Equip";

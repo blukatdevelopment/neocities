@@ -3,7 +3,7 @@
 ##############################################################################*/
 SCENE.SCENES.Game = function(){
   let gm = SCENE.SCENES.BaseScene();
-  gm.name = "Game";
+  gm.name = SCENES.game;
   gm.isSetup = false;
   gm.gameState = GAMESTATES.play;
   gm.levelRenderer = null;

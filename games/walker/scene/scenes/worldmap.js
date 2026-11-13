@@ -3,7 +3,7 @@
 ##############################################################################*/
 SCENE.SCENES.WorldMap = function(){
     let wm = SCENE.SCENES.BaseScene();
-    wm.name = "worldmap";
+    wm.name = SCENES.worldMap;
     wm.worldGrid = SCENE.SCENES.BaseScene
     wm.setup = function(){
         wm.isSetup = true;

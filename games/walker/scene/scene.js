@@ -111,3 +111,8 @@ SCENE.emitLight = function(light){
   var activeScene = SCENE.getActiveScene();
   return activeScene.emitLight(light);
 };
+
+SCENE.getActiveSceneName = function(){
+  var activeScene = SCENE.getActiveScene();
+  return activeScene.name;
+};
