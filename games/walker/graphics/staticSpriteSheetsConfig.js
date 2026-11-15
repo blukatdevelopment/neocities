@@ -59,6 +59,19 @@ SETTINGS.staticSheetList.push({
     ]
 });
 
+
+SETTINGS.staticSheetList.push({
+    name: "cave",
+    sheet: "cave_terrain.png",
+    resolutionX: 256,
+    resolutionY: 256,
+    cells: 5,
+    sprites: [
+        "Floor", "NWall", "SWall",
+        "EWall", "WWall"
+    ]
+});
+
 SETTINGS.staticSheetList.push({
     name: "cursors",
     sheet: "cursors.png",

@@ -13,7 +13,7 @@ SCENE.SCENES.Game = function(){
     gm.levelRenderer.init();
     // Toggle debug level
     gm.levelRenderer.loadData(LEVEL.Static.TestLevel());
-    gm.levelRenderer.loadData(LEVEL.Generate.DebugLevel());
+    //gm.levelRenderer.loadData(LEVEL.Generate.DebugLevel());
     gm.isSetup = true;
   };
 

@@ -4,7 +4,8 @@ LEVEL.Data.new = function(){
         tileMap: null,
         entityData: [],
         playerPosition: null,
-        exterior: true
+        exterior: true,
+        darkness: 0
     };
     ld.toJs = function(){
         let js = `
