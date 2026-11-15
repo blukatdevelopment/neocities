@@ -107,6 +107,12 @@ LEVEL.Renderer.new = function(){
             }
         }
         onScreen.sort((a, b) => {
+            if(a.renderLayer < b.renderLayer){
+                return -1;
+            }
+            if(a.renderLayer > b.renderLayer){
+                return 1;
+            }
             let aY = a.position.y + a.getSpriteRect().size.y;
             let bY = b.position.y + b.getSpriteRect().size.y;
             if(aY < bY){

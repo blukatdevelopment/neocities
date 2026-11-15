@@ -11,7 +11,9 @@ ENTITY.baseEntity.new = function(){
         position: VECTOR2.new(0, 0),
         collider: PHYSICS.BoxCollider.new(),
         renderer: SPRITES.SpriteRenderer.new(),
-        label: ""
+        label: "",
+        renderLayer: GRAPHICS.RenderLayers.Default
+
     };
     be.renderer.parent = be;
     be.collider.parent = be;

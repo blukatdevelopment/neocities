@@ -31,6 +31,11 @@ GRAPHICS.Colors.Green50 = "rgb(81 162 0 / 50%)";
 GRAPHICS.Colors.Blue50 = "rgb(65 97 251 / 50%)";
 GRAPHICS.Colors.Yellow15 = "rgb(235 211 32 / 15%)";
 
+GRAPHICS.RenderLayers = {};
+GRAPHICS.RenderLayers.Bottom = -10;
+GRAPHICS.RenderLayers.Default = 0;
+GRAPHICS.RenderLayers.Top = 10;
+
 GRAPHICS.isOnScreen = function(rect){
   let cr = GRAPHICS._camera.rect;
   return cr.overlaps(rect);

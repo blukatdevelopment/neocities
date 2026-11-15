@@ -10,6 +10,7 @@ ENTITYFACTORY.CaveFloor = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(256, 256)
     );
+    ent.renderLayer = GRAPHICS.RenderLayers.Bottom;
     return ent;
 };
 
@@ -21,6 +22,7 @@ ENTITYFACTORY.CaveWallNorth = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(256, 256)
     );
+    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     return ent;
 };
 
@@ -32,6 +34,7 @@ ENTITYFACTORY.CaveWallSouth = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(256, 256)
     );
+    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     return ent;
 };
 
@@ -43,6 +46,7 @@ ENTITYFACTORY.CaveWallEast = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(256, 256)
     );
+    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     return ent;
 };
 
@@ -54,6 +58,7 @@ ENTITYFACTORY.CaveWallWest = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(256, 256)
     );
+    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     return ent;
 };
 
@@ -65,5 +70,6 @@ ENTITYFACTORY.CaveWallWest = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(256, 256)
     );
+    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     return ent;
 };
