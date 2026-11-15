@@ -16,47 +16,49 @@ LEVEL.Data.new = function(){
 LEVEL.Static.LevelName = function(){
 `;
         js += "\tlet data = LEVEL.Data.new();\n";
+        if(ld.tileMap != null){
+            js += "\tlet sprites = [];\n"
 
-        js += "\tlet sprites = [];\n"
-
-        for(let sprite of ld.tileMap.tileSprites){
-            js += "\tsprites.push(" + sprite.toJs() + ");\n";
-        }
-        let gridSize = 9;
-        if(ld.tileMap.size == 9){
-            // Yay, you actually have a grid to export! :3
-            js += "\tlet tiles = [\n";
-            for(let i = 0; i < gridSize; i++){
-                js += "\t";
-                for(let j = 0; j < gridSize; j++){
-                    js += "" + ld.tileMap.getSpriteIndexByCoords(VECTOR2.new(j, i));
-                    let cell = i * gridSize + j;
-                    if(cell != gridSize * gridSize){
-                        js += ",";
-                    }
-                }
-                js += "\n";
+            for(let sprite of ld.tileMap.tileSprites){
+                js += "\tsprites.push(" + sprite.toJs() + ");\n";
             }
-            js += "\t];\n";
-        }
-        else{
-            js += "\t // Update this by hand. :3\n";
-            js += "\tlet tiles = [\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0,\n";
-            js += "\t 0,0,0,0,0,0,0,0,0\n";
-            js += "\t];\n"
-        }
+        
+            let gridSize = 9;
+            if(ld.tileMap.size == 9){
+                // Yay, you actually have a grid to export! :3
+                js += "\tlet tiles = [\n";
+                for(let i = 0; i < gridSize; i++){
+                    js += "\t";
+                    for(let j = 0; j < gridSize; j++){
+                        js += "" + ld.tileMap.getSpriteIndexByCoords(VECTOR2.new(j, i));
+                        let cell = i * gridSize + j;
+                        if(cell != gridSize * gridSize){
+                            js += ",";
+                        }
+                    }
+                    js += "\n";
+                }
+                js += "\t];\n";
+            }
+            else{
+                js += "\t // Update this by hand. :3\n";
+                js += "\tlet tiles = [\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0,\n";
+                js += "\t 0,0,0,0,0,0,0,0,0\n";
+                js += "\t];\n"
+            }
 
-        js += "\tdata.tileMap = LEVEL.TileMap.new(sprites, tiles, " + gridSize +");\n";
+            js += "\tdata.tileMap = LEVEL.TileMap.new(sprites, tiles, " + gridSize +");\n";
 
-        js += "\n";
+            js += "\n";
+        }
 
         for(let entity of ld.entityData){
             js += "\tdata.entityData.push(";
