@@ -20,6 +20,7 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
     cm.update = function(){
         // Always update notifications
         cm.notificationsBar.update();
+        cm.foodbar.update();
 
 
         if(INPUT.keyPress(INPUT.KEYS.K_TAB)){
