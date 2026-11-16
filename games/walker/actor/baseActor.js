@@ -438,15 +438,26 @@ ACTOR.new = function(){
   };
   atr.dropItem = function(item){
     // Create an item stack within short range of body
-    console.log("Dropping item "+ item.toString());
-
     let itemStack = ENTITY.ItemStack.new(item);
     let position = atr.position.clone();
     let drift = 32;
-    position.x += UTILITY.randRange(-drift, drift);
-    position.y += UTILITY.randRange(-drift, drift);
-    itemStack.position = position;
+    let placed = false;
+    let offset = null;
     SCENE.createEntity(itemStack);
+
+    // Position the item stack
+    itemStack.collider.rigid = true;
+    while(!placed){
+      offset = VECTOR2.new(UTILITY.randRange(-drift, drift),UTILITY.randRange(-drift, drift));
+      let dropPos = offset.add(position);
+      let collision = itemStack.collider.moveAndCollideShort(dropPos, true, [atr.getEntityId()]);
+      if(!collision){
+        placed = true;
+      }
+    }
+
+    itemStack.collider.rigid = false;
+
   };
   return atr;
 };

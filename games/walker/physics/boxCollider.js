@@ -40,7 +40,7 @@ PHYSICS.BoxCollider.new = function(){
         return SCENE.boundsCheck(rect);
     };
     // Makes one check, assuming distance is less than scale
-    bc.moveAndCollideShort = function(destination, suppressCollisionEvents){
+    bc.moveAndCollideShort = function(destination, suppressCollisionEvents, _excludeList){
         if(bc.controller == null || bc.parent == null){
             UTILITY.log("BoxCollider.moveAndCollide()", "BoxCollider not assigned to physics controller.", { controller: bc.controller == null, parent: bc.parent == null});
             return null;
@@ -52,6 +52,9 @@ PHYSICS.BoxCollider.new = function(){
         let previous = bc.parent.getPosition();
         bc.parent.setPosition(VECTOR2.new(destination.x, destination.y));
         let excludeList = [];
+        if(_excludeList != null && _excludeList.length > 0){
+            excludeList.push(..._excludeList);
+        }
         excludeList.push(bc.parent.getEntityId());
         let ret = bc.controller.checkForCollision(excludeList, bc);
         if(ret){
