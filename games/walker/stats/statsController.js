@@ -27,6 +27,27 @@ STATS.StatsController.new = function(){
       stc.resources[resource].change(delta);
     }    
   };
+  // Returns true upon success
+  stc.consumeResource = function(resource, amount){
+    if(stc.resources[resource] == null){
+      return false;
+    }
+    let rs = stc.resources[resource];
+    if(rs.value < amount){
+      return false;
+    }
+    stc.changeResource(resource, -amount);
+    return true;
+  };
+  stc.consumeEnergy = function(amount){
+    return stc.consumeResource(STATS.Resources.energy, amount);
+  }
+  stc.consumeHealth = function(amount){
+    return stc.consumeResource(STATS.Resources.health, amount);
+  }
+  stc.consumeMagic = function(amount){
+    return stc.consumeResource(STATS.Resources.magic, amount);
+  }
   stc.getAttribute = function(attribute){
     if(stc.attributes[attribute]){
       let atr = stc.attributes[attribute];
@@ -86,6 +107,10 @@ STATS.StatsController.new = function(){
   };
   stc.removeEffect = function(name, source){
     let effect = stc.getEffect(name, source);
+    if(effect == null){
+      // nothing to remove
+      return;
+    }
     stc.effects = stc.effects.filter((ef) => !(ef.name === name && ef.source === source));
     if(effect.effectType === STATS.Effect.Types.Attribute){
       let inverseDelta = effect.modifier * -1;

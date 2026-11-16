@@ -30,7 +30,6 @@ ITEMS.BaseItem.new = function(){
             quantityStored = quantity;
         }
         let overflow = quantity - quantityStored;
-        console.log("Storing " + quantityStored + ", overflow " + overflow);
         item.quantity += quantityStored;
         return overflow;
     };

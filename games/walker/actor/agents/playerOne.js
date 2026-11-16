@@ -16,6 +16,9 @@ AGENT.PLAYER_ONE.new = function(actor){
         if(INPUT.key(INPUT.KEYS.K_LEFT_SHIFT)){
             atr.sprint();
         }
+        else{
+            atr.haltSprint();
+        }
         let x_movement = 0;
         let y_movement = 0;
         let k_w = INPUT.key(INPUT.KEYS.K_W) ? 1 : 0;

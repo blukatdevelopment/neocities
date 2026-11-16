@@ -192,32 +192,20 @@ ACTOR.new = function(){
     });
     
   };
-  atr.canSprint = function(){
-    if(atr.stats == null){
-      // No stats, no problems!
-      return true;
-    }
-    if(atr.stats.getEffect(STATS.Effect.Names.Sprinting, STATS.Effect.Sources.Body)){
-      // You're already sprinting.
-      return false;
-    }
-    let energy = atr.stats.getResourceValue(STATS.Resources.energy);
-    if(energy > 0){
-      // You can afford to sprint
-      return true;
-    }
-    // You can't afford it
-    return false;
-  };
-  // Call this each frame before moving
   atr.sprint = function(){
-    if(!atr.canSprint()){
+    if(atr.stats == null
+      || atr.stats.getEffect(STATS.Effect.Names.SprintBuff, STATS.Effect.Sources.Body)
+      || !atr.stats.consumeEnergy(1)){
+      // Stats don't exist, you're alreadys printing, or you can't afford to continue
       return;
     }
-    let cost = STATS.Effect.SprintCost();
-    let buff = STATS.Effect.SprintBuff();
-    atr.stats.addEffect(cost);
-    atr.stats.addEffect(buff);
+    atr.stats.addEffect(STATS.Effect.SprintBuff());
+  };
+  atr.haltSprint = function(){
+    if(atr.stats == null){
+      return;
+    }
+    atr.stats.removeEffect(STATS.Effect.Names.SprintBuff, STATS.Effect.Sources.Body);
   };
   atr.attackHitscan = function(atk){
 

@@ -22,7 +22,6 @@ STATS.Effect.Types.Resource = "Resource";
 STATS.Effect.Types.ResourceMax = "ResourceMax";
 
 STATS.Effect.Names = {};
-STATS.Effect.Names.SprintCost = "SprintCost";
 STATS.Effect.Names.SprintBuff = "SprintBuff";
 STATS.Effect.Names.Regen = "Regen";
 STATS.Effect.Names.HealthMax = "HealthMax";
@@ -122,20 +121,6 @@ STATS.Effect.Armor = function(amount, duration, source){
     duration // Duration
   );
 };
-
-
-
-STATS.Effect.SprintCost = function(){
-  return STATS.Effect.ResourceEffect.new(
-      STATS.Effect.Names.SprintCost, // Name
-      STATS.Effect.Sources.Body, // Source
-      STATS.Resources.energy, // Resource
-      -1, // Delta
-      1000, // Interval
-      1000 // Duration
-    );
-};
-
 
 STATS.Effect.EnergyRegen = function(interval, resource, source){
   let regen = STATS.Effect.ResourceEffect.new(
