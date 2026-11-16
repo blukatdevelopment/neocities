@@ -10,8 +10,8 @@ SCENE.SCENES.Start = function(){
             VECTOR2.new(180,180),
             VECTOR2.new(40,20)
         ),
-        "Play",
-        () => { SCENE.setActiveScene(SCENE.SCENES.Game()); }
+        "New Game",
+        () => { SCENE.setActiveScene(SCENE.SCENES.NewGame()); }
     );
     st.editButton = UI.COMPONENTS.TextButton.new(
         SHAPES.RECT.new(
