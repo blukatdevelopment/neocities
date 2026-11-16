@@ -10,6 +10,7 @@ SCENE.SCENES.LevelEditor = function(){
   le.input = LEVEL.Editor.EditorInputController.new(le);
   le.physics = null;
   le.selected = null;
+  le.hovered = null;
   le.tooltip = null;
 
   le.setup = function(){

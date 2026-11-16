@@ -72,6 +72,9 @@ ENTITY.baseEntity.new = function(){
     be.getSpriteRect = function(){
         return be.renderer.getRect();
     };
+    be.getColRect = function(){
+        return be.collider.absoluteRect();
+    };
     be.recenter = function(position){
         let rect = be.getSpriteRect();
         rect.recenter(position);

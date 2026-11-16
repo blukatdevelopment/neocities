@@ -2,8 +2,9 @@
 # Allows player to place entities in level editor
 ##############################################################################*/
 UI.COMPONENTS.EntitySelectMenu = {};
-UI.COMPONENTS.EntitySelectMenu.new = function(){
+UI.COMPONENTS.EntitySelectMenu.new = function(parent){
     let esm = {
+        parent: parent,
         rect: SHAPES.RECT.new(VECTOR2.new(320, 280), VECTOR2.new(80, 100))
     };
     esm.panel = UI.COMPONENTS.Panel.new(esm.rect);
@@ -31,7 +32,7 @@ UI.COMPONENTS.EntitySelectMenu.new = function(){
         let entity = ENTITYFACTORY[selected]();
         entity.position = pos;
         SCENE.createEntity(entity);
-
+        esm.parent.selected = entity;
     };
     esm.update = function(){
         esm.placeButton.update();

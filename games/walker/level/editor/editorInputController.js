@@ -8,17 +8,20 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         mouseDragOrigin: null,
         camDragOrigin: null,
         snap: true,
-        dragEntityStart: null
+        dragOrigin: null,
+        freshlySelected: false
     };
     ic.update = function(){
+        ic.parent.hovered = ic.getHoveredEntity();
+        if(INPUT.leftClick()){
+            ic.handleClick();
+        }
         ic.handleDragEntity();
         ic.handleDragCamera();
         ic.handleCameraControls();
-        if(INPUT.leftClick()){
-            ic.handleSelectEntity(false);
-        }
+        
         if(INPUT.fullClick()){
-            ic.handleSelectEntity(true);
+            ic.handleFullClick();
         }
         if(INPUT.keyPress(INPUT.KEYS.K_P)){
             ic.parent.export();
@@ -31,10 +34,47 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             ic.parent.selected = null;
         }
     };
-    ic.handleSelectEntity = function(dragFinished){
+    ic.handleClick = function(){
         if(ic.parent.ui.isHovered()){
+            // Selection disabled over UI
             return;
         }
+        if(ic.dragOrigin == null){
+            ic.dragOrigin = GRAPHICS.getWorldCursor();
+        }
+        let mPos = GRAPHICS.getWorldCursor();
+        let hEnt = ic.parent.hovered;
+        if(hEnt == null){
+            // Clicked on nothing. Deselect.
+            ic.parent.selected = null;
+            return;
+        }
+        if(hEnt != ic.parent.selected){
+            // Clicked on another entity. Select it.
+            ic.parent.selected = hEnt;
+            ic.freshlySelected = true;
+        }
+    };
+    ic.handleFullClick = function(){
+        let dragOrigin = ic.dragOrigin;
+        ic.dragOrigin = null;
+        if(ic.parent.ui.isHovered()){
+            // Selection disabled over UI
+            return;
+        }
+        if(dragOrigin == null){
+            return;
+        }
+        let mPos = GRAPHICS.getWorldCursor();
+        let hEnt = ic.parent.hovered;
+        let mouseDrift = dragOrigin.distance(GRAPHICS.getWorldCursor());
+        if(!ic.freshlySelected && mouseDrift < 8){
+            // Clicked on selected entity. Deselect it.
+            ic.parent.selected = null;
+        }
+        ic.freshlySelected = false;
+    };
+    ic.getHoveredEntity = function(){
         let worldPoint = GRAPHICS.getWorldCursor();
         //ic.parent.tooltip = worldPoint.toString();
         let size = 10;
@@ -43,8 +83,7 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         //console.log(rect.toString());
         let colliders = ic.parent.physics.rectHitScan([], rect);
         if(colliders == null || colliders.length == 0){
-            ic.parent.selected = null;
-            return;
+            return null;
         }
         colliders.sort((a, b) => {
             if(a.parent.renderLayer < b.parent.renderLayer){
@@ -55,23 +94,14 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             }
             return 0;
         });
-        if(colliders[0].parent != ic.parent.selected){
-            ic.parent.selected = colliders[0].parent;
-            return;
-        }
-        if(!dragFinished || ic.dragEntityStart == null){
-            return;
-        }
-        let mouseDrift = ic.dragEntityStart.distance(worldPoint);
-        if(mouseDrift < 8){
-            // Deselect when you click the selected entity
-            ic.parent.selected = null;
-        }
-        ic.dragEntityStart = null;
+        return colliders[0].parent;
     };
 
     ic.handleDragEntity = function(){
         if(!INPUT.isMouseDragging(INPUT.LEFT_MOUSE)){
+            return;
+        }
+        if(ic.dragOrigin == null){
             return;
         }
         if(ic.parent.ui.isHovered()){
@@ -81,9 +111,6 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             return;
         }
         let mPos = GRAPHICS.getWorldCursor();
-        if(ic.dragEntityStart == null){
-            ic.dragEntityStart = mPos;
-        }
         if(ic.snap){
             let prev = mPos;
             mPos = mPos.snapToGrid(16);

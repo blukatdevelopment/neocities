@@ -62,7 +62,7 @@ LEVEL.Static.LevelName = function(){
 
         for(let entity of ld.entityData){
 
-            if(entity.entityName == ENTITY.ENTITIES.PlayerOne){
+            if(entity.entityName === ACTOR.Names.PlayerOne){
                 js += "\tdata.playerPosition = VECTOR2.new(";
                 js += entity.position.x + ", " + entity.position.y + ");\n";
             }
