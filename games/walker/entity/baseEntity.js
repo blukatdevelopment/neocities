@@ -80,6 +80,15 @@ ENTITY.baseEntity.new = function(){
         rect.recenter(position);
         be.position = rect.position;
     };
+    be.colliderRecenter = function(position){
+        let rect = be.collider.rect;
+        let entPos = position.clone();
+        entPos.x -= rect.position.x;
+        entPos.y -= rect.position.y;
+        entPos.x -= (rect.size.x/2);
+        entPos.y -= (rect.size.y/2);
+        be.position = entPos;
+    };
     be.getLabel = function(){ return ""; };
     return be;
 };

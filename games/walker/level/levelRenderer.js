@@ -86,9 +86,6 @@ LEVEL.Renderer.new = function(){
     };
     lr.drawLevel = function(){
         GRAPHICS.clearCanvas();
-        if(!lr.exterior){
-            //GRAPHICS.fillScreen(GRAPHICS.Colors.Black);
-        }
         for(let renderer of lr.scenery){
             renderer.draw();
         }
@@ -99,7 +96,6 @@ LEVEL.Renderer.new = function(){
         if(lr.ui){
             lr.ui.draw();    
         }
-        
     }
     lr.getRenderSortedEntities = function(){
         let onScreen = [];

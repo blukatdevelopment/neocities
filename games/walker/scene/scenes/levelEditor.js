@@ -12,7 +12,7 @@ SCENE.SCENES.LevelEditor = function(){
   le.selected = null;
   le.hovered = null;
   le.tooltip = null;
-
+  le.snap = true;
   le.setup = function(){
     le.levelRenderer = LEVEL.Renderer.new();
     le.levelRenderer.init();

@@ -7,7 +7,6 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         parent: parent,
         mouseDragOrigin: null,
         camDragOrigin: null,
-        snap: true,
         dragOrigin: null,
         freshlySelected: false
     };
@@ -27,7 +26,7 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             ic.parent.export();
         }
         if(INPUT.keyPress(INPUT.KEYS.K_L)){
-            ic.snap = !ic.snap;
+            ic.parent.snap = !ic.parent.snap;
         }
         if(INPUT.keyPress(INPUT.KEYS.K_SPACE) && ic.parent.selected){
             SCENE.destroyEntity(ic.parent.selected);
@@ -111,11 +110,11 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             return;
         }
         let mPos = GRAPHICS.getWorldCursor();
-        if(ic.snap){
-            let prev = mPos;
-            mPos = mPos.snapToGrid(16);
+        let ent = ic.parent.selected;
+        ent.colliderRecenter(mPos);
+        if(ic.parent.snap){
+            ent.position = ent.position.snapToGrid(16);
         }
-        ic.parent.selected.recenter(mPos);
     };
     ic.handleDragCamera = function(){
         if(!INPUT.isMouseDragging(INPUT.RIGHT_MOUSE)){

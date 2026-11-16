@@ -30,9 +30,12 @@ UI.COMPONENTS.EntitySelectMenu.new = function(parent){
         let selected = esm.select.getSelected();
         let pos = GRAPHICS.getCameraCenter();
         let entity = ENTITYFACTORY[selected]();
-        entity.position = pos;
+        entity.recenter(pos);
         SCENE.createEntity(entity);
         esm.parent.selected = entity;
+        if(esm.parent.snap){
+            entity.position = entity.position.snapToGrid(16);
+        }
     };
     esm.update = function(){
         esm.placeButton.update();

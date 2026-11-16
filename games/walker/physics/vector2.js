@@ -21,7 +21,7 @@ VECTOR2.new = function(x, y){
     };
     v2.multiply = function(otherVector){
         return VECTOR2.new(v2.x * otherVector.x, v2.y * otherVector.y);
-    }
+    };
     v2.toString = function(){
         return "{" + v2.x + ", " + v2.y + "}";
     };
