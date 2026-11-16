@@ -63,7 +63,7 @@ PHYSICS.BoxCollider.new = function(){
                 bc.parent.setPosition(previous);
                 
             }
-            if(suppressCollisionEvents){
+            if(suppressCollisionEvents == null || !suppressCollisionEvents){
                 // Emit collision events
                 bc.parent.onCollide(ret);
                 if(ret.second && ret.second.parent){

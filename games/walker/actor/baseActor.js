@@ -71,7 +71,7 @@ ACTOR.new = function(){
         atr.direction = direction;
       break;
     }
-    if(atr.collider.moveAndCollideShort(dest)){
+    if(atr.collider.moveAndCollideShort(dest, false, null)){
       return;
     }
   };
