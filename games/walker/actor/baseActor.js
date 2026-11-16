@@ -257,13 +257,6 @@ ACTOR.new = function(){
       return;
     }
 
-    if(atr.stats.damageCooldown == null || atr.stats.damageCooldown < Date.now()){
-      atr.stats.damageCooldown = Date.now() + SETTINGS.damageCooldown;
-    }
-    else{
-      //console.log("Ignoring attack until cooldown finishes");
-      return;
-    }
     let damageDealt = atr.stats.receiveAttack(attackData);
     
     atr.damageLabel = UTILITY.formatDamage(damageDealt);
