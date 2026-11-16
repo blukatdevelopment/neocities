@@ -166,6 +166,10 @@ ACTOR.new = function(){
     if(!atr.cooldown){
       return;
     }
+    if(!atr.stats.consumeEnergy(attack.energyCost)){
+      // No energy to perform attack
+      return;
+    }
     let atk = attack;
 
     // Execute immediately

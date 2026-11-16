@@ -11,7 +11,7 @@ ITEMS.Config.foodPack = function(){
             description: "One a day keeps the doctor away",
             sprite: SPRITES.static.items.Apple,
             stackSize: 8,
-            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.Apple, 10, 10, 10)
+            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.Apple, 1, 9, 0)
     });
 
     ITEMS.Names.RedBerry = "RedBerry";
@@ -21,7 +21,7 @@ ITEMS.Config.foodPack = function(){
             description: "Sweet and mildly tart.",
             sprite: SPRITES.static.items.RedBerry,
             stackSize: 8,
-            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.RedBerry, 10, 10, 10)
+            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.RedBerry, 1, 9, 0)
     });    	
 
     ITEMS.Names.GreenBerry = "GreenBerry";
@@ -31,7 +31,7 @@ ITEMS.Config.foodPack = function(){
             description: "What plant does this come from?",
             sprite: SPRITES.static.items.GreenBerry,
             stackSize: 8,
-            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.GreenBerry, 10, 10, 10)
+            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.GreenBerry, 1, 9, 0)
     });
 
     ITEMS.Names.BlueBerry = "BlueBerry";
@@ -41,7 +41,7 @@ ITEMS.Config.foodPack = function(){
             description: "It's actually purple, not blue.",
             sprite: SPRITES.static.items.BlueBerry,
             stackSize: 8,
-            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.BlueBerry, 10, 10, 10)
+            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.BlueBerry, 0, 5, 5)
     });
 
     ITEMS.Names.Venison = "Venison";
@@ -51,7 +51,7 @@ ITEMS.Config.foodPack = function(){
             description: "Very savory, lean meat",
             sprite: SPRITES.static.items.MeatSteak,
             stackSize: 8,
-            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.Venison, 10, 10, 10)
+            effects: STATS.Effect.foodEffects(10 * TIME.minute, ITEMS.Names.Venison, 10, 0, 0)
     });
 
 	return config;

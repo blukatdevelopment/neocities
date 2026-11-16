@@ -12,7 +12,7 @@ STATS.AttackFactory.Unarmed = function(){
   atk.damageDice = [];
   atk.frames = 3;
   atk.damageFrames = [1];
-  atk.cost = 1;
+  atk.energyCost = 1;
   return atk;
 };
 
@@ -29,7 +29,7 @@ STATS.AttackFactory.Knife = function(){
   ];
   atk.frames = 3;
   atk.damageFrames = [1];
-  atk.cost = 1;
+  atk.energyCost = 1;
   return atk;
 };
 
@@ -44,7 +44,7 @@ STATS.AttackFactory.Axe = function(){
   atk.damageDice = [];
   atk.frames = 3;
   atk.damageFrames = [1];
-  atk.cost = 3;
+  atk.energyCost = 3;
   return atk;
 };
 
@@ -60,7 +60,7 @@ STATS.AttackFactory.Spear = function(){
   ];
   atk.frames = 3;
   atk.damageFrames = [1];
-  atk.cost = 2;
+  atk.energyCost = 2;
   return atk;
 };
 
@@ -76,6 +76,6 @@ STATS.AttackFactory.Sword = function(){
   ];
   atk.frames = 3;
   atk.damageFrames = [1];
-  atk.cost = 2;
+  atk.energyCost = 2;
   return atk;
 };

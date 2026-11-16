@@ -117,8 +117,8 @@ STATS.Effect.foodEffects = function(duration, source, health, energy, magic){
   let effects = [];
   let src = SETTINGS.foodPrefix + source;
   if(health != 0){
-    effects.push(STATS.Effect.MaxHealthBuff(health, duration, src));
-    effects.push(STATS.Effect.HealthGain(health, src));
+    effects.push(STATS.Effect.MaxHealthBuff(health * SETTINGS.PiecesPerHeart, duration, src));
+    effects.push(STATS.Effect.HealthGain(health * SETTINGS.PiecesPerHeart, src));
   }
   if(energy != 0){
     effects.push(STATS.Effect.MaxEnergyBuff(energy, duration, src));
