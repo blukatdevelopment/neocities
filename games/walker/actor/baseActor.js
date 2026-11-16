@@ -447,13 +447,15 @@ ACTOR.new = function(){
 
     // Position the item stack
     itemStack.collider.rigid = true;
-    while(!placed){
+    let iterations = 0;
+    while(!placed && iterations < 1000){
       offset = VECTOR2.new(UTILITY.randRange(-drift, drift),UTILITY.randRange(-drift, drift));
       let dropPos = offset.add(position);
       let collision = itemStack.collider.moveAndCollideShort(dropPos, true, [atr.getEntityId()]);
       if(!collision){
         placed = true;
       }
+      iterations++;
     }
 
     itemStack.collider.rigid = false;
