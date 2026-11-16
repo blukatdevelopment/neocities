@@ -29,10 +29,19 @@ PHYSICS.Controller.new = function(){
         return null;
     };
     ctl.getLocalColliders = function(point){
-        if(ctl.collisionGrid){
-            return ctl.collisionGrid.getLocalColliders(point);
+        if(ctl.collisionGrid == null){
+            return ctl.rigidColliders;
         }
-        return ctl.rigidColliders;
+
+        let cellCoords = ctl.collisionGrid.getCellCoords(point);
+        let ret = [];
+        for(let i = -1; i < 2; i++){
+            for(let j = -1; j < 2; j++){
+                let offset = VECTOR2.new(i, j);
+                ret.push(...ctl.collisionGrid.getCollidersAtCell(cellCoords.add(offset)));
+            }
+        }
+        return ret;
     };
     ctl.getCollidersByPoint = function(excludeList, point){
         let cols = [];

@@ -28,6 +28,24 @@ PHYSICS.CellGrid.new = function(colliders, size){
         let index = grid.posToCellIndex(point);
         return grid.cells[index];
     };
+    grid.getCellCoords = function(position){
+        let index = grid.posToCellIndex(position);
+        let y = Math.trunc(index / grid.size);
+        let x = index % grid.size;
+        return VECTOR2.new(x, y);
+    };
+    grid.getCollidersAtCell = function(coords){
+        let index = grid.coordsToIndex(coords);
+        if(index > -1 && index < grid.cells.length){
+            return grid.cells[index];
+        }
+        return [];
+    };
+    grid.coordsToIndex = function(coords){
+        let gridX = coords.x;
+        let gridY = coords.y;
+        return gridX + (grid.size * gridY)
+    };
     grid.init();
     return grid;
 };
