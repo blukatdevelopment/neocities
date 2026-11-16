@@ -50,6 +50,10 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
     };
 
     cm.handleDrag = function(){
+        cm.handleDragStart();
+        cm.handleDragEnd();
+    };
+    cm.handleDragStart = function(){
         if(INPUT.mouseClick(INPUT.LEFT_MOUSE)){
             let draggedComponent = cm.getDraggedComponent();
             if(draggedComponent){
@@ -59,43 +63,74 @@ UI.COMPONENTS.PlayerUIManager.new = function(){
                 };
             }
         }
-        if(INPUT.fullClick()){
-            // Deposit dropped item if possible
-            let destComponent = cm.getHoveredComponent();
-            if(destComponent && cm.dragged){
-                let destSlot = destComponent.getHoveredSlot();
-                let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
-                let displacedItem = destComponent.getItem(destSlot);
-                let nullCheck = draggedItem != null && displacedItem != null;
-                if(nullCheck && draggedItem.name == displacedItem.name){
-                    // Try to stack like items. Do not swap places.
-                    let space = displacedItem.stackSpace();
-                    if(space >= draggedItem.quantity){
-                        displacedItem.stack(draggedItem.quantity);
-                        cm.dragged.component.setItem(cm.dragged.slot, null)
-                    }
-                    else{
-                        let overflow = draggedItem.quantity - space;
-                        displacedItem.stack(space);
-                        draggedItem.quantity = overflow;
-                    }
-                }
-                else if(destComponent.canSetItem(destSlot, draggedItem) && cm.dragged.component.canSetItem(cm.dragged.slot, displacedItem)){
-                    // Swap contents of slots
-                    destComponent.setItem(destSlot, draggedItem);
-                    cm.dragged.component.setItem(cm.dragged.slot, displacedItem);
-                }
-            }
-            else if(cm.dragged){
-                // Drop item
-                let player = SCENE.getPlayerOne();
-                let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
-                player.dropItem(draggedItem);
-                cm.dragged.component.setItem(cm.dragged.slot, null);
-            }
-            // Stop dragging
-            cm.dragged = null;
+    };
+    cm.handleDragEnd = function(){
+        if(!INPUT.fullClick()){
+            return;
         }
+        if(cm.dragged == null
+            || cm.dragged.component == null 
+            || cm.dragged.slot == null 
+            || cm.dragged.component.getItem(cm.dragged.slot) == null){
+            // Missing or malformed dragged object
+            cm.dragged = null;
+            return;
+        }
+
+        let destComponent = cm.getHoveredComponent();
+
+        if(destComponent == null){
+            cm.dropItem();
+            return; // Dragged off UI. Drop item.
+        }
+
+        let destSlot = destComponent.getHoveredSlot();
+        let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
+        let displacedItem = destComponent.getItem(destSlot);
+
+        if(displacedItem != null && draggedItem.name == displacedItem.name){
+            // Attempt to stack like items
+            return cm.stackItem(draggedItem, displacedItem);            
+        }
+        // Attempt to swap items
+        cm.swapItems(destComponent, destSlot, draggedItem, displacedItem);        
+    };
+    cm.dropItem = function(){
+        let player = SCENE.getPlayerOne();
+        let draggedItem = cm.dragged.component.getItem(cm.dragged.slot);
+        player.dropItem(draggedItem);
+        cm.dragged.component.setItem(cm.dragged.slot, null);
+        cm.dragged = null;
+    };
+    cm.stackItem = function(draggedItem, displacedItem){
+        if(draggedItem == displacedItem){
+            // Don't stack an item into itself.
+            cm.dragged = null;
+            return;
+        }
+        let space = displacedItem.stackSpace();
+        if(space >= draggedItem.quantity){
+            displacedItem.stack(draggedItem.quantity);
+            cm.dragged.component.setItem(cm.dragged.slot, null)
+        }
+        else{
+            let overflow = draggedItem.quantity - space;
+            displacedItem.stack(space);
+            draggedItem.quantity = overflow;
+        }
+        cm.dragged = null;
+    };
+    cm.swapItems = function(destComponent, destSlot, draggedItem, displacedItem){
+        if(!destComponent.canSetItem(destSlot, draggedItem) || !cm.dragged.component.canSetItem(cm.dragged.slot, displacedItem)){
+            // Swap is not possible. Abort.
+            cm.dragged = null;
+            return;
+        }
+
+        // Swap contents of slots
+        destComponent.setItem(destSlot, draggedItem);
+        cm.dragged.component.setItem(cm.dragged.slot, displacedItem);
+        cm.dragged = null;
     };
     cm.draw = function(){
         // Always draw notifications bar
