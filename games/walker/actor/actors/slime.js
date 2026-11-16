@@ -26,13 +26,14 @@ ACTORFACTORY.Slime = function(){
   // Deal damage and knock target away
   se.onCollide = function(collision){
     let target = collision.second.parent == se ? collision.first.parent : collision.second.parent;
-    if(target == se){
+    if(target == se || target.name == se.name){
+      // Slimes won't hurt themselves nor their friends
       return;
     }
     let pos = se.centeredPosition();
     let targetPos = target.centeredPosition();
     let dir = pos.x < targetPos.x ? DIRECTIONS.east : DIRECTIONS.west;
-    let attackData = STATS.AttackData.new(dir, -se.activeAttack.damage, se, { knockback: 10 });
+    let attackData = STATS.AttackData.new(dir, se.activeAttack.getDamage(), se, { knockback: 10 });
     target.onAttacked(attackData);
   };
 

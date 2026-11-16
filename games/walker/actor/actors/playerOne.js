@@ -27,8 +27,9 @@ ACTORFACTORY.PlayerOne = function(){
   pone.stats.setAttributeValue(STATS.Attributes.magicMax, 0);
   pone.stats.setAttributeValue(STATS.Attributes.speed, 3);
   pone.stats.fullRestore();
-  pone.stats.addEffect(STATS.Effect.Regen(2000, STATS.Resources.energy, STATS.Effect.Sources.Body));
-  pone.stats.addEffect(STATS.Effect.Regen(5000, STATS.Resources.health, STATS.Effect.Sources.Body));
+  pone.stats.addEffect(STATS.Effect.Regen(5 * TIME.second, STATS.Resources.health, STATS.Effect.Sources.Body));
+  pone.stats.addEffect(STATS.Effect.Regen(2 * TIME.second, STATS.Resources.energy, STATS.Effect.Sources.Body));
+  pone.stats.addEffect(STATS.Effect.Regen(5 * TIME.second, STATS.Resources.magic, STATS.Effect.Sources.Body));
   return pone;
 };
 

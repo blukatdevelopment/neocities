@@ -171,19 +171,6 @@ STATS.Effect.Armor = function(amount, duration, source){
   );
 };
 
-STATS.Effect.EnergyRegen = function(interval, resource, source){
-  let regen = STATS.Effect.ResourceEffect.new(
-      STATS.Effect.Names.Regen, // Name
-      source, // Source
-      resource, // Resource
-      1, // Delta
-      interval, // Interval
-      null // Duration
-    );
-  regen.blockedByEffect = STATS.Effect.Names.SprintCost;
-  return regen;
-};
-
 STATS.Effect.Regen = function(interval, resource, source){
   let regen = STATS.Effect.ResourceEffect.new(
       resource + STATS.Effect.Names.Regen, // Name
