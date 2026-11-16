@@ -13,8 +13,8 @@ ACTORFACTORY.PlayerOne = function(){
   pone.animator = anm;
   pone.lockCamera = true;
   pone.setCollider(PHYSICS.BoxCollider.new());
-  pone.getCollider().rect.position = VECTOR2.new(11, 0);
-  pone.getCollider().rect.size = VECTOR2.new(11, 32);
+  pone.getCollider().rect.position = VECTOR2.new(10, 0);
+  pone.getCollider().rect.size = VECTOR2.new(12, 32);
   pone.name = ACTOR.Names.PlayerOne;
   pone.entityName = ACTOR.Names.PlayerOne;
 

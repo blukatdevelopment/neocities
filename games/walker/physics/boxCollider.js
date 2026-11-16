@@ -54,19 +54,18 @@ PHYSICS.BoxCollider.new = function(){
         let excludeList = [];
         excludeList.push(bc.parent.getEntityId());
         let ret = bc.controller.checkForCollision(excludeList, bc);
-        if(suppressCollisionEvents){
-            return ret;
-        }
         if(ret){
             if(ret.second.rigid){
                 //revert upon collision with rigid collider
                 bc.parent.setPosition(previous);
                 
             }
-            // Emit collision events
-            bc.parent.onCollide(ret);
-            if(ret.second && ret.second.parent){
-                ret.second.parent.onCollide(ret);
+            if(suppressCollisionEvents){
+                // Emit collision events
+                bc.parent.onCollide(ret);
+                if(ret.second && ret.second.parent){
+                    ret.second.parent.onCollide(ret);
+                }
             }
             return ret;
         }

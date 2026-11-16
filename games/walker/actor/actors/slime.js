@@ -14,8 +14,8 @@ ACTORFACTORY.Slime = function(){
   se.lockCamera = false;
 
   se.setCollider(PHYSICS.BoxCollider.new());
-  se.getCollider().rect.position = VECTOR2.new(13, 0);
-  se.getCollider().rect.size = VECTOR2.new(11, 32);
+  se.getCollider().rect.position = VECTOR2.new(0, 0);
+  se.getCollider().rect.size = VECTOR2.new(32, 32);
   se.name = ACTOR.Names.Slime;
   se.entityName = ACTOR.Names.Slime;
   se.label = se.name;
