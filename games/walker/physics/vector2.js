@@ -25,6 +25,12 @@ VECTOR2.new = function(x, y){
     v2.toString = function(){
         return "{" + v2.x + ", " + v2.y + "}";
     };
+    v2.snapToGrid = function(gridSize){
+        let ret = v2.clone();
+        ret.x = Math.trunc(ret.x/gridSize) * gridSize;
+        ret.y = Math.trunc(ret.y/gridSize) * gridSize;
+        return ret;
+    };
     v2.move = function(direction, magnitude){
         let ret = VECTOR2.new(v2.x, v2.y);
         switch(direction){

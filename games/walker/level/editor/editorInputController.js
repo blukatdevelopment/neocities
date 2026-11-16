@@ -6,30 +6,37 @@ LEVEL.Editor.EditorInputController.new = function(parent){
     let ic = {
         parent: parent,
         mouseDragOrigin: null,
-        camDragOrigin: null
+        camDragOrigin: null,
+        snap: true,
+        dragEntityStart: null
     };
     ic.update = function(){
-        ic.handleSelectEntity();
         ic.handleDragEntity();
         ic.handleDragCamera();
         ic.handleCameraControls();
+        if(INPUT.leftClick()){
+            ic.handleSelectEntity(false);
+        }
+        if(INPUT.fullClick()){
+            ic.handleSelectEntity(true);
+        }
         if(INPUT.keyPress(INPUT.KEYS.K_P)){
             ic.parent.export();
+        }
+        if(INPUT.keyPress(INPUT.KEYS.K_L)){
+            ic.snap = !ic.snap;
         }
         if(INPUT.keyPress(INPUT.KEYS.K_SPACE) && ic.parent.selected){
             SCENE.destroyEntity(ic.parent.selected);
             ic.parent.selected = null;
         }
     };
-    ic.handleSelectEntity = function(){
+    ic.handleSelectEntity = function(dragFinished){
         if(ic.parent.ui.isHovered()){
             return;
         }
         let worldPoint = GRAPHICS.getWorldCursor();
         //ic.parent.tooltip = worldPoint.toString();
-        if(!INPUT.mouseClick(INPUT.LEFT_MOUSE)){
-            return;
-        }
         let size = 10;
         let rect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(size, size));
         rect.recenter(worldPoint);
@@ -48,12 +55,19 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             }
             return 0;
         });
-        if(colliders[0].parent == ic.parent.selected){
+        if(colliders[0].parent != ic.parent.selected){
+            ic.parent.selected = colliders[0].parent;
+            return;
+        }
+        if(!dragFinished || ic.dragEntityStart == null){
+            return;
+        }
+        let mouseDrift = ic.dragEntityStart.distance(worldPoint);
+        if(mouseDrift < 8){
+            // Deselect when you click the selected entity
             ic.parent.selected = null;
         }
-        else{
-            ic.parent.selected = colliders[0].parent;
-        }
+        ic.dragEntityStart = null;
     };
 
     ic.handleDragEntity = function(){
@@ -67,6 +81,13 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             return;
         }
         let mPos = GRAPHICS.getWorldCursor();
+        if(ic.dragEntityStart == null){
+            ic.dragEntityStart = mPos;
+        }
+        if(ic.snap){
+            let prev = mPos;
+            mPos = mPos.snapToGrid(16);
+        }
         ic.parent.selected.recenter(mPos);
     };
     ic.handleDragCamera = function(){

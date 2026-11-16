@@ -93,6 +93,14 @@ INPUT.mouseClick = function(mouseButton){
   }
 };
 
+INPUT.leftClick = function(){
+  return INPUT.mouseClick(INPUT.LEFT_MOUSE);
+};
+
+INPUT.rightClick = function(){
+  return INPUT.mouseClick(INPUT.RIGHT_MOUSE);
+};
+
 INPUT.isMouseDragging = function(mouseButton){
   return INPUT._mouseDown[mouseButton] && !INPUT._mouseClick[mouseButton];
 };
