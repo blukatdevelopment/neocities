@@ -78,7 +78,7 @@ STATS.Effect.SprintBuff = function(){
     STATS.Effect.Names.SprintBuff, // name
     STATS.Effect.Sources.Body, // Source
     STATS.Attributes.speed, // attribute
-    5, // modifier
+    3, // modifier
     1000 // Duration
   );
 };
@@ -140,6 +140,19 @@ STATS.Effect.SprintCost = function(){
 STATS.Effect.EnergyRegen = function(interval, resource, source){
   let regen = STATS.Effect.ResourceEffect.new(
       STATS.Effect.Names.Regen, // Name
+      source, // Source
+      resource, // Resource
+      1, // Delta
+      interval, // Interval
+      null // Duration
+    );
+  regen.blockedByEffect = STATS.Effect.Names.SprintCost;
+  return regen;
+};
+
+STATS.Effect.Regen = function(interval, resource, source){
+  let regen = STATS.Effect.ResourceEffect.new(
+      resource + STATS.Effect.Names.Regen, // Name
       source, // Source
       resource, // Resource
       1, // Delta
