@@ -443,6 +443,7 @@ ACTOR.new = function(){
     let drift = 32;
     let placed = false;
     let offset = null;
+    itemStack.position = position;
     SCENE.createEntity(itemStack);
 
     // Position the item stack
