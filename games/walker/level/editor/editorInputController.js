@@ -35,13 +35,27 @@ LEVEL.Editor.EditorInputController.new = function(parent){
         rect.recenter(worldPoint);
         //console.log(rect.toString());
         let colliders = ic.parent.physics.rectHitScan([], rect);
-        if(colliders.length > 0){
-            ic.parent.selected = colliders[0].parent;
+        if(colliders == null || colliders.length == 0){
+            ic.parent.selected = null;
+            return;
         }
-        else{
+        colliders.sort((a, b) => {
+            if(a.parent.renderLayer < b.parent.renderLayer){
+                return 1;
+            }
+            if(a.parent.renderLayer > b.parent.renderLayer){
+                return -1;
+            }
+            return 0;
+        });
+        if(colliders[0].parent == ic.parent.selected){
             ic.parent.selected = null;
         }
+        else{
+            ic.parent.selected = colliders[0].parent;
+        }
     };
+
     ic.handleDragEntity = function(){
         if(!INPUT.isMouseDragging(INPUT.LEFT_MOUSE)){
             return;
@@ -100,6 +114,7 @@ LEVEL.Editor.EditorInputController.new = function(parent){
             GRAPHICS.panCamera(vector);
             return;
         }
+        return; // Disabling the below.
         // pan with mouse only if not panning with keyboard
         let mPos = INPUT.getMousePosition();
         let margin = 20;

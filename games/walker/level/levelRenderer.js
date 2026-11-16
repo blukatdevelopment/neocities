@@ -86,7 +86,9 @@ LEVEL.Renderer.new = function(){
     };
     lr.drawLevel = function(){
         GRAPHICS.clearCanvas();
-
+        if(!lr.exterior){
+            //GRAPHICS.fillScreen(GRAPHICS.Colors.Black);
+        }
         for(let renderer of lr.scenery){
             renderer.draw();
         }

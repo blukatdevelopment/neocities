@@ -146,6 +146,13 @@ GRAPHICS.clearCanvas = function(){
   GRAPHICS._context.imageSmoothingEnabled = false;
 };
 
+GRAPHICS.fillScreen = function(color){
+  if(color == null){
+    color = GRAPHICS.Colors.Black;
+  }
+  GRAPHICS.fillBox(SETTINGS.canvasMin, SETTINGS.canvasMin, SETTINGS.canvasMax, SETTINGS.canvasMax, color);
+}
+
 // XY is for top left corner.
 GRAPHICS.drawBox = function(x, y, width, height, color){
   let ctx = GRAPHICS.getContext();

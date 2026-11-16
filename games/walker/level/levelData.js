@@ -61,10 +61,17 @@ LEVEL.Static.LevelName = function(){
         }
 
         for(let entity of ld.entityData){
-            js += "\tdata.entityData.push(";
-            js += "ENTITY.Data.new(\"" + entity.entityName +"\"";
-            js += ", " + entity.position.toJs() + ")";
-            js += ");\n";
+
+            if(entity.entityName == ENTITY.ENTITIES.PlayerOne){
+                js += "\tdata.playerPosition = VECTOR2.new(";
+                js += entity.position.x + ", " + entity.position.y + ");\n";
+            }
+            else{
+                js += "\tdata.entityData.push(";
+                js += "ENTITY.Data.new(\"" + entity.entityName +"\"";
+                js += ", " + entity.position.toJs() + ")";
+                js += ");\n";
+            }   
         }
 
         js += "\treturn data;";
