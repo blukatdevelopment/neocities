@@ -65,10 +65,6 @@ LEVEL.Renderer.new = function(){
         }
         lr.updateCursor();
         lr.drawLevel();
-        if(INPUT.keyPress(INPUT.KEYS.K_F)){
-            // TODO: Remove this debug code
-            lr.lighting.darkness = 100;    
-        }
     };
     lr.cursorInRange = function(){
         let pos = GRAPHICS.getWorldCursor();

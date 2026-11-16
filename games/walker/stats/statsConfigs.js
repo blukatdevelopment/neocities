@@ -20,6 +20,7 @@ STATS.Effect.Types = {};
 STATS.Effect.Types.Attribute = "Attribute";
 STATS.Effect.Types.Resource = "Resource";
 STATS.Effect.Types.ResourceMax = "ResourceMax";
+STATS.Effect.Types.ResourceChange = "ResourceChange";
 
 STATS.Effect.Names = {};
 STATS.Effect.Names.SprintBuff = "SprintBuff";
@@ -29,6 +30,9 @@ STATS.Effect.Names.EnergyMax = "EnergyMax";
 STATS.Effect.Names.MagicMax = "MagicMax";
 STATS.Effect.Names.Armor = "Armor";
 STATS.Effect.Names.Torch = "Torch";
+STATS.Effect.Names.HealthGain = "HealthGain";
+STATS.Effect.Names.EnergyGain = "EnergyGain";
+STATS.Effect.Names.MagicGain = "MagicGain";
 
 STATS.Effect.Sources = {};
 STATS.Effect.Sources.Body = "Body";
@@ -82,30 +86,75 @@ STATS.Effect.SprintBuff = function(){
   );
 };
 
-STATS.Effect.FoodHealth = function(amount, duration, source){
+STATS.Effect.HealthGain = function(amount, source){
+  return STATS.Effect.ResourceChangeEffect.new(
+    STATS.Effect.Names.HealthGain, // Name
+    source, // Source
+    STATS.Resources.health, // resource
+    amount
+  );
+};
+
+STATS.Effect.EnergyGain = function(amount, source){
+  return STATS.Effect.ResourceChangeEffect.new(
+    STATS.Effect.Names.EnergyGain, // Name
+    source, // Source
+    STATS.Resources.energy, // resource
+    amount
+  );
+};
+
+STATS.Effect.MagicGain = function(amount, source){
+  return STATS.Effect.ResourceChangeEffect.new(
+    STATS.Effect.Names.MagicGain, // Name
+    source, // Source
+    STATS.Resources.magic, // resource
+    amount
+  );
+};
+
+STATS.Effect.foodEffects = function(duration, source, health, energy, magic){
+  let effects = [];
+  let src = SETTINGS.foodPrefix + source;
+  if(health != 0){
+    effects.push(STATS.Effect.MaxHealthBuff(health, duration, src));
+    effects.push(STATS.Effect.HealthGain(health, src));
+  }
+  if(energy != 0){
+    effects.push(STATS.Effect.MaxEnergyBuff(energy, duration, src));
+    effects.push(STATS.Effect.EnergyGain(energy, src));
+  }
+  if(magic != 0){
+    effects.push(STATS.Effect.MaxMagicBuff(magic, duration, src));
+    effects.push(STATS.Effect.MagicGain(magic, src));
+  }
+  return effects;
+};
+
+STATS.Effect.MaxHealthBuff = function(amount, duration, source){
   return STATS.Effect.AttributeEffect.new(
     STATS.Effect.Names.HealthMax, // name
-    SETTINGS.foodPrefix + source, // Source
+    source, // Source
     STATS.Attributes.healthMax, // attribute
     amount, // modifier
     duration // Duration
   );
 };
 
-STATS.Effect.FoodEnergy = function(amount, duration, source){
+STATS.Effect.MaxEnergyBuff = function(amount, duration, source){
   return STATS.Effect.AttributeEffect.new(
     STATS.Effect.Names.EnergyMax, // name
-    SETTINGS.foodPrefix + source, // Source
+    source, // Source
     STATS.Attributes.energyMax, // attribute
     amount, // modifier
     duration // Duration
   );
 };
 
-STATS.Effect.FoodMagic = function(amount, duration, source){
+STATS.Effect.MaxMagicBuff = function(amount, duration, source){
   return STATS.Effect.AttributeEffect.new(
     STATS.Effect.Names.MagicMax, // name
-    SETTINGS.foodPrefix + source, // Source
+    source, // Source
     STATS.Attributes.magicMax, // attribute
     amount, // modifier
     duration // Duration

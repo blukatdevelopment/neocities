@@ -56,5 +56,6 @@ ITEMS.getConfig = function(){
     config.push(...ITEMS.Config.starterPack());
     config.push(...ITEMS.Config.leatherPack());
     config.push(...ITEMS.Config.flintPack());
+    config.push(...ITEMS.Config.foodPack());
     return config;    
 };

@@ -3,20 +3,6 @@
 ##############################################################################*/
 ITEMS.Config.starterPack = function(){
     let config = [];
-    
-    ITEMS.Names.Apple = "Apple";
-    config.push({
-            type: ITEMS.Types.Food,
-            name: ITEMS.Names.Apple,
-            description: "One a day keeps the doctor away",
-            sprite: SPRITES.static.items.Apple,
-            stackSize: 8,
-            effects: [
-                STATS.Effect.FoodHealth(10, 5 * TIME.minute, ITEMS.Names.Apple),
-                STATS.Effect.FoodEnergy(10, 5 * TIME.minute, ITEMS.Names.Apple),
-                STATS.Effect.FoodMagic(10, 5 * TIME.minute, ITEMS.Names.Apple)
-            ]
-    });
 
     ITEMS.Names.Seeds = "Seeds";
     config.push({
@@ -61,62 +47,6 @@ ITEMS.Config.starterPack = function(){
             description: "Has some heft to it",
             sprite: SPRITES.static.items.Rock,
             stackSize: 8
-    });
-
-    ITEMS.Names.RedBerry = "RedBerry";
-    config.push({
-            type: ITEMS.Types.Food,
-            name: ITEMS.Names.RedBerry,
-            description: "Sweet and mildly tart.",
-            sprite: SPRITES.static.items.RedBerry,
-            stackSize: 8,
-            effects: [
-                STATS.Effect.FoodHealth(10, 5 * TIME.minute, ITEMS.Names.RedBerry),
-                STATS.Effect.FoodEnergy(10, 5 * TIME.minute, ITEMS.Names.RedBerry),
-                STATS.Effect.FoodMagic(10, 5 * TIME.minute, ITEMS.Names.RedBerry)
-            ]
-    });
-
-    ITEMS.Names.GreenBerry = "GreenBerry";
-    config.push({
-            type: ITEMS.Types.Food,
-            name: ITEMS.Names.GreenBerry,
-            description: "What plant does this come from?",
-            sprite: SPRITES.static.items.GreenBerry,
-            stackSize: 8,
-            effects: [
-                STATS.Effect.FoodHealth(10, 5 * TIME.minute, ITEMS.Names.GreenBerry),
-                STATS.Effect.FoodEnergy(10, 5 * TIME.minute, ITEMS.Names.GreenBerry),
-                STATS.Effect.FoodMagic(10, 5 * TIME.minute, ITEMS.Names.GreenBerry)
-            ]
-    });
-
-    ITEMS.Names.BlueBerry = "BlueBerry";
-    config.push({
-            type: ITEMS.Types.Food,
-            name: ITEMS.Names.BlueBerry,
-            description: "It's actually purple, not blue.",
-            sprite: SPRITES.static.items.BlueBerry,
-            stackSize: 8,
-            effects: [
-                STATS.Effect.FoodHealth(10, 5 * TIME.minute, ITEMS.Names.BlueBerry),
-                STATS.Effect.FoodEnergy(10, 5 * TIME.minute, ITEMS.Names.BlueBerry),
-                STATS.Effect.FoodMagic(10, 5 * TIME.minute, ITEMS.Names.BlueBerry)
-            ]
-    });
-
-    ITEMS.Names.Venison = "Venison";
-    config.push({
-            type: ITEMS.Types.Food,
-            name: ITEMS.Names.Venison,
-            description: "Very savory, lean meat",
-            sprite: SPRITES.static.items.MeatSteak,
-            stackSize: 8,
-            effects: [
-                STATS.Effect.FoodHealth(10, 5 * TIME.minute, ITEMS.Names.BlueBerry),
-                STATS.Effect.FoodEnergy(10, 5 * TIME.minute, ITEMS.Names.BlueBerry),
-                STATS.Effect.FoodMagic(10, 5 * TIME.minute, ITEMS.Names.BlueBerry)
-            ]
     });
 
     ITEMS.Names.Resin = "Resin";

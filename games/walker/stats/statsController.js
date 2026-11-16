@@ -85,6 +85,11 @@ STATS.StatsController.new = function(){
     if(_effect == null){
       return;
     }
+    if(_effect.effectType == STATS.Effect.Types.ResourceChange){
+      stc.changeResource(_effect.resource, _effect.delta);
+      return;
+    }
+
     if(_effect.duration){
       _effect.expiration = _effect.duration + Date.now();
     }
