@@ -1,6 +1,22 @@
 /*##############################################################################
 # Dungeon design entities
 ##############################################################################*/
+ENTITY.ENTITIES.CaveEntrance = "CaveEntrance";
+ENTITYFACTORY.CaveEntrance = function(){
+    let sprite = SPRITES.static.scenery64.caveEntrance;
+    let ent = ENTITY.Door.new("Cave", true, DIRECTIONS.south);
+    ent.entityName = ENTITY.ENTITIES.CaveEntrance;
+    ent.renderer.sprite = sprite;
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0, 0),
+        VECTOR2.new(64, 64)
+    );
+    ent.entityName = ENTITY.ENTITIES.CaveEntrance;
+    ent.renderLayer = GRAPHICS.RenderLayers.Top;
+    ent.collider.rigid = true;
+    return ent;
+};
+
 
 ENTITY.ENTITIES.CaveFloor = "CaveFloor";
 ENTITYFACTORY.CaveFloor = function(){

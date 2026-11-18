@@ -21,12 +21,15 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
     cg.addEntity(slimePit);
 
     let slime = ACTORFACTORY.Slime();
-    slime.position = VECTOR2.new(600, 100);
+    slime.position = VECTOR2.new(600, 300);
     cg.addEntity(slime);
 
     let deer = ACTORFACTORY.Deer();
     deer.position = VECTOR2.new(100, 100);
     cg.addEntity(deer);
 
+    let caveEntrance = ENTITYFACTORY.CaveEntrance();
+    caveEntrance.position = VECTOR2.new(600, 100);
+    cg.addEntity(caveEntrance);
 
 };

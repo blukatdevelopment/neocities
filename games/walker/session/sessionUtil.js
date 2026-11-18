@@ -14,7 +14,6 @@ SESSION.DebugSession = function(){
     let s = SESSION.Session.new();
 
     s.addExterior(LEVEL.Generate.DebugLevel());
-    s.addInterior(LEVEL.Static.TestLevel());
     s.activeLevel = s.exteriors[0];
     return s;
 };

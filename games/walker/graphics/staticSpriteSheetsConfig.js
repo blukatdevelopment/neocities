@@ -100,7 +100,8 @@ SETTINGS.staticSheetList.push({
     cells: 7,
     sprites: [
         "tree", "bush", "berryBush",
-        "boulder", "slimepit", "hovel", "campfire"
+        "boulder", "slimepit", "hovel",
+        "campfire", "caveEntrance"
     ]
 });
 SETTINGS.staticSheetList.push({

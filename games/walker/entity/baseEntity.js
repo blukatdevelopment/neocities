@@ -6,13 +6,15 @@ ENTITY.baseEntity = {};
 ENTITY.baseEntity.new = function(){
     let be = {
         entityType: ENTITY.TYPES.Scenery,
-        name: "",
+        name: "", // Player-facing name
+        entityName: "", // Refers to the constructor
         entityId: UTILITY.getNextEntityId(),
         position: VECTOR2.new(0, 0),
         collider: PHYSICS.BoxCollider.new(),
         renderer: SPRITES.SpriteRenderer.new(),
         label: "",
-        renderLayer: GRAPHICS.RenderLayers.Default
+        renderLayer: GRAPHICS.RenderLayers.Default,
+        tags: []
 
     };
     be.renderer.parent = be;
@@ -66,7 +68,7 @@ ENTITY.baseEntity.new = function(){
     };
     be.pickUp = function(item){ return item.quantity; };
     be.getData = function(){
-        let data = ENTITY.Data.new(be.name, be.position);
+        let data = ENTITY.Data.new(be.entityName, be.position);
         return data;
     };
     be.getSpriteRect = function(){
@@ -90,5 +92,8 @@ ENTITY.baseEntity.new = function(){
         be.position = entPos;
     };
     be.getLabel = function(){ return ""; };
+    be.hasTag = function(tag){
+        return be.tags.includes(tag);
+    };
     return be;
 };

@@ -1,10 +1,10 @@
 
 /*##############################################################################
-# This is a test static level, a dungeon
+# Babby's first dungeon
 ##############################################################################*/
-LEVEL.Static.TestLevel = function(){
+LEVEL.Static.Cave = function(){
     let data = LEVEL.Data.new();
-    data.name = "Debug interior level."
+    data.name = "A cave!"
     data.exterior = false;
     data.darkness = 50;
 	data.playerPosition = VECTOR2.new(2352, 8928);
