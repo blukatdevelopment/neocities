@@ -28,6 +28,10 @@ LEVEL.Generate.Cell.Debug = function(data, rect){
     deer.position = VECTOR2.new(100, 100);
     cg.addEntity(deer);
 
+    let torch = ENTITYFACTORY.TorchStack();
+    torch.position = VECTOR2.new(100, 100);
+    cg.addEntity(torch);
+
     let caveEntrance = ENTITYFACTORY.CaveEntrance();
     caveEntrance.position = VECTOR2.new(600, 100);
     cg.addEntity(caveEntrance);

@@ -48,7 +48,7 @@ GRAPHICS.LightingController.new = function(){
         lm.lights.push(light);
     };
     lm.setDarkness = function(darkness){
-        lm.darkeness = darkness;
+        lm.darkness = darkness;
     };
     return lm;
 };

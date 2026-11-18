@@ -43,9 +43,8 @@ LEVEL.Renderer.new = function(){
         lr.unlinkEntities();
         lr.linkPlayer(SESSION.GetPlayer());
         let levelSize = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;
-        if(data.darkness && data.darkness != 0){
-            lr.lighting.setDarkness(data.darkness);
-        }
+        lr.lighting.setDarkness(data.darkness);
+        
         lr.levelRect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(levelSize, levelSize));
         if(data.tileMap){
             lr.tileMap = data.tileMap;

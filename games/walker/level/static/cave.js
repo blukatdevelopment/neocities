@@ -6,7 +6,7 @@ LEVEL.Static.Cave = function(){
     let data = LEVEL.Data.new();
     data.name = "A cave!"
     data.exterior = false;
-    data.darkness = 50;
+    data.darkness = 100;
 	data.playerPosition = VECTOR2.new(2352, 8928);
 	data.entities.push(ENTITYFACTORY.Load(ENTITY.Data.new("CaveFloor", VECTOR2.new(2240,8512))));
 	data.entities.push(ENTITYFACTORY.Load(ENTITY.Data.new("CaveFloor", VECTOR2.new(2240,8768))));
