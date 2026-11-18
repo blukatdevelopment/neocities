@@ -17,7 +17,7 @@ SCENE.SCENES.LevelEditor = function(){
     le.levelRenderer = LEVEL.Renderer.new();
     le.levelRenderer.init();
     // Toggle debug level
-    let data = LEVEL.Static.TestLevel()
+    let data = LEVEL.Static.Cave()
     le.levelRenderer.loadData(data);
     if(data.playerPosition){
       GRAPHICS.centerCamera(data.playerPosition);
@@ -62,7 +62,7 @@ SCENE.SCENES.LevelEditor = function(){
     
     console.log("Preparing data");
     let dataObj = le.levelRenderer.getData();
-    console.log("Level dataobj:" + JSON.stringify(dataObj));
+    //console.log("Level dataobj:" + JSON.stringify(dataObj));
     let data = dataObj.toJs();
     
     console.log("Downloading data");

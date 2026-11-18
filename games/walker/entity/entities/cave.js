@@ -1,6 +1,22 @@
 /*##############################################################################
 # Dungeon design entities
 ##############################################################################*/
+ENTITY.ENTITIES.CaveExit = "CaveExit";
+ENTITYFACTORY.CaveExit = function(){
+    let sprite = SPRITES.static.cave64.caveExit;
+    let ent = ENTITY.Door.new("Overworld", false, DIRECTIONS.north);
+    ent.entityName = ENTITY.ENTITIES.CaveExit;
+    ent.renderer.sprite = sprite;
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0, 48),
+        VECTOR2.new(64, 16)
+    );
+    ent.entityName = ENTITY.ENTITIES.CaveExit;
+    ent.renderLayer = GRAPHICS.RenderLayers.Top;
+    ent.collider.rigid = true;
+    return ent;
+};
+
 ENTITY.ENTITIES.CaveEntrance = "CaveEntrance";
 ENTITYFACTORY.CaveEntrance = function(){
     let sprite = SPRITES.static.scenery64.caveEntrance;
@@ -40,7 +56,6 @@ ENTITYFACTORY.CaveWallNorth = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(256, 16)
     );
-    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     ent.entityName = ENTITY.ENTITIES.CaveWallNorth;
     return ent;
 };
@@ -53,7 +68,6 @@ ENTITYFACTORY.CaveWallSouth = function(){
         VECTOR2.new(0, 240),
         VECTOR2.new(256, 16)
     );
-    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     ent.entityName = ENTITY.ENTITIES.CaveWallSouth;
     return ent;
 };
@@ -66,7 +80,6 @@ ENTITYFACTORY.CaveWallEast = function(){
         VECTOR2.new(240, 0),
         VECTOR2.new(16, 256)
     );
-    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     ent.entityName = ENTITY.ENTITIES.CaveWallEast;
     return ent;
 };
@@ -79,7 +92,6 @@ ENTITYFACTORY.CaveWallWest = function(){
         VECTOR2.new(0, 0),
         VECTOR2.new(16, 256)
     );
-    ent.renderLayer = GRAPHICS.RenderLayers.Top;
     ent.entityName = ENTITY.ENTITIES.CaveWallWest;
     return ent;
 };

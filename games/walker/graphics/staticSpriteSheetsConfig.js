@@ -105,6 +105,17 @@ SETTINGS.staticSheetList.push({
     ]
 });
 SETTINGS.staticSheetList.push({
+    name: "cave64",
+    sheet: "cave_64.png",
+    resolutionX: 64,
+    resolutionY: 64,
+    cells: 6,
+    sprites: [
+        "rockPile", "spiderWeb", "boulder",
+        "stalactites", "crystals", "caveExit"
+    ]
+});
+SETTINGS.staticSheetList.push({
     name: "inventory",
     sheet: "inventory.png",
     resolutionX: 154,

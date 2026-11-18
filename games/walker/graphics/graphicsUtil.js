@@ -56,10 +56,10 @@ GRAPHICS.getCamera = function(){
   return GRAPHICS._camera;
 };
 
-GRAPHICS.centerCamera = function(point){
+GRAPHICS.centerCamera = function(point, ignoreBounds){
   let size = GRAPHICS._camera.rect.size;
   let centered = VECTOR2.new(point.x - (size.x/2), point.y - (size.y/2));
-  GRAPHICS._camera.move(centered);
+  GRAPHICS._camera.move(centered, ignoreBounds);
 };
 
 GRAPHICS.getCameraCenter = function(){

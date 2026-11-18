@@ -8,14 +8,17 @@ ENTITY.Door.new = function(destinationName, interiorFacing, direction){
     d.destinationName = "Cave";
     d.destinationLevelId = null;
     d.destinationDoorId = null;
+    d.levelId = null;
     d.doorId = null;
     d.direction = direction;
     d.tags.push("door");
     d.onInteract = function(interaction){
-        console.log("Opening the door to " + d.destination);
-        if(d.destinationLevelId && d.destinationDoorId){
-            console.log("Door configured.");
-        }
+        SESSION.EnterLevel(d.destinationLevelId, d.destinationDoorId);
+    };
+    d.getExitPosition = function(){
+        let pos = d.collider.absoluteRect().center();
+        pos = pos.move(d.direction, 64);
+        return pos;
     };
 
     return d;

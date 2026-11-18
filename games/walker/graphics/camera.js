@@ -4,12 +4,12 @@ GRAPHICS.Camera.new = function(position, size){
   let cam = {
     rect: SHAPES.RECT.new(position, size)
   };
-  cam.move = function(destination){
+  cam.move = function(destination, ignoreBounds){
     if(cam.rect.position.x == destination.x && cam.rect.position.y == destination.y){
       // Nothing to do
       return;
     }
-    if(cam.boundsCheck(destination)){
+    if(ignoreBounds || cam.boundsCheck(destination)){
       // Valid destination
       cam.rect.position = destination;
       return;

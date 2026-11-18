@@ -6,7 +6,6 @@
 SCENE._instances = {};
 
 SCENE._cursorSprite = null;
-SCENE._levelRect = null;
 SCENE._activeScene = null;
 
 SCENE.getDefaultScene = function(){
@@ -115,4 +114,9 @@ SCENE.emitLight = function(light){
 SCENE.getActiveSceneName = function(){
   var activeScene = SCENE.getActiveScene();
   return activeScene.name;
+};
+
+SCENE.getLevelRenderer = function(){
+  var activeScene = SCENE.getActiveScene();
+  return activeScene.getLevelRenderer();
 };

@@ -40,5 +40,8 @@ SCENE.SCENES.Game = function(){
   gm.boundsCheck = function(rect){
     return gm.levelRenderer.boundsCheck(rect);
   };
+  gm.getLevelRenderer = function(){
+    return gm.levelRenderer;
+  };
   return gm;
 };

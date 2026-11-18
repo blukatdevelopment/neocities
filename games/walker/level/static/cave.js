@@ -39,5 +39,8 @@ LEVEL.Static.Cave = function(){
 	data.entities.push(ENTITYFACTORY.Load(ENTITY.Data.new("GreenBerryStack", VECTOR2.new(2272,8896))));
 	data.entities.push(ENTITYFACTORY.Load(ENTITY.Data.new("BlueBerryStack", VECTOR2.new(2272,8864))));
 	data.entities.push(ENTITYFACTORY.Load(ENTITY.Data.new("VenisonStack", VECTOR2.new(2272,8992))));
+	let caveExit = ENTITYFACTORY.Load(ENTITY.Data.new("CaveExit", VECTOR2.new(2336,8960)));
+	data.entranceDoor = caveExit;
+	data.entities.push(caveExit);
     return data;
 };

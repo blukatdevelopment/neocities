@@ -95,5 +95,6 @@ ENTITY.baseEntity.new = function(){
     be.hasTag = function(tag){
         return be.tags.includes(tag);
     };
+    be.isPlayer = function(){ return false; };
     return be;
 };

@@ -10,22 +10,38 @@ LEVEL.Renderer.new = function(){
         ui: null,
         lighting: GRAPHICS.LightingController.new(),
         tileMap: null,
-        levelRect: null
+        levelRect: null,
+        data: null
     };
     lr.init = function(){
         GRAPHICS.setDisplayMode(DISPLAY_MODES.camera);
         lr.physics = PHYSICS.Controller.new();
-        lr.player = ACTORFACTORY.PlayerOne();
+    };
+    lr.linkPlayer = function(player){
+        lr.player = player;
         lr.addEntity(lr.player);
         lr.ui = UI.COMPONENTS.PlayerUIManager.new();
         lr.ui.linkActor(lr.player);
     };
+    lr.unlinkEntities = function(){
+        let entities = lr.entities;
+        for(let entity of entities){
+            lr.removeEntity(entity);
+        }
+        if(lr.player){
+            lr.removeEntity(lr.player);
+        }
+    }
     lr.loadData = function(data){
         if(data == null){
             console.log("Tried to load null level data");
             return;
         }
         console.log("Loading level " + data.name);
+        lr.data = data;
+        lr.scenery = [];
+        lr.unlinkEntities();
+        lr.linkPlayer(SESSION.GetPlayer());
         let levelSize = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;
         if(data.darkness && data.darkness != 0){
             lr.lighting.setDarkness(data.darkness);
@@ -49,10 +65,13 @@ LEVEL.Renderer.new = function(){
         }
     };
     lr.getData = function(){
-        let data = LEVEL.Data.new();
+        let data = lr.data;
+        data.entities = [];
         data.tileMap = lr.tileMap;
         for(let entity of lr.entities){
-            data.entities.push(entity);
+            if(!entity.isPlayer()){
+                data.entities.push(entity);
+            }
         }
         return data;
     };
@@ -154,6 +173,7 @@ LEVEL.Renderer.new = function(){
     }
     lr.boundsCheck = function(rect){
         if(lr.levelRect == null){
+            console.log("Level rect is null");
             return false;
         }
         if(!rect.isInside(lr.levelRect)){

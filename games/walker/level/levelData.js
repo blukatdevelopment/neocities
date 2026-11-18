@@ -6,9 +6,18 @@ LEVEL.Data.new = function(){
         entities: [],
         playerPosition: null,
         exterior: true,
-        darkness: 0
+        darkness: 0,
+        entranceDoor: null
     };
-
+    ld.getDoors = function(){
+        let doors = [];
+        for(let entity of ld.entities){
+            if(entity.hasTag("door")){
+                doors.push(entity);
+            }
+        }
+        return doors;
+    };
     ld.toJs = function(){
         let js = `
 /*##############################################################################

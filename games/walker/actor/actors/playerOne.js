@@ -17,6 +17,7 @@ ACTORFACTORY.PlayerOne = function(){
   pone.getCollider().rect.size = VECTOR2.new(12, 32);
   pone.name = ACTOR.Names.PlayerOne;
   pone.entityName = ACTOR.Names.PlayerOne;
+  pone.isPlayer = function(){ return true; }
 
   pone.attacks.push(STATS.AttackFactory.Unarmed());
   pone.activeAttack = pone.attacks[0];

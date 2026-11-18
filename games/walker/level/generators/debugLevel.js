@@ -3,7 +3,6 @@
 ##############################################################################*/
 
 LEVEL.Generate.DebugLevel = function(){
-    SETTINGS.DefaultLevelSize = 1; // Change level to a single cell wide
     let data = LEVEL.Data.new();
     data.name = "Debug Exterior Level";
     data.tileMap = LEVEL.Generate.UniformTileMap(SPRITES.static.village.village, 1);
