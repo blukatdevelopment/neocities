@@ -1,6 +1,7 @@
 LEVEL.Data = {};
 LEVEL.Data.new = function(){
     let ld = {
+        name: "",
         tileMap: null,
         entityData: [],
         playerPosition: null,

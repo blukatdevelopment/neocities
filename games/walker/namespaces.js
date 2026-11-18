@@ -48,3 +48,5 @@ let CRAFTING = {};
 CRAFTING.Config = {};
 CRAFTING.Recipes = [];
 CRAFTING.RecipeNames = {};
+let WORLD = {};
+let SESSION = {};

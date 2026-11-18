@@ -21,6 +21,11 @@ LEVEL.Renderer.new = function(){
         lr.ui.linkActor(lr.player);
     };
     lr.loadData = function(data){
+        if(data == null){
+            console.log("Tried to load null level data");
+            return;
+        }
+        console.log("Loading level " + data.name);
         let levelSize = SETTINGS.DefaultLevelTileSize * SETTINGS.DefaultLevelSize;
         if(data.darkness && data.darkness != 0){
             lr.lighting.setDarkness(data.darkness);

@@ -4,6 +4,7 @@
 ##############################################################################*/
 LEVEL.Static.TestLevel = function(){
     let data = LEVEL.Data.new();
+    data.name = "Debug interior level."
     data.exterior = false;
     data.darkness = 50;
 	data.playerPosition = VECTOR2.new(2352, 8928);

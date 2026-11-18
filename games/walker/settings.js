@@ -34,6 +34,7 @@ SCENES.startScreen = "startScreen";
 SCENES.worldMap = "worldMap";
 SCENES.game = "game";
 SCENES.levelEditor = "levelEditor"
+SCENES.newGame = "newGame";
 
 
 

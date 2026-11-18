@@ -3,34 +3,22 @@
 ##############################################################################*/
 SCENE.SCENES.NewGame = function(){
     let ng = SCENE.SCENES.BaseScene();
-    ng.name = SCENES.ngartScreen;
+    ng.name = SCENES.newGame;
     ng.setup = false;
-    ng.loading = false;
-    ng.loadingComplete = false;
     ng.loadingLabel = UI.COMPONENTS.TextLabel.new(
-        SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(400,400)),
+        SHAPES.RECT.new(VECTOR2.new(200,200), VECTOR2.new(200,200)),
         "Generating World",
         null,
         null
     );
-    ng.init = function(){
-        // TODO: put some GUI for game configuration here
-        // which calls ng.newGame()
+    ng.update = function(){
+        GRAPHICS.clearCanvas();
+        ng.loadingLabel.draw();
         ng.newGame();
     };
     ng.newGame = function(){
-        ng.loading = true;
+        SESSION.NewGame();
+        SCENE.setActiveScene(SCENE.SCENES.Game());
     };
-    ng.update = function(){
-        GRAPHICS.clearCanvas();
-        if(ng.loading){
-            ng.loadingLabel.draw();
-            ng.load();
-        }
-    };
-    ng.load = function(){
-
-    };
-    ng.init();
     return ng;
 };
