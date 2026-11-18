@@ -41,8 +41,8 @@ LEVEL.Renderer.new = function(){
                 lr.scenery.push(tile);
             }
         }
-        for(let entityData of data.entityData){
-            lr.addEntity(ENTITYFACTORY.Load(entityData));
+        for(let entity of data.entities){
+            lr.addEntity(entity);
         }
         if(data.playerPosition && lr.player){
             lr.player.setPosition(data.playerPosition);
@@ -52,7 +52,7 @@ LEVEL.Renderer.new = function(){
         let data = LEVEL.Data.new();
         data.tileMap = lr.tileMap;
         for(let entity of lr.entities){
-            data.entityData.push(entity.getData());
+            data.entities.push(entity);
         }
         return data;
     };

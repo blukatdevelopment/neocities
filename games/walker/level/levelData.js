@@ -3,11 +3,12 @@ LEVEL.Data.new = function(){
     let ld = {
         name: "",
         tileMap: null,
-        entityData: [],
+        entities: [],
         playerPosition: null,
         exterior: true,
         darkness: 0
     };
+
     ld.toJs = function(){
         let js = `
 /*##############################################################################
@@ -61,16 +62,18 @@ LEVEL.Static.LevelName = function(){
             js += "\n";
         }
 
-        for(let entity of ld.entityData){
+        for(let entity of ld.entities){
 
             if(entity.entityName === ACTOR.Names.PlayerOne){
                 js += "\tdata.playerPosition = VECTOR2.new(";
                 js += entity.position.x + ", " + entity.position.y + ");\n";
             }
             else{
-                js += "\tdata.entityData.push(";
+                js += "\tdata.entities.push(";
+                js += "ENTITYFACTORY.Load("
                 js += "ENTITY.Data.new(\"" + entity.entityName +"\"";
                 js += ", " + entity.position.toJs() + ")";
+                js += ")";
                 js += ");\n";
             }   
         }

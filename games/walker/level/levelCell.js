@@ -41,7 +41,7 @@ LEVEL.Generate.Cell.new = function(data, rect){
         return true;
     };
     cg.addEntity = function(entity){
-        cg.data.entityData.push(entity.getData());
+        cg.data.entities.push(entity);
         cg.entities.push(entity);
     };
     cg.generateEntities = function(){};
