@@ -121,7 +121,7 @@ ACTOR.new = function(){
   // Left click
   atr.primaryAction = function(){
     let inRange = atr.cursorInRange();
-    if(atr.itemsDrawn){
+    if(atr.itemsDrawn && atr.paperdoll.slots[GEAR.slotIndices.hand]){
       atr.useHandItem();
     }
     else{
