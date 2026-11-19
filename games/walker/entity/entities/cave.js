@@ -24,8 +24,8 @@ ENTITYFACTORY.CaveEntrance = function(){
     ent.entityName = ENTITY.ENTITIES.CaveEntrance;
     ent.renderer.sprite = sprite;
     ent.collider.rect = SHAPES.RECT.new(
-        VECTOR2.new(0, 0),
-        VECTOR2.new(64, 64)
+        VECTOR2.new(0, 48),
+        VECTOR2.new(64, 16)
     );
     ent.entityName = ENTITY.ENTITIES.CaveEntrance;
     ent.renderLayer = GRAPHICS.RenderLayers.Top;
