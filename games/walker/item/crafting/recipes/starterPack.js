@@ -1,43 +1,46 @@
 CRAFTING.Config.starterPack = function(){
     let recipes = [];
 
-    CRAFTING.RecipeNames.Test = "Test";
+    CRAFTING.RecipeNames.Torch = "Torch";
     recipes.push(CRAFTING.Recipe.new(
-        CRAFTING.RecipeNames.Test,
+        CRAFTING.RecipeNames.Torch,
         [
-            CRAFTING.Ingredient.new(ITEMS.Names.RedBerry, 1),
-            CRAFTING.Ingredient.new(ITEMS.Names.GreenBerry, 1),
-            CRAFTING.Ingredient.new(ITEMS.Names.BlueBerry, 1)
+            CRAFTING.Ingredient.new(ITEMS.Names.Resin, 1),
+            CRAFTING.Ingredient.new(ITEMS.Names.Stick, 1)
         ],
-        CRAFTING.Ingredient.new(ITEMS.Names.Rock, 5)
+        CRAFTING.Ingredient.new(ITEMS.Names.Torch, 1)
     ));
 
-    CRAFTING.RecipeNames.Test2 = "Test2";
+    CRAFTING.RecipeNames.FlintAxe = "FlintAxe";
     recipes.push(CRAFTING.Recipe.new(
-        CRAFTING.RecipeNames.Test2,
+        CRAFTING.RecipeNames.FlintAxe,
         [
-            CRAFTING.Ingredient.new(ITEMS.Names.RedBerry, 1)
+            CRAFTING.Ingredient.new(ITEMS.Names.Flint, 1),
+            CRAFTING.Ingredient.new(ITEMS.Names.Stick, 1)
         ],
-        CRAFTING.Ingredient.new(ITEMS.Names.BlueBerry, 5)
+        CRAFTING.Ingredient.new(ITEMS.Names.FlintAxe, 1)
     ));
 
-    CRAFTING.RecipeNames.Test3 = "Test3";
+    CRAFTING.RecipeNames.LeatherTunic = "LeatherTunic";
     recipes.push(CRAFTING.Recipe.new(
-        CRAFTING.RecipeNames.Test3,
+        CRAFTING.RecipeNames.LeatherTunic,
         [
-            CRAFTING.Ingredient.new(ITEMS.Names.RedBerry, 1)
+            CRAFTING.Ingredient.new(ITEMS.Names.Leather, 3)
         ],
-        CRAFTING.Ingredient.new(ITEMS.Names.RedBerry, 5)
+        CRAFTING.Ingredient.new(ITEMS.Names.LeatherTunic, 1)
     ));
 
-    CRAFTING.RecipeNames.Test4 = "Test4";
+    CRAFTING.RecipeNames.LeatherLeggings = "LeatherLeggings";
     recipes.push(CRAFTING.Recipe.new(
-        CRAFTING.RecipeNames.Test3,
+        CRAFTING.RecipeNames.LeatherLeggings,
         [
-            CRAFTING.Ingredient.new(ITEMS.Names.RedBerry, 1)
+            CRAFTING.Ingredient.new(ITEMS.Names.Leather, 3)
         ],
-        CRAFTING.Ingredient.new(ITEMS.Names.Apple, 1)
+        CRAFTING.Ingredient.new(ITEMS.Names.LeatherLeggings, 1)
     ));
+
+
+    return recipes;
 
     let ingredients = [
         CRAFTING.Ingredient.new(ITEMS.Names.Apple, 1),

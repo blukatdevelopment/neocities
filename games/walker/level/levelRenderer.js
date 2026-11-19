@@ -155,6 +155,7 @@ LEVEL.Renderer.new = function(){
     lr.destroyEntity = function(entity){
       if(entity == lr.player){
         console.log("Game over!");
+        UTILITY.restartGame();
       }
       // Removes entity after update loop completes.
       UTILITY.delayExecute(0, () => { lr.removeEntity(entity); });

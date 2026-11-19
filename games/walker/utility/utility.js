@@ -2,6 +2,12 @@
 # Util
 ##############################################################################*/
 
+UTILITY.restartGame = function(){
+    SESSION.ClearSession();
+    SCENE.clearScenes();
+    SCENE.setActiveScene(SCENE.SCENES.Start());
+};
+
 UTILITY.copyProperty = function(sourceObj, destObj, property){
     if(Object.hasOwn(sourceObj, property)){
         destObj[property] = sourceObj[property];

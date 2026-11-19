@@ -24,7 +24,7 @@ ITEMS.LootTable.new = function(){
     };
     lp.generateItemLoot = function(item, chance, max){
         let loot = [];
-        if(!RANDOM.chance(chance)){
+        if(chance != 1 && !RANDOM.chance(chance)){
             // You get nothing! You lose! Good day, sir!
             return loot;
         }

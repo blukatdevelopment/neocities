@@ -46,3 +46,7 @@ SESSION.EnterLevel = function(levelId, doorId){
     }
     ses.enterLevel(levelId, doorId);
 };
+
+SESSION.ClearSession = function(){
+    SESSION.INSTANCE = null;
+};

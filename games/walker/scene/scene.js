@@ -8,6 +8,10 @@ SCENE._instances = {};
 SCENE._cursorSprite = null;
 SCENE._activeScene = null;
 
+SCENE.clearScenes = function(){
+  SCENE._instances = {};
+};
+
 SCENE.getDefaultScene = function(){
   return SCENE.SCENES.Start();
 };

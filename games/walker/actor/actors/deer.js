@@ -29,7 +29,7 @@ ACTORFACTORY.Deer = function(){
   se.stats.setAttributeValue(STATS.Attributes.speed, 1.5);
 
   let lootTable = ITEMS.LootTable.new();
-  lootTable.addItem(ITEMS.getByName(ITEMS.Names.Leather), 2, 1);
+  lootTable.addItem(ITEMS.getByName(ITEMS.Names.Leather), 1, 4);
   lootTable.addItem(ITEMS.getByName(ITEMS.Names.Venison), 1, 5);
   se.lootTable = lootTable;
   return se;

@@ -9,6 +9,7 @@ ACTORFACTORY.PlayerOne = function(){
   asm.linkToActor(pone);
   pone.stateMachine = asm;
   let agent = AGENT.PLAYER_ONE.new(pone);
+  pone.tags.push("player");
   pone.agent = agent;
   pone.animator = anm;
   pone.lockCamera = true;

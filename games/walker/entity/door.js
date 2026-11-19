@@ -20,6 +20,15 @@ ENTITY.Door.new = function(destinationName, interiorFacing, direction){
         pos = pos.move(d.direction, 64);
         return pos;
     };
+    d.onCollide = function(collision){
+        let target = collision.second.parent == d ? collision.first.parent : collision.second.parent;
+        if(target == d){
+            return;
+        }
+        if(target.hasTag("player")){
+            d.onInteract();
+        }
+    };
 
     return d;
 };
