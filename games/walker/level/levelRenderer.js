@@ -46,6 +46,9 @@ LEVEL.Renderer.new = function(){
         lr.lighting.setDarkness(data.darkness);
         
         lr.levelRect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(levelSize, levelSize));
+        if(data.levelRect){
+            lr.levelRect = data.levelRect;
+        }
         if(data.tileMap){
             lr.tileMap = data.tileMap;
             let tileMap = data.tileMap;

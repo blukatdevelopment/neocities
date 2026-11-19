@@ -11,6 +11,7 @@ ENTITYFACTORY.Bush = function(){
         VECTOR2.new(0, 56),
         VECTOR2.new(64, 8)
     );
+    ent.entityName = ENTITY.ENTITIES.Bush;
     return ent;
 };
 
@@ -27,6 +28,7 @@ ENTITYFACTORY.BerryBush = function(){
         VECTOR2.new(64, 8)
     );
     let ent = ENTITY.Harvestable.new(ENTITY.ENTITIES.BerryBush, items, emptySprite, fullSprite, rect, rigid);
+    ent.entityName = ENTITY.ENTITIES.BerryBush;
     return ent;
 };
 
@@ -38,6 +40,7 @@ ENTITYFACTORY.BirchTree = function(){
         VECTOR2.new(24,56),
         VECTOR2.new(8,8)
     );
+    ent.entityName = ENTITY.ENTITIES.BirchTree;
     return ent;
 };
 
@@ -49,5 +52,18 @@ ENTITYFACTORY.SlimePit = function(){
         VECTOR2.new(24,24),
         VECTOR2.new(8,8)
     );
+    ent.entityName = ENTITY.ENTITIES.SlimePit;
+    return ent;
+};
+
+ENTITY.ENTITIES.Boulder = "Boulder";
+ENTITYFACTORY.Boulder = function(){
+    let sprite = SPRITES.static.scenery64.boulder;
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.Boulder, sprite, VECTOR2.new(0,0));
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0,0),
+        VECTOR2.new(64,64)
+    );
+    ent.entityName = ENTITY.ENTITIES.Boulder;
     return ent;
 };

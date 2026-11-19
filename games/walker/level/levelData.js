@@ -7,7 +7,8 @@ LEVEL.Data.new = function(){
         playerPosition: null,
         exterior: true,
         darkness: 0,
-        entranceDoor: null
+        entranceDoor: null,
+        levelRect: null
     };
     ld.getDoors = function(){
         let doors = [];

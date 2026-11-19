@@ -10,6 +10,14 @@ SESSION.ActiveLevel = function(){
     return null;
 };
 
+SESSION.EditorSession = function(){
+    let s = SESSION.Session.new();
+    s.addExterior(LEVEL.Generate.DebugLevel());
+    s.activeLevel = s.exteriors[0];
+    s.playerData.player = ACTORFACTORY.PlayerOne();
+    SESSION.INSTANCE = s;
+};
+
 SESSION.DebugSession = function(){
     let s = SESSION.Session.new();
 

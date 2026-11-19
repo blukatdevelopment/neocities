@@ -14,10 +14,11 @@ SCENE.SCENES.LevelEditor = function(){
   le.tooltip = null;
   le.snap = true;
   le.setup = function(){
+    SESSION.EditorSession();
     le.levelRenderer = LEVEL.Renderer.new();
     le.levelRenderer.init();
     // Toggle debug level
-    let data = LEVEL.Static.Cave()
+    let data =  LEVEL.Generate.DebugLevel();// LEVEL.Static.Cave();//LEVEL.Generate.DebugLevel();//
     le.levelRenderer.loadData(data);
     if(data.playerPosition){
       GRAPHICS.centerCamera(data.playerPosition);
@@ -28,6 +29,7 @@ SCENE.SCENES.LevelEditor = function(){
       SCENE.updateCursor(SPRITES.static.cursors.roundBlack);
     };
     le.physics = le.levelRenderer.physics;
+    le.levelRenderer.lighting.setDarkness(0);
     le.isSetup = true;
   };
 

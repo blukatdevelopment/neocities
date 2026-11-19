@@ -44,6 +44,7 @@ ENTITYFACTORY.registerItem = function(itemName){
         let item = ITEMS.create(itemName, 1, 0);
         let ret = ENTITY.ItemStack.new(item);
         ret.name = stackName;
+        ret.entityName = stackName;
         return ret;
     };
 };

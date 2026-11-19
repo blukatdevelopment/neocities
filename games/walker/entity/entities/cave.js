@@ -95,3 +95,69 @@ ENTITYFACTORY.CaveWallWest = function(){
     ent.entityName = ENTITY.ENTITIES.CaveWallWest;
     return ent;
 };
+
+
+ENTITY.ENTITIES.RockPile = "RockPile";
+ENTITYFACTORY.RockPile = function(){
+    let sprite = SPRITES.static.cave64.rockPile;
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.RockPile, sprite, VECTOR2.new(0,0));
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0, 0),
+        VECTOR2.new(64, 64)
+    );
+    ent.entityName = ENTITY.ENTITIES.RockPile;
+    return ent;
+};
+
+ENTITY.ENTITIES.SpiderWeb = "SpiderWeb";
+ENTITYFACTORY.SpiderWeb = function(){
+    let sprite = SPRITES.static.cave64.spiderWeb;
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.SpiderWeb, sprite, VECTOR2.new(0,0));
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0, 0),
+        VECTOR2.new(64, 64)
+    );
+    ent.entityName = ENTITY.ENTITIES.SpiderWeb;
+    return ent;
+};
+
+ENTITY.ENTITIES.Crystals = "Crystals";
+ENTITYFACTORY.Crystals = function(){
+    let sprite = SPRITES.static.cave64.crystals;
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.Crystals, sprite, VECTOR2.new(0,0));
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0, 0),
+        VECTOR2.new(64, 64)
+    );
+    let color = GRAPHICS.Colors.Purple15;
+    ent.light = GRAPHICS.LightSource.new(ent.getColRect(), 32, color);
+    ent.update = function(){
+        SCENE.emitLight(ent.light);
+    };
+    ent.entityName = ENTITY.ENTITIES.Crystals;
+    return ent;
+};
+
+ENTITY.ENTITIES.Stalactites = "Stalactites";
+ENTITYFACTORY.Stalactites = function(){
+    let sprite = SPRITES.static.cave64.stalactites;
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.Stalactites, sprite, VECTOR2.new(0,0));
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0, 0),
+        VECTOR2.new(64, 64)
+    );
+    ent.entityName = ENTITY.ENTITIES.Stalactites;
+    return ent;
+};
+
+ENTITY.ENTITIES.CaveBoulder = "CaveBoulder";
+ENTITYFACTORY.CaveBoulder = function(){
+    let sprite = SPRITES.static.cave64.boulder;
+    let ent = ENTITY.Scenery.new(ENTITY.ENTITIES.CaveBoulder, sprite, VECTOR2.new(0,0));
+    ent.collider.rect = SHAPES.RECT.new(
+        VECTOR2.new(0, 0),
+        VECTOR2.new(64, 64)
+    );
+    ent.entityName = ENTITY.ENTITIES.CaveBoulder;
+    return ent;
+};

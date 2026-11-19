@@ -30,6 +30,7 @@ GRAPHICS.Colors.Red50 = "rgb(178 16 48 / 50%)";
 GRAPHICS.Colors.Green50 = "rgb(81 162 0 / 50%)";
 GRAPHICS.Colors.Blue50 = "rgb(65 97 251 / 50%)";
 GRAPHICS.Colors.Yellow15 = "rgb(235 211 32 / 15%)";
+GRAPHICS.Colors.Purple15 = "rgb(119 59 191 / 15%)";
 
 GRAPHICS.RenderLayers = {};
 GRAPHICS.RenderLayers.Bottom = -10;

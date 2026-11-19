@@ -10,6 +10,7 @@ LEVEL.Generate.DebugLevel = function(){
     rect.position.x = 0;
     rect.position.y = 0;
     data.playerPosition = VECTOR2.new(500, 500);
+    data.levelRect = SHAPES.RECT.new(VECTOR2.new(0,0), VECTOR2.new(1024, 1024));
     LEVEL.Generate.Cell.Debug(data, rect);
     return data;
 };
