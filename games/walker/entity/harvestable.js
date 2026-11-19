@@ -5,7 +5,7 @@ ENTITY.Harvestable = {};
 ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, isRigid){
     let h = ENTITY.baseEntity.new();
     h.name = name;
-    h.items = [];
+    h.items = items;
     h.harvested = false;
     h.emptySprite = emptySprite;
     h.fullSprite = fullSprite;
@@ -42,13 +42,17 @@ ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, is
         return true;
     };
     h.onInteract = function(interaction){
+        console.log("1");
         if(interaction.initiator == null){
+            console.log("2");
             return;
         }
         if(h.harvested || h.items.length == 0){
+            console.log("3");
             return;
         }
         if(!h.canHarvest(interaction.initiator)){
+            console.log("4");
             UTILITY.notification("You have no space for this item.");
             return;
         }
@@ -60,7 +64,7 @@ ENTITY.Harvestable.new = function(name, items, emptySprite, fullSprite, rect, is
             }
             UTILITY.notification(message);    
         }
-        
+        console.log("5");
         h.harvested = true;
     };
     h.getSpriteRect = function(){
